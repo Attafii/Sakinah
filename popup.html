@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakinah</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">
+                <span class="arabic">سكينة</span>
+                <span class="english">Sakinah</span>
+            </h1>
+            <p class="subtitle">Find peace through the Qur'an</p>
+        </header>
+
+        <!-- Tab Navigation -->
+        <nav class="tabs">
+            <button class="tab-button active" data-tab="random">
+                <span class="tab-icon">📖</span>
+                Random Ayah
+            </button>
+            <button class="tab-button" data-tab="ai-guide">
+                <span class="tab-icon">🤲</span>
+                AI Guide
+            </button>
+            <button class="tab-button" data-tab="settings">
+                <span class="tab-icon">⚙️</span>
+                Settings
+            </button>
+        </nav>
+
+        <!-- Tab Content -->
+        <main class="content">
+            <!-- Random Ayah Tab -->
+            <div class="tab-content active" id="random-tab">
+                <div class="ayah-container">
+                    <div class="ayah-loading" id="ayah-loading">
+                        <div class="spinner"></div>
+                        <p>Loading Ayah...</p>
+                    </div>
+                    <div class="ayah-content" id="ayah-content" style="display: none;">
+                        <div class="ayah-arabic" id="ayah-arabic"></div>
+                        <div class="ayah-translation" id="ayah-translation"></div>
+                        <div class="ayah-reference" id="ayah-reference"></div>
+                    </div>
+                </div>
+                <button class="refresh-button" id="refresh-ayah">
+                    <span>🔄</span>
+                    New Ayah
+                </button>
+            </div>
+
+            <!-- AI Guide Tab -->
+            <div class="tab-content" id="ai-guide-tab">
+                <div class="ai-guide-container">
+                    <h3>How are you feeling?</h3>
+                    <p class="guide-instruction">
+                        Describe your current emotional or spiritual state, and we'll suggest the most relevant Ayah for you.
+                    </p>
+                    <textarea 
+                        id="emotional-state" 
+                        placeholder="I'm feeling anxious about my future..."
+                        maxlength="500"
+                    ></textarea>
+                    <div class="char-count">
+                        <span id="char-count">0</span>/500
+                    </div>
+                    <button class="guide-button" id="get-guidance">
+                        Find Guidance
+                    </button>
+                    
+                    <div class="ai-result" id="ai-result" style="display: none;">
+                        <div class="suggested-ayah">
+                            <h4>Suggested Ayah for you:</h4>
+                            <div class="ayah-arabic" id="ai-ayah-arabic"></div>
+                            <div class="ayah-translation" id="ai-ayah-translation"></div>
+                            <div class="ayah-reference" id="ai-ayah-reference"></div>
+                            <div class="ai-explanation" id="ai-explanation"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings-tab">
+                <div class="settings-container">
+                    <div class="setting-group">
+                        <h3>Notifications</h3>
+                        <label class="setting-item">
+                            <input type="checkbox" id="notifications-enabled">
+                            <span class="checkmark"></span>
+                            Enable notifications
+                        </label>
+                        
+                        <div class="notification-frequency" id="notification-settings">
+                            <label class="setting-item">
+                                <span class="setting-label">Frequency:</span>
+                                <select id="notification-frequency">
+                                    <option value="15">Every 15 minutes</option>
+                                    <option value="30">Every 30 minutes</option>
+                                    <option value="60" selected>Every hour</option>
+                                    <option value="120">Every 2 hours</option>
+                                    <option value="180">Every 3 hours</option>
+                                    <option value="360">Every 6 hours</option>
+                                    <option value="720">Every 12 hours</option>
+                                    <option value="1440">Daily</option>
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="setting-group">
+                        <h3>Display</h3>
+                        <label class="setting-item">
+                            <input type="checkbox" id="show-arabic" checked>
+                            <span class="checkmark"></span>
+                            Show Arabic text
+                        </label>
+                        
+                        <label class="setting-item">
+                            <input type="checkbox" id="show-translation" checked>
+                            <span class="checkmark"></span>
+                            Show English translation
+                        </label>
+                    </div>
+
+                    <div class="setting-group">
+                        <button class="options-button" id="open-options">
+                            Open Advanced Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>May Allah grant you peace and tranquility</p>
+        </footer>
+    </div>
+
+    <script src="ai.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>

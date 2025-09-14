@@ -1,0 +1,664 @@
+/* styles.css - Elegant and tranquil design for Sakinah Chrome Extension */
+
+/* ===== RESET AND BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    line-height: 1.6;
+    min-width: 380px;
+    min-height: 500px;
+    overflow-x: hidden;
+}
+
+/* ===== CONTAINER AND LAYOUT ===== */
+.container {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px 20px 0 0;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== HEADER STYLES ===== */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+@keyframes gentle-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.3; }
+    50% { transform: scale(1.1); opacity: 0.1; }
+}
+
+.logo {
+    margin-bottom: 5px;
+    font-weight: 300;
+    position: relative;
+    z-index: 2;
+}
+
+.logo .arabic {
+    font-size: 28px;
+    font-weight: 400;
+    margin-right: 10px;
+    font-family: 'Traditional Arabic', 'Noto Sans Arabic', serif;
+}
+
+.logo .english {
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.subtitle {
+    font-size: 13px;
+    opacity: 0.9;
+    font-weight: 300;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===== TAB NAVIGATION ===== */
+.tabs {
+    display: flex;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    position: relative;
+}
+
+.tab-button {
+    flex: 1;
+    padding: 15px 10px;
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.tab-button:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.tab-button.active {
+    color: #667eea;
+    background: white;
+}
+
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    border-radius: 2px 2px 0 0;
+}
+
+.tab-icon {
+    font-size: 16px;
+    margin-bottom: 2px;
+}
+
+/* ===== CONTENT AREAS ===== */
+.content {
+    flex: 1;
+    padding: 0;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.tab-content {
+    display: none;
+    padding: 20px;
+    flex: 1;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.tab-content.active {
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== AYAH DISPLAY STYLES ===== */
+.ayah-container {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-left: 4px solid #667eea;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.ayah-container::before {
+    content: '❝';
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 40px;
+    color: rgba(102, 126, 234, 0.1);
+    font-family: serif;
+}
+
+.ayah-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 150px;
+    color: #6c757d;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #e9ecef;
+    border-top: 3px solid #667eea;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.ayah-arabic {
+    font-size: 20px;
+    line-height: 1.8;
+    text-align: right;
+    direction: rtl;
+    margin-bottom: 15px;
+    color: #2c3e50;
+    font-family: 'Traditional Arabic', 'Noto Sans Arabic', serif;
+    font-weight: 400;
+}
+
+.ayah-translation {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #495057;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.ayah-reference {
+    font-size: 13px;
+    color: #6c757d;
+    text-align: right;
+    font-weight: 500;
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+}
+
+/* ===== BUTTON STYLES ===== */
+.refresh-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 0 auto;
+    min-width: 120px;
+}
+
+.refresh-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.refresh-button:active {
+    transform: translateY(0);
+}
+
+/* ===== AI GUIDE STYLES ===== */
+.ai-guide-container h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.guide-instruction {
+    color: #6c757d;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+#emotional-state {
+    width: 100%;
+    min-height: 100px;
+    padding: 15px;
+    border: 2px solid #e9ecef;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+    transition: border-color 0.3s ease;
+    background: #fafafa;
+}
+
+#emotional-state:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.char-count {
+    text-align: right;
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 15px;
+}
+
+.guide-button {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 auto 20px;
+    display: block;
+    min-width: 140px;
+}
+
+.guide-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.guide-button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.ai-result {
+    background: #e8f5e8;
+    border-radius: 15px;
+    padding: 20px;
+    border-left: 4px solid #28a745;
+    margin-top: 20px;
+}
+
+.suggested-ayah h4 {
+    color: #155724;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.ai-explanation {
+    background: rgba(40, 167, 69, 0.1);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #155724;
+    border-left: 3px solid #28a745;
+}
+
+/* ===== SETTINGS STYLES ===== */
+.settings-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setting-group {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e9ecef;
+}
+
+.setting-group h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.setting-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #495057;
+    cursor: pointer;
+    position: relative;
+}
+
+.setting-item:last-child {
+    margin-bottom: 0;
+}
+
+.setting-label {
+    min-width: 80px;
+    font-weight: 500;
+    margin-right: 10px;
+}
+
+/* Custom checkbox styles */
+.setting-item input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #6c757d;
+    border-radius: 4px;
+    margin-right: 10px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.setting-item input[type="checkbox"]:checked {
+    background: #667eea;
+    border-color: #667eea;
+}
+
+.setting-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.checkmark {
+    display: none; /* We're using the pseudo-element instead */
+}
+
+/* Select dropdown styles */
+select {
+    padding: 8px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 14px;
+    background: white;
+    color: #495057;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+    min-width: 120px;
+}
+
+select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.notification-frequency {
+    margin-top: 10px;
+    padding-left: 28px;
+}
+
+.options-button {
+    background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+    display: block;
+}
+
+.options-button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(108, 117, 125, 0.3);
+}
+
+/* ===== FOOTER STYLES ===== */
+.footer {
+    background: #f8f9fa;
+    padding: 15px 20px;
+    text-align: center;
+    border-top: 1px solid #e9ecef;
+    margin-top: auto;
+}
+
+.footer p {
+    font-size: 12px;
+    color: #6c757d;
+    font-style: italic;
+    margin: 0;
+}
+
+/* ===== ERROR STYLES ===== */
+.error {
+    color: #dc3545;
+    text-align: center;
+    padding: 20px;
+}
+
+.error p {
+    margin-bottom: 10px;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 400px) {
+    .container {
+        border-radius: 0;
+        min-height: 100vh;
+    }
+    
+    .tab-button {
+        font-size: 11px;
+        padding: 12px 8px;
+    }
+    
+    .tab-icon {
+        font-size: 14px;
+    }
+    
+    .ayah-arabic {
+        font-size: 18px;
+    }
+    
+    .ayah-translation {
+        font-size: 15px;
+    }
+}
+
+/* ===== ACCESSIBILITY ===== */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .tab-button.active {
+        background: #000;
+        color: #fff;
+    }
+    
+    .ayah-container {
+        border-left-width: 6px;
+    }
+}
+
+/* ===== ADDITIONAL OPTION PAGE STYLES ===== */
+.secondary-button {
+    background: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    padding: 8px 16px;
+    border-radius: 15px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin: 0 5px 10px 0;
+}
+
+.secondary-button:hover {
+    background: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* Dark mode support (future enhancement) */
+@media (prefers-color-scheme: dark) {
+    /* Dark mode styles would go here if needed */
+}
+
+/* ===== LOADING STATES ===== */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.slide-up {
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== MICRO-INTERACTIONS ===== */
+.tab-button, .refresh-button, .guide-button, .options-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.tab-button::before, .refresh-button::before, .guide-button::before, .options-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: width 0.6s, height 0.6s;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+.tab-button:active::before, .refresh-button:active::before, .guide-button:active::before, .options-button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* ===== AI STATUS INDICATOR ===== */
+.ai-status {
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-top: 8px;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.ai-status.online {
+    background: linear-gradient(135deg, #4CAF50, #81C784);
+    color: white;
+}
+
+.ai-status.offline {
+    background: linear-gradient(135deg, #FF9800, #FFB74D);
+    color: white;
+}
+
+.ai-status.checking {
+    background: linear-gradient(135deg, #2196F3, #64B5F6);
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.setting-note {
+    margin-top: 4px;
+    margin-left: 24px;
+    color: #666;
+}
+
+.setting-note small {
+    font-size: 11px;
+    line-height: 1.4;
+}

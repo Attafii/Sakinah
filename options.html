@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakinah - Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .options-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .options-header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 20px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        
+        .section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+        
+        .custom-times {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .time-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .time-input input[type="time"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .add-time-btn, .remove-time-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .add-time-btn {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .remove-time-btn {
+            background: #f44336;
+            color: white;
+        }
+        
+        .save-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            min-width: 150px;
+        }
+        
+        .save-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .success-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="options-container">
+        <header class="options-header">
+            <h1>
+                <span class="arabic">سكينة</span>
+                <span class="english">Sakinah Settings</span>
+            </h1>
+            <p>Configure your spiritual companion</p>
+        </header>
+
+        <main>
+            <!-- Notification Settings -->
+            <section class="section">
+                <h3>📅 Notification Schedule</h3>
+                
+                <label class="setting-item">
+                    <input type="checkbox" id="enable-notifications">
+                    <span class="checkmark"></span>
+                    Enable automatic notifications
+                </label>
+
+                <div id="notification-options" style="display: none;">
+                    <div class="setting-group">
+                        <label class="setting-item">
+                            <span class="setting-label">Notification Type:</span>
+                            <select id="notification-type">
+                                <option value="interval">Regular intervals</option>
+                                <option value="custom">Custom times</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div id="interval-settings">
+                        <label class="setting-item">
+                            <span class="setting-label">Frequency:</span>
+                            <select id="notification-interval">
+                                <option value="15">Every 15 minutes</option>
+                                <option value="30">Every 30 minutes</option>
+                                <option value="60" selected>Every hour</option>
+                                <option value="120">Every 2 hours</option>
+                                <option value="180">Every 3 hours</option>
+                                <option value="360">Every 6 hours</option>
+                                <option value="720">Every 12 hours</option>
+                                <option value="1440">Daily</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <div id="custom-times-settings">
+                        <h4>Custom Notification Times</h4>
+                        <div class="custom-times" id="custom-times-container">
+                            <!-- Custom times will be added here -->
+                        </div>
+                        <button class="add-time-btn" id="add-custom-time">+ Add Time</button>
+                    </div>
+
+                    <div class="setting-group">
+                        <label class="setting-item">
+                            <span class="setting-label">Quiet Hours:</span>
+                            <div style="display: flex; gap: 10px; align-items: center;">
+                                <input type="time" id="quiet-start" value="22:00">
+                                <span>to</span>
+                                <input type="time" id="quiet-end" value="07:00">
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Display Settings -->
+            <section class="section">
+                <h3>🎨 Display Preferences</h3>
+                
+                <label class="setting-item">
+                    <input type="checkbox" id="show-arabic-text" checked>
+                    <span class="checkmark"></span>
+                    Show Arabic text
+                </label>
+
+                <label class="setting-item">
+                    <input type="checkbox" id="show-english-translation" checked>
+                    <span class="checkmark"></span>
+                    Show English translation
+                </label>
+
+                <label class="setting-item">
+                    <input type="checkbox" id="show-surah-info" checked>
+                    <span class="checkmark"></span>
+                    Show Surah and Ayah reference
+                </label>
+
+                <label class="setting-item">
+                    <span class="setting-label">Font Size:</span>
+                    <select id="font-size">
+                        <option value="small">Small</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="large">Large</option>
+                        <option value="extra-large">Extra Large</option>
+                    </select>
+                </label>
+            </section>
+
+            <!-- AI Guide Settings -->
+            <section class="section">
+                <h3>🤲 AI Guide Preferences</h3>
+                
+                <label class="setting-item">
+                    <input type="checkbox" id="use-groq-api" checked>
+                    <span class="checkmark"></span>
+                    Use advanced AI analysis (Groq API)
+                </label>
+
+                <div class="setting-note">
+                    <small>⚡ Enhanced emotion analysis with more accurate Ayah suggestions. Falls back to offline mode if unavailable.</small>
+                </div>
+                
+                <label class="setting-item">
+                    <input type="checkbox" id="ai-detailed-explanations" checked>
+                    <span class="checkmark"></span>
+                    Show detailed explanations
+                </label>
+
+                <label class="setting-item">
+                    <input type="checkbox" id="ai-context-history">
+                    <span class="checkmark"></span>
+                    Remember previous contexts for better suggestions
+                </label>
+
+                <label class="setting-item">
+                    <span class="setting-label">Response Style:</span>
+                    <select id="ai-response-style">
+                        <option value="concise">Concise</option>
+                        <option value="detailed" selected>Detailed</option>
+                        <option value="scholarly">Scholarly</option>
+                    </select>
+                </label>
+
+                <div class="ai-status" id="ai-status">
+                    <small>🔄 Checking AI service status...</small>
+                </div>
+            </section>
+
+            <!-- Data & Privacy -->
+            <section class="section">
+                <h3>🔒 Data & Privacy</h3>
+                
+                <label class="setting-item">
+                    <input type="checkbox" id="offline-mode" checked>
+                    <span class="checkmark"></span>
+                    Use offline mode (all data stored locally)
+                </label>
+
+                <label class="setting-item">
+                    <input type="checkbox" id="anonymous-usage">
+                    <span class="checkmark"></span>
+                    Allow anonymous usage statistics
+                </label>
+
+                <div class="setting-group">
+                    <button class="secondary-button" id="export-settings">Export Settings</button>
+                    <button class="secondary-button" id="import-settings">Import Settings</button>
+                    <button class="secondary-button" id="reset-settings">Reset to Defaults</button>
+                </div>
+            </section>
+
+            <button class="save-button" id="save-settings">Save All Settings</button>
+            <div class="success-message" id="success-message">
+                Settings saved successfully! ✅
+            </div>
+        </main>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+</html>
