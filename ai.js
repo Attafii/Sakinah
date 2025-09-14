@@ -2,7 +2,7 @@
 
 class AIGuide {
     constructor() {
-        this.groqApiKey = '[REDACTED_GROQ_KEY]';
+        // Groq API key must not be hardcoded. It will be read from chrome.storage.sync at runtime.
         this.groqEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
         this.useGroqAPI = true; // Can be toggled in settings
         
@@ -166,7 +166,7 @@ class AIGuide {
             // Check if user wants to use Groq API and if available
             const settings = await this.getSettings();
             
-            if (settings.useGroqAPI && this.groqApiKey) {
+            if (settings.useGroqAPI && settings.groqApiKey) {
                 try {
                     const groqResult = await this.findAyahWithGroq(emotionalInput, ayahDatabase);
                     if (groqResult) {
@@ -190,11 +190,16 @@ class AIGuide {
     async findAyahWithGroq(emotionalInput, ayahDatabase) {
         try {
             const prompt = this.buildGroqPrompt(emotionalInput, ayahDatabase);
-            
+            // Read the API key from secure storage at runtime
+            const stored = await chrome.storage.sync.get({ groqApiKey: '' });
+            const apiKey = stored.groqApiKey;
+
+            if (!apiKey) throw new Error('Groq API key not configured');
+
             const response = await fetch(this.groqEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${this.groqApiKey}`,
+                    'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({

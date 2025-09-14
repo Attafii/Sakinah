@@ -51,6 +51,19 @@ class SakinahOptions {
         document.getElementById('use-groq-api').addEventListener('change', () => {
             this.checkAIStatus();
         });
+
+        // Save Groq API key
+        document.getElementById('save-groq-key').addEventListener('click', async () => {
+            const keyInput = document.getElementById('groq-api-key').value.trim();
+            try {
+                await chrome.storage.sync.set({ groqApiKey: keyInput });
+                this.showSuccessMessage();
+                this.checkAIStatus();
+            } catch (err) {
+                console.error('Error saving Groq API key:', err);
+                alert('Failed to save API key.');
+            }
+        });
     }
 
     async loadSettings() {
@@ -75,6 +88,7 @@ class SakinahOptions {
                 aiContextHistory: false,
                 aiResponseStyle: 'detailed',
                 useGroqAPI: true,
+                groqApiKey: '',
                 
                 // Privacy settings
                 offlineMode: true,
@@ -99,6 +113,7 @@ class SakinahOptions {
             document.getElementById('ai-context-history').checked = settings.aiContextHistory;
             document.getElementById('ai-response-style').value = settings.aiResponseStyle;
             document.getElementById('use-groq-api').checked = settings.useGroqAPI;
+            document.getElementById('groq-api-key').value = settings.groqApiKey || '';
 
             // Load privacy settings
             document.getElementById('offline-mode').checked = settings.offlineMode;
@@ -195,6 +210,7 @@ class SakinahOptions {
                 aiContextHistory: document.getElementById('ai-context-history').checked,
                 aiResponseStyle: document.getElementById('ai-response-style').value,
                 useGroqAPI: document.getElementById('use-groq-api').checked,
+                groqApiKey: document.getElementById('groq-api-key').value.trim(),
                 
                 // Privacy settings
                 offlineMode: document.getElementById('offline-mode').checked,
@@ -298,16 +314,24 @@ class SakinahOptions {
         statusElement.className = 'ai-status checking';
 
         try {
-            // Test Groq API connection
+            // Check whether a Groq API key is stored, and perform a minimal authenticated request if available
+            const stored = await chrome.storage.sync.get({ groqApiKey: '' });
+            const apiKey = stored.groqApiKey;
+
+            if (!apiKey) {
+                throw new Error('No Groq API key configured');
+            }
+
+            // Minimal test request to validate the key (small token usage)
             const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer [REDACTED_GROQ_KEY]',
+                    'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
                     model: 'llama-3.1-70b-versatile',
-                    messages: [{ role: 'user', content: 'test' }],
+                    messages: [{ role: 'user', content: 'ping' }],
                     max_tokens: 1
                 })
             });
