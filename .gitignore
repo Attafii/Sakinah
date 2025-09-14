@@ -1,0 +1,36 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.production
+.env.staging
+secrets.json
+config.json
+api-keys.txt
+
+# Extension development
+*.crx
+*.pem
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+debug.log
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
