@@ -21,6 +21,86 @@
       "emotions": ["gratitude", "humility", "peace"]
     },
     {
+      "id": 111,
+      "surah": "Al-An'am",
+      "surahNumber": 6,
+      "ayahNumber": 141,
+      "arabic": "وَهُوَ الَّذِيٓ أَنبَتَ مَعَكُمْ الْبَהِيمَةَ لِتَأْكُلُوا مِمَّا فَرَضَ عَلَيْكُمْ",
+      "translation": "And He it is Who produces livestock for you; you have in them warm clothing and numerous benefits, and from them you eat.",
+      "theme": "provision, sustenance, gratitude",
+      "emotions": ["grateful", "content", "provided"]
+    },
+    {
+      "id": 112,
+      "surah": "Ar-Ra'd",
+      "surahNumber": 13,
+      "ayahNumber": 28,
+      "arabic": "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
+      "translation": "Unquestionably, by the remembrance of Allah hearts are assured.",
+      "theme": "remembrance, peace, tranquility",
+      "emotions": ["peaceful", "calm", "reassured"]
+    },
+    {
+      "id": 113,
+      "surah": "Al-Hadid",
+      "surahNumber": 57,
+      "ayahNumber": 20,
+      "arabic": "اعْلَمُوا أَنَّمَا الْحَيَاةُ الدُّنْيَا لَعِبٌ وَلَهْوٌ",
+      "translation": "Know that the life of this world is but play and amusement.",
+      "theme": "perspective, detachment, reflection",
+      "emotions": ["reflective", "content", "detached"]
+    },
+    {
+      "id": 114,
+      "surah": "Al-Mu'minun",
+      "surahNumber": 23,
+      "ayahNumber": 1,
+      "arabic": "قَدْ أَفْلَحَ الْمُؤْمِنُونَ",
+      "translation": "Certainly will the believers have succeeded.",
+      "theme": "success, faith, reassurance",
+      "emotions": ["successful", "joyful", "grateful"]
+    },
+    {
+      "id": 115,
+      "surah": "Al-Hashr",
+      "surahNumber": 59,
+      "ayahNumber": 21,
+      "arabic": "لَوْ أَنزَلْنَا هَذَا الْقُرْآنَ عَلَى جَبَلٍ لَرَأَيْتَهُ خَاشِعًا مُتَصَدِّعًا",
+      "translation": "Had We sent down this Qur'an on a mountain, you would have seen it humbled and coming apart from fear of Allah.",
+      "theme": "awe, humility, reverence",
+      "emotions": ["awe", "humble", "reflective"]
+    },
+    {
+      "id": 116,
+      "surah": "Ar-Rahman",
+      "surahNumber": 55,
+      "ayahNumber": 13,
+      "arabic": "فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ",
+      "translation": "So which of the favors of your Lord would you deny?",
+      "theme": "gratitude, favors, reflection",
+      "emotions": ["thankful", "grateful", "mindful"]
+    },
+    {
+      "id": 117,
+      "surah": "Az-Zukhruf",
+      "surahNumber": 43,
+      "ayahNumber": 89,
+      "arabic": "وَهُوَ الَّذِي أَنشَأَكُمْ فِى أَرْجُلِكُمْ وَجَعَلَكُمْ سُبَاتًا",
+      "translation": "And He it is Who created you in stages and made your sleep for rest.",
+      "theme": "rest, creation, mercy",
+      "emotions": ["rested", "content", "grateful"]
+    },
+    {
+      "id": 118,
+      "surah": "Al-Mulk",
+      "surahNumber": 67,
+      "ayahNumber": 15,
+      "arabic": "هُوَ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ ذَلُولًا",
+      "translation": "It is He who made the earth tame for you - so walk among its slopes and eat of His provision.",
+      "theme": "provision, travel, sustenance",
+      "emotions": ["provided", "grateful", "content"]
+    },
+    {
       "id": 3,
       "surah": "Al-Baqarah",
       "surahNumber": 2,
@@ -999,6 +1079,106 @@
       "translation": "O you who have believed, whoever of you should revert from his religion - Allah will bring forth a people He will love and who will love Him.",
       "theme": "divine love, mutual love, steadfastness in faith",
       "emotions": ["seeking divine love", "steadfast in faith", "mutual love with Allah"]
+    },
+    {
+      "id": 101,
+      "surah": "Yunus",
+      "surahNumber": 10,
+      "ayahNumber": 58,
+      "arabic": "قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا ۖ هَٰذَا خَيْرٌ مِّمَّا يَجْمَعُونَ",
+      "translation": "Say, 'In the bounty of Allah and in His mercy — in that let them rejoice; that is better than what they accumulate.'",
+      "theme": "joy, mercy, gratitude",
+      "emotions": ["happy", "rejoicing", "grateful", "joyful"]
+    },
+    {
+      "id": 102,
+      "surah": "Ad-Duha",
+      "surahNumber": 93,
+      "ayahNumber": 5,
+      "arabic": "وَسَيُؤْتِيكَ رَبُّكَ فَتَرْضَىٰ",
+      "translation": "And your Lord is going to give you, and you will be satisfied.",
+      "theme": "comfort, provision, satisfaction",
+      "emotions": ["hopeful", "content", "satisfied", "happy"]
+    },
+    {
+      "id": 103,
+      "surah": "Al-Fath",
+      "surahNumber": 48,
+      "ayahNumber": 1,
+      "arabic": "إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا",
+      "translation": "Indeed, We have given you a clear conquest.",
+      "theme": "victory, success, celebration",
+      "emotions": ["joyful", "victorious", "celebration", "grateful"]
+    },
+    {
+      "id": 104,
+      "surah": "Ar-Rum",
+      "surahNumber": 30,
+      "ayahNumber": 21,
+      "arabic": "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا",
+      "translation": "And of His signs is that He created for you from yourselves mates that you may find tranquility in them.",
+      "theme": "love, family, tranquility",
+      "emotions": ["content", "blessed", "love", "gratitude"]
+    },
+    {
+      "id": 105,
+      "surah": "Al-Baqarah",
+      "surahNumber": 2,
+      "ayahNumber": 201,
+      "arabic": "وَمِنْهُم مَّن يَقُولُ رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً",
+      "translation": "And among them are those who say, 'Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good.'",
+      "theme": "supplication, well-being, balanced life",
+      "emotions": ["hopeful", "seeking good", "content", "happy"]
+    },
+    {
+      "id": 106,
+      "surah": "An-Nahl",
+      "surahNumber": 16,
+      "ayahNumber": 114,
+      "arabic": "فَكُلُوا مِمَّا رَزَقَكُمُ اللَّهُ حَلَالًا طَيِّبًا",
+      "translation": "So eat of what Allah has provided for you [that is] lawful and good.",
+      "theme": "provision, gratitude, lawful bounty",
+      "emotions": ["content", "grateful", "blessed"]
+    },
+    {
+      "id": 107,
+      "surah": "Al-Kahf",
+      "surahNumber": 18,
+      "ayahNumber": 10,
+      "arabic": "إِذْ أَوَى الْفِتْيَةُ إِلَى الْكَهْفِ فَقَالُوا رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
+      "translation": "When the youths retreated to the cave and said, 'Our Lord, grant us mercy from Yourself and prepare for us from our affair right guidance.'",
+      "theme": "protection, mercy, guidance",
+      "emotions": ["hopeful", "protected", "grateful"]
+    },
+    {
+      "id": 108,
+      "surah": "Al-Fajr",
+      "surahNumber": 89,
+      "ayahNumber": 27,
+      "arabic": "يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ",
+      "translation": "O reassured soul.",
+      "theme": "peace, reassurance, contentment",
+      "emotions": ["content", "peaceful", "happy"]
+    },
+    {
+      "id": 109,
+      "surah": "Ash-Sharh",
+      "surahNumber": 94,
+      "ayahNumber": 6,
+      "arabic": "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا",
+      "translation": "For indeed, with hardship comes ease.",
+      "theme": "comfort, ease after hardship, hope",
+      "emotions": ["relieved", "hopeful", "grateful"]
+    },
+    {
+      "id": 110,
+      "surah": "Ar-Rum",
+      "surahNumber": 30,
+      "ayahNumber": 21,
+      "arabic": "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا",
+      "translation": "And of His signs is that He created for you from yourselves mates that you may find tranquility in them.",
+      "theme": "love, family, tranquility",
+      "emotions": ["blessed", "content", "love"]
     }
   ]
 }

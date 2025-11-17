@@ -29,60 +29,64 @@ class SakinahPopup {
     // Setup all event listeners
     setupEventListeners() {
         // Tab switching
-        document.querySelectorAll('.tab-button').forEach(button => {
+        const tabButtons = document.querySelectorAll('.tab-button') || [];
+        tabButtons.forEach(button => {
+            if (!button) return;
             button.addEventListener('click', (e) => {
-                this.switchTab(e.target.dataset.tab);
+                const tab = e.target && e.target.dataset ? e.target.dataset.tab : null;
+                if (tab) this.switchTab(tab);
             });
         });
 
         // Random Ayah refresh
-        document.getElementById('refresh-ayah').addEventListener('click', () => {
-            this.showRandomAyah();
-        });
+        const refreshBtn = document.getElementById('refresh-ayah');
+        if (refreshBtn) refreshBtn.addEventListener('click', () => this.showRandomAyah());
 
         // AI Guide functionality
-        document.getElementById('get-guidance').addEventListener('click', () => {
-            this.getAIGuidance();
-        });
+        const guidanceBtn = document.getElementById('get-guidance');
+        if (guidanceBtn) guidanceBtn.addEventListener('click', () => this.getAIGuidance());
 
         // Character count for textarea
         const textarea = document.getElementById('emotional-state');
         const charCount = document.getElementById('char-count');
-        textarea.addEventListener('input', () => {
-            charCount.textContent = textarea.value.length;
-        });
+        if (textarea && charCount) {
+            textarea.addEventListener('input', () => {
+                charCount.textContent = textarea.value.length;
+            });
+        }
 
         // Settings
-        document.getElementById('notifications-enabled').addEventListener('change', (e) => {
-            this.toggleNotifications(e.target.checked);
-        });
+        const notificationsEnabledEl = document.getElementById('notifications-enabled');
+        if (notificationsEnabledEl) notificationsEnabledEl.addEventListener('change', (e) => this.toggleNotifications(e.target.checked));
 
-        document.getElementById('notification-frequency').addEventListener('change', (e) => {
-            this.updateNotificationFrequency(e.target.value);
-        });
+        const notificationFreqEl = document.getElementById('notification-frequency');
+        if (notificationFreqEl) notificationFreqEl.addEventListener('change', (e) => this.updateNotificationFrequency(e.target.value));
 
-        document.getElementById('show-arabic').addEventListener('change', (e) => {
-            this.updateDisplaySetting('showArabic', e.target.checked);
-        });
+        const showArabicEl = document.getElementById('show-arabic');
+        if (showArabicEl) showArabicEl.addEventListener('change', (e) => this.updateDisplaySetting('showArabic', e.target.checked));
 
-        document.getElementById('show-translation').addEventListener('change', (e) => {
-            this.updateDisplaySetting('showTranslation', e.target.checked);
-        });
+        const showTranslationEl = document.getElementById('show-translation');
+        if (showTranslationEl) showTranslationEl.addEventListener('change', (e) => this.updateDisplaySetting('showTranslation', e.target.checked));
 
-        document.getElementById('open-options').addEventListener('click', () => {
-            chrome.runtime.openOptionsPage();
-        });
+        const openOptionsEl = document.getElementById('open-options');
+        if (openOptionsEl) openOptionsEl.addEventListener('click', () => chrome.runtime.openOptionsPage());
     }
 
     // Switch between tabs
     switchTab(tabName) {
         // Remove active class from all tabs and content
-        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+        const tabBtns = document.querySelectorAll('.tab-button') || [];
+        tabBtns.forEach(btn => { if (btn && btn.classList) btn.classList.remove('active'); });
+
+        const tabContents = document.querySelectorAll('.tab-content') || [];
+        tabContents.forEach(content => { if (content && content.classList) content.classList.remove('active'); });
 
         // Add active class to selected tab and content
-        document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
-        document.getElementById(`${tabName}-tab`).classList.add('active');
+        const selectedBtn = document.querySelector(`[data-tab="${tabName}"]`);
+        if (selectedBtn && selectedBtn.classList) selectedBtn.classList.add('active');
+
+        const selectedContent = document.getElementById(`${tabName}-tab`);
+        if (selectedContent && selectedContent.classList) selectedContent.classList.add('active');
 
         this.currentTab = tabName;
     }
@@ -109,13 +113,17 @@ class SakinahPopup {
     // Display an Ayah in the specified context
     displayAyah(ayah, context = 'random') {
         const prefix = context === 'ai' ? 'ai-' : '';
-        
-        document.getElementById(`${prefix}ayah-arabic`).textContent = ayah.arabic;
-        document.getElementById(`${prefix}ayah-translation`).textContent = ayah.translation;
-        document.getElementById(`${prefix}ayah-reference`).textContent = `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`;
+        const arabicEl = document.getElementById(`${prefix}ayah-arabic`);
+        const translationEl = document.getElementById(`${prefix}ayah-translation`);
+        const referenceEl = document.getElementById(`${prefix}ayah-reference`);
+
+        if (arabicEl) arabicEl.textContent = ayah.arabic || '';
+        if (translationEl) translationEl.textContent = ayah.translation || '';
+        if (referenceEl) referenceEl.textContent = `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`;
 
         if (context === 'random') {
-            document.getElementById('ayah-content').style.display = 'block';
+            const ayahContentEl = document.getElementById('ayah-content');
+            if (ayahContentEl) ayahContentEl.style.display = 'block';
         }
     }
 
@@ -139,12 +147,80 @@ class SakinahPopup {
                 this.displayAyah(guidanceResult.ayah, 'ai');
                 document.getElementById('ai-explanation').textContent = guidanceResult.explanation;
                 document.getElementById('ai-result').style.display = 'block';
+
+                // Show detected emotions as clickable chips if provided
+                const detectedContainer = document.getElementById('ai-detected');
+                const chipsRoot = document.getElementById('ai-detected-chips');
+                chipsRoot.innerHTML = '';
+
+                if (guidanceResult.detectedEmotions && guidanceResult.detectedEmotions.length > 0) {
+                    guidanceResult.detectedEmotions.forEach(item => {
+                        const emotion = item.emotion || item;
+                        const confidence = (item.confidence !== undefined) ? item.confidence : null;
+
+                        const chip = document.createElement('button');
+                        chip.className = 'emotion-chip';
+                        chip.style.padding = '6px 8px';
+                        chip.style.border = 'none';
+                        chip.style.borderRadius = '14px';
+                        chip.style.background = '#e6f2ff';
+                        chip.style.color = '#034e7b';
+                        chip.style.cursor = 'pointer';
+                        chip.style.fontSize = '0.85em';
+                        chip.textContent = confidence ? `${emotion} (${(confidence).toFixed(2)})` : emotion;
+                        chip.dataset.emotion = emotion;
+
+                        chip.addEventListener('click', () => {
+                            this.findByEmotion(emotion);
+                        });
+
+                        chipsRoot.appendChild(chip);
+                    });
+
+                    detectedContainer.style.display = 'block';
+                } else {
+                    detectedContainer.style.display = 'none';
+                }
             } else {
                 alert('Unable to find relevant guidance. Please try rephrasing your emotional state.');
             }
         } catch (error) {
             console.error('Error getting AI guidance:', error);
             alert('Error getting guidance. Please try again.');
+        } finally {
+            document.getElementById('get-guidance').disabled = false;
+            document.getElementById('get-guidance').textContent = 'Find Guidance';
+        }
+    }
+
+    // Find guidance specifically for a single emotion keyword (used when clicking a detected emotion)
+    async findByEmotion(emotionKeyword) {
+        try {
+            document.getElementById('get-guidance').disabled = true;
+            document.getElementById('get-guidance').textContent = 'Finding guidance...';
+
+            const guidanceResult = await window.AIGuide.findRelevantAyah(emotionKeyword, this.ayahData.ayahs);
+
+            if (guidanceResult) {
+                this.displayAyah(guidanceResult.ayah, 'ai');
+                document.getElementById('ai-explanation').textContent = guidanceResult.explanation;
+                document.getElementById('ai-result').style.display = 'block';
+
+                // Update detected chips to highlight selected
+                const chipsRoot = document.getElementById('ai-detected-chips');
+                chipsRoot.querySelectorAll('button').forEach(btn => {
+                    if (btn.dataset.emotion === emotionKeyword) {
+                        btn.style.background = '#cfe9ff';
+                    } else {
+                        btn.style.background = '#e6f2ff';
+                    }
+                });
+            } else {
+                alert('No verse found for that emotion.');
+            }
+        } catch (err) {
+            console.error('Error finding by emotion:', err);
+            alert('Error finding guidance.');
         } finally {
             document.getElementById('get-guidance').disabled = false;
             document.getElementById('get-guidance').textContent = 'Find Guidance';
