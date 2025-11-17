@@ -34,6 +34,12 @@ class AIGuide {
             'grateful': ['grateful', 'thankful', 'blessed', 'appreciative'],
             'peaceful': ['peaceful', 'calm', 'serene', 'tranquil', 'content'],
             'hopeful': ['hopeful', 'optimistic', 'positive', 'looking forward'],
+            'happy': ['happy', 'joyful', 'joy', 'glad', 'delighted', 'cheerful', 'content', 'blessed'],
+            'joyful': ['joyful', 'overjoyed', 'elated', 'rejoicing', 'celebrating'],
+            'cheerful': ['cheerful', 'merry', 'lighthearted'],
+            'elated': ['elated', 'ecstatic', 'overjoyed', 'thrilled'],
+            'contented': ['contented', 'satisfied', 'content'],
+            'thankful': ['thankful', 'grateful', 'blessed', 'appreciative'],
             
             // Spiritual states
             'devoted': ['devoted', 'spiritual', 'religious', 'worship', 'pray'],
@@ -118,6 +124,15 @@ class AIGuide {
             'content': [44, 21, 7], // Peaceful soul, peace, tranquility
             'peaceful': [21, 44, 7], // Peace, reassured soul, tranquility
             
+            // Positive / happy mappings
+            'happy': [101, 64, 8, 102], // Yunus 10:58 (rejoice), Al-Kawthar (abundance), Ibrahim 14:7 (gratitude), Ad-Duha 93:5
+            'joyful': [103, 101, 53], // Al-Fath 48:1 (victory), Yunus 10:58, Al-Bayyinah 98:8 (reward)
+            'blessed': [64, 8, 104], // Al-Kawthar, Ibrahim 14:7, Ar-Rum 30:21 (family/blessing)
+            'cheerful': [101, 103, 108], // Yunus 10:58, Al-Fath 48:1, Al-Fajr 89:27
+            'elated': [103, 101, 109], // Victory, rejoice, ease after hardship
+            'contented': [108, 106, 102], // Reassured soul, provision, Ad-Duha
+            'thankful': [8, 64, 106], // Ibrahim 14:7, Al-Kawthar, An-Nahl 16:114
+
             // Hope and future
             'hopeful': [48, 8, 49], // Future is better, increase, ease
             'optimistic': [48, 8, 23], // Future better, increase, mercy
@@ -306,7 +321,8 @@ Consider:
                 const ayah = ayahDatabase.find(a => a.id === randomFallback);
                 return {
                     ayah: ayah,
-                    explanation: "Here's a comforting verse from the Qur'an that may bring you peace and strength."
+                    explanation: "Here's a comforting verse from the Qur'an that may bring you peace and strength.",
+                    detectedEmotions: emotions
                 };
             }
 
@@ -319,6 +335,7 @@ Consider:
             return {
                 ayah: selectedAyah.ayah,
                 explanation: explanation,
+                detectedEmotions: emotions,
                 source: 'offline'
             };
 
@@ -461,6 +478,7 @@ Consider:
     // Generate explanation for why this ayah was chosen
     generateExplanation(ayah, emotions, originalInput) {
         const primaryEmotion = emotions[0];
+        const secondaryEmotion = emotions[1];
         const explanations = {
             'anxious': `This verse reminds us that Allah is always near and brings peace to anxious hearts. When we remember Allah, our worries begin to fade.`,
             'stressed': `This ayah teaches us that Allah never burdens us beyond our capacity. Your current challenges are within your ability to handle with Allah's help.`,
@@ -475,10 +493,26 @@ Consider:
             'seeking': `This verse responds to your search for guidance. Allah hears those who call upon Him and provides direction to sincere seekers.`
         };
 
-        let explanation = explanations[primaryEmotion?.emotion];
-        
-        if (!explanation) {
-            explanation = `This verse from the Qur'an offers guidance and comfort for your current situation. Reflect on its meaning and let it bring peace to your heart.`;
+        // Add explanations for positive states
+        explanations['happy'] = `This verse celebrates the blessings and mercy of Allah. Reflect on gratitude and share joy with others while remembering the Source of your happiness.`;
+        explanations['joyful'] = `This verse points to moments of victory and celebration granted by Allah. Use it to reflect on gratitude and to remain humble and thankful.`;
+        explanations['blessed'] = `This ayah highlights the blessings Allah grants; it encourages thankfulness and recognition of the Good He bestows.`;
+        explanations['cheerful'] = `This verse can remind you to carry a light and grateful heart; be thankful for small joys.`;
+        explanations['elated'] = `This verse reflects moments of uplift and victory; remember to give thanks to Allah and seek humility.`;
+        explanations['contented'] = `This ayah speaks to inner contentment and satisfaction; reflect on your blessings and maintain gratitude.`;
+        explanations['thankful'] = `This verse reminds you that gratitude opens the door to more blessings; acknowledge and thank Allah.`;
+
+        // Start with primary explanation or a generic fallback
+        let explanation = explanations[primaryEmotion?.emotion] || `This verse from the Qur'an offers guidance and comfort for your current situation. Reflect on its meaning and let it bring peace to your heart.`;
+
+        // If there's a secondary emotion, blend a short phrase to acknowledge it
+        if (secondaryEmotion && secondaryEmotion.emotion && secondaryEmotion.emotion !== primaryEmotion.emotion) {
+            const secText = explanations[secondaryEmotion.emotion] || '';
+            if (secText) {
+                explanation += ` Also, this verse can speak to ${secondaryEmotion.emotion} as well — ${secText.split('.')[0]}.`;
+            } else {
+                explanation += ` It may also provide comfort regarding ${secondaryEmotion.emotion}.`;
+            }
         }
 
         // Add theme-specific context
@@ -489,9 +523,129 @@ Consider:
             }
         }
 
+        // Append detected keywords summary when available in originalInput length
+        if (originalInput && originalInput.length < 500) {
+            explanation += ` Take a moment to reflect and, if helpful, repeat the keywords you used as a brief prayer.`;
+        }
+
         return explanation;
+    }
+
+    // Provide a more detailed explanation / mini-tafsir for a given ayah
+    async explainAyah(ayah) {
+        try {
+            const settings = await this.getSettings();
+
+            // If Groq is enabled and API key exists, attempt a richer explanation
+            if (settings.useGroqAPI) {
+                try {
+                    const stored = await chrome.storage.sync.get({ groqApiKey: '' });
+                    const apiKey = stored.groqApiKey;
+                    if (apiKey) {
+                        return await this.explainAyahWithGroq(ayah, apiKey);
+                    }
+                } catch (err) {
+                    console.warn('AIGuide: Groq explainAyah failed, falling back to offline explanation', err);
+                }
+            }
+
+            // Offline detailed explanation (non-authoritative, reflective)
+            return this.generateOfflineDetailedExplanation(ayah);
+
+        } catch (error) {
+            console.error('Error in explainAyah:', error);
+            return 'An explanation could not be generated at this time.';
+        }
+    }
+
+    // Call Groq API to produce a detailed contextual explanation
+    async explainAyahWithGroq(ayah, apiKey) {
+        try {
+            const prompt = `Provide a careful, non-authoritative explanation of the following Quran verse. Include: 1) a plain-language summary of its meaning, 2) common contexts or situations where people reflect on this verse (avoid inventing historical claims), 3) practical reflections and applications today, and 4) a short suggested reflection/prayer. Format as plain text. Verse (translation): ${ayah.translation}`;
+
+            const response = await fetch(this.groqEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${apiKey}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    model: 'llama-3.1-70b-versatile',
+                    messages: [
+                        { role: 'system', content: 'You are a careful, humble Islamic guide. Provide non-authoritative, compassionate explanations and avoid inventing historical claims.' },
+                        { role: 'user', content: prompt }
+                    ],
+                    temperature: 0.6,
+                    max_tokens: 700
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Groq explain error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            const text = data.choices?.[0]?.message?.content || data.choices?.[0]?.text || '';
+            return text.trim();
+        } catch (error) {
+            console.error('AIGuide: explainAyahWithGroq error:', error);
+            throw error;
+        }
+    }
+
+    // Offline generator for a careful, reflective explanation
+    generateOfflineDetailedExplanation(ayah) {
+        const title = `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`;
+        const plain = ayah.translation || '';
+        const themes = ayah.theme ? ayah.theme.split(', ').map(t => t.trim()) : [];
+
+        let parts = [];
+
+        parts.push(`Verse: ${title}`);
+        parts.push(`Translation: ${plain}`);
+        parts.push('---');
+
+        // Plain-language summary
+        parts.push('Plain summary:');
+        if (themes.length > 0) {
+            parts.push(`This verse touches on ${themes.slice(0,3).join(', ')} and offers guidance related to those themes.`);
+        } else {
+            parts.push('This verse offers guidance and reflection from the Qur\'an appropriate for many spiritual situations.');
+        }
+
+        // Context & situations (non-assertive)
+        parts.push('\nContexts & occasions to reflect on this verse:');
+        parts.push('Scholars and readers commonly reflect on this verse when confronting challenges such as worry, gratitude, decision-making, or seeking comfort. Use this verse as a lens to examine your current situation rather than as a strict historical claim.');
+
+        // Why it exists / purpose (careful phrasing)
+        parts.push('\nPurpose & meaning:');
+        parts.push('The verse offers spiritual orientation: it either comforts, admonishes, or reminds the reader of a divine attribute or an ethical teaching. Its presence in the Qur\'an supports sustained reflection and righteous behaviour.');
+
+        // Practical applications
+        parts.push('\nPractical reflections & application:');
+        parts.push('1) Read the verse slowly and repeat its keywords as a short prayer.');
+        parts.push('2) Consider one concrete action you can take today that aligns with the verse\'s teaching.');
+        parts.push('3) Use the verse as a prompt for a short dua or dhikr focused on the theme above.');
+
+        // Reflection prompts
+        parts.push('\nReflection prompts:');
+        parts.push('- What emotion does this verse resonate with in me?');
+        parts.push('- How could I translate this guidance into a small, achievable action?');
+        parts.push('- Which Allah attribute does this verse point me towards?');
+
+        // Caution about authority
+        parts.push('\nNote: This is a reflective, non-authoritative explanation intended for personal growth. For scholarly tafsir or historical details, consult trusted classical commentaries and qualified scholars.');
+
+        // Short suggested practice
+        parts.push('\nSuggested short practice:');
+        parts.push('Pause for a minute, recite the verse slowly (or its translation), then make a short dua asking for clarity and the strength to act on its guidance.');
+
+        return parts.join('\n');
     }
 }
 
-// Create global instance
-window.AIGuide = new AIGuide();
+// Create global instance in whichever global scope is available (window for popup, self for service worker)
+(() => {
+    const globalScope = (typeof window !== 'undefined') ? window : (typeof self !== 'undefined') ? self : this;
+    globalScope.AIGuide = new AIGuide();
+})();
