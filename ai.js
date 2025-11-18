@@ -541,11 +541,18 @@ Consider:
                 try {
                     const stored = await chrome.storage.sync.get({ groqApiKey: '' });
                     const apiKey = stored.groqApiKey;
-                    if (apiKey) {
-                        return await this.explainAyahWithGroq(ayah, apiKey);
+
+                    if (!apiKey) {
+                        // Clear, instructive placeholder for users without API access
+                        const placeholder = '[Detailed AI explanations are disabled — no API key configured]\n\n';
+                        return placeholder + this.generateOfflineDetailedExplanation(ayah);
                     }
+
+                    // If API key exists, attempt a richer explanation
+                    return await this.explainAyahWithGroq(ayah, apiKey);
                 } catch (err) {
                     console.warn('AIGuide: Groq explainAyah failed, falling back to offline explanation', err);
+                    return this.generateOfflineDetailedExplanation(ayah);
                 }
             }
 

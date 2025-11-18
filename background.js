@@ -362,7 +362,8 @@ class SakinahBackground {
             const notificationOptions = {
                 type: 'basic',
                 title: title,
-                message: message,
+                message: message || `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
+                iconUrl: chrome.runtime.getURL('icons/Tosca modern minimalist Islamic center logo .png'),
                 contextMessage: `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
                 priority: 1,
                 requireInteraction: false
@@ -427,7 +428,8 @@ class SakinahBackground {
             const notificationOptions = {
                 type: 'basic',
                 title: title,
-                message: message || 'A verse has been chosen for reflection today.',
+                message: message || `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
+                iconUrl: chrome.runtime.getURL('icons/Tosca modern minimalist Islamic center logo .png'),
                 contextMessage: `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
                 priority: 1
             };

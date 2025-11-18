@@ -23,10 +23,18 @@
                 <span class="tab-icon">📖</span>
                 Random Ayah
             </button>
+            <button class="tab-button" data-tab="ahadith">
+                <span class="tab-icon">🕋</span>
+                Ahadith
+            </button>
             <button class="tab-button" data-tab="ai-guide">
                 <span class="tab-icon">🤲</span>
                 AI Guide
             </button>
+                <button class="tab-button" data-tab="favorites">
+                    <span class="tab-icon">⭐</span>
+                    Favorites
+                </button>
             <button class="tab-button" data-tab="settings">
                 <span class="tab-icon">⚙️</span>
                 Settings
@@ -48,10 +56,13 @@
                         <div class="ayah-reference" id="ayah-reference"></div>
                     </div>
                 </div>
-                <button class="refresh-button" id="refresh-ayah">
+                <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+                    <button class="refresh-button" id="refresh-ayah" aria-label="New Ayah">
                     <span>🔄</span>
                     New Ayah
-                </button>
+                    </button>
+                    <button class="secondary-button" id="save-favorite" aria-label="Save Ayah to favorites">⭐ Save</button>
+                </div>
             </div>
 
             <!-- AI Guide Tab -->
@@ -89,6 +100,26 @@
                             <div class="ayah-reference" id="ai-ayah-reference"></div>
                             <div class="ai-explanation" id="ai-explanation"></div>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ahadith Tab -->
+            <div class="tab-content" id="ahadith-tab">
+                <div class="hadith-container">
+                    <div style="display:flex; gap:8px; align-items:center; margin-bottom:10px;">
+                        <input id="hadith-search" type="search" placeholder="Search Ahadith by keyword, tag, or source" style="flex:1; padding:8px; border-radius:6px; border:1px solid #ddd;" />
+                        <button id="hadith-prev" class="secondary-button" aria-label="Previous Hadith">◀ Prev</button>
+                        <button id="hadith-random" class="secondary-button" aria-label="Random Hadith">🎲 Random</button>
+                        <button id="hadith-next" class="secondary-button" aria-label="Next Hadith">Next ▶</button>
+                    </div>
+
+                    <div id="hadith-list" style="display:flex; flex-direction:column; gap:12px;">
+                        <!-- hadith cards will render here -->
+                    </div>
+
+                    <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+                        <button class="secondary-button" id="save-hadith-favorite">⭐ Save Hadith</button>
                     </div>
                 </div>
             </div>
@@ -137,9 +168,20 @@
                     </div>
 
                     <div class="setting-group">
-                        <button class="options-button" id="open-options">
-                            Open Advanced Settings
-                        </button>
+                        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                            <button class="options-button" id="open-options">
+                                Open Advanced Settings
+                            </button>
+                            <button class="options-button" id="test-notification">
+                                Test Notification
+                            </button>
+                            <button class="options-button" id="export-data">
+                                Export Data
+                            </button>
+                            <button class="options-button" id="help-button">
+                                Help
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
