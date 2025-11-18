@@ -12,6 +12,10 @@ class SakinahPopup {
         this.setupEventListeners();
         this.loadSettings();
         this.showRandomAyah();
+        this.loadFavorites();
+        // hadith state
+        this.hadithData = null;
+        this.currentHadithIndex = -1;
     }
 
     // Load Quran data from JSON file
@@ -70,6 +74,64 @@ class SakinahPopup {
 
         const openOptionsEl = document.getElementById('open-options');
         if (openOptionsEl) openOptionsEl.addEventListener('click', () => chrome.runtime.openOptionsPage());
+
+        // Test Notification button (sends a message to background to show a random ayah notification)
+        const testNotificationBtn = document.getElementById('test-notification');
+        if (testNotificationBtn) testNotificationBtn.addEventListener('click', () => {
+            try {
+                chrome.runtime.sendMessage({ action: 'showRandomAyah' }, (resp) => {
+                    // Optional feedback
+                    if (chrome.runtime.lastError) {
+                        console.warn('Test notification message error:', chrome.runtime.lastError.message);
+                        alert('Unable to send test notification message. Check background console for details.');
+                    } else {
+                        alert('Test notification requested. Check your notifications and background console.');
+                    }
+                });
+            } catch (err) {
+                console.error('Error requesting test notification:', err);
+                alert('Failed to request test notification.');
+            }
+        });
+
+        // Export Data placeholder (or real export of favorites)
+        const exportBtn = document.getElementById('export-data');
+        if (exportBtn) exportBtn.addEventListener('click', () => this.exportFavorites());
+
+        // Help placeholder
+        const helpBtn = document.getElementById('help-button');
+        if (helpBtn) helpBtn.addEventListener('click', () => alert('Help is coming soon — this will include usage tips and FAQs.'));
+
+        // Save favorite button (from Random Ayah view)
+        const saveFavBtn = document.getElementById('save-favorite');
+        if (saveFavBtn) saveFavBtn.addEventListener('click', () => {
+            if (this.currentTab === 'ahadith') {
+                this.saveCurrentHadithToFavorites();
+            } else {
+                this.saveCurrentAyahToFavorites();
+            }
+        });
+
+        // Save hadith favorite (specific button in hadith tab)
+        const saveHadithBtn = document.getElementById('save-hadith-favorite');
+        if (saveHadithBtn) saveHadithBtn.addEventListener('click', () => this.saveCurrentHadithToFavorites());
+
+        // Hadith search and navigation
+        const hadithSearch = document.getElementById('hadith-search');
+        if (hadithSearch) {
+            let debounce = null;
+            hadithSearch.addEventListener('input', (e) => {
+                if (debounce) clearTimeout(debounce);
+                debounce = setTimeout(() => this.searchHadiths(e.target.value.trim()), 250);
+            });
+        }
+
+        const prevBtn = document.getElementById('hadith-prev');
+        if (prevBtn) prevBtn.addEventListener('click', () => this.showPrevHadith());
+        const nextBtn = document.getElementById('hadith-next');
+        if (nextBtn) nextBtn.addEventListener('click', () => this.showNextHadith());
+        const rndBtn = document.getElementById('hadith-random');
+        if (rndBtn) rndBtn.addEventListener('click', () => this.showRandomHadith());
     }
 
     // Switch between tabs
@@ -89,6 +151,174 @@ class SakinahPopup {
         if (selectedContent && selectedContent.classList) selectedContent.classList.add('active');
 
         this.currentTab = tabName;
+        // If switching to hadith tab, ensure hadiths are loaded
+        if (tabName === 'ahadith') {
+            this.ensureHadithLoaded();
+        }
+    }
+
+    async ensureHadithLoaded() {
+        if (!this.hadithData) {
+            await this.loadAhadith();
+            this.showRandomHadith();
+        }
+    }
+
+    // Load Ahadith data
+    async loadAhadith() {
+        try {
+            const response = await fetch(chrome.runtime.getURL('ahadith.json'));
+            const data = await response.json();
+            this.hadithData = Array.isArray(data.hadiths) ? data.hadiths : [];
+            console.log('Hadith data loaded:', this.hadithData.length, 'entries');
+        } catch (err) {
+            console.error('Error loading hadiths:', err);
+            // show an inline message in hadith tab
+            const list = document.getElementById('hadith-list');
+            if (list) list.innerHTML = '<div style="color:#c00">Failed to load Ahadith data.</div>';
+        }
+    }
+
+    // Search hadiths (simple client-side search)
+    searchHadiths(query) {
+        if (!this.hadithData) return;
+        const q = query.toLowerCase();
+        const results = this.hadithData.filter(h => {
+            return (h.arabic_text && h.arabic_text.toLowerCase().includes(q)) ||
+                   (h.english_translation && h.english_translation.toLowerCase().includes(q)) ||
+                   (h.tags && h.tags.join(' ').toLowerCase().includes(q)) ||
+                   (h.source && h.source.toLowerCase().includes(q));
+        });
+        this.renderHadithList(results);
+    }
+
+    // Render a list of hadith cards
+    renderHadithList(list) {
+        const root = document.getElementById('hadith-list');
+        if (!root) return;
+        root.innerHTML = '';
+        if (!list || list.length === 0) {
+            root.innerHTML = '<div style="color:#666">No Ahadith found.</div>';
+            return;
+        }
+
+        list.forEach((h, idx) => {
+            const card = document.createElement('div');
+            card.className = 'hadith-card';
+            card.style.border = '1px solid #eee';
+            card.style.padding = '12px';
+            card.style.borderRadius = '8px';
+            card.style.background = '#fff';
+
+            card.innerHTML = `
+                <div style="font-size:1.05em; direction:rtl; font-family: 'Scheherazade', serif;">${h.arabic_text}</div>
+                <div style="margin-top:8px; font-size:0.95em;">${h.english_translation}</div>
+                <div style="margin-top:8px; color:#666; font-size:0.85em;">${h.source} • ${h.book || ''}</div>
+                <div style="margin-top:8px; display:flex; gap:8px;">
+                    <button class="secondary-button" data-idx="${idx}" data-action="open">Open</button>
+                    <button class="secondary-button" data-idx="${idx}" data-action="save">Save</button>
+                </div>
+            `;
+
+            // open action -> display full hadith at this index in the full dataset
+            card.querySelectorAll('button').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const action = btn.dataset.action;
+                    if (action === 'open') {
+                        // find index in overall hadithData
+                        const globalIndex = this.hadithData.indexOf(list[idx]);
+                        if (globalIndex >= 0) {
+                            this.currentHadithIndex = globalIndex;
+                            this.displayHadith(this.hadithData[this.currentHadithIndex]);
+                        }
+                    } else if (action === 'save') {
+                        // save this hadith
+                        const globalIndex = this.hadithData.indexOf(list[idx]);
+                        if (globalIndex >= 0) {
+                            this.currentHadithIndex = globalIndex;
+                            this.displayHadith(this.hadithData[this.currentHadithIndex]);
+                            this.saveCurrentHadithToFavorites();
+                        }
+                    }
+                });
+            });
+
+            root.appendChild(card);
+        });
+    }
+
+    // Show a random hadith
+    showRandomHadith() {
+        if (!this.hadithData || this.hadithData.length === 0) return;
+        const idx = Math.floor(Math.random() * this.hadithData.length);
+        this.currentHadithIndex = idx;
+        this.displayHadith(this.hadithData[idx]);
+    }
+
+    showPrevHadith() {
+        if (!this.hadithData || this.hadithData.length === 0) return;
+        this.currentHadithIndex = (this.currentHadithIndex <= 0) ? (this.hadithData.length - 1) : (this.currentHadithIndex - 1);
+        this.displayHadith(this.hadithData[this.currentHadithIndex]);
+    }
+
+    showNextHadith() {
+        if (!this.hadithData || this.hadithData.length === 0) return;
+        this.currentHadithIndex = (this.currentHadithIndex >= this.hadithData.length - 1) ? 0 : (this.currentHadithIndex + 1);
+        this.displayHadith(this.hadithData[this.currentHadithIndex]);
+    }
+
+    displayHadith(hadith) {
+        // When a hadith is displayed, also ensure it is shown in the hadith list area as a focused card
+        // For now, show a simple highlighted card at the top
+        const listRoot = document.getElementById('hadith-list');
+        if (!listRoot) return;
+
+        // create a full view
+        const full = document.createElement('div');
+        full.className = 'hadith-full';
+        full.style.padding = '12px';
+        full.style.border = '1px solid #ddd';
+        full.style.borderRadius = '8px';
+        full.innerHTML = `
+            <div style="direction:rtl; font-size:1.15em; font-family: 'Scheherazade', serif;">${hadith.arabic_text}</div>
+            <div style="margin-top:8px;">${hadith.english_translation}</div>
+            <div style="margin-top:8px; color:#666; font-size:0.85em;">${hadith.source} • ${hadith.book || ''}</div>
+        `;
+
+        // clear and show
+        listRoot.innerHTML = '';
+        listRoot.appendChild(full);
+
+        // track currentHadith for save
+        this.currentHadith = hadith;
+    }
+
+    // Save hadith to favorites
+    async saveCurrentHadithToFavorites() {
+        if (!this.currentHadith) {
+            alert('No Hadith selected to save.');
+            return;
+        }
+
+        try {
+            const storage = await chrome.storage.local.get({ favorites: [] });
+            const favorites = storage.favorites || [];
+
+            const exists = favorites.some(f => f.type === 'hadith' && f.hadith_id === this.currentHadith.hadith_id);
+            if (exists) {
+                alert('This Hadith is already in your favorites.');
+                return;
+            }
+
+            const entry = Object.assign({ type: 'hadith' }, this.currentHadith);
+            favorites.unshift(entry);
+            await chrome.storage.local.set({ favorites });
+            this.renderFavorites(favorites);
+            alert('Saved Hadith to favorites.');
+        } catch (err) {
+            console.error('Error saving hadith favorite:', err);
+            alert('Could not save hadith favorite.');
+        }
     }
 
     // Display a random Ayah
@@ -124,6 +354,205 @@ class SakinahPopup {
         if (context === 'random') {
             const ayahContentEl = document.getElementById('ayah-content');
             if (ayahContentEl) ayahContentEl.style.display = 'block';
+        }
+
+        // Track current ayah for actions like saving to favorites
+        this.currentAyah = ayah;
+    }
+
+    // Favorites management
+    async saveCurrentAyahToFavorites() {
+        if (!this.currentAyah) {
+            alert('No Ayah to save.');
+            return;
+        }
+
+        try {
+            const storage = await chrome.storage.local.get({ favorites: [] });
+            const favorites = storage.favorites || [];
+
+            // Avoid duplicates by id
+            const exists = favorites.some(f => f.id === this.currentAyah.id);
+            if (exists) {
+                alert('This Ayah is already in your favorites.');
+                return;
+            }
+
+            favorites.unshift(this.currentAyah);
+            await chrome.storage.local.set({ favorites });
+            this.renderFavorites(favorites);
+            alert('Saved to favorites.');
+        } catch (err) {
+            console.error('Error saving favorite:', err);
+            alert('Could not save favorite.');
+        }
+    }
+
+    async loadFavorites() {
+        try {
+            const storage = await chrome.storage.local.get({ favorites: [] });
+            const favorites = storage.favorites || [];
+            this.renderFavorites(favorites);
+        } catch (err) {
+            console.error('Error loading favorites:', err);
+        }
+    }
+
+    renderFavorites(favorites) {
+        // Ensure a favorites tab exists in the DOM; create if missing
+        let favTab = document.getElementById('favorites-tab');
+        if (!favTab) {
+            // create tab content dynamically
+            const main = document.querySelector('.content');
+            if (!main) return;
+            const div = document.createElement('div');
+            div.className = 'tab-content';
+            div.id = 'favorites-tab';
+            div.innerHTML = `
+                <div class="favorites-container">
+                    <h3>Your Favorites</h3>
+                    <div id="favorites-list" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;"></div>
+                    <div style="display:flex;gap:8px;margin-top:12px;">
+                        <button id="export-favorites" class="secondary-button">Export Favorites</button>
+                        <button id="clear-favorites" class="secondary-button">Clear Favorites</button>
+                    </div>
+                </div>
+            `;
+            main.appendChild(div);
+
+            // attach handlers for newly created buttons
+            setTimeout(() => {
+                const exp = document.getElementById('export-favorites');
+                if (exp) exp.addEventListener('click', () => this.exportFavorites());
+                const clear = document.getElementById('clear-favorites');
+                if (clear) clear.addEventListener('click', () => this.clearFavorites());
+            }, 50);
+            favTab = div;
+        }
+
+        const listRoot = document.getElementById('favorites-list');
+        if (!listRoot) return;
+        listRoot.innerHTML = '';
+
+        if (!favorites || favorites.length === 0) {
+            listRoot.innerHTML = '<div style="color:#666">No favorites yet. Save Ayahs you like for later reflection.</div>';
+            return;
+        }
+
+        favorites.forEach(ayah => {
+            const item = document.createElement('div');
+            item.className = 'ayah-container';
+            item.style.padding = '12px';
+            item.style.borderLeft = '4px solid #ffc107';
+
+            if (ayah.type === 'hadith') {
+                item.innerHTML = `
+                    <div style="font-weight:600;">Hadith • ${ayah.source}</div>
+                    <div style="margin-top:6px; font-style:italic; direction:rtl;">${ayah.arabic_text}</div>
+                    <div style="margin-top:6px;">${ayah.english_translation}</div>
+                    <div style="margin-top:8px; display:flex; gap:8px;">
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open">Open</button>
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove">Remove</button>
+                    </div>
+                `;
+            } else {
+                item.innerHTML = `
+                    <div style="font-weight:600;">${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}</div>
+                    <div style="margin-top:6px; font-style:italic;">${ayah.translation || ayah.english_translation || ''}</div>
+                    <div style="margin-top:8px; display:flex; gap:8px;">
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="open">Open</button>
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove">Remove</button>
+                    </div>
+                `;
+            }
+
+            listRoot.appendChild(item);
+        });
+
+        // Attach event delegation for open/remove (support both ayah and hadith favorites)
+        listRoot.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const idRaw = btn.dataset.id;
+                const action = btn.dataset.action;
+
+                if (!idRaw) return;
+
+                // Try to detect hadith ids (strings like 'bukhari-1') vs numeric ayah ids
+                const isHadithId = isNaN(parseInt(idRaw, 10));
+
+                if (action === 'open') {
+                    if (isHadithId) {
+                        const had = favorites.find(a => a.hadith_id === idRaw || a.hadith_id === String(idRaw));
+                        if (had) {
+                            // display as hadith and switch to hadith tab
+                            this.currentHadith = had;
+                            this.switchTab('ahadith');
+                            this.displayHadith(had);
+                        }
+                    } else {
+                        const id = parseInt(idRaw, 10);
+                        const ay = favorites.find(a => a.id === id || a.ayahId === id);
+                        if (ay) this.displayAyah(ay, 'random');
+                        this.switchTab('random');
+                    }
+                } else if (action === 'remove') {
+                    this.removeFavorite(idRaw);
+                }
+            });
+        });
+    }
+
+    async removeFavorite(id) {
+        try {
+            const storage = await chrome.storage.local.get({ favorites: [] });
+            let favorites = storage.favorites || [];
+
+            // Remove by matching ayah id OR hadith_id (string)
+            favorites = favorites.filter(f => {
+                if (!id) return true;
+                if (typeof id === 'string') {
+                    return !(f.hadith_id === id || f.hadith_id === String(id));
+                }
+                const numericId = parseInt(id, 10);
+                return !(f.id === numericId || f.ayahId === numericId);
+            });
+
+            await chrome.storage.local.set({ favorites });
+            this.renderFavorites(favorites);
+        } catch (err) {
+            console.error('Error removing favorite:', err);
+        }
+    }
+
+    async clearFavorites() {
+        if (!confirm('Clear all favorites?')) return;
+        try {
+            await chrome.storage.local.set({ favorites: [] });
+            this.renderFavorites([]);
+        } catch (err) {
+            console.error('Error clearing favorites:', err);
+        }
+    }
+
+    async exportFavorites() {
+        try {
+            const storage = await chrome.storage.local.get({ favorites: [] });
+            const favorites = storage.favorites || [];
+            const blob = new Blob([JSON.stringify(favorites, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sakinah-favorites-${new Date().toISOString().slice(0,10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+
+            alert('Favorites export started (check your downloads).');
+        } catch (err) {
+            console.error('Error exporting favorites:', err);
+            alert('Could not export favorites.');
         }
     }
 
