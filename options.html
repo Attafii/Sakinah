@@ -249,15 +249,31 @@
                 <div class="ai-status" id="ai-status">
                     <small>🔄 Checking AI service status...</small>
                 </div>
-                
-                <label class="setting-item">
-                    <span class="setting-label">Groq API Key:</span>
-                    <input type="password" id="groq-api-key" placeholder="Paste your Groq API key here" style="width: 60%; padding:8px; border-radius:6px; border:1px solid #ccc;">
-                    <button class="secondary-button" id="save-groq-key" style="margin-left:10px;">Save Key</button>
-                </label>
 
-                <div class="setting-note">
-                    <small>🛡️ The API key is stored in your browser's synced storage. Rotate the key if it was accidentally committed.</small>
+                <div style="margin-top:20px; padding:16px; background:#f0f8ff; border-radius:8px; border-left:4px solid #2196F3;">
+                    <h4 style="margin:0 0 12px 0; color:#1976d2;">🧠 AI Favorites Analysis</h4>
+                    
+                    <div class="setting-note">
+                        <strong>✨ Powered by AI:</strong> Your saved verses are automatically analyzed using advanced AI to provide personalized spiritual insights.
+                    </div>
+
+                    <div class="setting-note" style="margin-top:12px;">
+                        <strong>How it works:</strong>
+                        <ul style="margin:8px 0; padding-left:20px; line-height:1.6;">
+                            <li><strong>Intelligent analysis:</strong> AI examines patterns in your saved verses to understand your spiritual journey</li>
+                            <li><strong>Personalized insights:</strong> Receives thoughtful analysis of themes, needs, and actionable guidance</li>
+                            <li><strong>Automatic:</strong> No configuration needed - just save verses and click "Analyze Favorites"</li>
+                        </ul>
+                    </div>
+
+                    <div class="setting-note" style="margin-top:12px; padding:12px; background:#fff3cd; border-radius:6px;">
+                        <strong>🔒 Privacy:</strong>
+                        <ul style="margin:8px 0; padding-left:20px; line-height:1.6;">
+                            <li>Only verse text and themes are analyzed - no personal information</li>
+                            <li>Analysis happens securely via encrypted connection</li>
+                            <li>Results are stored only in your browser's local storage</li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
@@ -291,6 +307,7 @@
         </main>
     </div>
 
+    <script src="config.js"></script>
     <script src="options.js"></script>
 </body>
 </html>

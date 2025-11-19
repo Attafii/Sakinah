@@ -56,12 +56,20 @@
                         <div class="ayah-reference" id="ayah-reference"></div>
                     </div>
                 </div>
-                <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+                <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
                     <button class="refresh-button" id="refresh-ayah" aria-label="New Ayah">
                     <span>🔄</span>
                     New Ayah
                     </button>
                     <button class="secondary-button" id="save-favorite" aria-label="Save Ayah to favorites">⭐ Save</button>
+                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white;">🤖 Explain</button>
+                </div>
+                <div id="ayah-explanation" style="display:none; margin-top:16px; padding:16px; background:#f0f8ff; border-radius:10px; border-left:4px solid #667eea;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <h4 style="margin:0; color:#667eea;">🤖 AI Explanation</h4>
+                        <button id="close-ayah-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
+                    </div>
+                    <div id="ayah-explanation-content" style="line-height:1.8; color:#333;"></div>
                 </div>
             </div>
 
@@ -118,8 +126,16 @@
                         <!-- hadith cards will render here -->
                     </div>
 
-                    <div style="display:flex; gap:8px; justify-content:center; margin-top:12px;">
+                    <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
                         <button class="secondary-button" id="save-hadith-favorite">⭐ Save Hadith</button>
+                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white;">🤖 Explain</button>
+                    </div>
+                    <div id="hadith-explanation" style="display:none; margin-top:16px; padding:16px; background:#f0f8ff; border-radius:10px; border-left:4px solid #667eea;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                            <h4 style="margin:0; color:#667eea;">🤖 AI Explanation</h4>
+                            <button id="close-hadith-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
+                        </div>
+                        <div id="hadith-explanation-content" style="line-height:1.8; color:#333;"></div>
                     </div>
                 </div>
             </div>
@@ -193,7 +209,9 @@
         </footer>
     </div>
 
+    <script src="config.js"></script>
     <script src="ai.js"></script>
+    <script src="favorites-analyzer.js"></script>
     <script src="popup.js"></script>
 </body>
 </html>
