@@ -46,6 +46,24 @@ class SakinahPopup {
         const refreshBtn = document.getElementById('refresh-ayah');
         if (refreshBtn) refreshBtn.addEventListener('click', () => this.showRandomAyah());
 
+        // Explain Ayah with AI
+        const explainAyahBtn = document.getElementById('explain-ayah');
+        if (explainAyahBtn) explainAyahBtn.addEventListener('click', () => this.explainCurrentAyah());
+
+        const closeAyahExplanation = document.getElementById('close-ayah-explanation');
+        if (closeAyahExplanation) closeAyahExplanation.addEventListener('click', () => {
+            document.getElementById('ayah-explanation').style.display = 'none';
+        });
+
+        // Explain Hadith with AI
+        const explainHadithBtn = document.getElementById('explain-hadith');
+        if (explainHadithBtn) explainHadithBtn.addEventListener('click', () => this.explainCurrentHadith());
+
+        const closeHadithExplanation = document.getElementById('close-hadith-explanation');
+        if (closeHadithExplanation) closeHadithExplanation.addEventListener('click', () => {
+            document.getElementById('hadith-explanation').style.display = 'none';
+        });
+
         // AI Guide functionality
         const guidanceBtn = document.getElementById('get-guidance');
         if (guidanceBtn) guidanceBtn.addEventListener('click', () => this.getAIGuidance());
@@ -411,8 +429,17 @@ class SakinahPopup {
             div.innerHTML = `
                 <div class="favorites-container">
                     <h3>Your Favorites</h3>
+                    <div id="favorites-analysis-result" style="display:none; background:#f0f8ff; padding:16px; border-radius:10px; margin-bottom:16px;">
+                        <h4 style="margin:0 0 12px 0; color:#1976d2;">📊 Your Spiritual Journey</h4>
+                        <div id="analysis-content"></div>
+                        <div style="margin-top:12px; display:flex; gap:8px;">
+                            <button id="regenerate-analysis" class="secondary-button">🔄 Regenerate</button>
+                            <button id="close-analysis" class="secondary-button">✖ Close</button>
+                        </div>
+                    </div>
                     <div id="favorites-list" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;"></div>
-                    <div style="display:flex;gap:8px;margin-top:12px;">
+                    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white;">🧠 Analyze Favorites</button>
                         <button id="export-favorites" class="secondary-button">Export Favorites</button>
                         <button id="clear-favorites" class="secondary-button">Clear Favorites</button>
                     </div>
@@ -422,10 +449,18 @@ class SakinahPopup {
 
             // attach handlers for newly created buttons
             setTimeout(() => {
+                const analyze = document.getElementById('analyze-favorites');
+                if (analyze) analyze.addEventListener('click', () => this.analyzeFavorites());
                 const exp = document.getElementById('export-favorites');
                 if (exp) exp.addEventListener('click', () => this.exportFavorites());
                 const clear = document.getElementById('clear-favorites');
                 if (clear) clear.addEventListener('click', () => this.clearFavorites());
+                const regenerate = document.getElementById('regenerate-analysis');
+                if (regenerate) regenerate.addEventListener('click', () => this.analyzeFavorites(true));
+                const closeAnalysis = document.getElementById('close-analysis');
+                if (closeAnalysis) closeAnalysis.addEventListener('click', () => {
+                    document.getElementById('favorites-analysis-result').style.display = 'none';
+                });
             }, 50);
             favTab = div;
         }
@@ -553,6 +588,273 @@ class SakinahPopup {
         } catch (err) {
             console.error('Error exporting favorites:', err);
             alert('Could not export favorites.');
+        }
+    }
+
+    async analyzeFavorites(forceRegenerate = false) {
+        try {
+            // Get favorites
+            const storage = await chrome.storage.local.get({ favorites: [] });
+            const favorites = storage.favorites || [];
+
+            if (favorites.length === 0) {
+                alert('No favorites to analyze. Save some Ayahs or Ahadith first!');
+                return;
+            }
+
+            // Show loading state
+            const analyzeBtn = document.getElementById('analyze-favorites');
+            const originalText = analyzeBtn.textContent;
+            analyzeBtn.disabled = true;
+            analyzeBtn.textContent = '🤖 AI is analyzing your spiritual journey...';
+
+            // Perform AI analysis (always uses LLM with hardcoded key)
+            const result = await window.FavoritesAnalyzer.analyzeFavorites(favorites);
+
+            // Reset button
+            analyzeBtn.disabled = false;
+            analyzeBtn.textContent = originalText;
+
+            if (result.success) {
+                this.displayAnalysisResult(result.analysis, result.method);
+            } else {
+                alert(result.error || 'Failed to analyze favorites');
+            }
+
+        } catch (error) {
+            console.error('Error analyzing favorites:', error);
+            alert('An error occurred while analyzing favorites');
+            
+            const analyzeBtn = document.getElementById('analyze-favorites');
+            if (analyzeBtn) {
+                analyzeBtn.disabled = false;
+                analyzeBtn.textContent = '🧠 Analyze Favorites';
+            }
+        }
+    }
+
+    displayAnalysisResult(analysis, method) {
+        const resultDiv = document.getElementById('favorites-analysis-result');
+        const contentDiv = document.getElementById('analysis-content');
+
+        if (!resultDiv || !contentDiv) return;
+
+        // Build HTML for analysis result
+        let html = '';
+
+        // Method badge
+        const methodBadge = method === 'llm' 
+            ? '<span style="background:#4CAF50; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em;">🤖 AI-Powered</span>'
+            : '<span style="background:#2196F3; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em;">📊 Offline Analysis</span>';
+        
+        html += `<div style="margin-bottom:12px;">${methodBadge}</div>`;
+
+        // Interests
+        if (analysis.interests) {
+            html += `
+                <div style="margin-bottom:16px;">
+                    <h5 style="margin:0 0 8px 0; color:#1976d2;">🎯 Your Interests</h5>
+                    <p style="margin:0; line-height:1.6;">${analysis.interests}</p>
+                </div>
+            `;
+        }
+
+        // Needs
+        if (analysis.needs) {
+            html += `
+                <div style="margin-bottom:16px;">
+                    <h5 style="margin:0 0 8px 0; color:#1976d2;">💭 Spiritual Needs</h5>
+                    <p style="margin:0; line-height:1.6;">${analysis.needs}</p>
+                </div>
+            `;
+        }
+
+        // Meaning
+        if (analysis.meaning) {
+            html += `
+                <div style="margin-bottom:16px;">
+                    <h5 style="margin:0 0 8px 0; color:#1976d2;">✨ Meaning & Synthesis</h5>
+                    <p style="margin:0; line-height:1.6; font-style:italic;">${analysis.meaning}</p>
+                </div>
+            `;
+        }
+
+        // Actions
+        if (analysis.actions && analysis.actions.length > 0) {
+            html += `
+                <div style="margin-bottom:16px;">
+                    <h5 style="margin:0 0 8px 0; color:#1976d2;">🎯 Suggested Actions</h5>
+                    <ol style="margin:0; padding-left:20px; line-height:1.8;">
+                        ${analysis.actions.map(action => `<li>${action}</li>`).join('')}
+                    </ol>
+                </div>
+            `;
+        }
+
+        // Metadata
+        if (analysis.metadata) {
+            html += `
+                <div style="margin-top:16px; padding-top:12px; border-top:1px solid #ddd; font-size:0.85em; color:#666;">
+                    <strong>Total saved:</strong> ${analysis.metadata.totalSaved} items
+                    ${analysis.metadata.topThemes ? ` • <strong>Top themes:</strong> ${analysis.metadata.topThemes.join(', ')}` : ''}
+                </div>
+            `;
+        }
+
+        contentDiv.innerHTML = html;
+        resultDiv.style.display = 'block';
+
+        // Scroll to result
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    async explainCurrentAyah() {
+        if (!this.currentAyah) {
+            alert('No Ayah to explain. Please load an Ayah first.');
+            return;
+        }
+
+        try {
+            const explainBtn = document.getElementById('explain-ayah');
+            const originalText = explainBtn.textContent;
+            explainBtn.disabled = true;
+            explainBtn.textContent = '🤖 Thinking...';
+
+            const explanation = await this.getAIExplanation(this.currentAyah, 'ayah');
+
+            explainBtn.disabled = false;
+            explainBtn.textContent = originalText;
+
+            if (explanation) {
+                const explanationDiv = document.getElementById('ayah-explanation');
+                const contentDiv = document.getElementById('ayah-explanation-content');
+                contentDiv.innerHTML = explanation;
+                explanationDiv.style.display = 'block';
+                explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('Failed to generate explanation. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error explaining Ayah:', error);
+            alert('An error occurred while generating the explanation.');
+            const explainBtn = document.getElementById('explain-ayah');
+            if (explainBtn) {
+                explainBtn.disabled = false;
+                explainBtn.textContent = '🤖 Explain';
+            }
+        }
+    }
+
+    async explainCurrentHadith() {
+        if (!this.currentHadith) {
+            alert('No Hadith to explain. Please load a Hadith first.');
+            return;
+        }
+
+        try {
+            const explainBtn = document.getElementById('explain-hadith');
+            const originalText = explainBtn.textContent;
+            explainBtn.disabled = true;
+            explainBtn.textContent = '🤖 Thinking...';
+
+            const explanation = await this.getAIExplanation(this.currentHadith, 'hadith');
+
+            explainBtn.disabled = false;
+            explainBtn.textContent = originalText;
+
+            if (explanation) {
+                const explanationDiv = document.getElementById('hadith-explanation');
+                const contentDiv = document.getElementById('hadith-explanation-content');
+                contentDiv.innerHTML = explanation;
+                explanationDiv.style.display = 'block';
+                explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            } else {
+                alert('Failed to generate explanation. Please try again.');
+            }
+        } catch (error) {
+            console.error('Error explaining Hadith:', error);
+            alert('An error occurred while generating the explanation.');
+            const explainBtn = document.getElementById('explain-hadith');
+            if (explainBtn) {
+                explainBtn.disabled = false;
+                explainBtn.textContent = '🤖 Explain';
+            }
+        }
+    }
+
+    async getAIExplanation(item, type) {
+        const apiKey = CONFIG.GROQ_API_KEY;
+        const apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
+
+        let prompt = '';
+        if (type === 'ayah') {
+            prompt = `As an Islamic scholar, please provide a detailed, thoughtful explanation of this Quranic verse:
+
+Arabic: ${item.arabic}
+Translation: ${item.translation}
+Source: ${item.surah} (${item.surahNumber}:${item.ayahNumber})
+
+Please explain:
+1. The context and revelation circumstances (if known)
+2. The key meanings and lessons
+3. How this verse applies to modern life
+4. Practical ways to implement its teachings
+
+Provide a warm, accessible explanation that helps deepen understanding and connection to this verse.`;
+        } else {
+            prompt = `As an Islamic scholar, please provide a detailed, thoughtful explanation of this Hadith:
+
+Arabic: ${item.arabic_text || item.arabic || ''}
+Translation: ${item.english_translation || item.translation || item.text || ''}
+Source: ${item.source}
+Narrator: ${item.narrator || 'Not specified'}
+
+Please explain:
+1. The context and background of this Hadith
+2. The key teachings and wisdom it contains
+3. How Muslims can apply this in daily life
+4. The practical spiritual and moral lessons
+
+Provide a warm, accessible explanation that helps deepen understanding of the Prophet's (peace be upon him) guidance.`;
+        }
+
+        try {
+            const response = await fetch(apiEndpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
+                body: JSON.stringify({
+                    model: 'llama-3.3-70b-versatile',
+                    messages: [
+                        {
+                            role: 'system',
+                            content: 'You are a knowledgeable Islamic scholar who explains Quranic verses and Hadith with clarity, depth, and warmth. Your explanations are accessible, meaningful, and help people connect with Islamic teachings in their daily lives.'
+                        },
+                        {
+                            role: 'user',
+                            content: prompt
+                        }
+                    ],
+                    temperature: 0.7,
+                    max_completion_tokens: 1200
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+
+            const result = await response.json();
+            const explanation = result.choices[0].message.content;
+
+            // Format the explanation with paragraphs
+            return explanation.replace(/\n\n/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>');
+
+        } catch (error) {
+            console.error('Error calling Groq API:', error);
+            return null;
         }
     }
 

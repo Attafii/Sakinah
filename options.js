@@ -52,18 +52,6 @@ class SakinahOptions {
             this.checkAIStatus();
         });
 
-        // Save Groq API key
-        document.getElementById('save-groq-key').addEventListener('click', async () => {
-            const keyInput = document.getElementById('groq-api-key').value.trim();
-            try {
-                await chrome.storage.sync.set({ groqApiKey: keyInput });
-                this.showSuccessMessage();
-                this.checkAIStatus();
-            } catch (err) {
-                console.error('Error saving Groq API key:', err);
-                alert('Failed to save API key.');
-            }
-        });
     }
 
     async loadSettings() {
@@ -88,7 +76,7 @@ class SakinahOptions {
                 aiContextHistory: false,
                 aiResponseStyle: 'detailed',
                 useGroqAPI: true,
-                groqApiKey: '',
+                groqApiKey: CONFIG.GROQ_API_KEY,
                 
                 // Privacy settings
                 offlineMode: true,
@@ -113,7 +101,6 @@ class SakinahOptions {
             document.getElementById('ai-context-history').checked = settings.aiContextHistory;
             document.getElementById('ai-response-style').value = settings.aiResponseStyle;
             document.getElementById('use-groq-api').checked = settings.useGroqAPI;
-            document.getElementById('groq-api-key').value = settings.groqApiKey || '';
 
             // Load privacy settings
             document.getElementById('offline-mode').checked = settings.offlineMode;
@@ -210,7 +197,6 @@ class SakinahOptions {
                 aiContextHistory: document.getElementById('ai-context-history').checked,
                 aiResponseStyle: document.getElementById('ai-response-style').value,
                 useGroqAPI: document.getElementById('use-groq-api').checked,
-                groqApiKey: document.getElementById('groq-api-key').value.trim(),
                 
                 // Privacy settings
                 offlineMode: document.getElementById('offline-mode').checked,
