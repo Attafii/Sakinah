@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
     color: #333;
     line-height: 1.6;
     min-width: 380px;
@@ -33,7 +33,7 @@ body {
 
 /* ===== HEADER STYLES ===== */
 .header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
     color: white;
     padding: 20px;
     text-align: center;
@@ -111,12 +111,12 @@ body {
 }
 
 .tab-button:hover {
-    background: rgba(102, 126, 234, 0.1);
-    color: #667eea;
+    background: rgba(114, 186, 174, 0.08);
+    color: #2B8C7B;
 }
 
 .tab-button.active {
-    color: #667eea;
+    color: #2B8C7B;
     background: white;
 }
 
@@ -128,7 +128,7 @@ body {
     transform: translateX(-50%);
     width: 60%;
     height: 3px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    background: linear-gradient(90deg, #72BAAE, #2B8C7B);
     border-radius: 2px 2px 0 0;
 }
 
@@ -169,7 +169,7 @@ body {
     border-radius: 15px;
     padding: 20px;
     margin-bottom: 20px;
-    border-left: 4px solid #667eea;
+    border-left: 4px solid #72BAAE;
     min-height: 200px;
     display: flex;
     flex-direction: column;
@@ -184,7 +184,7 @@ body {
     top: 10px;
     right: 15px;
     font-size: 40px;
-    color: rgba(102, 126, 234, 0.1);
+    color: rgba(114, 186, 174, 0.09);
     font-family: serif;
 }
 
@@ -201,7 +201,7 @@ body {
     width: 30px;
     height: 30px;
     border: 3px solid #e9ecef;
-    border-top: 3px solid #667eea;
+    border-top: 3px solid #72BAAE;
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin-bottom: 15px;
@@ -242,7 +242,7 @@ body {
 
 /* ===== BUTTON STYLES ===== */
 .refresh-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
     color: white;
     border: none;
     padding: 12px 20px;
@@ -261,7 +261,7 @@ body {
 
 .refresh-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 5px 15px rgba(114, 186, 174, 0.28);
 }
 
 .refresh-button:active {
@@ -299,9 +299,9 @@ body {
 
 #emotional-state:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #72BAAE;
     background: white;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(114, 186, 174, 0.12);
 }
 
 .char-count {
@@ -419,8 +419,8 @@ body {
 }
 
 .setting-item input[type="checkbox"]:checked {
-    background: #667eea;
-    border-color: #667eea;
+    background: #72BAAE;
+    border-color: #72BAAE;
 }
 
 .setting-item input[type="checkbox"]:checked::after {
@@ -453,8 +453,8 @@ select {
 
 select:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+    border-color: #72BAAE;
+    box-shadow: 0 0 0 2px rgba(114, 186, 174, 0.15);
 }
 
 .notification-frequency {
