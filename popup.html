@@ -35,6 +35,10 @@
                     <span class="tab-icon">⭐</span>
                     Favorites
                 </button>
+            <button class="tab-button" data-tab="hifdh">
+                <span class="tab-icon">🎯</span>
+                Hifdh
+            </button>
             <button class="tab-button" data-tab="settings">
                 <span class="tab-icon">⚙️</span>
                 Settings
@@ -136,6 +140,46 @@
                             <button id="close-hadith-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
                         </div>
                         <div id="hadith-explanation-content" style="line-height:1.8; color:#333;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hifdh (Memorization) Tab -->
+            <div class="tab-content" id="hifdh-tab">
+                <div class="hifdh-container">
+                    <h3>Hifdh — Memorize the Qur'an</h3>
+                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
+                        <label for="surah-select" style="font-size:0.95em;">Choose Surah:</label>
+                        <select id="surah-select" style="flex:1; padding:6px; border-radius:6px; border:1px solid #ddd;"></select>
+                    </div>
+
+                    <div style="display:flex; gap:8px; margin-bottom:8px;">
+                        <button id="hifdh-learn" class="secondary-button">Learn (Ayah-by-Ayah)</button>
+                        <button id="hifdh-quiz" class="secondary-button">Quiz</button>
+                        <button id="hifdh-reset" class="secondary-button">Reset Progress</button>
+                    </div>
+
+                    <div id="hifdh-progress" style="margin-bottom:8px; color:#444">No Surah selected.</div>
+
+                    <div id="hifdh-display" style="border:1px solid #eee; padding:12px; border-radius:8px; background:#fff;">
+                        <div id="hifdh-arabic" style="direction:rtl; font-size:1.15em; font-family:'Scheherazade', serif; margin-bottom:8px;">Select a Surah to begin.</div>
+                        <div id="hifdh-translation" style="font-size:0.95em; color:#333; margin-bottom:8px;"></div>
+
+                        <div id="hifdh-quiz-area" style="display:none; margin-bottom:8px;">
+                            <label for="hifdh-answer">Type the Arabic text (or translation) to check:</label>
+                            <textarea id="hifdh-answer" rows="3" style="width:100%; padding:8px; margin-top:6px;"></textarea>
+                            <div style="display:flex; gap:8px; margin-top:8px;">
+                                <button id="hifdh-check" class="secondary-button">Check Answer</button>
+                                <button id="hifdh-reveal" class="secondary-button">Reveal</button>
+                            </div>
+                            <div id="hifdh-feedback" style="margin-top:8px; color:#c00"></div>
+                        </div>
+
+                        <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
+                            <button id="hifdh-prev" class="secondary-button">◀ Prev</button>
+                            <button id="hifdh-next" class="secondary-button">Next ▶</button>
+                            <button id="hifdh-mark" class="secondary-button">Mark Memorized</button>
+                        </div>
                     </div>
                 </div>
             </div>

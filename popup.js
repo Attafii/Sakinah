@@ -16,6 +16,13 @@ class SakinahPopup {
         // hadith state
         this.hadithData = null;
         this.currentHadithIndex = -1;
+        // hifdh (memorization) state
+        this.hifdhData = null;
+        this.hifdhState = {
+            surahIndex: -1,
+            ayahIndex: 0,
+            mode: 'learn' // 'learn' or 'quiz'
+        };
     }
 
     // Load Quran data from JSON file
@@ -150,6 +157,35 @@ class SakinahPopup {
         if (nextBtn) nextBtn.addEventListener('click', () => this.showNextHadith());
         const rndBtn = document.getElementById('hadith-random');
         if (rndBtn) rndBtn.addEventListener('click', () => this.showRandomHadith());
+
+        // Hifdh UI elements
+        const surahSelect = document.getElementById('surah-select');
+        if (surahSelect) surahSelect.addEventListener('change', (e) => {
+            const idx = parseInt(e.target.value, 10);
+            this.hifdhState.surahIndex = idx;
+            this.hifdhState.ayahIndex = 0;
+            this.updateHifdhProgressUI();
+            this.ensureHifdhLoaded().then(() => this.showHifdhAyah());
+        });
+
+        const hLearn = document.getElementById('hifdh-learn');
+        if (hLearn) hLearn.addEventListener('click', () => { this.hifdhState.mode = 'learn'; this.toggleHifdhMode(); });
+        const hQuiz = document.getElementById('hifdh-quiz');
+        if (hQuiz) hQuiz.addEventListener('click', () => { this.hifdhState.mode = 'quiz'; this.toggleHifdhMode(); });
+        const hReset = document.getElementById('hifdh-reset');
+        if (hReset) hReset.addEventListener('click', () => this.resetHifdhProgress());
+
+        const hPrev = document.getElementById('hifdh-prev');
+        if (hPrev) hPrev.addEventListener('click', () => this.hifdhPrev());
+        const hNext = document.getElementById('hifdh-next');
+        if (hNext) hNext.addEventListener('click', () => this.hifdhNext());
+        const hMark = document.getElementById('hifdh-mark');
+        if (hMark) hMark.addEventListener('click', () => this.toggleMarkMemorized());
+
+        const hCheck = document.getElementById('hifdh-check');
+        if (hCheck) hCheck.addEventListener('click', () => this.checkHifdhAnswer());
+        const hReveal = document.getElementById('hifdh-reveal');
+        if (hReveal) hReveal.addEventListener('click', () => this.revealHifdhAnswer());
     }
 
     // Switch between tabs
@@ -172,6 +208,17 @@ class SakinahPopup {
         // If switching to hadith tab, ensure hadiths are loaded
         if (tabName === 'ahadith') {
             this.ensureHadithLoaded();
+        }
+        // If switching to Hifdh tab, ensure hifdh data is loaded and UI shown
+        if (tabName === 'hifdh') {
+            this.ensureHifdhLoaded().then(() => {
+                const sel = document.getElementById('surah-select');
+                if (sel && this.hifdhState && typeof this.hifdhState.surahIndex === 'number') {
+                    sel.value = String(this.hifdhState.surahIndex);
+                }
+                // display first ayah
+                this.showHifdhAyah();
+            });
         }
     }
 
@@ -1037,6 +1084,183 @@ Provide a warm, accessible explanation that helps deepen understanding of the Pr
         } catch (error) {
             console.error('Error updating display setting:', error);
         }
+    }
+
+    // --- Hifdh (memorization) helpers ---
+    async ensureHifdhLoaded() {
+        if (this.hifdhData) return;
+        let raw = null;
+        try {
+            const response = await fetch(chrome.runtime.getURL('quran_hifdh.json'));
+            raw = await response.json();
+        } catch (err) {
+            console.error('Error loading hifdh data:', err);
+            raw = null;
+        }
+
+        // normalize into { surahs: [ { number, name?, ayahs: [...] } ] }
+        let surahs = [];
+        if (raw) {
+            if (raw.surahs && Array.isArray(raw.surahs)) {
+                surahs = raw.surahs.map(s => ({
+                    number: s.number,
+                    name: s.name || null,
+                    ayahs: s.ayahs || []
+                }));
+            } else {
+                // raw likely has numeric keys "1", "2", ...
+                const keys = Object.keys(raw).filter(k => /^\d+$/.test(k)).sort((a,b)=>parseInt(a)-parseInt(b));
+                keys.forEach(k => {
+                    const arr = raw[k] || [];
+                    const sNum = parseInt(k, 10);
+                    const ayahs = Array.isArray(arr) ? arr.map(a => ({
+                        numberInSurah: a.verse || a.verseNumber || a.ayah || a.verse || 0,
+                        arabic: a.text || a.arabic || '',
+                        translation: a.translation || a.trans || ''
+                    })) : [];
+                    surahs.push({ number: sNum, name: null, ayahs });
+                });
+            }
+        }
+
+        // try to load meta names (Arabic-only) and apply when names missing
+        try {
+            const metaResp = await fetch(chrome.runtime.getURL('quran_hifdh_meta.json'));
+            const meta = await metaResp.json();
+            if (meta && Array.isArray(meta.surahNames)) {
+                surahs.forEach(s => {
+                    if (!s.name) {
+                        const idx = s.number - 1;
+                        s.name = meta.surahNames[idx] || s.name || `سورة ${s.number}`;
+                    }
+                });
+            }
+        } catch (err) {
+            // non-fatal; use existing names or blank
+            console.warn('Could not load surah meta names:', err);
+        }
+
+        this.hifdhData = { surahs };
+
+        const sel = document.getElementById('surah-select');
+        if (sel && this.hifdhData && Array.isArray(this.hifdhData.surahs)) {
+            sel.innerHTML = '';
+            this.hifdhData.surahs.forEach((s, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                const name = s.name ? String(s.name) : '';
+                opt.textContent = name ? `${s.number}. ${name}` : `${s.number}`;
+                sel.appendChild(opt);
+            });
+            if (this.hifdhState.surahIndex === -1) this.hifdhState.surahIndex = 0;
+        }
+    }
+
+    updateHifdhProgressUI() {
+        const info = document.getElementById('hifdh-progress');
+        if (!info || !this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        const total = s ? s.ayahs.length : 0;
+        info.textContent = `Surah ${s.number} • ${s.name} — Ayah ${this.hifdhState.ayahIndex + 1} / ${total}`;
+    }
+
+    showHifdhAyah() {
+        const arabicBox = document.getElementById('hifdh-arabic');
+        const transBox = document.getElementById('hifdh-translation');
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s) return;
+        const ay = s.ayahs[this.hifdhState.ayahIndex];
+        if (!ay) return;
+
+        const numberInSurah = ay.numberInSurah || ay.verse || ay.verseNumber || (this.hifdhState.ayahIndex + 1);
+
+        // Update primary displayed text
+        if (arabicBox) arabicBox.textContent = ay.arabic || ay.text || '';
+        if (transBox) {
+            transBox.textContent = ay.translation || ay.trans || '';
+            transBox.style.visibility = this.hifdhState.mode === 'quiz' ? 'hidden' : 'visible';
+        }
+
+        // Update progress / reference area (uses existing ID in popup.html)
+        const info = document.getElementById('hifdh-progress');
+        const total = s ? s.ayahs.length : 0;
+        if (info) info.textContent = `Surah ${s.number} • ${s.name} — Ayah ${this.hifdhState.ayahIndex + 1} / ${total} • Ref ${s.number}:${numberInSurah}`;
+
+        this.updateHifdhProgressUI();
+        const quizArea = document.getElementById('hifdh-quiz-area');
+        if (quizArea) quizArea.style.display = (this.hifdhState.mode === 'quiz') ? 'block' : 'none';
+    }
+
+    toggleHifdhMode() {
+        this.showHifdhAyah();
+    }
+
+    hifdhNext() {
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s) return;
+        if (this.hifdhState.ayahIndex < s.ayahs.length - 1) this.hifdhState.ayahIndex++;
+        this.showHifdhAyah();
+        this.saveHifdhProgress();
+    }
+
+    hifdhPrev() {
+        if (this.hifdhState.ayahIndex > 0) this.hifdhState.ayahIndex--;
+        this.showHifdhAyah();
+        this.saveHifdhProgress();
+    }
+
+    toggleMarkMemorized() {
+        const key = `hifdh.progress.${this.hifdhState.surahIndex}`;
+        chrome.storage.local.get([key], (res) => {
+            const prog = res[key] || {};
+            const idx = this.hifdhState.ayahIndex;
+            prog[idx] = !prog[idx];
+            const obj = {}; obj[key] = prog;
+            chrome.storage.local.set(obj, () => { this.updateHifdhProgressUI(); });
+        });
+    }
+
+    saveHifdhProgress() {
+        const key = `hifdh.cursor.${this.hifdhState.surahIndex}`;
+        const obj = {}; obj[key] = this.hifdhState.ayahIndex;
+        chrome.storage.local.set(obj);
+    }
+
+    resetHifdhProgress() {
+        const key = `hifdh.progress.${this.hifdhState.surahIndex}`;
+        chrome.storage.local.remove([key], () => { this.updateHifdhProgressUI(); });
+    }
+
+    revealHifdhAnswer() {
+        const transBox = document.getElementById('hifdh-translation');
+        if (transBox) transBox.style.visibility = 'visible';
+    }
+
+    checkHifdhAnswer() {
+        const input = document.getElementById('hifdh-answer');
+        const result = document.getElementById('hifdh-feedback');
+        if (!input || !result || !this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        const ay = s.ayahs[this.hifdhState.ayahIndex];
+        const expected = (ay.translation || ay.text || ay.arabic || '').replace(/[^\w\s]|_/g, '').toLowerCase().trim();
+        const given = input.value.replace(/[^\w\s]|_/g, '').toLowerCase().trim();
+        if (expected.length === 0) { result.textContent = 'No reference text available.'; return; }
+        if (given.length === 0) { result.textContent = 'Please type your attempt.'; return; }
+        const score = this.simpleSimilarity(expected, given);
+        result.textContent = score > 0.7 ? `Good — similarity ${Math.round(score*100)}%` : `Try again — similarity ${Math.round(score*100)}%`;
+        if (score > 0.8) this.toggleMarkMemorized();
+    }
+
+    simpleSimilarity(a, b) {
+        if (!a || !b) return 0;
+        const aWords = a.split(/\s+/);
+        const bWords = b.split(/\s+/);
+        let matches = 0;
+        const setB = new Set(bWords);
+        aWords.forEach(w => { if (setB.has(w)) matches++; });
+        return matches / Math.max(aWords.length, bWords.length);
     }
 }
 
