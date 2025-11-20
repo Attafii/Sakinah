@@ -9,7 +9,7 @@
 
 body {
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+    background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
     color: #333;
     line-height: 1.6;
     min-width: 380px;
@@ -33,7 +33,7 @@ body {
 
 /* ===== HEADER STYLES ===== */
 .header {
-    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+    background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
     color: white;
     padding: 20px;
     text-align: center;
@@ -128,7 +128,7 @@ body {
     transform: translateX(-50%);
     width: 60%;
     height: 3px;
-    background: linear-gradient(90deg, #72BAAE, #2B8C7B);
+    background: linear-gradient(90deg, #A8EBD8, #72BAAE);
     border-radius: 2px 2px 0 0;
 }
 
@@ -242,7 +242,7 @@ body {
 
 /* ===== BUTTON STYLES ===== */
 .refresh-button {
-    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+    background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
     color: white;
     border: none;
     padding: 12px 20px;

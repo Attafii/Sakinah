@@ -87,7 +87,7 @@ class SakinahNotification {
         const style = document.createElement('style');
         style.textContent = `
             .sakinah-notification-card {
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
                 border-radius: 16px;
                 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0, 0, 0, 0.1);
                 overflow: hidden;
