@@ -75,6 +75,7 @@ class SakinahOptions {
                 aiDetailedExplanations: true,
                 aiContextHistory: false,
                 aiResponseStyle: 'detailed',
+                explanationLanguage: 'english',
                 useGroqAPI: true,
                 groqApiKey: CONFIG.GROQ_API_KEY,
                 
@@ -101,6 +102,7 @@ class SakinahOptions {
             document.getElementById('ai-context-history').checked = settings.aiContextHistory;
             document.getElementById('ai-response-style').value = settings.aiResponseStyle;
             document.getElementById('use-groq-api').checked = settings.useGroqAPI;
+            document.getElementById('explanation-language').value = settings.explanationLanguage || 'english';
 
             // Load privacy settings
             document.getElementById('offline-mode').checked = settings.offlineMode;
@@ -196,6 +198,7 @@ class SakinahOptions {
                 aiDetailedExplanations: document.getElementById('ai-detailed-explanations').checked,
                 aiContextHistory: document.getElementById('ai-context-history').checked,
                 aiResponseStyle: document.getElementById('ai-response-style').value,
+                explanationLanguage: document.getElementById('explanation-language').value,
                 useGroqAPI: document.getElementById('use-groq-api').checked,
                 
                 // Privacy settings

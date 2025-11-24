@@ -766,24 +766,56 @@ class SakinahPopup {
             const originalText = explainBtn.textContent;
             explainBtn.disabled = true;
             explainBtn.textContent = '🤖 Thinking...';
-
-            const explanation = await this.getAIExplanation(this.currentAyah, 'ayah');
+            // Load explanation language preference and request explanation
+            const stored = await chrome.storage.sync.get({ explanationLanguage: 'english' });
+            const lang = stored.explanationLanguage || 'english';
+            const explanation = await this.getAIExplanation(this.currentAyah, 'ayah', lang);
 
             explainBtn.disabled = false;
             explainBtn.textContent = originalText;
 
-            if (explanation) {
-                const explanationDiv = document.getElementById('ayah-explanation');
-                const contentDiv = document.getElementById('ayah-explanation-content');
-                contentDiv.innerHTML = explanation;
+            const explanationDiv = document.getElementById('ayah-explanation');
+            const contentDiv = document.getElementById('ayah-explanation-content');
+
+            if (!explanation) {
+                contentDiv.innerHTML = '<div class="explain-error">Failed to generate explanation. Please try again later.</div>';
                 explanationDiv.style.display = 'block';
-                explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                alert('Failed to generate explanation. Please try again.');
+                return;
             }
+
+            if (typeof explanation === 'object' && explanation.status) {
+                if (explanation.status === 'no_key') {
+                    contentDiv.innerHTML = `
+                        <div class="explain-warning">
+                            <strong>Groq API key not found.</strong><br>
+                            To enable AI explanations from Groq, run the project's build script locally:
+                            <div style="margin-top:6px;font-family:monospace;">copy .env.example .env</div>
+                            edit the `.env` file and then run <span style="font-family:monospace;">.\\build.bat</span>
+                        </div>`;
+                } else if (explanation.status === 'auth_failed') {
+                    contentDiv.innerHTML = '<div class="explain-error">Groq API authentication failed (401). Please check your API key configuration.</div>';
+                } else if (explanation.status === 'api_error') {
+                    contentDiv.innerHTML = `<div class="explain-error">Groq API error (${explanation.code}). Try again later.</div>`;
+                } else if (explanation.status === 'network_error') {
+                    contentDiv.innerHTML = '<div class="explain-error">Network error contacting Groq API. Check your connection.</div>';
+                } else {
+                    contentDiv.innerHTML = '<div class="explain-error">Unable to generate explanation.</div>';
+                }
+
+                explanationDiv.style.display = 'block';
+                return;
+            }
+
+            // Success: explanation is HTML string
+            contentDiv.innerHTML = explanation;
+            explanationDiv.style.display = 'block';
+            explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } catch (error) {
             console.error('Error explaining Ayah:', error);
-            alert('An error occurred while generating the explanation.');
+            const explanationDiv = document.getElementById('ayah-explanation');
+            const contentDiv = document.getElementById('ayah-explanation-content');
+            contentDiv.innerHTML = '<div class="explain-error">An error occurred while generating the explanation.</div>';
+            explanationDiv.style.display = 'block';
             const explainBtn = document.getElementById('explain-ayah');
             if (explainBtn) {
                 explainBtn.disabled = false;
@@ -803,24 +835,54 @@ class SakinahPopup {
             const originalText = explainBtn.textContent;
             explainBtn.disabled = true;
             explainBtn.textContent = '🤖 Thinking...';
-
-            const explanation = await this.getAIExplanation(this.currentHadith, 'hadith');
+            const stored = await chrome.storage.sync.get({ explanationLanguage: 'english' });
+            const lang = stored.explanationLanguage || 'english';
+            const explanation = await this.getAIExplanation(this.currentHadith, 'hadith', lang);
 
             explainBtn.disabled = false;
             explainBtn.textContent = originalText;
 
-            if (explanation) {
-                const explanationDiv = document.getElementById('hadith-explanation');
-                const contentDiv = document.getElementById('hadith-explanation-content');
-                contentDiv.innerHTML = explanation;
+            const explanationDiv = document.getElementById('hadith-explanation');
+            const contentDiv = document.getElementById('hadith-explanation-content');
+
+            if (!explanation) {
+                contentDiv.innerHTML = '<div class="explain-error">Failed to generate explanation. Please try again later.</div>';
                 explanationDiv.style.display = 'block';
-                explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                alert('Failed to generate explanation. Please try again.');
+                return;
             }
+
+            if (typeof explanation === 'object' && explanation.status) {
+                if (explanation.status === 'no_key') {
+                    contentDiv.innerHTML = `
+                        <div class="explain-warning">
+                            <strong>Groq API key not found.</strong><br>
+                            To enable AI explanations from Groq, run the project's build script locally:
+                            <div style="margin-top:6px;font-family:monospace;">copy .env.example .env</div>
+                            edit the `.env` file and then run <span style="font-family:monospace;">.\\build.bat</span>
+                        </div>`;
+                } else if (explanation.status === 'auth_failed') {
+                    contentDiv.innerHTML = '<div class="explain-error">Groq API authentication failed (401). Please check your API key configuration.</div>';
+                } else if (explanation.status === 'api_error') {
+                    contentDiv.innerHTML = `<div class="explain-error">Groq API error (${explanation.code}). Try again later.</div>`;
+                } else if (explanation.status === 'network_error') {
+                    contentDiv.innerHTML = '<div class="explain-error">Network error contacting Groq API. Check your connection.</div>';
+                } else {
+                    contentDiv.innerHTML = '<div class="explain-error">Unable to generate explanation.</div>';
+                }
+
+                explanationDiv.style.display = 'block';
+                return;
+            }
+
+            contentDiv.innerHTML = explanation;
+            explanationDiv.style.display = 'block';
+            explanationDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         } catch (error) {
             console.error('Error explaining Hadith:', error);
-            alert('An error occurred while generating the explanation.');
+            const explanationDiv = document.getElementById('hadith-explanation');
+            const contentDiv = document.getElementById('hadith-explanation-content');
+            contentDiv.innerHTML = '<div class="explain-error">An error occurred while generating the explanation.</div>';
+            explanationDiv.style.display = 'block';
             const explainBtn = document.getElementById('explain-hadith');
             if (explainBtn) {
                 explainBtn.disabled = false;
@@ -829,40 +891,24 @@ class SakinahPopup {
         }
     }
 
-    async getAIExplanation(item, type) {
-        const apiKey = CONFIG.GROQ_API_KEY;
+    async getAIExplanation(item, type, language = 'english') {
+        const apiKey = (typeof CONFIG !== 'undefined' && CONFIG && CONFIG.GROQ_API_KEY) ? CONFIG.GROQ_API_KEY : '';
         const apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
 
+        // If no key, return structured status so callers can show inline guidance
+        if (!apiKey || apiKey === 'GROQ_API_KEY') {
+            return { status: 'no_key' };
+        }
+
         let prompt = '';
+        // Add language instruction to the prompt
+        const langInstruction = (language && language.toLowerCase() === 'arabic')
+            ? 'Respond in Arabic (العربية).' : 'Respond in English.';
+
         if (type === 'ayah') {
-            prompt = `As an Islamic scholar, please provide a detailed, thoughtful explanation of this Quranic verse:
-
-Arabic: ${item.arabic}
-Translation: ${item.translation}
-Source: ${item.surah} (${item.surahNumber}:${item.ayahNumber})
-
-Please explain:
-1. The context and revelation circumstances (if known)
-2. The key meanings and lessons
-3. How this verse applies to modern life
-4. Practical ways to implement its teachings
-
-Provide a warm, accessible explanation that helps deepen understanding and connection to this verse.`;
+            prompt = `${langInstruction} As an Islamic scholar, please provide a concise, thoughtful explanation of this Quranic verse:\n\nArabic: ${item.arabic || ''}\nTranslation: ${item.translation || ''}\nSource: ${item.surah || ''} (${item.surahNumber || ''}:${item.ayahNumber || ''})\n\nPlease explain context, key meanings, modern application, and practical steps (short).`;
         } else {
-            prompt = `As an Islamic scholar, please provide a detailed, thoughtful explanation of this Hadith:
-
-Arabic: ${item.arabic_text || item.arabic || ''}
-Translation: ${item.english_translation || item.translation || item.text || ''}
-Source: ${item.source}
-Narrator: ${item.narrator || 'Not specified'}
-
-Please explain:
-1. The context and background of this Hadith
-2. The key teachings and wisdom it contains
-3. How Muslims can apply this in daily life
-4. The practical spiritual and moral lessons
-
-Provide a warm, accessible explanation that helps deepen understanding of the Prophet's (peace be upon him) guidance.`;
+            prompt = `${langInstruction} As an Islamic scholar, provide a concise, thoughtful explanation of this Hadith:\n\nArabic: ${item.arabic_text || item.arabic || ''}\nTranslation: ${item.english_translation || item.translation || item.text || ''}\nSource: ${item.source || ''}\n\nExplain context, teachings, modern application, and practical steps (short).`;
         }
 
         try {
@@ -875,33 +921,35 @@ Provide a warm, accessible explanation that helps deepen understanding of the Pr
                 body: JSON.stringify({
                     model: 'llama-3.3-70b-versatile',
                     messages: [
-                        {
-                            role: 'system',
-                            content: 'You are a knowledgeable Islamic scholar who explains Quranic verses and Hadith with clarity, depth, and warmth. Your explanations are accessible, meaningful, and help people connect with Islamic teachings in their daily lives.'
-                        },
-                        {
-                            role: 'user',
-                            content: prompt
-                        }
+                        { role: 'system', content: 'You are a knowledgeable Islamic scholar who explains Quranic verses and Hadith with clarity, warmth, and actionable guidance.' },
+                        { role: 'user', content: prompt }
                     ],
                     temperature: 0.7,
                     max_completion_tokens: 1200
                 })
             });
 
+            if (response.status === 401) {
+                console.error('Groq API 401: invalid API key');
+                return { status: 'auth_failed' };
+            }
+
             if (!response.ok) {
-                throw new Error(`API error: ${response.status}`);
+                console.error('Groq API error:', response.status);
+                return { status: 'api_error', code: response.status };
             }
 
             const result = await response.json();
-            const explanation = result.choices[0].message.content;
+            const explanation = (result.choices && result.choices[0] && result.choices[0].message && result.choices[0].message.content) ? result.choices[0].message.content : '';
+            if (!explanation) {
+                return { status: 'empty' };
+            }
 
-            // Format the explanation with paragraphs
             return explanation.replace(/\n\n/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>');
 
         } catch (error) {
             console.error('Error calling Groq API:', error);
-            return null;
+            return { status: 'network_error' };
         }
     }
 
