@@ -340,7 +340,51 @@ class SakinahBackground {
                 showTranslation: true
             });
 
-            let title = 'Sakinah - A verse for you';
+            // Store the ayah data for the popup to read
+            await chrome.storage.local.set({ 
+                pendingNotificationAyah: ayah,
+                showArabic: settings.showArabic,
+                showTranslation: settings.showTranslation
+            });
+
+            // Open the notification popup window
+            try {
+                const popupWidth = 450;
+                const popupHeight = 520;
+
+                // Create popup window - position will be handled by the browser
+                // We'll position it after getting display info
+                let windowOptions = {
+                    url: chrome.runtime.getURL('notification.html'),
+                    type: 'popup',
+                    width: popupWidth,
+                    height: popupHeight,
+                    focused: true
+                };
+
+                // Try to get display info to position in top-right
+                try {
+                    const displays = await chrome.system.display.getInfo();
+                    if (displays && displays.length > 0) {
+                        const primaryDisplay = displays[0];
+                        const screenWidth = primaryDisplay.workArea.width;
+                        windowOptions.left = screenWidth - popupWidth - 30;
+                        windowOptions.top = 30;
+                    }
+                } catch (displayErr) {
+                    // If we can't get display info, just let browser position it
+                    console.log('Background: Could not get display info, using default position');
+                }
+
+                await chrome.windows.create(windowOptions);
+                
+                console.log('Background: Notification popup window opened');
+            } catch (popupError) {
+                console.error('Background: Could not open popup window:', popupError);
+            }
+
+            // Also show native Windows notification
+            let title = 'Sakinah - A verse for you 🌙';
             let message = '';
 
             if (settings.showArabic) {
@@ -365,13 +409,13 @@ class SakinahBackground {
                 message: message || `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
                 iconUrl: chrome.runtime.getURL('icons/Tosca modern minimalist Islamic center logo .png'),
                 contextMessage: `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
-                priority: 1,
+                priority: 2,
                 requireInteraction: false
             };
 
             chrome.notifications.create(notificationId, notificationOptions);
             
-            console.log('Background: Notification shown for ayah:', ayah.id);
+            console.log('Background: Windows notification shown for ayah:', ayah.id);
 
             // Store the ayah for potential retrieval by popup
             await chrome.storage.local.set({ 
