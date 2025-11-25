@@ -32,7 +32,7 @@
                 AI Guide
             </button>
                 <button class="tab-button" data-tab="favorites">
-                    <span class="tab-icon">⭐</span>
+                    <span class="tab-icon">❤️</span>
                     Favorites
                 </button>
             <button class="tab-button" data-tab="hifdh">
@@ -65,12 +65,12 @@
                     <span>🔄</span>
                     New Ayah
                     </button>
-                    <button class="secondary-button" id="save-favorite" aria-label="Save Ayah to favorites">⭐ Save</button>
-                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white;">🤖 Explain</button>
+                    <button class="icon-button" id="save-favorite" aria-label="Save Ayah to favorites" title="Save to favorites">🤍</button>
+                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🤖 Explain</button>
                 </div>
-                <div id="ayah-explanation" style="display:none; margin-top:16px; padding:16px; background:#f0f8ff; border-radius:10px; border-left:4px solid #667eea;">
+                <div id="ayah-explanation" style="display:none; margin-top:16px; padding:16px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <h4 style="margin:0; color:#667eea;">🤖 AI Explanation</h4>
+                        <h4 style="margin:0; color:#2B8C7B;">🤖 AI Explanation</h4>
                         <button id="close-ayah-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
                     </div>
                     <div id="ayah-explanation-content" style="line-height:1.8; color:#333;"></div>
@@ -93,7 +93,7 @@
                         <span id="char-count">0</span>/500
                     </div>
                     <!-- Detected emotions indicator (click a tag to request a verse for that emotion) -->
-                    <div id="ai-detected" class="ai-detected" style="display:none; margin-top:8px; font-size:0.9em; color:#2b6cb0;">
+                    <div id="ai-detected" class="ai-detected" style="display:none; margin-top:8px; font-size:0.9em; color:#2B8C7B;">
                         <span id="ai-detected-label" style="display:block; font-weight:600; margin-bottom:6px;">Detected:</span>
                         <div id="ai-detected-chips" style="display:flex; gap:6px; flex-wrap:wrap;"></div>
                     </div>
@@ -119,24 +119,29 @@
             <!-- Ahadith Tab -->
             <div class="tab-content" id="ahadith-tab">
                 <div class="hadith-container">
-                    <div style="display:flex; gap:8px; align-items:center; margin-bottom:10px;">
-                        <input id="hadith-search" type="search" placeholder="Search Ahadith by keyword, tag, or source" style="flex:1; padding:8px; border-radius:6px; border:1px solid #ddd;" />
-                        <button id="hadith-prev" class="secondary-button" aria-label="Previous Hadith">◀ Prev</button>
-                        <button id="hadith-random" class="secondary-button" aria-label="Random Hadith">🎲 Random</button>
-                        <button id="hadith-next" class="secondary-button" aria-label="Next Hadith">Next ▶</button>
+                    <div class="ayah-container">
+                        <div class="ayah-loading" id="hadith-loading">
+                            <div class="spinner"></div>
+                            <p>Loading Hadith...</p>
+                        </div>
+                        <div class="ayah-content" id="hadith-content" style="display: none;">
+                            <div class="ayah-arabic" id="hadith-arabic"></div>
+                            <div class="ayah-translation" id="hadith-translation"></div>
+                            <div class="ayah-reference" id="hadith-reference"></div>
+                        </div>
                     </div>
 
-                    <div id="hadith-list" style="display:flex; flex-direction:column; gap:12px;">
-                        <!-- hadith cards will render here -->
+                    <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; align-items:center;">
+                        <button class="refresh-button" id="hadith-random" aria-label="New Hadith">
+                            <span>🔄</span>
+                            New Hadith
+                        </button>
+                        <button class="icon-button" id="save-hadith-favorite" aria-label="Save Hadith to favorites" title="Save to favorites">🤍</button>
+                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🤖 Explain</button>
                     </div>
-
-                    <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
-                        <button class="secondary-button" id="save-hadith-favorite">⭐ Save Hadith</button>
-                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white;">🤖 Explain</button>
-                    </div>
-                    <div id="hadith-explanation" style="display:none; margin-top:16px; padding:16px; background:#f0f8ff; border-radius:10px; border-left:4px solid #667eea;">
+                    <div id="hadith-explanation" style="display:none; margin-top:16px; padding:16px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                            <h4 style="margin:0; color:#667eea;">🤖 AI Explanation</h4>
+                            <h4 style="margin:0; color:#2B8C7B;">🤖 AI Explanation</h4>
                             <button id="close-hadith-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
                         </div>
                         <div id="hadith-explanation-content" style="line-height:1.8; color:#333;"></div>
@@ -147,38 +152,38 @@
             <!-- Hifdh (Memorization) Tab -->
             <div class="tab-content" id="hifdh-tab">
                 <div class="hifdh-container">
-                    <h3>Hifdh — Memorize the Qur'an</h3>
-                    <div style="display:flex; gap:8px; margin-bottom:8px; align-items:center;">
-                        <label for="surah-select" style="font-size:0.95em;">Choose Surah:</label>
-                        <select id="surah-select" style="flex:1; padding:6px; border-radius:6px; border:1px solid #ddd;"></select>
+                    <h3 style="color:#2B8C7B; margin-bottom:16px;">🎯 Hifdh — Memorize the Qur'an</h3>
+                    <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
+                        <label for="surah-select" style="font-size:0.95em; color:#2B8C7B; font-weight:600;">Choose Surah:</label>
+                        <select id="surah-select" style="flex:1; padding:10px 14px; border-radius:12px; border:2px solid rgba(114, 186, 174, 0.3); background:white; cursor:pointer; transition:all 0.3s ease;"></select>
                     </div>
 
-                    <div style="display:flex; gap:8px; margin-bottom:8px;">
-                        <button id="hifdh-learn" class="secondary-button">Learn (Ayah-by-Ayah)</button>
-                        <button id="hifdh-quiz" class="secondary-button">Quiz</button>
-                        <button id="hifdh-reset" class="secondary-button">Reset Progress</button>
+                    <div style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
+                        <button id="hifdh-learn" class="secondary-button">📖 Learn</button>
+                        <button id="hifdh-quiz" class="secondary-button">📝 Quiz</button>
+                        <button id="hifdh-reset" class="secondary-button">🔄 Reset</button>
                     </div>
 
-                    <div id="hifdh-progress" style="margin-bottom:8px; color:#444">No Surah selected.</div>
+                    <div id="hifdh-progress" style="margin-bottom:12px; color:#2B8C7B; font-weight:500; padding:10px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:8px;">No Surah selected.</div>
 
-                    <div id="hifdh-display" style="border:1px solid #eee; padding:12px; border-radius:8px; background:#fff;">
-                        <div id="hifdh-arabic" style="direction:rtl; font-size:1.15em; font-family:'Scheherazade', serif; margin-bottom:8px;">Select a Surah to begin.</div>
-                        <div id="hifdh-translation" style="font-size:0.95em; color:#333; margin-bottom:8px;"></div>
+                    <div id="hifdh-display" style="border:2px solid rgba(114, 186, 174, 0.2); padding:16px; border-radius:12px; background:linear-gradient(145deg, #fff 0%, #f8faf9 100%); box-shadow:0 4px 15px rgba(114, 186, 174, 0.1);">
+                        <div id="hifdh-arabic" style="direction:rtl; font-size:1.25em; font-family:'Scheherazade', 'Amiri', serif; margin-bottom:12px; color:#1a3a36; line-height:1.8;">Select a Surah to begin.</div>
+                        <div id="hifdh-translation" style="font-size:0.95em; color:#495057; margin-bottom:12px; line-height:1.7;"></div>
 
-                        <div id="hifdh-quiz-area" style="display:none; margin-bottom:8px;">
-                            <label for="hifdh-answer">Type the Arabic text (or translation) to check:</label>
-                            <textarea id="hifdh-answer" rows="3" style="width:100%; padding:8px; margin-top:6px;"></textarea>
-                            <div style="display:flex; gap:8px; margin-top:8px;">
-                                <button id="hifdh-check" class="secondary-button">Check Answer</button>
-                                <button id="hifdh-reveal" class="secondary-button">Reveal</button>
+                        <div id="hifdh-quiz-area" style="display:none; margin-bottom:12px;">
+                            <label for="hifdh-answer" style="display:block; margin-bottom:8px; color:#2B8C7B; font-weight:600;">Type the Arabic text (or translation) to check:</label>
+                            <textarea id="hifdh-answer" rows="3" style="width:100%; padding:12px; margin-top:6px; border-radius:10px; border:2px solid rgba(114, 186, 174, 0.3); resize:vertical; font-family:inherit; transition:all 0.3s ease;"></textarea>
+                            <div style="display:flex; gap:8px; margin-top:10px;">
+                                <button id="hifdh-check" class="secondary-button">✔️ Check Answer</button>
+                                <button id="hifdh-reveal" class="secondary-button">👁️ Reveal</button>
                             </div>
-                            <div id="hifdh-feedback" style="margin-top:8px; color:#c00"></div>
+                            <div id="hifdh-feedback" style="margin-top:10px; padding:10px; border-radius:8px; font-weight:500;"></div>
                         </div>
 
-                        <div style="display:flex; gap:8px; justify-content:center; margin-top:10px;">
+                        <div style="display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
                             <button id="hifdh-prev" class="secondary-button">◀ Prev</button>
                             <button id="hifdh-next" class="secondary-button">Next ▶</button>
-                            <button id="hifdh-mark" class="secondary-button">Mark Memorized</button>
+                            <button id="hifdh-mark" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">✅ Mark Memorized</button>
                         </div>
                     </div>
                 </div>

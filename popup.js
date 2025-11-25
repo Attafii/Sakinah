@@ -102,20 +102,36 @@ class SakinahPopup {
 
         // Test Notification button (sends a message to background to show a random ayah notification)
         const testNotificationBtn = document.getElementById('test-notification');
-        if (testNotificationBtn) testNotificationBtn.addEventListener('click', () => {
+        if (testNotificationBtn) testNotificationBtn.addEventListener('click', async () => {
             try {
+                // Update button to show loading state
+                const originalText = testNotificationBtn.textContent;
+                testNotificationBtn.textContent = '⏳ Sending...';
+                testNotificationBtn.disabled = true;
+
                 chrome.runtime.sendMessage({ action: 'showRandomAyah' }, (resp) => {
-                    // Optional feedback
                     if (chrome.runtime.lastError) {
-                        console.warn('Test notification message error:', chrome.runtime.lastError.message);
-                        alert('Unable to send test notification message. Check background console for details.');
-                    } else {
-                        alert('Test notification requested. Check your notifications and background console.');
+                        // This is expected if service worker needs to wake up
+                        console.log('Test notification note:', chrome.runtime.lastError.message);
                     }
+                    
+                    // Show success regardless - the Windows notification will appear
+                    // The in-browser notification only works on regular web pages
+                    testNotificationBtn.textContent = '✅ Sent!';
+                    testNotificationBtn.title = 'Windows notification sent! In-browser notification requires an open web page.';
+                    setTimeout(() => {
+                        testNotificationBtn.textContent = originalText;
+                        testNotificationBtn.disabled = false;
+                        testNotificationBtn.title = '';
+                    }, 2500);
                 });
             } catch (err) {
                 console.error('Error requesting test notification:', err);
-                alert('Failed to request test notification.');
+                testNotificationBtn.textContent = '❌ Error';
+                setTimeout(() => {
+                    testNotificationBtn.textContent = 'Test Notification';
+                    testNotificationBtn.disabled = false;
+                }, 2000);
             }
         });
 
@@ -141,20 +157,7 @@ class SakinahPopup {
         const saveHadithBtn = document.getElementById('save-hadith-favorite');
         if (saveHadithBtn) saveHadithBtn.addEventListener('click', () => this.saveCurrentHadithToFavorites());
 
-        // Hadith search and navigation
-        const hadithSearch = document.getElementById('hadith-search');
-        if (hadithSearch) {
-            let debounce = null;
-            hadithSearch.addEventListener('input', (e) => {
-                if (debounce) clearTimeout(debounce);
-                debounce = setTimeout(() => this.searchHadiths(e.target.value.trim()), 250);
-            });
-        }
-
-        const prevBtn = document.getElementById('hadith-prev');
-        if (prevBtn) prevBtn.addEventListener('click', () => this.showPrevHadith());
-        const nextBtn = document.getElementById('hadith-next');
-        if (nextBtn) nextBtn.addEventListener('click', () => this.showNextHadith());
+        // Hadith random button
         const rndBtn = document.getElementById('hadith-random');
         if (rndBtn) rndBtn.addEventListener('click', () => this.showRandomHadith());
 
@@ -239,8 +242,8 @@ class SakinahPopup {
         } catch (err) {
             console.error('Error loading hadiths:', err);
             // show an inline message in hadith tab
-            const list = document.getElementById('hadith-list');
-            if (list) list.innerHTML = '<div style="color:#c00">Failed to load Ahadith data.</div>';
+            const loadingEl = document.getElementById('hadith-loading');
+            if (loadingEl) loadingEl.innerHTML = '<div style="color:#c00; text-align:center;">Failed to load Ahadith data.</div>';
         }
     }
 
@@ -315,9 +318,20 @@ class SakinahPopup {
     // Show a random hadith
     showRandomHadith() {
         if (!this.hadithData || this.hadithData.length === 0) return;
+        
+        // Show loading state
+        const contentEl = document.getElementById('hadith-content');
+        const loadingEl = document.getElementById('hadith-loading');
+        if (contentEl) contentEl.style.display = 'none';
+        if (loadingEl) loadingEl.style.display = 'block';
+        
         const idx = Math.floor(Math.random() * this.hadithData.length);
         this.currentHadithIndex = idx;
-        this.displayHadith(this.hadithData[idx]);
+        
+        // Small delay for better UX like ayah
+        setTimeout(() => {
+            this.displayHadith(this.hadithData[idx]);
+        }, 600);
     }
 
     showPrevHadith() {
@@ -333,29 +347,30 @@ class SakinahPopup {
     }
 
     displayHadith(hadith) {
-        // When a hadith is displayed, also ensure it is shown in the hadith list area as a focused card
-        // For now, show a simple highlighted card at the top
-        const listRoot = document.getElementById('hadith-list');
-        if (!listRoot) return;
+        // Display hadith in the same style as ayah display
+        const arabicEl = document.getElementById('hadith-arabic');
+        const translationEl = document.getElementById('hadith-translation');
+        const referenceEl = document.getElementById('hadith-reference');
+        const contentEl = document.getElementById('hadith-content');
+        const loadingEl = document.getElementById('hadith-loading');
 
-        // create a full view
-        const full = document.createElement('div');
-        full.className = 'hadith-full';
-        full.style.padding = '12px';
-        full.style.border = '1px solid #ddd';
-        full.style.borderRadius = '8px';
-        full.innerHTML = `
-            <div style="direction:rtl; font-size:1.15em; font-family: 'Scheherazade', serif;">${hadith.arabic_text}</div>
-            <div style="margin-top:8px;">${hadith.english_translation}</div>
-            <div style="margin-top:8px; color:#666; font-size:0.85em;">${hadith.source} • ${hadith.book || ''}</div>
-        `;
+        if (arabicEl) arabicEl.textContent = hadith.arabic_text || '';
+        if (translationEl) translationEl.textContent = hadith.english_translation || '';
+        if (referenceEl) referenceEl.textContent = `${hadith.source} • ${hadith.book || ''}`;
 
-        // clear and show
-        listRoot.innerHTML = '';
-        listRoot.appendChild(full);
+        // Show content, hide loading
+        if (contentEl) contentEl.style.display = 'block';
+        if (loadingEl) loadingEl.style.display = 'none';
 
         // track currentHadith for save
         this.currentHadith = hadith;
+        
+        // Reset heart icon for new hadith
+        const saveBtn = document.getElementById('save-hadith-favorite');
+        if (saveBtn) {
+            saveBtn.innerHTML = '🤍';
+            saveBtn.classList.remove('saved');
+        }
     }
 
     // Save hadith to favorites
@@ -365,13 +380,19 @@ class SakinahPopup {
             return;
         }
 
+        const saveBtn = document.getElementById('save-hadith-favorite');
+
         try {
             const storage = await chrome.storage.local.get({ favorites: [] });
             const favorites = storage.favorites || [];
 
             const exists = favorites.some(f => f.type === 'hadith' && f.hadith_id === this.currentHadith.hadith_id);
             if (exists) {
-                alert('This Hadith is already in your favorites.');
+                // Visual feedback - already saved
+                if (saveBtn) {
+                    saveBtn.innerHTML = '❤️';
+                    saveBtn.classList.add('saved');
+                }
                 return;
             }
 
@@ -379,7 +400,12 @@ class SakinahPopup {
             favorites.unshift(entry);
             await chrome.storage.local.set({ favorites });
             this.renderFavorites(favorites);
-            alert('Saved Hadith to favorites.');
+            
+            // Visual feedback - heart animation
+            if (saveBtn) {
+                saveBtn.innerHTML = '❤️';
+                saveBtn.classList.add('saved');
+            }
         } catch (err) {
             console.error('Error saving hadith favorite:', err);
             alert('Could not save hadith favorite.');
@@ -419,6 +445,13 @@ class SakinahPopup {
         if (context === 'random') {
             const ayahContentEl = document.getElementById('ayah-content');
             if (ayahContentEl) ayahContentEl.style.display = 'block';
+            
+            // Reset heart icon for new ayah
+            const saveBtn = document.getElementById('save-favorite');
+            if (saveBtn) {
+                saveBtn.innerHTML = '🤍';
+                saveBtn.classList.remove('saved');
+            }
         }
 
         // Track current ayah for actions like saving to favorites
@@ -432,6 +465,8 @@ class SakinahPopup {
             return;
         }
 
+        const saveBtn = document.getElementById('save-favorite');
+
         try {
             const storage = await chrome.storage.local.get({ favorites: [] });
             const favorites = storage.favorites || [];
@@ -439,14 +474,23 @@ class SakinahPopup {
             // Avoid duplicates by id
             const exists = favorites.some(f => f.id === this.currentAyah.id);
             if (exists) {
-                alert('This Ayah is already in your favorites.');
+                // Visual feedback - already saved
+                if (saveBtn) {
+                    saveBtn.innerHTML = '❤️';
+                    saveBtn.classList.add('saved');
+                }
                 return;
             }
 
             favorites.unshift(this.currentAyah);
             await chrome.storage.local.set({ favorites });
             this.renderFavorites(favorites);
-            alert('Saved to favorites.');
+            
+            // Visual feedback - heart animation
+            if (saveBtn) {
+                saveBtn.innerHTML = '❤️';
+                saveBtn.classList.add('saved');
+            }
         } catch (err) {
             console.error('Error saving favorite:', err);
             alert('Could not save favorite.');
@@ -475,9 +519,9 @@ class SakinahPopup {
             div.id = 'favorites-tab';
             div.innerHTML = `
                 <div class="favorites-container">
-                    <h3>Your Favorites</h3>
-                    <div id="favorites-analysis-result" style="display:none; background:#f0f8ff; padding:16px; border-radius:10px; margin-bottom:16px;">
-                        <h4 style="margin:0 0 12px 0; color:#1976d2;">📊 Your Spiritual Journey</h4>
+                    <h3 style="color:#2B8C7B; display:flex; align-items:center; gap:8px;">❤️ Your Favorites</h3>
+                    <div id="favorites-analysis-result" style="display:none; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); padding:18px; border-radius:12px; margin-bottom:16px; border-left:4px solid #72BAAE;">
+                        <h4 style="margin:0 0 12px 0; color:#2B8C7B;">📊 Your Spiritual Journey</h4>
                         <div id="analysis-content"></div>
                         <div style="margin-top:12px; display:flex; gap:8px;">
                             <button id="regenerate-analysis" class="secondary-button">🔄 Regenerate</button>
@@ -486,9 +530,9 @@ class SakinahPopup {
                     </div>
                     <div id="favorites-list" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;"></div>
                     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white;">🧠 Analyze Favorites</button>
-                        <button id="export-favorites" class="secondary-button">Export Favorites</button>
-                        <button id="clear-favorites" class="secondary-button">Clear Favorites</button>
+                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🧠 Analyze Favorites</button>
+                        <button id="export-favorites" class="secondary-button">📤 Export</button>
+                        <button id="clear-favorites" class="secondary-button">🗑️ Clear All</button>
                     </div>
                 </div>
             `;
@@ -517,33 +561,34 @@ class SakinahPopup {
         listRoot.innerHTML = '';
 
         if (!favorites || favorites.length === 0) {
-            listRoot.innerHTML = '<div style="color:#666">No favorites yet. Save Ayahs you like for later reflection.</div>';
+            listRoot.innerHTML = '<div class="empty-favorites" style="text-align:center; padding:40px 20px; color:#6c757d;"><span style="font-size:3em; display:block; margin-bottom:16px; opacity:0.5;">🤍</span><p>No favorites yet.<br>Tap the heart icon to save Ayahs for later reflection.</p></div>';
             return;
         }
 
         favorites.forEach(ayah => {
             const item = document.createElement('div');
             item.className = 'ayah-container';
-            item.style.padding = '12px';
-            item.style.borderLeft = '4px solid #ffc107';
+            item.style.padding = '14px';
+            item.style.borderLeft = '4px solid #ff6b6b';
+            item.style.background = 'linear-gradient(145deg, #fff 0%, #fff5f5 100%)';
 
             if (ayah.type === 'hadith') {
                 item.innerHTML = `
-                    <div style="font-weight:600;">Hadith • ${ayah.source}</div>
-                    <div style="margin-top:6px; font-style:italic; direction:rtl;">${ayah.arabic_text}</div>
-                    <div style="margin-top:6px;">${ayah.english_translation}</div>
-                    <div style="margin-top:8px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open">Open</button>
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove">Remove</button>
+                    <div style="font-weight:600; color:#2B8C7B;">💬 Hadith • ${ayah.source}</div>
+                    <div style="margin-top:8px; font-style:italic; direction:rtl; font-family:'Amiri', serif;">${ayah.arabic_text}</div>
+                    <div style="margin-top:8px; color:#495057; line-height:1.7;">${ayah.english_translation}</div>
+                    <div style="margin-top:10px; display:flex; gap:8px;">
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open">📖 Open</button>
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove" style="color:#ee5253;">💔 Remove</button>
                     </div>
                 `;
             } else {
                 item.innerHTML = `
-                    <div style="font-weight:600;">${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}</div>
-                    <div style="margin-top:6px; font-style:italic;">${ayah.translation || ayah.english_translation || ''}</div>
-                    <div style="margin-top:8px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="open">Open</button>
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove">Remove</button>
+                    <div style="font-weight:600; color:#2B8C7B;">📖 ${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}</div>
+                    <div style="margin-top:8px; font-style:italic; color:#495057; line-height:1.7;">${ayah.translation || ayah.english_translation || ''}</div>
+                    <div style="margin-top:10px; display:flex; gap:8px;">
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="open">📖 Open</button>
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove" style="color:#ee5253;">💔 Remove</button>
                     </div>
                 `;
             }
@@ -589,18 +634,28 @@ class SakinahPopup {
             const storage = await chrome.storage.local.get({ favorites: [] });
             let favorites = storage.favorites || [];
 
-            // Remove by matching ayah id OR hadith_id (string)
+            console.log('Removing favorite with id:', id, 'type:', typeof id);
+
+            // Convert to string for consistent comparison
+            const idStr = String(id);
+            const idNum = parseInt(id, 10);
+
+            // Remove by matching ayah id OR hadith_id
             favorites = favorites.filter(f => {
-                if (!id) return true;
-                if (typeof id === 'string') {
-                    return !(f.hadith_id === id || f.hadith_id === String(id));
+                // Check hadith_id (string)
+                if (f.hadith_id && (f.hadith_id === idStr || String(f.hadith_id) === idStr)) {
+                    return false; // Remove this item
                 }
-                const numericId = parseInt(id, 10);
-                return !(f.id === numericId || f.ayahId === numericId);
+                // Check ayah id (can be number or string)
+                if (f.id !== undefined && (f.id === idNum || f.id === idStr || String(f.id) === idStr)) {
+                    return false; // Remove this item
+                }
+                return true; // Keep this item
             });
 
             await chrome.storage.local.set({ favorites });
             this.renderFavorites(favorites);
+            console.log('Favorite removed, remaining:', favorites.length);
         } catch (err) {
             console.error('Error removing favorite:', err);
         }
@@ -785,13 +840,11 @@ class SakinahPopup {
 
             if (typeof explanation === 'object' && explanation.status) {
                 if (explanation.status === 'no_key') {
-                    contentDiv.innerHTML = `
-                        <div class="explain-warning">
-                            <strong>Groq API key not found.</strong><br>
-                            To enable AI explanations from Groq, run the project's build script locally:
-                            <div style="margin-top:6px;font-family:monospace;">copy .env.example .env</div>
-                            edit the `.env` file and then run <span style="font-family:monospace;">.\\build.bat</span>
-                        </div>`;
+                    contentDiv.innerHTML = '<div class="explain-warning"><strong>Groq API key not found.</strong><br>To enable AI explanations, please configure your Groq API key in the extension options.<div style="margin-top:10px;"><button id="open-options-for-key" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:#1a3a36; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;">⚙️ Open Settings</button></div></div>';
+                    setTimeout(() => {
+                        const btn = document.getElementById('open-options-for-key');
+                        if (btn) btn.addEventListener('click', () => chrome.runtime.openOptionsPage());
+                    }, 50);
                 } else if (explanation.status === 'auth_failed') {
                     contentDiv.innerHTML = '<div class="explain-error">Groq API authentication failed (401). Please check your API key configuration.</div>';
                 } else if (explanation.status === 'api_error') {
@@ -856,10 +909,16 @@ class SakinahPopup {
                     contentDiv.innerHTML = `
                         <div class="explain-warning">
                             <strong>Groq API key not found.</strong><br>
-                            To enable AI explanations from Groq, run the project's build script locally:
-                            <div style="margin-top:6px;font-family:monospace;">copy .env.example .env</div>
-                            edit the `.env` file and then run <span style="font-family:monospace;">.\\build.bat</span>
+                            To enable AI explanations, please configure your Groq API key in the extension options.
+                            <div style="margin-top:10px;">
+                                <button id="open-options-for-key-hadith" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:#1a3a36; border:none;">⚙️ Open Settings</button>
+                            </div>
                         </div>`;
+                    // Add click handler for the button
+                    setTimeout(() => {
+                        const btn = document.getElementById('open-options-for-key-hadith');
+                        if (btn) btn.addEventListener('click', () => chrome.runtime.openOptionsPage());
+                    }, 50);
                 } else if (explanation.status === 'auth_failed') {
                     contentDiv.innerHTML = '<div class="explain-error">Groq API authentication failed (401). Please check your API key configuration.</div>';
                 } else if (explanation.status === 'api_error') {
