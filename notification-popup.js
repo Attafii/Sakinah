@@ -53,7 +53,6 @@ async function checkIfFavorited() {
         const isFavorited = favorites.some(f => f.id === currentAyah.id);
         if (isFavorited) {
             const saveBtn = document.getElementById('save-btn');
-            saveBtn.innerHTML = '<span>❤️</span> Saved';
             saveBtn.classList.add('saved');
         }
     } catch (err) {
@@ -221,12 +220,12 @@ Provide: 1) Key meaning, 2) Context, 3) One practical application. Keep it under
             .replace(/$/, '</p>');
         
         explanationContent.innerHTML = formattedExplanation;
-        explainBtn.innerHTML = '<span>✅</span> Explained';
+        explainBtn.innerHTML = '<span>✅</span> Done';
 
     } catch (error) {
         console.error('Error explaining ayah:', error);
         explanationContent.innerHTML = '<div style="color: #721c24; background: #f8d7da; padding: 12px; border-radius: 8px;">Error generating explanation. Please try again.</div>';
-        explainBtn.innerHTML = '<span>🤖</span> Explain Ayah';
+        explainBtn.innerHTML = '<span>🤖</span> Explain';
         explainBtn.disabled = false;
     }
 }
@@ -292,7 +291,6 @@ async function saveToFavorites() {
 
         const exists = favorites.some(f => f.id === currentAyah.id);
         if (exists) {
-            saveBtn.innerHTML = '<span>❤️</span> Already Saved';
             saveBtn.classList.add('saved');
             return;
         }
@@ -303,14 +301,12 @@ async function saveToFavorites() {
         });
         await chrome.storage.local.set({ favorites });
 
-        saveBtn.innerHTML = '<span>❤️</span> Saved!';
         saveBtn.classList.add('saved');
-        saveBtn.style.transform = 'scale(1.05)';
-        setTimeout(() => { saveBtn.style.transform = ''; }, 200);
+        saveBtn.style.transform = 'scale(1.2)';
+        setTimeout(() => { saveBtn.style.transform = ''; }, 300);
 
     } catch (error) {
         console.error('Error saving to favorites:', error);
-        saveBtn.innerHTML = '<span>⚠️</span> Error';
     }
 }
 

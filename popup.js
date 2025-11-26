@@ -105,8 +105,8 @@ class SakinahPopup {
         if (testNotificationBtn) testNotificationBtn.addEventListener('click', async () => {
             try {
                 // Update button to show loading state
-                const originalText = testNotificationBtn.textContent;
-                testNotificationBtn.textContent = '⏳ Sending...';
+                const originalHTML = testNotificationBtn.innerHTML;
+                testNotificationBtn.innerHTML = '<span>⏳</span><span>Sending...</span>';
                 testNotificationBtn.disabled = true;
 
                 chrome.runtime.sendMessage({ action: 'showRandomAyah' }, (resp) => {
@@ -117,19 +117,19 @@ class SakinahPopup {
                     
                     // Show success regardless - the Windows notification will appear
                     // The in-browser notification only works on regular web pages
-                    testNotificationBtn.textContent = '✅ Sent!';
+                    testNotificationBtn.innerHTML = '<span>✅</span><span>Sent!</span>';
                     testNotificationBtn.title = 'Windows notification sent! In-browser notification requires an open web page.';
                     setTimeout(() => {
-                        testNotificationBtn.textContent = originalText;
+                        testNotificationBtn.innerHTML = originalHTML;
                         testNotificationBtn.disabled = false;
                         testNotificationBtn.title = '';
                     }, 2500);
                 });
             } catch (err) {
                 console.error('Error requesting test notification:', err);
-                testNotificationBtn.textContent = '❌ Error';
+                testNotificationBtn.innerHTML = '<span>❌</span><span>Error</span>';
                 setTimeout(() => {
-                    testNotificationBtn.textContent = 'Test Notification';
+                    testNotificationBtn.innerHTML = '<span>🔔</span><span>Test</span>';
                     testNotificationBtn.disabled = false;
                 }, 2000);
             }
@@ -157,6 +157,10 @@ class SakinahPopup {
         const saveHadithBtn = document.getElementById('save-hadith-favorite');
         if (saveHadithBtn) saveHadithBtn.addEventListener('click', () => this.saveCurrentHadithToFavorites());
 
+        // Save AI ayah favorite (button in AI result card)
+        const saveAiAyahBtn = document.getElementById('save-ai-ayah');
+        if (saveAiAyahBtn) saveAiAyahBtn.addEventListener('click', () => this.saveCurrentAyahToFavorites());
+
         // Hadith random button
         const rndBtn = document.getElementById('hadith-random');
         if (rndBtn) rndBtn.addEventListener('click', () => this.showRandomHadith());
@@ -172,11 +176,23 @@ class SakinahPopup {
         });
 
         const hLearn = document.getElementById('hifdh-learn');
-        if (hLearn) hLearn.addEventListener('click', () => { this.hifdhState.mode = 'learn'; this.toggleHifdhMode(); });
+        if (hLearn) hLearn.addEventListener('click', () => { 
+            this.hifdhState.mode = 'learn'; 
+            this.updateHifdhModeButtons();
+            this.toggleHifdhMode(); 
+        });
         const hQuiz = document.getElementById('hifdh-quiz');
-        if (hQuiz) hQuiz.addEventListener('click', () => { this.hifdhState.mode = 'quiz'; this.toggleHifdhMode(); });
+        if (hQuiz) hQuiz.addEventListener('click', () => { 
+            this.hifdhState.mode = 'quiz'; 
+            this.updateHifdhModeButtons();
+            this.toggleHifdhMode(); 
+        });
         const hReset = document.getElementById('hifdh-reset');
-        if (hReset) hReset.addEventListener('click', () => this.resetHifdhProgress());
+        if (hReset) hReset.addEventListener('click', () => {
+            if (confirm('Reset all memorization progress for this Surah?')) {
+                this.resetHifdhProgress();
+            }
+        });
 
         const hPrev = document.getElementById('hifdh-prev');
         if (hPrev) hPrev.addEventListener('click', () => this.hifdhPrev());
@@ -189,6 +205,16 @@ class SakinahPopup {
         if (hCheck) hCheck.addEventListener('click', () => this.checkHifdhAnswer());
         const hReveal = document.getElementById('hifdh-reveal');
         if (hReveal) hReveal.addEventListener('click', () => this.revealHifdhAnswer());
+    }
+    
+    updateHifdhModeButtons() {
+        const learnBtn = document.getElementById('hifdh-learn');
+        const quizBtn = document.getElementById('hifdh-quiz');
+        
+        if (learnBtn && quizBtn) {
+            learnBtn.classList.toggle('active', this.hifdhState.mode === 'learn');
+            quizBtn.classList.toggle('active', this.hifdhState.mode === 'quiz');
+        }
     }
 
     // Switch between tabs
@@ -368,7 +394,6 @@ class SakinahPopup {
         // Reset heart icon for new hadith
         const saveBtn = document.getElementById('save-hadith-favorite');
         if (saveBtn) {
-            saveBtn.innerHTML = '🤍';
             saveBtn.classList.remove('saved');
         }
     }
@@ -390,7 +415,6 @@ class SakinahPopup {
             if (exists) {
                 // Visual feedback - already saved
                 if (saveBtn) {
-                    saveBtn.innerHTML = '❤️';
                     saveBtn.classList.add('saved');
                 }
                 return;
@@ -403,7 +427,6 @@ class SakinahPopup {
             
             // Visual feedback - heart animation
             if (saveBtn) {
-                saveBtn.innerHTML = '❤️';
                 saveBtn.classList.add('saved');
             }
         } catch (err) {
@@ -449,7 +472,6 @@ class SakinahPopup {
             // Reset heart icon for new ayah
             const saveBtn = document.getElementById('save-favorite');
             if (saveBtn) {
-                saveBtn.innerHTML = '🤍';
                 saveBtn.classList.remove('saved');
             }
         }
@@ -476,7 +498,6 @@ class SakinahPopup {
             if (exists) {
                 // Visual feedback - already saved
                 if (saveBtn) {
-                    saveBtn.innerHTML = '❤️';
                     saveBtn.classList.add('saved');
                 }
                 return;
@@ -488,7 +509,6 @@ class SakinahPopup {
             
             // Visual feedback - heart animation
             if (saveBtn) {
-                saveBtn.innerHTML = '❤️';
                 saveBtn.classList.add('saved');
             }
         } catch (err) {
@@ -518,21 +538,48 @@ class SakinahPopup {
             div.className = 'tab-content';
             div.id = 'favorites-tab';
             div.innerHTML = `
-                <div class="favorites-container">
-                    <h3 style="color:#2B8C7B; display:flex; align-items:center; gap:8px;">❤️ Your Favorites</h3>
-                    <div id="favorites-analysis-result" style="display:none; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); padding:18px; border-radius:12px; margin-bottom:16px; border-left:4px solid #72BAAE;">
-                        <h4 style="margin:0 0 12px 0; color:#2B8C7B;">📊 Your Spiritual Journey</h4>
-                        <div id="analysis-content"></div>
-                        <div style="margin-top:12px; display:flex; gap:8px;">
-                            <button id="regenerate-analysis" class="secondary-button">🔄 Regenerate</button>
-                            <button id="close-analysis" class="secondary-button">✖ Close</button>
+                <div class="section-container">
+                    <!-- Section Header -->
+                    <div class="section-header">
+                        <div class="section-icon">
+                            <span>❤️</span>
+                        </div>
+                        <div class="section-title-group">
+                            <h3 class="section-title">Favorites</h3>
+                            <p class="section-subtitle">Your saved moments of reflection</p>
                         </div>
                     </div>
-                    <div id="favorites-list" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;"></div>
-                    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🧠 Analyze Favorites</button>
-                        <button id="export-favorites" class="secondary-button">📤 Export</button>
-                        <button id="clear-favorites" class="secondary-button">🗑️ Clear All</button>
+
+                    <!-- Analysis Result -->
+                    <div class="content-card analysis-card" id="favorites-analysis-result" style="display:none;">
+                        <div class="analysis-header">
+                            <span>📊</span> Your Spiritual Journey
+                        </div>
+                        <div class="analysis-content" id="analysis-content"></div>
+                        <div class="analysis-actions">
+                            <button class="action-btn secondary-btn" id="regenerate-analysis">
+                                <span>🔄</span> Regenerate
+                            </button>
+                            <button class="action-btn secondary-btn" id="close-analysis">
+                                <span>✖</span> Close
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Favorites List -->
+                    <div id="favorites-list" class="favorites-list"></div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons favorites-actions">
+                        <button class="action-btn accent-btn" id="analyze-favorites">
+                            <span>🧠</span> Analyze
+                        </button>
+                        <button class="action-btn secondary-btn" id="export-favorites">
+                            <span>📤</span> Export
+                        </button>
+                        <button class="action-btn danger-btn" id="clear-favorites">
+                            <span>🗑️</span> Clear
+                        </button>
                     </div>
                 </div>
             `;
@@ -561,34 +608,49 @@ class SakinahPopup {
         listRoot.innerHTML = '';
 
         if (!favorites || favorites.length === 0) {
-            listRoot.innerHTML = '<div class="empty-favorites" style="text-align:center; padding:40px 20px; color:#6c757d;"><span style="font-size:3em; display:block; margin-bottom:16px; opacity:0.5;">🤍</span><p>No favorites yet.<br>Tap the heart icon to save Ayahs for later reflection.</p></div>';
+            listRoot.innerHTML = `
+                <div class="empty-state">
+                    <span class="empty-icon">🤍</span>
+                    <p class="empty-text">No favorites yet</p>
+                    <p class="empty-hint">Tap the heart icon to save Ayahs for later reflection</p>
+                </div>
+            `;
             return;
         }
 
         favorites.forEach(ayah => {
             const item = document.createElement('div');
-            item.className = 'ayah-container';
-            item.style.padding = '14px';
-            item.style.borderLeft = '4px solid #ff6b6b';
-            item.style.background = 'linear-gradient(145deg, #fff 0%, #fff5f5 100%)';
+            item.className = 'favorite-item';
 
             if (ayah.type === 'hadith') {
                 item.innerHTML = `
-                    <div style="font-weight:600; color:#2B8C7B;">💬 Hadith • ${ayah.source}</div>
-                    <div style="margin-top:8px; font-style:italic; direction:rtl; font-family:'Amiri', serif;">${ayah.arabic_text}</div>
-                    <div style="margin-top:8px; color:#495057; line-height:1.7;">${ayah.english_translation}</div>
-                    <div style="margin-top:10px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open">📖 Open</button>
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove" style="color:#ee5253;">💔 Remove</button>
+                    <div class="favorite-type hadith-type">
+                        <span>💬</span> Hadith • ${ayah.source}
+                    </div>
+                    <div class="favorite-arabic">${ayah.arabic_text || ''}</div>
+                    <div class="favorite-translation">${ayah.english_translation}</div>
+                    <div class="favorite-actions">
+                        <button class="fav-action-btn open-btn" data-id="${ayah.hadith_id}" data-action="open">
+                            <span>📖</span> Open
+                        </button>
+                        <button class="fav-action-btn remove-btn" data-id="${ayah.hadith_id}" data-action="remove">
+                            <span>💔</span> Remove
+                        </button>
                     </div>
                 `;
             } else {
                 item.innerHTML = `
-                    <div style="font-weight:600; color:#2B8C7B;">📖 ${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}</div>
-                    <div style="margin-top:8px; font-style:italic; color:#495057; line-height:1.7;">${ayah.translation || ayah.english_translation || ''}</div>
-                    <div style="margin-top:10px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="open">📖 Open</button>
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove" style="color:#ee5253;">💔 Remove</button>
+                    <div class="favorite-type ayah-type">
+                        <span>📖</span> ${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}
+                    </div>
+                    <div class="favorite-translation">${ayah.translation || ayah.english_translation || ''}</div>
+                    <div class="favorite-actions">
+                        <button class="fav-action-btn open-btn" data-id="${ayah.id}" data-action="open">
+                            <span>📖</span> Open
+                        </button>
+                        <button class="fav-action-btn remove-btn" data-id="${ayah.id}" data-action="remove">
+                            <span>💔</span> Remove
+                        </button>
                     </div>
                 `;
             }
@@ -1022,7 +1084,7 @@ class SakinahPopup {
         }
 
         document.getElementById('get-guidance').disabled = true;
-        document.getElementById('get-guidance').textContent = 'Finding guidance...';
+        document.getElementById('get-guidance').innerHTML = '<span>⏳</span> Finding guidance...';
 
         try {
             // Use AI logic to find relevant ayah
@@ -1045,13 +1107,6 @@ class SakinahPopup {
 
                         const chip = document.createElement('button');
                         chip.className = 'emotion-chip';
-                        chip.style.padding = '6px 8px';
-                        chip.style.border = 'none';
-                        chip.style.borderRadius = '14px';
-                        chip.style.background = '#e6f2ff';
-                        chip.style.color = '#034e7b';
-                        chip.style.cursor = 'pointer';
-                        chip.style.fontSize = '0.85em';
                         chip.textContent = confidence ? `${emotion} (${(confidence).toFixed(2)})` : emotion;
                         chip.dataset.emotion = emotion;
 
@@ -1074,7 +1129,7 @@ class SakinahPopup {
             alert('Error getting guidance. Please try again.');
         } finally {
             document.getElementById('get-guidance').disabled = false;
-            document.getElementById('get-guidance').textContent = 'Find Guidance';
+            document.getElementById('get-guidance').innerHTML = '<span>🔮</span> Find Guidance';
         }
     }
 
@@ -1082,7 +1137,7 @@ class SakinahPopup {
     async findByEmotion(emotionKeyword) {
         try {
             document.getElementById('get-guidance').disabled = true;
-            document.getElementById('get-guidance').textContent = 'Finding guidance...';
+            document.getElementById('get-guidance').innerHTML = '<span>⏳</span> Finding guidance...';
 
             const guidanceResult = await window.AIGuide.findRelevantAyah(emotionKeyword, this.ayahData.ayahs);
 
@@ -1095,9 +1150,9 @@ class SakinahPopup {
                 const chipsRoot = document.getElementById('ai-detected-chips');
                 chipsRoot.querySelectorAll('button').forEach(btn => {
                     if (btn.dataset.emotion === emotionKeyword) {
-                        btn.style.background = '#cfe9ff';
+                        btn.classList.add('active');
                     } else {
-                        btn.style.background = '#e6f2ff';
+                        btn.classList.remove('active');
                     }
                 });
             } else {
@@ -1108,7 +1163,7 @@ class SakinahPopup {
             alert('Error finding guidance.');
         } finally {
             document.getElementById('get-guidance').disabled = false;
-            document.getElementById('get-guidance').textContent = 'Find Guidance';
+            document.getElementById('get-guidance').innerHTML = '<span>🔮</span> Find Guidance';
         }
     }
 
@@ -1265,15 +1320,59 @@ class SakinahPopup {
 
     updateHifdhProgressUI() {
         const info = document.getElementById('hifdh-progress');
-        if (!info || !this.hifdhData) return;
+        const progressBar = document.getElementById('hifdh-progress-bar');
+        const progressText = document.getElementById('hifdh-progress-text');
+        const memorizedCount = document.getElementById('hifdh-memorized-count');
+        const totalCount = document.getElementById('hifdh-total-count');
+        const markBtn = document.getElementById('hifdh-mark');
+        
+        if (!this.hifdhData) return;
         const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
         const total = s ? s.ayahs.length : 0;
-        info.textContent = `Surah ${s.number} • ${s.name} — Ayah ${this.hifdhState.ayahIndex + 1} / ${total}`;
+        
+        // Get memorization progress for this surah
+        const key = `hifdh.progress.${this.hifdhState.surahIndex}`;
+        chrome.storage.local.get([key], (res) => {
+            const prog = res[key] || {};
+            const memorized = Object.values(prog).filter(v => v).length;
+            const percent = total > 0 ? Math.round((memorized / total) * 100) : 0;
+            
+            // Update progress bar
+            if (progressBar) progressBar.style.width = `${percent}%`;
+            if (progressText) progressText.textContent = `${percent}%`;
+            
+            // Update status text
+            if (info) {
+                if (memorized === 0) {
+                    info.textContent = `Start memorizing ${s.name} — ${total} ayat to go!`;
+                } else if (memorized === total) {
+                    info.textContent = `🎉 Masha'Allah! You've memorized all of ${s.name}!`;
+                } else {
+                    info.textContent = `${memorized} of ${total} ayat memorized — keep going!`;
+                }
+            }
+            
+            // Update stats
+            if (memorizedCount) memorizedCount.textContent = memorized;
+            if (totalCount) totalCount.textContent = total;
+            
+            // Update mark button state
+            const isCurrentMemorized = prog[this.hifdhState.ayahIndex];
+            if (markBtn) {
+                if (isCurrentMemorized) {
+                    markBtn.classList.add('memorized');
+                } else {
+                    markBtn.classList.remove('memorized');
+                }
+            }
+        });
     }
 
     showHifdhAyah() {
         const arabicBox = document.getElementById('hifdh-arabic');
         const transBox = document.getElementById('hifdh-translation');
+        const ayahBadge = document.getElementById('hifdh-ayah-badge');
+        
         if (!this.hifdhData) return;
         const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
         if (!s) return;
@@ -1281,22 +1380,32 @@ class SakinahPopup {
         if (!ay) return;
 
         const numberInSurah = ay.numberInSurah || ay.verse || ay.verseNumber || (this.hifdhState.ayahIndex + 1);
+        const total = s.ayahs.length;
+
+        // Update ayah badge
+        if (ayahBadge) ayahBadge.textContent = `Ayah ${this.hifdhState.ayahIndex + 1} of ${total}`;
 
         // Update primary displayed text
         if (arabicBox) arabicBox.textContent = ay.arabic || ay.text || '';
         if (transBox) {
             transBox.textContent = ay.translation || ay.trans || '';
-            transBox.style.visibility = this.hifdhState.mode === 'quiz' ? 'hidden' : 'visible';
+            transBox.style.display = this.hifdhState.mode === 'quiz' ? 'none' : 'block';
         }
 
-        // Update progress / reference area (uses existing ID in popup.html)
-        const info = document.getElementById('hifdh-progress');
-        const total = s ? s.ayahs.length : 0;
-        if (info) info.textContent = `Surah ${s.number} • ${s.name} — Ayah ${this.hifdhState.ayahIndex + 1} / ${total} • Ref ${s.number}:${numberInSurah}`;
-
         this.updateHifdhProgressUI();
+        
+        // Show/hide quiz area
         const quizArea = document.getElementById('hifdh-quiz-area');
         if (quizArea) quizArea.style.display = (this.hifdhState.mode === 'quiz') ? 'block' : 'none';
+        
+        // Clear previous quiz input/feedback
+        const answerInput = document.getElementById('hifdh-answer');
+        const feedback = document.getElementById('hifdh-feedback');
+        if (answerInput) answerInput.value = '';
+        if (feedback) {
+            feedback.textContent = '';
+            feedback.className = 'quiz-feedback';
+        }
     }
 
     toggleHifdhMode() {
@@ -1342,7 +1451,7 @@ class SakinahPopup {
 
     revealHifdhAnswer() {
         const transBox = document.getElementById('hifdh-translation');
-        if (transBox) transBox.style.visibility = 'visible';
+        if (transBox) transBox.style.display = 'block';
     }
 
     checkHifdhAnswer() {
@@ -1353,11 +1462,34 @@ class SakinahPopup {
         const ay = s.ayahs[this.hifdhState.ayahIndex];
         const expected = (ay.translation || ay.text || ay.arabic || '').replace(/[^\w\s]|_/g, '').toLowerCase().trim();
         const given = input.value.replace(/[^\w\s]|_/g, '').toLowerCase().trim();
-        if (expected.length === 0) { result.textContent = 'No reference text available.'; return; }
-        if (given.length === 0) { result.textContent = 'Please type your attempt.'; return; }
+        
+        // Reset feedback styling
+        result.className = 'quiz-feedback';
+        
+        if (expected.length === 0) { 
+            result.textContent = '⚠️ No reference text available.'; 
+            result.classList.add('partial');
+            return; 
+        }
+        if (given.length === 0) { 
+            result.textContent = '✏️ Please type your attempt.'; 
+            result.classList.add('partial');
+            return; 
+        }
+        
         const score = this.simpleSimilarity(expected, given);
-        result.textContent = score > 0.7 ? `Good — similarity ${Math.round(score*100)}%` : `Try again — similarity ${Math.round(score*100)}%`;
-        if (score > 0.8) this.toggleMarkMemorized();
+        
+        if (score > 0.8) {
+            result.textContent = `🎉 Excellent! ${Math.round(score*100)}% match — Masha'Allah!`;
+            result.classList.add('correct');
+            this.toggleMarkMemorized();
+        } else if (score > 0.5) {
+            result.textContent = `👍 Good effort! ${Math.round(score*100)}% match — keep practicing!`;
+            result.classList.add('partial');
+        } else {
+            result.textContent = `💪 Keep trying! ${Math.round(score*100)}% match — you can do it!`;
+            result.classList.add('incorrect');
+        }
     }
 
     simpleSimilarity(a, b) {
