@@ -84,6 +84,21 @@ class SakinahPopup {
             });
         }
 
+        // Mood chip click handlers
+        document.querySelectorAll('.mood-chip').forEach(chip => {
+            chip.addEventListener('click', () => {
+                const mood = chip.dataset.mood;
+                if (textarea && mood) {
+                    textarea.value = mood;
+                    textarea.focus();
+                    if (charCount) charCount.textContent = mood.length;
+                    // Visual feedback
+                    document.querySelectorAll('.mood-chip').forEach(c => c.classList.remove('selected'));
+                    chip.classList.add('selected');
+                }
+            });
+        });
+
         // Settings
         const notificationsEnabledEl = document.getElementById('notifications-enabled');
         if (notificationsEnabledEl) notificationsEnabledEl.addEventListener('change', (e) => this.toggleNotifications(e.target.checked));

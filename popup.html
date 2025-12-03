@@ -130,6 +130,61 @@
                         <div class="char-counter">
                             <span id="char-count">0</span>/500
                         </div>
+
+                        <!-- Mood Suggestion Chips -->
+                        <div class="mood-chips-container">
+                            <span class="mood-chips-label">💡 Quick moods:</span>
+                            <div class="mood-chips">
+                                <button class="mood-chip" data-mood="I'm feeling anxious">
+                                    <span class="mood-ar">قلق</span>
+                                    <span class="mood-en">Anxious</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling sad">
+                                    <span class="mood-ar">حزين</span>
+                                    <span class="mood-en">Sad</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling grateful">
+                                    <span class="mood-ar">شاكر</span>
+                                    <span class="mood-en">Grateful</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling hopeful">
+                                    <span class="mood-ar">متفائل</span>
+                                    <span class="mood-en">Hopeful</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling lost">
+                                    <span class="mood-ar">تائه</span>
+                                    <span class="mood-en">Lost</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling angry">
+                                    <span class="mood-ar">غاضب</span>
+                                    <span class="mood-en">Angry</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling lonely">
+                                    <span class="mood-ar">وحيد</span>
+                                    <span class="mood-en">Lonely</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling stressed">
+                                    <span class="mood-ar">متوتر</span>
+                                    <span class="mood-en">Stressed</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling peaceful">
+                                    <span class="mood-ar">مطمئن</span>
+                                    <span class="mood-en">Peaceful</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling confused">
+                                    <span class="mood-ar">حائر</span>
+                                    <span class="mood-en">Confused</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm feeling fearful">
+                                    <span class="mood-ar">خائف</span>
+                                    <span class="mood-en">Fearful</span>
+                                </button>
+                                <button class="mood-chip" data-mood="I'm seeking forgiveness">
+                                    <span class="mood-ar">تائب</span>
+                                    <span class="mood-en">Repentant</span>
+                                </button>
+                            </div>
+                        </div>
                         
                         <!-- Detected emotions -->
                         <div id="ai-detected" class="detected-emotions" style="display:none;">
@@ -139,9 +194,9 @@
                     </div>
 
                     <!-- Action Button -->
-                    <div class="action-buttons">
-                        <button class="action-btn primary-btn full-width" id="get-guidance">
-                            <span>🔮</span> Find Guidance
+                    <div class="action-buttons compact">
+                        <button class="action-btn compact-btn primary-btn" id="get-guidance">
+                            <span>🔮</span> Guide
                         </button>
                     </div>
                     

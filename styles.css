@@ -2059,13 +2059,17 @@ select:hover {
     content: '📜';
 }
 
-/* Action Buttons Container */
+/* Action Buttons Container - horizontal alignment */
 .action-buttons {
     display: flex;
+    flex-direction: row;
     gap: 10px;
     margin-bottom: 16px;
-    flex-wrap: wrap;
+    flex-wrap: nowrap; /* keep buttons on one line */
     justify-content: center;
+    align-items: center;
+    overflow-x: auto; /* allow horizontal scroll on narrow screens */
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Compact Action Buttons */
@@ -2075,16 +2079,32 @@ select:hover {
 }
 
 .action-buttons.compact .action-btn {
-    flex: 1;
+    flex: none;
     min-width: 0;
+    display: inline-flex;
+}
+
+/* Prevent full-width buttons from breaking horizontal layout */
+.action-buttons .action-btn.full-width {
+    flex: none;
+    width: auto;
+}
+
+/* Ensure button labels don't wrap */
+.action-buttons .action-btn {
+    white-space: nowrap;
 }
 
 /* Compact Button Style */
 .action-btn.compact-btn {
-    padding: 10px 16px;
+    padding: 8px 12px;
     font-size: 0.85em;
     border-radius: 12px;
     gap: 6px;
+    min-width: 92px;
+    max-width: 160px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+    backdrop-filter: blur(4px);
 }
 
 .action-btn.compact-btn span {
@@ -2130,6 +2150,11 @@ select:hover {
     box-shadow: 0 6px 18px rgba(114, 186, 174, 0.4);
     flex: 1;
     min-width: 120px;
+}
+
+/* When primary is used as compact button, avoid full flex grow */
+.action-btn.compact-btn.primary-btn {
+    flex: none;
 }
 
 .action-btn.primary-btn:hover {
@@ -2308,6 +2333,75 @@ select:hover {
     font-size: 0.8em;
     color: #adb5bd;
     margin-top: 6px;
+}
+
+/* Mood Chips Container */
+.mood-chips-container {
+    margin-top: 14px;
+}
+
+.mood-chips-label {
+    display: block;
+    font-size: 0.85em;
+    font-weight: 600;
+    color: #6c757d;
+    margin-bottom: 10px;
+}
+
+.mood-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.mood-chip {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 8px 14px;
+    border: 1.5px solid rgba(114, 186, 174, 0.3);
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fcfb 100%);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.mood-chip:hover {
+    border-color: #72BAAE;
+    background: linear-gradient(135deg, #e8f8f3 0%, #d4f1e8 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(114, 186, 174, 0.2);
+}
+
+.mood-chip:active,
+.mood-chip.selected {
+    background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+    border-color: transparent;
+    transform: scale(0.97);
+}
+
+.mood-chip:active .mood-ar,
+.mood-chip:active .mood-en,
+.mood-chip.selected .mood-ar,
+.mood-chip.selected .mood-en {
+    color: white;
+}
+
+.mood-ar {
+    font-family: 'Amiri', 'Traditional Arabic', serif;
+    font-size: 0.95em;
+    font-weight: 600;
+    color: #2B8C7B;
+    line-height: 1.2;
+}
+
+.mood-en {
+    font-size: 0.75em;
+    color: #6c757d;
+    font-weight: 500;
 }
 
 /* Detected Emotions */
