@@ -61,6 +61,7 @@ class SakinahBackground {
             const settings = await chrome.storage.sync.get({
                 notificationsEnabled: false,
                 notificationInterval: 60,
+                notificationFrequency: null, // Fallback for old key
                 customTimes: [],
                 quietStart: '22:00',
                 quietEnd: '07:00',
@@ -69,9 +70,12 @@ class SakinahBackground {
                 dailyAyahTime: '09:00'
             });
 
+            // Use notificationInterval, but fallback to notificationFrequency if set
+            const frequency = settings.notificationInterval || settings.notificationFrequency || 60;
+
             this.notificationSettings = {
                 enabled: settings.notificationsEnabled,
-                frequency: settings.notificationInterval,
+                frequency: frequency,
                 customTimes: settings.customTimes,
                 quietStart: settings.quietStart,
                 quietEnd: settings.quietEnd,
@@ -172,7 +176,7 @@ class SakinahBackground {
         if (namespace === 'sync') {
             let shouldUpdateAlarms = false;
             
-            if (changes.notificationsEnabled || changes.notificationInterval || 
+            if (changes.notificationsEnabled || changes.notificationInterval || changes.notificationFrequency ||
                 changes.customTimes || changes.notificationType) {
                 shouldUpdateAlarms = true;
             }

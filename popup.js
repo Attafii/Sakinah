@@ -21,7 +21,16 @@ class SakinahPopup {
         this.hifdhState = {
             surahIndex: -1,
             ayahIndex: 0,
-            mode: 'learn' // 'learn' or 'quiz'
+            mode: 'learn', // 'learn', 'quiz', or 'listen'
+            memorized: {} // Track memorized ayahs
+        };
+        this.hifdhAudio = null; // Audio element for listen mode
+        // Quiz game state
+        this.quizState = {
+            score: 0,
+            streak: 0,
+            correctIndex: -1,
+            answered: false
         };
     }
 
@@ -73,16 +82,73 @@ class SakinahPopup {
 
         // AI Guide functionality
         const guidanceBtn = document.getElementById('get-guidance');
-        if (guidanceBtn) guidanceBtn.addEventListener('click', () => this.getAIGuidance());
+        if (guidanceBtn) guidanceBtn.addEventListener('click', () => this.sendChatMessage());
+
+        // Enter key to send message in AI Guide
+        const textarea = document.getElementById('emotional-state');
+        if (textarea) {
+            textarea.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    this.sendChatMessage();
+                }
+            });
+        }
+
+        // Clear chat button
+        const clearChatBtn = document.getElementById('clear-chat');
+        if (clearChatBtn) clearChatBtn.addEventListener('click', () => this.clearChat());
+
+        // Arabic mode toggle
+        const arabicModeToggle = document.getElementById('arabic-mode-toggle');
+        if (arabicModeToggle) {
+            // Load saved preference
+            chrome.storage.sync.get({ arabicMode: false }, (result) => {
+                arabicModeToggle.checked = result.arabicMode;
+            });
+            // Save preference on change
+            arabicModeToggle.addEventListener('change', (e) => {
+                chrome.storage.sync.set({ arabicMode: e.target.checked });
+            });
+        }
 
         // Character count for textarea
-        const textarea = document.getElementById('emotional-state');
         const charCount = document.getElementById('char-count');
         if (textarea && charCount) {
             textarea.addEventListener('input', () => {
                 charCount.textContent = textarea.value.length;
             });
         }
+
+        // Mood chips click handlers
+        const moodChips = document.querySelectorAll('.mood-chip');
+        moodChips.forEach(chip => {
+            chip.addEventListener('click', (e) => {
+                const mood = e.target.dataset.mood;
+                if (mood) {
+                    // Set the textarea value and send message
+                    const textarea = document.getElementById('emotional-state');
+                    if (textarea) {
+                        textarea.value = `I'm feeling ${mood}. Can you help me find peace?`;
+                        document.getElementById('char-count').textContent = textarea.value.length;
+                    }
+                    // Highlight selected chip temporarily
+                    moodChips.forEach(c => {
+                        c.style.background = 'white';
+                        c.style.color = '#2B8C7B';
+                    });
+                    e.target.style.background = 'linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%)';
+                    e.target.style.color = 'white';
+                    // Send the message
+                    this.sendChatMessage();
+                    // Reset chip after a moment
+                    setTimeout(() => {
+                        e.target.style.background = 'white';
+                        e.target.style.color = '#2B8C7B';
+                    }, 1000);
+                }
+            });
+        });
 
         // Settings
         const notificationsEnabledEl = document.getElementById('notifications-enabled');
@@ -139,9 +205,9 @@ class SakinahPopup {
         const exportBtn = document.getElementById('export-data');
         if (exportBtn) exportBtn.addEventListener('click', () => this.exportFavorites());
 
-        // Help placeholder
+        // Help button - show help information
         const helpBtn = document.getElementById('help-button');
-        if (helpBtn) helpBtn.addEventListener('click', () => alert('Help is coming soon — this will include usage tips and FAQs.'));
+        if (helpBtn) helpBtn.addEventListener('click', () => this.showHelpModal());
 
         // Save favorite button (from Random Ayah view)
         const saveFavBtn = document.getElementById('save-favorite');
@@ -161,23 +227,37 @@ class SakinahPopup {
         const rndBtn = document.getElementById('hadith-random');
         if (rndBtn) rndBtn.addEventListener('click', () => this.showRandomHadith());
 
+        // Hadith collection filter
+        const collectionFilter = document.getElementById('hadith-collection-filter');
+        if (collectionFilter) {
+            collectionFilter.addEventListener('change', () => this.showRandomHadith());
+        }
+
         // Hifdh UI elements
         const surahSelect = document.getElementById('surah-select');
         if (surahSelect) surahSelect.addEventListener('change', (e) => {
             const idx = parseInt(e.target.value, 10);
             this.hifdhState.surahIndex = idx;
             this.hifdhState.ayahIndex = 0;
+            this.loadHifdhMemorizedState();
             this.updateHifdhProgressUI();
             this.ensureHifdhLoaded().then(() => this.showHifdhAyah());
         });
 
+        // Mode buttons
         const hLearn = document.getElementById('hifdh-learn');
-        if (hLearn) hLearn.addEventListener('click', () => { this.hifdhState.mode = 'learn'; this.toggleHifdhMode(); });
+        if (hLearn) hLearn.addEventListener('click', () => this.setHifdhMode('learn'));
         const hQuiz = document.getElementById('hifdh-quiz');
-        if (hQuiz) hQuiz.addEventListener('click', () => { this.hifdhState.mode = 'quiz'; this.toggleHifdhMode(); });
+        if (hQuiz) hQuiz.addEventListener('click', () => this.setHifdhMode('quiz'));
+        const hListen = document.getElementById('hifdh-listen');
+        if (hListen) hListen.addEventListener('click', () => this.setHifdhMode('listen'));
+        
         const hReset = document.getElementById('hifdh-reset');
         if (hReset) hReset.addEventListener('click', () => this.resetHifdhProgress());
+        const hRandom = document.getElementById('hifdh-random');
+        if (hRandom) hRandom.addEventListener('click', () => this.randomHifdhAyah());
 
+        // Navigation
         const hPrev = document.getElementById('hifdh-prev');
         if (hPrev) hPrev.addEventListener('click', () => this.hifdhPrev());
         const hNext = document.getElementById('hifdh-next');
@@ -185,10 +265,50 @@ class SakinahPopup {
         const hMark = document.getElementById('hifdh-mark');
         if (hMark) hMark.addEventListener('click', () => this.toggleMarkMemorized());
 
-        const hCheck = document.getElementById('hifdh-check');
-        if (hCheck) hCheck.addEventListener('click', () => this.checkHifdhAnswer());
-        const hReveal = document.getElementById('hifdh-reveal');
-        if (hReveal) hReveal.addEventListener('click', () => this.revealHifdhAnswer());
+        // Quiz game controls - Multiple choice options
+        const quizOptions = document.querySelectorAll('.quiz-option');
+        quizOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                const btn = e.currentTarget;
+                const optionIndex = parseInt(btn.dataset.option);
+                this.selectQuizOption(optionIndex);
+            });
+        });
+
+        // Quiz next button
+        const quizNextBtn = document.getElementById('quiz-next-btn');
+        if (quizNextBtn) quizNextBtn.addEventListener('click', () => this.nextQuizQuestion());
+
+        // Listen controls
+        const hPlay = document.getElementById('hifdh-play');
+        if (hPlay) hPlay.addEventListener('click', () => this.playHifdhAudio());
+        const hRepeat = document.getElementById('hifdh-repeat');
+        if (hRepeat) hRepeat.addEventListener('click', () => this.repeatHifdhAudio());
+
+        // Keyboard navigation for Hifdh
+        document.addEventListener('keydown', (e) => {
+            if (this.currentTab !== 'hifdh') return;
+            if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'INPUT') return;
+            
+            if (this.hifdhState.mode === 'quiz' && !this.quizState.answered) {
+                // Number keys 1-3 for quiz options
+                if (e.key === '1') this.selectQuizOption(0);
+                if (e.key === '2') this.selectQuizOption(1);
+                if (e.key === '3') this.selectQuizOption(2);
+            } else {
+                if (e.key === 'ArrowRight') this.hifdhNext();
+                if (e.key === 'ArrowLeft') this.hifdhPrev();
+                if (e.key === ' ' && e.target.tagName !== 'BUTTON') {
+                    e.preventDefault();
+                    this.toggleMarkMemorized();
+                }
+            }
+            
+            // Enter to go to next question after answering
+            if (e.key === 'Enter' && this.hifdhState.mode === 'quiz' && this.quizState.answered) {
+                this.nextQuizQuestion();
+            }
+        });
     }
 
     // Switch between tabs
@@ -315,6 +435,20 @@ class SakinahPopup {
         });
     }
 
+    // Get filtered hadiths based on selected collection
+    getFilteredHadiths() {
+        if (!this.hadithData || this.hadithData.length === 0) return [];
+        
+        const filterEl = document.getElementById('hadith-collection-filter');
+        const selectedCollection = filterEl ? filterEl.value : 'all';
+        
+        if (selectedCollection === 'all') {
+            return this.hadithData;
+        }
+        
+        return this.hadithData.filter(h => h.collection_id === selectedCollection);
+    }
+    
     // Show a random hadith
     showRandomHadith() {
         if (!this.hadithData || this.hadithData.length === 0) return;
@@ -325,12 +459,23 @@ class SakinahPopup {
         if (contentEl) contentEl.style.display = 'none';
         if (loadingEl) loadingEl.style.display = 'block';
         
-        const idx = Math.floor(Math.random() * this.hadithData.length);
-        this.currentHadithIndex = idx;
+        // Get filtered hadiths based on collection filter
+        const filteredHadiths = this.getFilteredHadiths();
+        
+        if (filteredHadiths.length === 0) {
+            if (loadingEl) loadingEl.innerHTML = '<div style="color:#666; text-align:center;">No hadiths in this collection.</div>';
+            return;
+        }
+        
+        const randomIdx = Math.floor(Math.random() * filteredHadiths.length);
+        const selectedHadith = filteredHadiths[randomIdx];
+        
+        // Find the actual index in the full hadithData array
+        this.currentHadithIndex = this.hadithData.indexOf(selectedHadith);
         
         // Small delay for better UX like ayah
         setTimeout(() => {
-            this.displayHadith(this.hadithData[idx]);
+            this.displayHadith(selectedHadith);
         }, 600);
     }
 
@@ -960,14 +1105,70 @@ class SakinahPopup {
         }
 
         let prompt = '';
+        let systemPrompt = '';
+        
         // Add language instruction to the prompt
         const langInstruction = (language && language.toLowerCase() === 'arabic')
-            ? 'Respond in Arabic (العربية).' : 'Respond in English.';
+            ? 'CRITICAL: Respond ONLY in Arabic (العربية). Use Arabic script EXCLUSIVELY. Do NOT include ANY words from other languages (no English, no Russian, no Chinese, no French, etc.). Every single word must be in Arabic. If you need to use a technical term, use its Arabic equivalent or transliterate it into Arabic script.' 
+            : 'Respond in English.';
 
         if (type === 'ayah') {
-            prompt = `${langInstruction} As an Islamic scholar, please provide a concise, thoughtful explanation of this Quranic verse:\n\nArabic: ${item.arabic || ''}\nTranslation: ${item.translation || ''}\nSource: ${item.surah || ''} (${item.surahNumber || ''}:${item.ayahNumber || ''})\n\nPlease explain context, key meanings, modern application, and practical steps (short).`;
+            systemPrompt = 'You are a knowledgeable Islamic scholar trained in Quranic tafsir, particularly following the methodology of Imam Ibn Kathir (Tafsir al-Quran al-Azim). You explain verses by: 1) Using other Quran verses as explanation (Tafsir al-Quran bil-Quran), 2) Citing authentic hadiths, 3) Referencing statements of Sahabah when relevant, 4) Providing Arabic linguistic analysis. You are humble and never fabricate references. You say "Allah knows best" when uncertain. IMPORTANT: When asked to respond in Arabic, use ONLY Arabic script and Arabic words. Never mix in words from other languages like English, Russian, Chinese, etc.';
+            
+            prompt = `${langInstruction}
+
+You are explaining this Quranic verse following the methodology of Tafsir Ibn Kathir:
+
+**Arabic Text:** ${item.arabic || ''}
+**Translation:** ${item.translation || ''}
+**Surah & Verse:** ${item.surah || ''} (${item.surahNumber || ''}:${item.ayahNumber || ''})
+
+Follow Ibn Kathir's tafsir methodology in your explanation:
+
+1. **Tafsir al-Quran bil-Quran (Quran explains Quran):** Reference other verses that relate to or explain this verse. Mention the surah and verse numbers.
+
+2. **Tafsir bil-Hadith (Explanation through Hadith):** If there are authentic hadiths from the Prophet ﷺ that explain this verse, mention them. Only cite well-known authentic hadiths.
+
+3. **Linguistic Analysis:** Explain key Arabic words, their root meanings, and significance in this context.
+
+4. **Core Message:** What is Allah teaching us? Be precise based on scholarly understanding.
+
+5. **Practical Application:** How can a Muslim apply this verse today?
+
+**Important Guidelines:**
+- Follow the approach of Imam Ibn Kathir: use Quran to explain Quran, then Sunnah, then statements of Sahabah.
+- Only cite hadiths and cross-references you are confident about. If unsure, say "Allah knows best."
+- Do not invent or fabricate any references.
+- Keep the tone scholarly yet accessible and spiritually uplifting.
+- Aim for approximately 250-350 words.`;
         } else {
-            prompt = `${langInstruction} As an Islamic scholar, provide a concise, thoughtful explanation of this Hadith:\n\nArabic: ${item.arabic_text || item.arabic || ''}\nTranslation: ${item.english_translation || item.translation || item.text || ''}\nSource: ${item.source || ''}\n\nExplain context, teachings, modern application, and practical steps (short).`;
+            systemPrompt = 'You are a knowledgeable Islamic scholar trained in hadith sciences. You explain hadiths accurately based on classical scholarship, mentioning authenticity grades when known. You are humble and never fabricate information. Your goal is to help Muslims understand and apply prophetic teachings authentically. IMPORTANT: When asked to respond in Arabic, use ONLY Arabic script and Arabic words. Never mix in words from other languages like English, Russian, Chinese, etc.';
+            
+            prompt = `${langInstruction}
+
+You are explaining this Hadith to a Muslim seeking guidance:
+
+**Arabic Text:** ${item.arabic_text || item.arabic || ''}
+**Translation:** ${item.english_translation || item.translation || item.text || ''}
+**Source:** ${item.source || ''}
+
+Please provide a thoughtful, accurate explanation following this structure:
+
+1. **Hadith Authenticity:** If known, mention the grading (Sahih, Hasan, etc.) and the collection it comes from.
+
+2. **Key Terms:** Explain any important Arabic words or concepts mentioned.
+
+3. **Context:** If the occasion when the Prophet ﷺ said this is known, mention it briefly. If not known, skip this section - do not mention that it is unknown.
+
+4. **Core Teaching:** What is the main lesson or guidance from this hadith?
+
+5. **Practical Application:** How can a Muslim implement this teaching in their daily life?
+
+**Important Guidelines:**
+- Be accurate and truthful. If you're unsure about authenticity or context, say "Allah knows best."
+- Do not invent chains of narration or fabricate historical details.
+- Keep the tone warm, respectful, and spiritually uplifting.
+- Aim for approximately 200-300 words.`;
         }
 
         try {
@@ -980,10 +1181,10 @@ class SakinahPopup {
                 body: JSON.stringify({
                     model: 'llama-3.3-70b-versatile',
                     messages: [
-                        { role: 'system', content: 'You are a knowledgeable Islamic scholar who explains Quranic verses and Hadith with clarity, warmth, and actionable guidance.' },
+                        { role: 'system', content: systemPrompt },
                         { role: 'user', content: prompt }
                     ],
-                    temperature: 0.7,
+                    temperature: 0.4,
                     max_completion_tokens: 1200
                 })
             });
@@ -1012,104 +1213,187 @@ class SakinahPopup {
         }
     }
 
-    // Get AI guidance based on emotional state
-    async getAIGuidance() {
-        const emotionalState = document.getElementById('emotional-state').value.trim();
+    // Send chat message in AI Guide
+    async sendChatMessage() {
+        const textarea = document.getElementById('emotional-state');
+        const userMessage = textarea.value.trim();
         
-        if (!emotionalState) {
-            alert('Please describe how you\'re feeling first.');
+        if (!userMessage) {
             return;
         }
 
-        document.getElementById('get-guidance').disabled = true;
-        document.getElementById('get-guidance').textContent = 'Finding guidance...';
+        const chatMessages = document.getElementById('chat-messages');
+        const sendBtn = document.getElementById('get-guidance');
+        const arabicModeToggle = document.getElementById('arabic-mode-toggle');
+        const forceArabic = arabicModeToggle ? arabicModeToggle.checked : false;
+
+        // Add user message to chat
+        this.addChatMessage(userMessage, 'user');
+
+        // Clear input
+        textarea.value = '';
+        document.getElementById('char-count').textContent = '0';
+
+        // Disable send button and show loading
+        sendBtn.disabled = true;
+        sendBtn.textContent = '⏳';
+
+        // Add loading indicator
+        const loadingId = this.addChatMessage(forceArabic ? 'جاري التفكير...' : 'Thinking...', 'ai', true);
 
         try {
-            // Use AI logic to find relevant ayah
-            const guidanceResult = await window.AIGuide.findRelevantAyah(emotionalState, this.ayahData.ayahs);
-            
-            if (guidanceResult) {
-                this.displayAyah(guidanceResult.ayah, 'ai');
-                document.getElementById('ai-explanation').textContent = guidanceResult.explanation;
-                document.getElementById('ai-result').style.display = 'block';
+            // Get AI response with forceArabic option
+            const result = await window.AIGuide.getGuidance(userMessage, this.ayahData.ayahs, { forceArabic });
 
-                // Show detected emotions as clickable chips if provided
-                const detectedContainer = document.getElementById('ai-detected');
-                const chipsRoot = document.getElementById('ai-detected-chips');
-                chipsRoot.innerHTML = '';
+            // Remove loading indicator
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) loadingEl.remove();
 
-                if (guidanceResult.detectedEmotions && guidanceResult.detectedEmotions.length > 0) {
-                    guidanceResult.detectedEmotions.forEach(item => {
-                        const emotion = item.emotion || item;
-                        const confidence = (item.confidence !== undefined) ? item.confidence : null;
+            if (result.success) {
+                // Add AI response to chat
+                this.addChatMessage(result.response, 'ai');
 
-                        const chip = document.createElement('button');
-                        chip.className = 'emotion-chip';
-                        chip.style.padding = '6px 8px';
-                        chip.style.border = 'none';
-                        chip.style.borderRadius = '14px';
-                        chip.style.background = '#e6f2ff';
-                        chip.style.color = '#034e7b';
-                        chip.style.cursor = 'pointer';
-                        chip.style.fontSize = '0.85em';
-                        chip.textContent = confidence ? `${emotion} (${(confidence).toFixed(2)})` : emotion;
-                        chip.dataset.emotion = emotion;
-
-                        chip.addEventListener('click', () => {
-                            this.findByEmotion(emotion);
-                        });
-
-                        chipsRoot.appendChild(chip);
-                    });
-
-                    detectedContainer.style.display = 'block';
-                } else {
-                    detectedContainer.style.display = 'none';
+                // If a verse was detected, show it prominently
+                if (result.suggestedAyah) {
+                    this.addAyahCard(result.suggestedAyah);
                 }
             } else {
-                alert('Unable to find relevant guidance. Please try rephrasing your emotional state.');
+                // Handle errors
+                let errorMessage = result.message || 'Unable to get guidance. Please try again.';
+                
+                if (result.error === 'no_api_key') {
+                    errorMessage = '⚠️ To use the AI Guide, please configure your Groq API key in Settings → Open Advanced Settings.';
+                }
+                
+                this.addChatMessage(errorMessage, 'ai', false, true);
             }
+
         } catch (error) {
-            console.error('Error getting AI guidance:', error);
-            alert('Error getting guidance. Please try again.');
+            console.error('Error in chat:', error);
+            const loadingEl = document.getElementById(loadingId);
+            if (loadingEl) loadingEl.remove();
+            this.addChatMessage('An error occurred. Please try again.', 'ai', false, true);
         } finally {
-            document.getElementById('get-guidance').disabled = false;
-            document.getElementById('get-guidance').textContent = 'Find Guidance';
+            sendBtn.disabled = false;
+            sendBtn.textContent = 'Send 📤';
         }
     }
 
-    // Find guidance specifically for a single emotion keyword (used when clicking a detected emotion)
-    async findByEmotion(emotionKeyword) {
-        try {
-            document.getElementById('get-guidance').disabled = true;
-            document.getElementById('get-guidance').textContent = 'Finding guidance...';
+    // Add a message to the chat
+    addChatMessage(content, sender, isLoading = false, isError = false) {
+        const chatMessages = document.getElementById('chat-messages');
+        const messageId = `msg-${Date.now()}`;
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.id = messageId;
+        messageDiv.className = `chat-message ${sender}-message`;
+        messageDiv.style.marginBottom = '12px';
+        messageDiv.style.display = 'flex';
+        messageDiv.style.justifyContent = sender === 'user' ? 'flex-end' : 'flex-start';
 
-            const guidanceResult = await window.AIGuide.findRelevantAyah(emotionKeyword, this.ayahData.ayahs);
+        const isRTL = this.isArabicText(content);
+        
+        const bubbleStyle = sender === 'user' 
+            ? 'background: linear-gradient(135deg, #72BAAE 0%, #5AA89C 100%); color: white; border-radius: 12px 12px 0 12px;'
+            : `background: linear-gradient(135deg, rgba(168, 235, 216, 0.3) 0%, rgba(114, 186, 174, 0.2) 100%); color: #1a3a36; border-radius: 12px 12px 12px 0; ${isError ? 'border-left: 3px solid #ff6b6b;' : ''}`;
 
-            if (guidanceResult) {
-                this.displayAyah(guidanceResult.ayah, 'ai');
-                document.getElementById('ai-explanation').textContent = guidanceResult.explanation;
-                document.getElementById('ai-result').style.display = 'block';
+        // Format the content with proper paragraphs and handle Arabic
+        const formattedContent = this.formatChatContent(content);
 
-                // Update detected chips to highlight selected
-                const chipsRoot = document.getElementById('ai-detected-chips');
-                chipsRoot.querySelectorAll('button').forEach(btn => {
-                    if (btn.dataset.emotion === emotionKeyword) {
-                        btn.style.background = '#cfe9ff';
-                    } else {
-                        btn.style.background = '#e6f2ff';
-                    }
-                });
-            } else {
-                alert('No verse found for that emotion.');
-            }
-        } catch (err) {
-            console.error('Error finding by emotion:', err);
-            alert('Error finding guidance.');
-        } finally {
-            document.getElementById('get-guidance').disabled = false;
-            document.getElementById('get-guidance').textContent = 'Find Guidance';
+        messageDiv.innerHTML = `
+            <div style="${bubbleStyle} padding: 12px 16px; max-width: 85%; ${isRTL ? 'direction: rtl; text-align: right;' : ''} ${isLoading ? 'font-style: italic; opacity: 0.7;' : ''}">
+                ${isLoading ? '<span class="loading-dots">🤔 ' + content + '</span>' : formattedContent}
+            </div>
+        `;
+
+        chatMessages.appendChild(messageDiv);
+        
+        // Scroll to bottom
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
+        return messageId;
+    }
+
+    // Add an ayah card to the chat
+    addAyahCard(ayah) {
+        const chatMessages = document.getElementById('chat-messages');
+        
+        const cardDiv = document.createElement('div');
+        cardDiv.className = 'chat-message ai-message';
+        cardDiv.style.marginBottom = '12px';
+        
+        cardDiv.innerHTML = `
+            <div style="background: linear-gradient(145deg, #fff 0%, #f8faf9 100%); border: 2px solid rgba(114, 186, 174, 0.3); border-radius: 12px; padding: 16px; max-width: 90%; box-shadow: 0 2px 8px rgba(114, 186, 174, 0.1);">
+                <div style="font-size: 0.8em; color: #72BAAE; font-weight: 600; margin-bottom: 8px;">📖 Suggested Verse</div>
+                <div style="font-family: 'Scheherazade', 'Amiri', serif; font-size: 1.2em; direction: rtl; text-align: right; color: #1a3a36; line-height: 2; margin-bottom: 12px;">
+                    ${ayah.arabic || ''}
+                </div>
+                <div style="font-style: italic; color: #495057; line-height: 1.7; margin-bottom: 8px;">
+                    "${ayah.translation || ''}"
+                </div>
+                <div style="font-size: 0.85em; color: #72BAAE; font-weight: 500;">
+                    — ${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})
+                </div>
+            </div>
+        `;
+
+        chatMessages.appendChild(cardDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Format chat content with proper paragraphs
+    formatChatContent(content) {
+        if (!content) return '';
+        
+        // Convert markdown-style formatting
+        let formatted = content
+            // Bold text
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+            // Italic text
+            .replace(/\*(.*?)\*/g, '<em>$1</em>')
+            // Line breaks to paragraphs
+            .split('\n\n').map(p => `<p style="margin: 0 0 8px 0; line-height: 1.7;">${p}</p>`).join('')
+            // Single line breaks
+            .replace(/\n/g, '<br>');
+        
+        return formatted;
+    }
+
+    // Check if text is primarily Arabic
+    isArabicText(text) {
+        if (!text) return false;
+        const arabicPattern = /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/;
+        const arabicChars = (text.match(/[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF]/g) || []).length;
+        return arabicChars > text.length * 0.3;
+    }
+
+    // Clear chat history
+    clearChat() {
+        const chatMessages = document.getElementById('chat-messages');
+        
+        // Clear AI guide conversation history
+        if (window.AIGuide) {
+            window.AIGuide.clearHistory();
         }
+
+        // Reset chat to welcome message
+        chatMessages.innerHTML = `
+            <div class="chat-message ai-message" style="margin-bottom:12px;">
+                <div style="background:linear-gradient(135deg, rgba(168, 235, 216, 0.3) 0%, rgba(114, 186, 174, 0.2) 100%); padding:12px 16px; border-radius:12px 12px 12px 0; max-width:90%;">
+                    <p style="margin:0; color:#1a3a36; line-height:1.6;">
+                        السلام عليكم ورحمة الله وبركاته 🤲
+                    </p>
+                    <p style="margin:8px 0 0 0; color:#1a3a36; line-height:1.6;">
+                        Peace be upon you! I'm Sakinah, your AI spiritual guide. Share what's on your heart, and I'll help you find peace through the Quran and Islamic wisdom. How can I help you today?
+                    </p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Legacy method for backward compatibility
+    async getAIGuidance() {
+        return this.sendChatMessage();
     }
 
     // Show/hide loading state
@@ -1132,13 +1416,13 @@ class SakinahPopup {
         try {
             const settings = await chrome.storage.sync.get({
                 notificationsEnabled: false,
-                notificationFrequency: 60,
+                notificationInterval: 60,
                 showArabic: true,
                 showTranslation: true
             });
 
             document.getElementById('notifications-enabled').checked = settings.notificationsEnabled;
-            document.getElementById('notification-frequency').value = settings.notificationFrequency;
+            document.getElementById('notification-frequency').value = settings.notificationInterval;
             document.getElementById('show-arabic').checked = settings.showArabic;
             document.getElementById('show-translation').checked = settings.showTranslation;
 
@@ -1171,7 +1455,7 @@ class SakinahPopup {
     // Update notification frequency
     async updateNotificationFrequency(frequency) {
         try {
-            await chrome.storage.sync.set({ notificationFrequency: parseInt(frequency) });
+            await chrome.storage.sync.set({ notificationInterval: parseInt(frequency) });
             
             // Send message to background script
             chrome.runtime.sendMessage({
@@ -1191,6 +1475,83 @@ class SakinahPopup {
         } catch (error) {
             console.error('Error updating display setting:', error);
         }
+    }
+
+    // Show help modal
+    showHelpModal() {
+        // Remove existing modal if any
+        const existingModal = document.getElementById('help-modal');
+        if (existingModal) existingModal.remove();
+
+        const modal = document.createElement('div');
+        modal.id = 'help-modal';
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            padding: 20px;
+        `;
+
+        modal.innerHTML = `
+            <div style="background: white; border-radius: 16px; max-width: 400px; max-height: 80vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                <div style="padding: 20px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0; color: #2B8C7B;">📖 Sakinah Help</h2>
+                    <button id="close-help-modal" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">&times;</button>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🎲 Random Ayah</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.9em;">Get a random verse from the Quran. Click "Explain" to get AI-powered insights.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">📿 Ahadith</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.9em;">Browse prophetic traditions from various collections including Forties collections (Nawawi, etc.).</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🤖 AI Guide</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.9em;">Share your feelings and get personalized spiritual guidance with relevant Quranic verses. Toggle "عربي" for Arabic responses.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">❤️ Favorites</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.9em;">Save and review your favorite verses and hadiths. Use AI analysis to discover patterns in your selections.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🎯 Hifdh</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.9em;">Memorize the Quran with Learn and Quiz modes. Track your progress surah by surah.</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🔔 Notifications</h3>
+                        <p style="margin: 0; color: #555; font-size: 0.9em;">Enable periodic reminders with Quranic verses. Customize frequency from 15 minutes to daily.</p>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); padding: 12px; border-radius: 8px; margin-top: 16px;">
+                        <p style="margin: 0; color: #2B8C7B; font-size: 0.85em; text-align: center;">
+                            <strong>Tip:</strong> Configure your Groq API key in Advanced Settings for AI features.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        // Close handlers
+        document.getElementById('close-help-modal').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
     }
 
     // --- Hifdh (memorization) helpers ---
@@ -1261,14 +1622,353 @@ class SakinahPopup {
             });
             if (this.hifdhState.surahIndex === -1) this.hifdhState.surahIndex = 0;
         }
+
+        // Load memorized state for initial surah
+        this.loadHifdhMemorizedState();
+    }
+
+    // Load memorized ayahs from storage
+    loadHifdhMemorizedState() {
+        const key = `hifdh.progress.${this.hifdhState.surahIndex}`;
+        chrome.storage.local.get([key], (res) => {
+            this.hifdhState.memorized = res[key] || {};
+            this.updateHifdhStatsUI();
+            this.updateMarkButton();
+        });
+    }
+
+    // Update stats display
+    updateHifdhStatsUI() {
+        const countEl = document.getElementById('memorized-count');
+        if (!countEl || !this.hifdhData) return;
+        
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s) return;
+        
+        const memorizedCount = Object.values(this.hifdhState.memorized).filter(Boolean).length;
+        countEl.textContent = memorizedCount;
+
+        // Update progress bar
+        const progressBar = document.getElementById('hifdh-progress-bar');
+        const percentageEl = document.getElementById('hifdh-percentage');
+        if (progressBar && percentageEl) {
+            const percentage = s.ayahs.length > 0 ? Math.round((memorizedCount / s.ayahs.length) * 100) : 0;
+            progressBar.style.width = `${percentage}%`;
+            percentageEl.textContent = `${percentage}%`;
+        }
+    }
+
+    // Update mark button state
+    updateMarkButton() {
+        const markBtn = document.getElementById('hifdh-mark');
+        const markIcon = document.getElementById('hifdh-mark-icon');
+        if (!markBtn || !markIcon) return;
+        
+        const isMemorized = this.hifdhState.memorized[this.hifdhState.ayahIndex];
+        markIcon.textContent = isMemorized ? '✓' : '☐';
+        markBtn.innerHTML = `<span id="hifdh-mark-icon">${isMemorized ? '✓' : '☐'}</span> ${isMemorized ? 'Memorized!' : 'Mark Memorized'}`;
+        
+        if (isMemorized) {
+            markBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #218838 100%)';
+        } else {
+            markBtn.style.background = 'linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%)';
+        }
+    }
+
+    // Set hifdh mode
+    setHifdhMode(mode) {
+        this.hifdhState.mode = mode;
+        
+        // Update button styles
+        const modes = ['learn', 'quiz', 'listen'];
+        modes.forEach(m => {
+            const btn = document.getElementById(`hifdh-${m}`);
+            if (btn) {
+                if (m === mode) {
+                    btn.style.background = 'linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%)';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#72BAAE';
+                } else {
+                    btn.style.background = 'white';
+                    btn.style.color = '#2B8C7B';
+                    btn.style.borderColor = 'rgba(114,186,174,0.3)';
+                }
+            }
+        });
+
+        // Show/hide relevant areas
+        const quizArea = document.getElementById('hifdh-quiz-area');
+        const listenArea = document.getElementById('hifdh-listen-area');
+        const transBox = document.getElementById('hifdh-translation');
+        const arabicBox = document.getElementById('hifdh-arabic');
+
+        if (quizArea) quizArea.style.display = mode === 'quiz' ? 'block' : 'none';
+        if (listenArea) listenArea.style.display = mode === 'listen' ? 'block' : 'none';
+        
+        if (transBox) {
+            transBox.style.display = mode === 'quiz' ? 'none' : 'block';
+            transBox.style.visibility = 'visible';
+        }
+
+        if (arabicBox) {
+            arabicBox.style.display = mode === 'quiz' ? 'none' : 'block';
+        }
+
+        // Clear quiz feedback
+        const feedback = document.getElementById('hifdh-feedback');
+        if (feedback) {
+            feedback.style.display = 'none';
+        }
+
+        // Stop any playing audio when switching modes
+        if (this.hifdhAudio) {
+            this.hifdhAudio.pause();
+            this.hifdhAudio = null;
+        }
+
+        // Initialize quiz if entering quiz mode
+        if (mode === 'quiz') {
+            this.initQuizGame();
+        }
+    }
+
+    // Initialize quiz game
+    initQuizGame() {
+        // Reset quiz state
+        this.quizState = {
+            score: 0,
+            streak: 0,
+            correctIndex: -1,
+            answered: false
+        };
+        this.updateQuizScoreDisplay();
+        this.generateQuizQuestion();
+    }
+
+    // Generate a quiz question with 3 options
+    generateQuizQuestion() {
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s || s.ayahs.length < 3) return;
+
+        this.quizState.answered = false;
+        const currentAyah = s.ayahs[this.hifdhState.ayahIndex];
+        const arabicText = currentAyah.arabic || currentAyah.text || '';
+
+        // Split the verse into words and show first half as prompt
+        const words = arabicText.split(' ');
+        const promptWords = Math.max(1, Math.floor(words.length / 2));
+        const promptText = words.slice(0, promptWords).join(' ');
+        const answerText = words.slice(promptWords).join(' ');
+
+        // Display the prompt (first part of verse)
+        const quizPrompt = document.getElementById('quiz-prompt');
+        if (quizPrompt) {
+            quizPrompt.textContent = promptText;
+        }
+
+        // Get 2 random wrong answers from other ayahs
+        const wrongIndices = [];
+        const totalAyahs = s.ayahs.length;
+        
+        while (wrongIndices.length < 2) {
+            const randomIdx = Math.floor(Math.random() * totalAyahs);
+            if (randomIdx !== this.hifdhState.ayahIndex && !wrongIndices.includes(randomIdx)) {
+                wrongIndices.push(randomIdx);
+            }
+        }
+
+        // Get the second half of wrong answers too
+        const getSecondHalf = (ayah) => {
+            const text = ayah.arabic || ayah.text || '';
+            const w = text.split(' ');
+            const half = Math.max(1, Math.floor(w.length / 2));
+            return w.slice(half).join(' ') || text;
+        };
+
+        // Create options array with correct answer and 2 wrong ones
+        const options = [
+            { text: answerText || arabicText, correct: true },
+            { text: getSecondHalf(s.ayahs[wrongIndices[0]]), correct: false },
+            { text: getSecondHalf(s.ayahs[wrongIndices[1]]), correct: false }
+        ];
+
+        // Shuffle options
+        for (let i = options.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [options[i], options[j]] = [options[j], options[i]];
+        }
+
+        // Find correct index after shuffle
+        this.quizState.correctIndex = options.findIndex(o => o.correct);
+
+        // Update option buttons
+        const optionBtns = document.querySelectorAll('.quiz-option');
+        optionBtns.forEach((btn, idx) => {
+            const textSpan = btn.querySelector('.option-text');
+            if (textSpan) {
+                textSpan.textContent = options[idx].text;
+            }
+            // Reset styles
+            btn.style.background = 'white';
+            btn.style.borderColor = 'rgba(114,186,174,0.3)';
+            btn.style.transform = 'scale(1)';
+            btn.disabled = false;
+            btn.style.cursor = 'pointer';
+        });
+
+        // Hide feedback and next button
+        const feedback = document.getElementById('hifdh-feedback');
+        if (feedback) feedback.style.display = 'none';
+        const nextBtn = document.getElementById('quiz-next-btn');
+        if (nextBtn) nextBtn.style.display = 'none';
+    }
+
+    // Handle quiz option selection
+    selectQuizOption(optionIndex) {
+        if (this.quizState.answered) return;
+        this.quizState.answered = true;
+
+        const optionBtns = document.querySelectorAll('.quiz-option');
+        const isCorrect = optionIndex === this.quizState.correctIndex;
+
+        // Disable all options
+        optionBtns.forEach(btn => {
+            btn.disabled = true;
+            btn.style.cursor = 'default';
+        });
+
+        // Highlight correct answer
+        optionBtns[this.quizState.correctIndex].style.background = 'linear-gradient(135deg, rgba(40, 167, 69, 0.2) 0%, rgba(40, 167, 69, 0.1) 100%)';
+        optionBtns[this.quizState.correctIndex].style.borderColor = '#28a745';
+        optionBtns[this.quizState.correctIndex].style.transform = 'scale(1.02)';
+
+        // If wrong, highlight the wrong selection
+        if (!isCorrect) {
+            optionBtns[optionIndex].style.background = 'linear-gradient(135deg, rgba(220, 53, 69, 0.2) 0%, rgba(220, 53, 69, 0.1) 100%)';
+            optionBtns[optionIndex].style.borderColor = '#dc3545';
+        }
+
+        // Update score and streak
+        if (isCorrect) {
+            this.quizState.score++;
+            this.quizState.streak++;
+            
+            // Auto-mark as memorized if 3+ streak
+            if (this.quizState.streak >= 3 && !this.hifdhState.memorized[this.hifdhState.ayahIndex]) {
+                this.toggleMarkMemorized();
+            }
+        } else {
+            this.quizState.streak = 0;
+        }
+
+        this.updateQuizScoreDisplay();
+        this.showQuizFeedback(isCorrect);
+    }
+
+    // Update quiz score display
+    updateQuizScoreDisplay() {
+        const scoreEl = document.getElementById('quiz-score');
+        const streakEl = document.getElementById('quiz-streak');
+        
+        if (scoreEl) scoreEl.textContent = this.quizState.score;
+        if (streakEl) {
+            streakEl.textContent = this.quizState.streak;
+            // Add fire effect for high streaks
+            if (this.quizState.streak >= 3) {
+                streakEl.style.color = '#ff6b35';
+                streakEl.style.textShadow = '0 0 10px rgba(255, 107, 53, 0.5)';
+            } else {
+                streakEl.style.color = '#ffc107';
+                streakEl.style.textShadow = 'none';
+            }
+        }
+    }
+
+    // Show quiz feedback
+    showQuizFeedback(isCorrect) {
+        const feedback = document.getElementById('hifdh-feedback');
+        const feedbackIcon = document.getElementById('feedback-icon');
+        const feedbackText = document.getElementById('feedback-text');
+        const nextBtn = document.getElementById('quiz-next-btn');
+
+        if (!feedback) return;
+
+        feedback.style.display = 'block';
+
+        if (isCorrect) {
+            feedback.style.background = 'linear-gradient(135deg, rgba(40, 167, 69, 0.15) 0%, rgba(40, 167, 69, 0.05) 100%)';
+            feedback.style.border = '2px solid rgba(40, 167, 69, 0.3)';
+            
+            const messages = [
+                { icon: '🎉', text: 'Excellent! Masha\'Allah!' },
+                { icon: '⭐', text: 'Perfect! Keep going!' },
+                { icon: '🌟', text: 'Amazing! You got it!' },
+                { icon: '✨', text: 'Brilliant! Well done!' }
+            ];
+            const msg = messages[Math.floor(Math.random() * messages.length)];
+            
+            if (feedbackIcon) feedbackIcon.textContent = msg.icon;
+            if (feedbackText) {
+                feedbackText.style.color = '#155724';
+                feedbackText.textContent = msg.text;
+                if (this.quizState.streak >= 3) {
+                    feedbackText.textContent += ` 🔥 ${this.quizState.streak} streak!`;
+                }
+            }
+        } else {
+            feedback.style.background = 'linear-gradient(135deg, rgba(220, 53, 69, 0.15) 0%, rgba(220, 53, 69, 0.05) 100%)';
+            feedback.style.border = '2px solid rgba(220, 53, 69, 0.3)';
+            
+            if (feedbackIcon) feedbackIcon.textContent = '📚';
+            if (feedbackText) {
+                feedbackText.style.color = '#721c24';
+                feedbackText.textContent = 'Not quite! The correct answer is highlighted above.';
+            }
+        }
+
+        if (nextBtn) nextBtn.style.display = 'inline-block';
+    }
+
+    // Go to next quiz question
+    nextQuizQuestion() {
+        // Move to next ayah
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s) return;
+
+        if (this.hifdhState.ayahIndex < s.ayahs.length - 1) {
+            this.hifdhState.ayahIndex++;
+        } else {
+            // Loop back to beginning or show completion
+            this.hifdhState.ayahIndex = 0;
+        }
+
+        this.saveHifdhProgress();
+        this.updateHifdhProgressUI();
+        this.generateQuizQuestion();
     }
 
     updateHifdhProgressUI() {
         const info = document.getElementById('hifdh-progress');
-        if (!info || !this.hifdhData) return;
+        const badge = document.getElementById('hifdh-verse-badge');
+        if (!this.hifdhData) return;
+        
         const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
-        const total = s ? s.ayahs.length : 0;
-        info.textContent = `Surah ${s.number} • ${s.name} — Ayah ${this.hifdhState.ayahIndex + 1} / ${total}`;
+        if (!s) return;
+        
+        const total = s.ayahs.length;
+        const current = this.hifdhState.ayahIndex + 1;
+        
+        if (info) {
+            info.textContent = `${s.name || 'Surah ' + s.number} — Ayah ${current} of ${total}`;
+        }
+        
+        if (badge) {
+            badge.textContent = `Ayah ${current}`;
+        }
+
+        this.updateHifdhStatsUI();
     }
 
     showHifdhAyah() {
@@ -1280,23 +1980,23 @@ class SakinahPopup {
         const ay = s.ayahs[this.hifdhState.ayahIndex];
         if (!ay) return;
 
-        const numberInSurah = ay.numberInSurah || ay.verse || ay.verseNumber || (this.hifdhState.ayahIndex + 1);
-
         // Update primary displayed text
-        if (arabicBox) arabicBox.textContent = ay.arabic || ay.text || '';
+        if (arabicBox) {
+            arabicBox.textContent = ay.arabic || ay.text || '';
+        }
         if (transBox) {
             transBox.textContent = ay.translation || ay.trans || '';
             transBox.style.visibility = this.hifdhState.mode === 'quiz' ? 'hidden' : 'visible';
         }
 
-        // Update progress / reference area (uses existing ID in popup.html)
-        const info = document.getElementById('hifdh-progress');
-        const total = s ? s.ayahs.length : 0;
-        if (info) info.textContent = `Surah ${s.number} • ${s.name} — Ayah ${this.hifdhState.ayahIndex + 1} / ${total} • Ref ${s.number}:${numberInSurah}`;
-
         this.updateHifdhProgressUI();
-        const quizArea = document.getElementById('hifdh-quiz-area');
-        if (quizArea) quizArea.style.display = (this.hifdhState.mode === 'quiz') ? 'block' : 'none';
+        this.updateMarkButton();
+
+        // Clear feedback and answer when navigating
+        const feedback = document.getElementById('hifdh-feedback');
+        if (feedback) feedback.style.display = 'none';
+        const answerBox = document.getElementById('hifdh-answer');
+        if (answerBox) answerBox.value = '';
     }
 
     toggleHifdhMode() {
@@ -1307,25 +2007,44 @@ class SakinahPopup {
         if (!this.hifdhData) return;
         const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
         if (!s) return;
-        if (this.hifdhState.ayahIndex < s.ayahs.length - 1) this.hifdhState.ayahIndex++;
-        this.showHifdhAyah();
-        this.saveHifdhProgress();
+        if (this.hifdhState.ayahIndex < s.ayahs.length - 1) {
+            this.hifdhState.ayahIndex++;
+            this.showHifdhAyah();
+            this.saveHifdhProgress();
+        }
     }
 
     hifdhPrev() {
-        if (this.hifdhState.ayahIndex > 0) this.hifdhState.ayahIndex--;
+        if (this.hifdhState.ayahIndex > 0) {
+            this.hifdhState.ayahIndex--;
+            this.showHifdhAyah();
+            this.saveHifdhProgress();
+        }
+    }
+
+    randomHifdhAyah() {
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s || s.ayahs.length === 0) return;
+        
+        this.hifdhState.ayahIndex = Math.floor(Math.random() * s.ayahs.length);
         this.showHifdhAyah();
         this.saveHifdhProgress();
     }
 
     toggleMarkMemorized() {
         const key = `hifdh.progress.${this.hifdhState.surahIndex}`;
-        chrome.storage.local.get([key], (res) => {
-            const prog = res[key] || {};
-            const idx = this.hifdhState.ayahIndex;
-            prog[idx] = !prog[idx];
-            const obj = {}; obj[key] = prog;
-            chrome.storage.local.set(obj, () => { this.updateHifdhProgressUI(); });
+        const idx = this.hifdhState.ayahIndex;
+        
+        // Toggle in local state
+        this.hifdhState.memorized[idx] = !this.hifdhState.memorized[idx];
+        
+        // Save to storage
+        const obj = {}; 
+        obj[key] = this.hifdhState.memorized;
+        chrome.storage.local.set(obj, () => {
+            this.updateMarkButton();
+            this.updateHifdhStatsUI();
         });
     }
 
@@ -1336,38 +2055,215 @@ class SakinahPopup {
     }
 
     resetHifdhProgress() {
+        if (!confirm('Reset all memorization progress for this Surah?')) return;
+        
         const key = `hifdh.progress.${this.hifdhState.surahIndex}`;
-        chrome.storage.local.remove([key], () => { this.updateHifdhProgressUI(); });
+        chrome.storage.local.remove([key], () => {
+            this.hifdhState.memorized = {};
+            this.updateHifdhProgressUI();
+            this.updateMarkButton();
+            this.updateHifdhStatsUI();
+        });
     }
 
     revealHifdhAnswer() {
         const transBox = document.getElementById('hifdh-translation');
+        const arabicBox = document.getElementById('hifdh-arabic');
         if (transBox) transBox.style.visibility = 'visible';
+        if (arabicBox) arabicBox.style.visibility = 'visible';
+        
+        const feedback = document.getElementById('hifdh-feedback');
+        if (feedback) {
+            feedback.style.display = 'block';
+            feedback.style.background = 'rgba(114, 186, 174, 0.15)';
+            feedback.style.color = '#2B8C7B';
+            feedback.textContent = '👁️ Answer revealed - try to memorize it!';
+        }
+    }
+
+    showHifdhHint() {
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s) return;
+        const ay = s.ayahs[this.hifdhState.ayahIndex];
+        if (!ay) return;
+
+        const feedback = document.getElementById('hifdh-feedback');
+        if (!feedback) return;
+
+        const arabic = ay.arabic || ay.text || '';
+        const words = arabic.split(/\s+/);
+        
+        // Show first 2-3 words as hint
+        const hintWords = words.slice(0, Math.min(3, Math.ceil(words.length / 3)));
+        const hint = hintWords.join(' ') + ' ...';
+
+        feedback.style.display = 'block';
+        feedback.style.background = 'rgba(255, 193, 7, 0.15)';
+        feedback.style.color = '#856404';
+        feedback.innerHTML = `💡 <strong>Hint:</strong> <span style="direction:rtl; font-family:'Scheherazade', serif;">${hint}</span>`;
     }
 
     checkHifdhAnswer() {
         const input = document.getElementById('hifdh-answer');
         const result = document.getElementById('hifdh-feedback');
         if (!input || !result || !this.hifdhData) return;
+        
         const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
         const ay = s.ayahs[this.hifdhState.ayahIndex];
-        const expected = (ay.translation || ay.text || ay.arabic || '').replace(/[^\w\s]|_/g, '').toLowerCase().trim();
-        const given = input.value.replace(/[^\w\s]|_/g, '').toLowerCase().trim();
-        if (expected.length === 0) { result.textContent = 'No reference text available.'; return; }
-        if (given.length === 0) { result.textContent = 'Please type your attempt.'; return; }
-        const score = this.simpleSimilarity(expected, given);
-        result.textContent = score > 0.7 ? `Good — similarity ${Math.round(score*100)}%` : `Try again — similarity ${Math.round(score*100)}%`;
-        if (score > 0.8) this.toggleMarkMemorized();
+        
+        // Check against both Arabic and translation
+        const arabicText = (ay.arabic || ay.text || '').trim();
+        const translationText = (ay.translation || ay.trans || '').trim();
+        const given = input.value.trim();
+        
+        if (given.length === 0) {
+            result.style.display = 'block';
+            result.style.background = 'rgba(255, 193, 7, 0.15)';
+            result.style.color = '#856404';
+            result.textContent = '✏️ Please type your attempt first.';
+            return;
+        }
+
+        // Calculate similarity for both
+        const arabicScore = this.calculateSimilarity(arabicText, given);
+        const translationScore = this.calculateSimilarity(translationText, given);
+        const bestScore = Math.max(arabicScore, translationScore);
+        const percentage = Math.round(bestScore * 100);
+
+        result.style.display = 'block';
+
+        if (bestScore >= 0.9) {
+            result.style.background = 'rgba(40, 167, 69, 0.15)';
+            result.style.color = '#155724';
+            result.innerHTML = `🎉 <strong>Excellent!</strong> ${percentage}% match - Perfect memorization!`;
+            // Auto-mark as memorized
+            if (!this.hifdhState.memorized[this.hifdhState.ayahIndex]) {
+                this.toggleMarkMemorized();
+            }
+        } else if (bestScore >= 0.7) {
+            result.style.background = 'rgba(23, 162, 184, 0.15)';
+            result.style.color = '#0c5460';
+            result.innerHTML = `👍 <strong>Good!</strong> ${percentage}% match - Almost there!`;
+        } else if (bestScore >= 0.5) {
+            result.style.background = 'rgba(255, 193, 7, 0.15)';
+            result.style.color = '#856404';
+            result.innerHTML = `🔄 <strong>Keep trying!</strong> ${percentage}% match - You're getting there.`;
+        } else {
+            result.style.background = 'rgba(220, 53, 69, 0.15)';
+            result.style.color = '#721c24';
+            result.innerHTML = `📚 <strong>Practice more</strong> - ${percentage}% match. Try using the hint!`;
+        }
+    }
+
+    calculateSimilarity(reference, input) {
+        if (!reference || !input) return 0;
+        
+        // Normalize both strings
+        const normalize = (str) => str
+            .replace(/[\u064B-\u065F\u0670]/g, '') // Remove Arabic diacritics
+            .replace(/[^\w\s\u0600-\u06FF]/g, '') // Keep Arabic letters
+            .toLowerCase()
+            .trim();
+        
+        const refNorm = normalize(reference);
+        const inputNorm = normalize(input);
+        
+        if (refNorm === inputNorm) return 1;
+        
+        // Word-based similarity
+        const refWords = refNorm.split(/\s+/).filter(w => w.length > 0);
+        const inputWords = inputNorm.split(/\s+/).filter(w => w.length > 0);
+        
+        if (refWords.length === 0 || inputWords.length === 0) return 0;
+        
+        const inputSet = new Set(inputWords);
+        let matches = 0;
+        refWords.forEach(w => { if (inputSet.has(w)) matches++; });
+        
+        return matches / Math.max(refWords.length, inputWords.length);
     }
 
     simpleSimilarity(a, b) {
-        if (!a || !b) return 0;
-        const aWords = a.split(/\s+/);
-        const bWords = b.split(/\s+/);
-        let matches = 0;
-        const setB = new Set(bWords);
-        aWords.forEach(w => { if (setB.has(w)) matches++; });
-        return matches / Math.max(aWords.length, bWords.length);
+        return this.calculateSimilarity(a, b);
+    }
+
+    // Audio playback for Listen mode
+    async playHifdhAudio() {
+        if (!this.hifdhData) return;
+        const s = this.hifdhData.surahs[this.hifdhState.surahIndex];
+        if (!s) return;
+        const ay = s.ayahs[this.hifdhState.ayahIndex];
+        if (!ay) return;
+
+        const statusEl = document.getElementById('hifdh-audio-status');
+        const reciterSelect = document.getElementById('hifdh-reciter');
+        const reciter = reciterSelect ? reciterSelect.value : 'ar.alafasy';
+        const playBtn = document.getElementById('hifdh-play');
+
+        // Get verse number
+        const verseNum = ay.numberInSurah || ay.verse || (this.hifdhState.ayahIndex + 1);
+        const surahNum = s.number;
+
+        // Format for API: surah:ayah
+        const audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${this.getAyahNumber(surahNum, verseNum)}.mp3`;
+
+        if (statusEl) statusEl.textContent = '🔄 Loading audio...';
+        if (playBtn) playBtn.textContent = '⏳ Loading...';
+
+        try {
+            // Stop previous audio
+            if (this.hifdhAudio) {
+                this.hifdhAudio.pause();
+            }
+
+            this.hifdhAudio = new Audio(audioUrl);
+            
+            this.hifdhAudio.onplay = () => {
+                if (statusEl) statusEl.textContent = '🔊 Playing...';
+                if (playBtn) playBtn.textContent = '⏸️ Pause';
+            };
+            
+            this.hifdhAudio.onended = () => {
+                if (statusEl) statusEl.textContent = '✓ Finished';
+                if (playBtn) playBtn.textContent = '▶️ Play';
+            };
+            
+            this.hifdhAudio.onerror = () => {
+                if (statusEl) statusEl.textContent = '❌ Audio not available';
+                if (playBtn) playBtn.textContent = '▶️ Play';
+            };
+
+            await this.hifdhAudio.play();
+        } catch (err) {
+            console.error('Error playing audio:', err);
+            if (statusEl) statusEl.textContent = '❌ Could not play audio';
+            if (playBtn) playBtn.textContent = '▶️ Play';
+        }
+    }
+
+    repeatHifdhAudio() {
+        if (this.hifdhAudio) {
+            this.hifdhAudio.currentTime = 0;
+            this.hifdhAudio.play();
+        } else {
+            this.playHifdhAudio();
+        }
+    }
+
+    // Calculate absolute ayah number for audio API
+    getAyahNumber(surahNum, verseNum) {
+        // This is an approximation - the API uses absolute ayah numbers
+        // For accurate mapping, we'd need a lookup table
+        const ayahCounts = [7,286,200,176,120,165,206,75,129,109,123,111,43,52,99,128,111,110,98,135,112,78,118,64,77,227,93,88,69,60,34,30,73,54,45,83,182,88,75,85,54,53,89,59,37,35,38,29,18,45,60,49,62,55,78,96,29,22,24,13,14,11,11,18,12,12,30,52,52,44,28,28,20,56,40,31,50,40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+        
+        let absoluteNum = 0;
+        for (let i = 0; i < surahNum - 1 && i < ayahCounts.length; i++) {
+            absoluteNum += ayahCounts[i];
+        }
+        absoluteNum += verseNum;
+        
+        return absoluteNum;
     }
 }
 

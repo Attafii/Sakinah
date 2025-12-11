@@ -380,6 +380,50 @@
             border-radius: 50%;
             animation: spin 1s linear infinite;
         }
+
+        /* Scroll down button */
+        .scroll-down-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(43, 140, 123, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down-btn:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(43, 140, 123, 0.5);
+        }
+
+        .scroll-down-btn.visible {
+            display: flex;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-4px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -429,8 +473,14 @@
                 <div class="progress" id="progress-bar"></div>
             </div>
         </div>
+
+        <!-- Scroll down button -->
+        <button class="scroll-down-btn" id="scroll-down-btn" title="Scroll down for more">
+            ↓
+        </button>
     </div>
 
+    <script src="config.js"></script>
     <script src="notification-popup.js"></script>
 </body>
 </html>

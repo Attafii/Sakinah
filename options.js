@@ -333,8 +333,8 @@ class SakinahOptions {
             }
         } catch (error) {
             console.log('Groq API check failed:', error);
-            statusElement.innerHTML = '<small>⚠️ AI service unavailable - Using offline mode</small>';
-            statusElement.className = 'ai-status offline';
+            statusElement.innerHTML = '';
+            statusElement.className = 'ai-status';
         }
     }
 }

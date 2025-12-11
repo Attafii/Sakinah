@@ -106,12 +106,28 @@ function setupEventListeners() {
     // Close explanation
     document.getElementById('close-explanation').addEventListener('click', () => {
         document.getElementById('explanation-section').style.display = 'none';
+        checkScrollButton();
     });
 
     // Save button
     document.getElementById('save-btn').addEventListener('click', async () => {
         await saveToFavorites();
     });
+
+    // Scroll down button
+    const scrollBtn = document.getElementById('scroll-down-btn');
+    if (scrollBtn) {
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // Check scroll button visibility on scroll
+    window.addEventListener('scroll', checkScrollButton);
+    window.addEventListener('resize', checkScrollButton);
 
     // Pause timer on hover
     const card = document.getElementById('notification-card');
@@ -128,6 +144,26 @@ function setupEventListeners() {
             closePopup();
         }
     });
+
+    // Initial check for scroll button
+    setTimeout(checkScrollButton, 500);
+}
+
+// Check if scroll-down button should be visible
+function checkScrollButton() {
+    const scrollBtn = document.getElementById('scroll-down-btn');
+    if (!scrollBtn) return;
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const windowHeight = window.innerHeight;
+    const documentHeight = document.documentElement.scrollHeight;
+
+    // Show button if there's more content below (more than 50px)
+    if (documentHeight > windowHeight + scrollTop + 50) {
+        scrollBtn.classList.add('visible');
+    } else {
+        scrollBtn.classList.remove('visible');
+    }
 }
 
 // Explain Ayah with AI
@@ -173,16 +209,35 @@ async function explainAyah() {
         }
 
         const langInstruction = settings.explanationLanguage === 'arabic' 
-            ? 'Respond in Arabic.' 
+            ? 'CRITICAL: Respond ONLY in Arabic (العربية). Use Arabic script EXCLUSIVELY. Do NOT include ANY words from other languages (no English, no Russian, no Chinese, no French, etc.). Every single word must be in Arabic. If you need to use a technical term, use its Arabic equivalent or transliterate it into Arabic script.' 
             : 'Respond in English.';
 
-        const prompt = `${langInstruction} As an Islamic scholar, briefly explain this Quranic verse:
+        const prompt = `${langInstruction}
 
-Arabic: ${currentAyah.arabic || ''}
-Translation: ${currentAyah.translation || ''}
-Source: ${currentAyah.surah || ''} (${currentAyah.surahNumber || ''}:${currentAyah.ayahNumber || ''})
+You are explaining this Quranic verse following the methodology of Tafsir Ibn Kathir:
 
-Provide: 1) Key meaning, 2) Context, 3) One practical application. Keep it under 120 words.`;
+**Arabic Text:** ${currentAyah.arabic || ''}
+**Translation:** ${currentAyah.translation || ''}
+**Surah & Verse:** ${currentAyah.surah || ''} (${currentAyah.surahNumber || ''}:${currentAyah.ayahNumber || ''})
+
+Follow Ibn Kathir's tafsir methodology in your explanation:
+
+1. **Tafsir al-Quran bil-Quran (Quran explains Quran):** Reference other verses that relate to or explain this verse. Mention the surah and verse numbers.
+
+2. **Tafsir bil-Hadith (Explanation through Hadith):** If there are authentic hadiths from the Prophet ﷺ that explain this verse, mention them. Only cite well-known authentic hadiths.
+
+3. **Linguistic Analysis:** Explain key Arabic words, their root meanings, and significance in this context.
+
+4. **Core Message:** What is Allah teaching us? Be precise based on scholarly understanding.
+
+5. **Practical Application:** How can a Muslim apply this verse today?
+
+**Important Guidelines:**
+- Follow the approach of Imam Ibn Kathir: use Quran to explain Quran, then Sunnah, then statements of Sahabah.
+- Only cite hadiths and cross-references you are confident about. If unsure, say "Allah knows best."
+- Do not invent or fabricate any references.
+- Keep the tone scholarly yet accessible and spiritually uplifting.
+- Aim for approximately 250-350 words.`;
 
         const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
             method: 'POST',
@@ -193,11 +248,11 @@ Provide: 1) Key meaning, 2) Context, 3) One practical application. Keep it under
             body: JSON.stringify({
                 model: 'llama-3.3-70b-versatile',
                 messages: [
-                    { role: 'system', content: 'You are a knowledgeable Islamic scholar who explains Quranic verses with clarity and warmth.' },
+                    { role: 'system', content: 'You are a knowledgeable Islamic scholar trained in Quranic tafsir, particularly following the methodology of Imam Ibn Kathir (Tafsir al-Quran al-Azim). You explain verses by: 1) Using other Quran verses as explanation (Tafsir al-Quran bil-Quran), 2) Citing authentic hadiths, 3) Referencing statements of Sahabah when relevant, 4) Providing Arabic linguistic analysis. You are humble and never fabricate references. You say "Allah knows best" when uncertain. IMPORTANT: When asked to respond in Arabic, use ONLY Arabic script and Arabic words. Never mix in words from other languages like English, Russian, Chinese, etc.' },
                     { role: 'user', content: prompt }
                 ],
-                temperature: 0.7,
-                max_completion_tokens: 400
+                temperature: 0.4,
+                max_completion_tokens: 800
             })
         });
 
@@ -222,12 +277,16 @@ Provide: 1) Key meaning, 2) Context, 3) One practical application. Keep it under
         
         explanationContent.innerHTML = formattedExplanation;
         explainBtn.innerHTML = '<span>✅</span> Explained';
+        
+        // Check if scroll button should appear after content loads
+        setTimeout(checkScrollButton, 100);
 
     } catch (error) {
         console.error('Error explaining ayah:', error);
         explanationContent.innerHTML = '<div style="color: #721c24; background: #f8d7da; padding: 12px; border-radius: 8px;">Error generating explanation. Please try again.</div>';
         explainBtn.innerHTML = '<span>🤖</span> Explain Ayah';
         explainBtn.disabled = false;
+        checkScrollButton();
     }
 }
 

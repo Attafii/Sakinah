@@ -8,7 +8,11 @@
       "arabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
       "translation": "In the name of Allah, the Entirely Merciful, the Especially Merciful.",
       "theme": "beginning, mercy, compassion",
-      "emotions": ["hope", "gratitude", "peace"]
+      "emotions": [
+        "hope",
+        "gratitude",
+        "peace"
+      ]
     },
     {
       "id": 2,
@@ -18,7 +22,11 @@
       "arabic": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
       "translation": "All praise is due to Allah, Lord of the worlds.",
       "theme": "praise, gratitude, lordship",
-      "emotions": ["gratitude", "humility", "peace"]
+      "emotions": [
+        "gratitude",
+        "humility",
+        "peace"
+      ]
     },
     {
       "id": 111,
@@ -28,7 +36,11 @@
       "arabic": "وَهُوَ الَّذِيٓ أَنبَتَ مَعَكُمْ الْبَהِيمَةَ لِتَأْكُلُوا مِمَّا فَرَضَ عَلَيْكُمْ",
       "translation": "And He it is Who produces livestock for you; you have in them warm clothing and numerous benefits, and from them you eat.",
       "theme": "provision, sustenance, gratitude",
-      "emotions": ["grateful", "content", "provided"]
+      "emotions": [
+        "grateful",
+        "content",
+        "provided"
+      ]
     },
     {
       "id": 112,
@@ -38,7 +50,11 @@
       "arabic": "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
       "translation": "Unquestionably, by the remembrance of Allah hearts are assured.",
       "theme": "remembrance, peace, tranquility",
-      "emotions": ["peaceful", "calm", "reassured"]
+      "emotions": [
+        "peaceful",
+        "calm",
+        "reassured"
+      ]
     },
     {
       "id": 113,
@@ -48,7 +64,11 @@
       "arabic": "اعْلَمُوا أَنَّمَا الْحَيَاةُ الدُّنْيَا لَعِبٌ وَلَهْوٌ",
       "translation": "Know that the life of this world is but play and amusement.",
       "theme": "perspective, detachment, reflection",
-      "emotions": ["reflective", "content", "detached"]
+      "emotions": [
+        "reflective",
+        "content",
+        "detached"
+      ]
     },
     {
       "id": 114,
@@ -58,7 +78,11 @@
       "arabic": "قَدْ أَفْلَحَ الْمُؤْمِنُونَ",
       "translation": "Certainly will the believers have succeeded.",
       "theme": "success, faith, reassurance",
-      "emotions": ["successful", "joyful", "grateful"]
+      "emotions": [
+        "successful",
+        "joyful",
+        "grateful"
+      ]
     },
     {
       "id": 115,
@@ -68,7 +92,11 @@
       "arabic": "لَوْ أَنزَلْنَا هَذَا الْقُرْآنَ عَلَى جَبَلٍ لَرَأَيْتَهُ خَاشِعًا مُتَصَدِّعًا",
       "translation": "Had We sent down this Qur'an on a mountain, you would have seen it humbled and coming apart from fear of Allah.",
       "theme": "awe, humility, reverence",
-      "emotions": ["awe", "humble", "reflective"]
+      "emotions": [
+        "awe",
+        "humble",
+        "reflective"
+      ]
     },
     {
       "id": 116,
@@ -78,7 +106,11 @@
       "arabic": "فَبِأَيِّ آلَاءِ رَبِّكُمَا تُكَذِّبَانِ",
       "translation": "So which of the favors of your Lord would you deny?",
       "theme": "gratitude, favors, reflection",
-      "emotions": ["thankful", "grateful", "mindful"]
+      "emotions": [
+        "thankful",
+        "grateful",
+        "mindful"
+      ]
     },
     {
       "id": 117,
@@ -88,7 +120,11 @@
       "arabic": "وَهُوَ الَّذِي أَنشَأَكُمْ فِى أَرْجُلِكُمْ وَجَعَلَكُمْ سُبَاتًا",
       "translation": "And He it is Who created you in stages and made your sleep for rest.",
       "theme": "rest, creation, mercy",
-      "emotions": ["rested", "content", "grateful"]
+      "emotions": [
+        "rested",
+        "content",
+        "grateful"
+      ]
     },
     {
       "id": 118,
@@ -98,7 +134,11 @@
       "arabic": "هُوَ الَّذِي جَعَلَ لَكُمُ الْأَرْضَ ذَلُولًا",
       "translation": "It is He who made the earth tame for you - so walk among its slopes and eat of His provision.",
       "theme": "provision, travel, sustenance",
-      "emotions": ["provided", "grateful", "content"]
+      "emotions": [
+        "provided",
+        "grateful",
+        "content"
+      ]
     },
     {
       "id": 3,
@@ -108,7 +148,12 @@
       "arabic": "وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ ۖ أُجِيبُ دَعْوَةَ الدَّاعِ إِذَا دَعَانِ",
       "translation": "And when My servants ask you concerning Me, indeed I am near. I respond to the invocation of the supplicant when he calls upon Me.",
       "theme": "prayer, closeness, response",
-      "emotions": ["lonely", "anxious", "hopeful", "seeking"]
+      "emotions": [
+        "lonely",
+        "anxious",
+        "hopeful",
+        "seeking"
+      ]
     },
     {
       "id": 4,
@@ -118,7 +163,11 @@
       "arabic": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
       "translation": "Allah - there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep.",
       "theme": "power, protection, eternal",
-      "emotions": ["fearful", "insecure", "seeking protection"]
+      "emotions": [
+        "fearful",
+        "insecure",
+        "seeking protection"
+      ]
     },
     {
       "id": 5,
@@ -128,7 +177,12 @@
       "arabic": "لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا",
       "translation": "Allah does not charge a soul except with that within its capacity.",
       "theme": "burden, capacity, mercy",
-      "emotions": ["overwhelmed", "stressed", "anxious", "burdened"]
+      "emotions": [
+        "overwhelmed",
+        "stressed",
+        "anxious",
+        "burdened"
+      ]
     },
     {
       "id": 6,
@@ -138,7 +192,11 @@
       "arabic": "فَبِمَا رَحْمَةٍ مِّنَ اللَّهِ لِنتَ لَهُمْ",
       "translation": "So by mercy from Allah, you were lenient with them.",
       "theme": "mercy, gentleness, forgiveness",
-      "emotions": ["angry", "frustrated", "seeking forgiveness"]
+      "emotions": [
+        "angry",
+        "frustrated",
+        "seeking forgiveness"
+      ]
     },
     {
       "id": 7,
@@ -148,7 +206,12 @@
       "arabic": "أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ",
       "translation": "Unquestionably, by the remembrance of Allah hearts are assured.",
       "theme": "remembrance, peace, tranquility",
-      "emotions": ["anxious", "restless", "seeking peace", "troubled"]
+      "emotions": [
+        "anxious",
+        "restless",
+        "seeking peace",
+        "troubled"
+      ]
     },
     {
       "id": 8,
@@ -158,7 +221,11 @@
       "arabic": "وَإِذْ تَأَذَّنَ رَبُّكُمْ لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ",
       "translation": "And when your Lord proclaimed, 'If you are grateful, I will certainly give you more.'",
       "theme": "gratitude, increase, blessings",
-      "emotions": ["grateful", "seeking more", "thankful"]
+      "emotions": [
+        "grateful",
+        "seeking more",
+        "thankful"
+      ]
     },
     {
       "id": 9,
@@ -168,7 +235,11 @@
       "arabic": "وَاعْبُدْ رَبَّكَ حَتَّىٰ يَأْتِيَكَ الْيَقِينُ",
       "translation": "And worship your Lord until there comes to you the certainty (death).",
       "theme": "worship, perseverance, certainty",
-      "emotions": ["confused", "uncertain", "seeking purpose"]
+      "emotions": [
+        "confused",
+        "uncertain",
+        "seeking purpose"
+      ]
     },
     {
       "id": 10,
@@ -178,7 +249,10 @@
       "arabic": "قُلِ ادْعُوا اللَّهَ أَوِ ادْعُوا الرَّحْمَٰنَ ۖ أَيًّا مَّا تَدْعُوا فَلَهُ الْأَسْمَاءُ الْحُسْنَىٰ",
       "translation": "Say, 'Call upon Allah or call upon the Most Merciful. Whichever you call - to Him belong the best names.'",
       "theme": "names of Allah, prayer, mercy",
-      "emotions": ["seeking guidance", "confused about prayer"]
+      "emotions": [
+        "seeking guidance",
+        "confused about prayer"
+      ]
     },
     {
       "id": 11,
@@ -188,7 +262,11 @@
       "arabic": "مَا أَنزَلْنَا عَلَيْكَ الْقُرْآنَ لِتَشْقَىٰ",
       "translation": "We have not sent down to you the Qur'an that you be distressed.",
       "theme": "ease, comfort, purpose of Quran",
-      "emotions": ["distressed", "overwhelmed", "burdened"]
+      "emotions": [
+        "distressed",
+        "overwhelmed",
+        "burdened"
+      ]
     },
     {
       "id": 12,
@@ -198,7 +276,11 @@
       "arabic": "لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ",
       "translation": "There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.",
       "theme": "repentance, seeking forgiveness, humility",
-      "emotions": ["guilty", "remorseful", "seeking forgiveness"]
+      "emotions": [
+        "guilty",
+        "remorseful",
+        "seeking forgiveness"
+      ]
     },
     {
       "id": 13,
@@ -208,7 +290,11 @@
       "arabic": "اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ",
       "translation": "Allah is the light of the heavens and the earth.",
       "theme": "guidance, light, illumination",
-      "emotions": ["lost", "seeking guidance", "in darkness"]
+      "emotions": [
+        "lost",
+        "seeking guidance",
+        "in darkness"
+      ]
     },
     {
       "id": 14,
@@ -218,7 +304,11 @@
       "arabic": "وَتَوَكَّلْ عَلَى الْحَيِّ الَّذِي لَا يَمُوتُ",
       "translation": "And rely upon the Ever-Living who does not die.",
       "theme": "trust, reliance, eternal life",
-      "emotions": ["insecure", "needing support", "uncertain"]
+      "emotions": [
+        "insecure",
+        "needing support",
+        "uncertain"
+      ]
     },
     {
       "id": 15,
@@ -228,7 +318,11 @@
       "arabic": "لَعَلَّكَ بَاخِعٌ نَّفْسَكَ أَلَّا يَكُونُوا مُؤْمِنِينَ",
       "translation": "Perhaps you would kill yourself with grief that they will not be believers.",
       "theme": "grief, concern for others, patience",
-      "emotions": ["worried about others", "grief", "concerned"]
+      "emotions": [
+        "worried about others",
+        "grief",
+        "concerned"
+      ]
     },
     {
       "id": 16,
@@ -238,7 +332,11 @@
       "arabic": "أَمَّن يُجِيبُ الْمُضْطَرَّ إِذَا دَعَاهُ وَيَكْشِفُ السُّوءَ",
       "translation": "Is He not best who responds to the desperate one when he calls upon Him and removes evil?",
       "theme": "distress, relief, answering prayers",
-      "emotions": ["desperate", "in crisis", "emergency"]
+      "emotions": [
+        "desperate",
+        "in crisis",
+        "emergency"
+      ]
     },
     {
       "id": 17,
@@ -248,7 +346,11 @@
       "arabic": "وَابْتَغِ فِيمَا آتَاكَ اللَّهُ الدَّارَ الْآخِرَةَ ۖ وَلَا تَنسَ نَصِيبَكَ مِنَ الدُّنْيَا",
       "translation": "But seek, through that which Allah has given you, the home of the Hereafter; but do not forget your share of the world.",
       "theme": "balance, worldly life, hereafter",
-      "emotions": ["conflicted", "balancing priorities", "worldly concerns"]
+      "emotions": [
+        "conflicted",
+        "balancing priorities",
+        "worldly concerns"
+      ]
     },
     {
       "id": 18,
@@ -258,7 +360,11 @@
       "arabic": "يَا بُنَيَّ أَقِمِ الصَّلَاةَ وَأْمُرْ بِالْمَعْرُوفِ وَانْهَ عَنِ الْمُنكَرِ وَاصْبِرْ عَلَىٰ مَا أَصَابَكَ",
       "translation": "O my son, establish prayer and enjoin what is right and forbid what is wrong and be patient over what befalls you.",
       "theme": "advice, patience, righteousness",
-      "emotions": ["seeking guidance", "need direction", "facing challenges"]
+      "emotions": [
+        "seeking guidance",
+        "need direction",
+        "facing challenges"
+      ]
     },
     {
       "id": 19,
@@ -268,7 +374,11 @@
       "arabic": "تَتَجَافَىٰ جُنُوبُهُمْ عَنِ الْمَضَاجِعِ يَدْعُونَ رَبَّهُمْ خَوْفًا وَطَمَعًا",
       "translation": "Their sides forsake their beds, calling upon their Lord in fear and aspiration.",
       "theme": "night prayer, devotion, hope and fear",
-      "emotions": ["devoted", "seeking closeness", "spiritual longing"]
+      "emotions": [
+        "devoted",
+        "seeking closeness",
+        "spiritual longing"
+      ]
     },
     {
       "id": 20,
@@ -278,7 +388,11 @@
       "arabic": "وَمَا أَنفَقْتُم مِّن شَيْءٍ فَهُوَ يُخْلِفُهُ ۖ وَهُوَ خَيْرُ الرَّازِقِينَ",
       "translation": "And whatever you spend, He will replace it; and He is the best of providers.",
       "theme": "spending, provision, replacement",
-      "emotions": ["financial worry", "concerned about money", "generous"]
+      "emotions": [
+        "financial worry",
+        "concerned about money",
+        "generous"
+      ]
     },
     {
       "id": 21,
@@ -288,7 +402,11 @@
       "arabic": "سَلَامٌ قَوْلًا مِّن رَّبٍّ رَّحِيمٍ",
       "translation": "Peace - a word from a Merciful Lord.",
       "theme": "peace, mercy, divine greeting",
-      "emotions": ["seeking peace", "need tranquility", "restless"]
+      "emotions": [
+        "seeking peace",
+        "need tranquility",
+        "restless"
+      ]
     },
     {
       "id": 22,
@@ -298,7 +416,11 @@
       "arabic": "وَظَنَّ دَاوُودُ أَنَّمَا فَتَنَّاهُ فَاسْتَغْفَرَ رَبَّهُ وَخَرَّ رَاكِعًا وَأَنَابَ",
       "translation": "And David realized that We had tried him, so he asked forgiveness of his Lord and fell down bowing and turned in repentance.",
       "theme": "repentance, humility, seeking forgiveness",
-      "emotions": ["made mistake", "guilty", "seeking forgiveness"]
+      "emotions": [
+        "made mistake",
+        "guilty",
+        "seeking forgiveness"
+      ]
     },
     {
       "id": 23,
@@ -308,7 +430,12 @@
       "arabic": "قُلْ يَا عِبَادِيَ الَّذِينَ أَسْرَفُوا عَلَىٰ أَنفُسِهِمْ لَا تَقْنَطُوا مِن رَّحْمَةِ اللَّهِ",
       "translation": "Say, 'O My servants who have transgressed against themselves, do not despair of the mercy of Allah.'",
       "theme": "hope, mercy, no despair",
-      "emotions": ["despair", "hopeless", "sinful", "overwhelmed by mistakes"]
+      "emotions": [
+        "despair",
+        "hopeless",
+        "sinful",
+        "overwhelmed by mistakes"
+      ]
     },
     {
       "id": 24,
@@ -318,7 +445,11 @@
       "arabic": "وَقَالَ رَبُّكُمُ ادْعُونِي أَسْتَجِبْ لَكُمْ",
       "translation": "And your Lord says, 'Call upon Me; I will respond to you.'",
       "theme": "prayer, response, invitation",
-      "emotions": ["seeking help", "need guidance", "calling for help"]
+      "emotions": [
+        "seeking help",
+        "need guidance",
+        "calling for help"
+      ]
     },
     {
       "id": 25,
@@ -328,7 +459,11 @@
       "arabic": "إِنَّ الَّذِينَ قَالُوا رَبُّنَا اللَّهُ ثُمَّ اسْتَقَامُوا تَتَنَزَّلُ عَلَيْهِمُ الْمَلَائِكَةُ",
       "translation": "Indeed, those who have said, 'Our Lord is Allah' and then remained on a right course - the angels will descend upon them.",
       "theme": "steadfastness, guidance, angelic support",
-      "emotions": ["staying strong", "need consistency", "seeking steadfastness"]
+      "emotions": [
+        "staying strong",
+        "need consistency",
+        "seeking steadfastness"
+      ]
     },
     {
       "id": 26,
@@ -338,7 +473,11 @@
       "arabic": "وَمَا أَصَابَكُم مِّن مُّصِيبَةٍ فَبِمَا كَسَبَتْ أَيْدِيكُمْ وَيَعْفُو عَن كَثِيرٍ",
       "translation": "And whatever strikes you of disaster - it is for what your hands have earned; but He pardons much.",
       "theme": "trials, forgiveness, wisdom in hardship",
-      "emotions": ["facing trials", "reflecting on hardship", "seeking understanding"]
+      "emotions": [
+        "facing trials",
+        "reflecting on hardship",
+        "seeking understanding"
+      ]
     },
     {
       "id": 27,
@@ -348,7 +487,11 @@
       "arabic": "رَحْمَةً مِّن رَّبِّكَ ۚ إِنَّهُ هُوَ السَّمِيعُ الْعَلِيمُ",
       "translation": "As mercy from your Lord. Indeed, He is the Hearing, the Knowing.",
       "theme": "mercy, divine knowledge, listening",
-      "emotions": ["need mercy", "feeling unheard", "seeking understanding"]
+      "emotions": [
+        "need mercy",
+        "feeling unheard",
+        "seeking understanding"
+      ]
     },
     {
       "id": 28,
@@ -358,7 +501,11 @@
       "arabic": "رَبَّنَا اغْفِرْ لَنَا وَلِإِخْوَانِنَا الَّذِينَ سَبَقُونَا بِالْإِيمَانِ",
       "translation": "Our Lord, forgive us and our brothers who preceded us in faith.",
       "theme": "forgiveness, community, prayer for others",
-      "emotions": ["caring for others", "community spirit", "seeking collective forgiveness"]
+      "emotions": [
+        "caring for others",
+        "community spirit",
+        "seeking collective forgiveness"
+      ]
     },
     {
       "id": 29,
@@ -368,7 +515,11 @@
       "arabic": "وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ ۚ إِنَّ اللَّهَ بَالِغُ أَمْرِهِ",
       "translation": "And whoever relies upon Allah - then He is sufficient for him. Indeed, Allah will accomplish His purpose.",
       "theme": "trust, sufficiency, divine plan",
-      "emotions": ["need support", "trusting the process", "uncertain about future"]
+      "emotions": [
+        "need support",
+        "trusting the process",
+        "uncertain about future"
+      ]
     },
     {
       "id": 30,
@@ -378,7 +529,11 @@
       "arabic": "الَّذِي خَلَقَ الْمَوْتَ وَالْحَيَاةَ لِيَبْلُوَكُمْ أَيُّكُمْ أَحْسَنُ عَمَلًا",
       "translation": "Who created death and life to test you as to which of you is best in deed.",
       "theme": "purpose of life, test, good deeds",
-      "emotions": ["questioning purpose", "seeking meaning", "reflection on life"]
+      "emotions": [
+        "questioning purpose",
+        "seeking meaning",
+        "reflection on life"
+      ]
     },
     {
       "id": 31,
@@ -388,7 +543,11 @@
       "arabic": "وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ",
       "translation": "And indeed, you are of a great moral character.",
       "theme": "character, morality, excellence",
-      "emotions": ["striving for excellence", "working on character", "moral guidance"]
+      "emotions": [
+        "striving for excellence",
+        "working on character",
+        "moral guidance"
+      ]
     },
     {
       "id": 32,
@@ -398,7 +557,11 @@
       "arabic": "وَاذْكُرِ اسْمَ رَبِّكَ وَتَبَتَّلْ إِلَيْهِ تَبْتِيلًا",
       "translation": "And remember the name of your Lord and devote yourself to Him with complete devotion.",
       "theme": "devotion, remembrance, dedication",
-      "emotions": ["seeking devotion", "need focus", "spiritual dedication"]
+      "emotions": [
+        "seeking devotion",
+        "need focus",
+        "spiritual dedication"
+      ]
     },
     {
       "id": 33,
@@ -408,7 +571,11 @@
       "arabic": "وَلِرَبِّكَ فَاصْبِرْ",
       "translation": "And for your Lord, be patient.",
       "theme": "patience, perseverance, for Allah",
-      "emotions": ["impatient", "need perseverance", "struggling with waiting"]
+      "emotions": [
+        "impatient",
+        "need perseverance",
+        "struggling with waiting"
+      ]
     },
     {
       "id": 34,
@@ -418,7 +585,11 @@
       "arabic": "إِنَّمَا نُطْعِمُكُمْ لِوَجْهِ اللَّهِ لَا نُرِيدُ مِنكُمْ جَزَاءً وَلَا شُكُورًا",
       "translation": "We feed you only for the countenance of Allah. We wish not from you reward or gratitude.",
       "theme": "sincerity, charity, pure intention",
-      "emotions": ["wanting to help others", "charitable", "seeking pure intentions"]
+      "emotions": [
+        "wanting to help others",
+        "charitable",
+        "seeking pure intentions"
+      ]
     },
     {
       "id": 35,
@@ -428,7 +599,11 @@
       "arabic": "رَّبِّ السَّمَاوَاتِ وَالْأَرْضِ وَمَا بَيْنَهُمَا الرَّحْمَٰنِ",
       "translation": "Lord of the heavens and the earth and whatever is between them - the Most Merciful.",
       "theme": "lordship, mercy, creation",
-      "emotions": ["marveling at creation", "seeking mercy", "contemplating nature"]
+      "emotions": [
+        "marveling at creation",
+        "seeking mercy",
+        "contemplating nature"
+      ]
     },
     {
       "id": 36,
@@ -438,7 +613,11 @@
       "arabic": "وَأَمَّا مَنْ خَافَ مَقَامَ رَبِّهِ وَنَهَى النَّفْسَ عَنِ الْهَوَىٰ",
       "translation": "But as for he who feared the position of his Lord and prevented the soul from unlawful inclination.",
       "theme": "self-control, fear of Allah, discipline",
-      "emotions": ["struggling with desires", "need self-control", "fighting temptation"]
+      "emotions": [
+        "struggling with desires",
+        "need self-control",
+        "fighting temptation"
+      ]
     },
     {
       "id": 37,
@@ -448,7 +627,11 @@
       "arabic": "كَلَّا إِنَّهَا تَذْكِرَةٌ",
       "translation": "No! Indeed, these verses are a reminder.",
       "theme": "reminder, guidance, awakening",
-      "emotions": ["need reminder", "forgetful", "seeking awakening"]
+      "emotions": [
+        "need reminder",
+        "forgetful",
+        "seeking awakening"
+      ]
     },
     {
       "id": 38,
@@ -458,7 +641,11 @@
       "arabic": "إِنْ هُوَ إِلَّا ذِكْرٌ لِّلْعَالَمِينَ",
       "translation": "It is not except a reminder to the worlds.",
       "theme": "universal reminder, guidance for all",
-      "emotions": ["sharing knowledge", "wanting to guide others", "universal concerns"]
+      "emotions": [
+        "sharing knowledge",
+        "wanting to guide others",
+        "universal concerns"
+      ]
     },
     {
       "id": 39,
@@ -468,7 +655,11 @@
       "arabic": "يَا أَيُّهَا الْإِنسَانُ إِنَّكَ كَادِحٌ إِلَىٰ رَبِّكَ كَدْحًا فَمُلَاقِيهِ",
       "translation": "O mankind, indeed you are laboring toward your Lord with exertion and will meet it.",
       "theme": "striving, meeting Allah, effort",
-      "emotions": ["working hard", "striving", "preparing for meeting Allah"]
+      "emotions": [
+        "working hard",
+        "striving",
+        "preparing for meeting Allah"
+      ]
     },
     {
       "id": 40,
@@ -478,7 +669,11 @@
       "arabic": "وَهُوَ الْغَفُورُ الْوَدُودُ",
       "translation": "And He is the Forgiving, the Affectionate.",
       "theme": "forgiveness, love, divine affection",
-      "emotions": ["need forgiveness", "seeking love", "feeling distant from Allah"]
+      "emotions": [
+        "need forgiveness",
+        "seeking love",
+        "feeling distant from Allah"
+      ]
     },
     {
       "id": 41,
@@ -488,7 +683,11 @@
       "arabic": "إِن كُلُّ نَفْسٍ لَّمَّا عَلَيْهَا حَافِظٌ",
       "translation": "There is no soul but that it has over it a protector.",
       "theme": "protection, guardian angels, divine care",
-      "emotions": ["feeling vulnerable", "need protection", "seeking safety"]
+      "emotions": [
+        "feeling vulnerable",
+        "need protection",
+        "seeking safety"
+      ]
     },
     {
       "id": 42,
@@ -498,7 +697,11 @@
       "arabic": "سَبِّحِ اسْمَ رَبِّكَ الْأَعْلَىٰ",
       "translation": "Exalt the name of your Lord, the Most High.",
       "theme": "glorification, exaltation, praise",
-      "emotions": ["grateful", "praising", "recognizing greatness"]
+      "emotions": [
+        "grateful",
+        "praising",
+        "recognizing greatness"
+      ]
     },
     {
       "id": 43,
@@ -508,7 +711,11 @@
       "arabic": "لَّسْتَ عَلَيْهِم بِمُصَيْطِرٍ",
       "translation": "You are not over them a controller.",
       "theme": "free will, guidance, not forcing",
-      "emotions": ["frustrated with others", "trying to control", "letting go"]
+      "emotions": [
+        "frustrated with others",
+        "trying to control",
+        "letting go"
+      ]
     },
     {
       "id": 44,
@@ -518,7 +725,11 @@
       "arabic": "يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ",
       "translation": "O reassured soul.",
       "theme": "peace of soul, tranquility, contentment",
-      "emotions": ["seeking peace", "inner turmoil", "wanting tranquility"]
+      "emotions": [
+        "seeking peace",
+        "inner turmoil",
+        "wanting tranquility"
+      ]
     },
     {
       "id": 45,
@@ -528,7 +739,11 @@
       "arabic": "لَقَدْ خَلَقْنَا الْإِنسَانَ فِي كَبَدٍ",
       "translation": "We have certainly created man into hardship.",
       "theme": "hardship, struggle, human condition",
-      "emotions": ["struggling", "facing hardship", "acknowledging difficulty"]
+      "emotions": [
+        "struggling",
+        "facing hardship",
+        "acknowledging difficulty"
+      ]
     },
     {
       "id": 46,
@@ -538,7 +753,11 @@
       "arabic": "وَنَفْسٍ وَمَا سَوَّاهَا",
       "translation": "And a soul and He who proportioned it.",
       "theme": "soul, divine design, balance",
-      "emotions": ["self-reflection", "understanding oneself", "seeking balance"]
+      "emotions": [
+        "self-reflection",
+        "understanding oneself",
+        "seeking balance"
+      ]
     },
     {
       "id": 47,
@@ -548,7 +767,11 @@
       "arabic": "إِنَّ سَعْيَكُمْ لَشَتَّىٰ",
       "translation": "Indeed, your efforts are diverse.",
       "theme": "different paths, efforts, diversity",
-      "emotions": ["confused about direction", "multiple paths", "seeking clarity"]
+      "emotions": [
+        "confused about direction",
+        "multiple paths",
+        "seeking clarity"
+      ]
     },
     {
       "id": 48,
@@ -558,7 +781,11 @@
       "arabic": "وَلَلْآخِرَةُ خَيْرٌ لَّكَ مِنَ الْأُولَىٰ",
       "translation": "And the hereafter is better for you than the first life.",
       "theme": "hope, future, patience with present",
-      "emotions": ["discouraged", "current difficulties", "need hope"]
+      "emotions": [
+        "discouraged",
+        "current difficulties",
+        "need hope"
+      ]
     },
     {
       "id": 49,
@@ -568,7 +795,12 @@
       "arabic": "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا",
       "translation": "For indeed, with hardship comes ease.",
       "theme": "relief after hardship, hope, divine promise",
-      "emotions": ["going through hardship", "need hope", "struggling", "patience"]
+      "emotions": [
+        "going through hardship",
+        "need hope",
+        "struggling",
+        "patience"
+      ]
     },
     {
       "id": 50,
@@ -578,7 +810,11 @@
       "arabic": "لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ",
       "translation": "We have certainly created man in the best stature.",
       "theme": "human dignity, creation, potential",
-      "emotions": ["low self-esteem", "recognizing potential", "human worth"]
+      "emotions": [
+        "low self-esteem",
+        "recognizing potential",
+        "human worth"
+      ]
     },
     {
       "id": 51,
@@ -588,7 +824,11 @@
       "arabic": "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ",
       "translation": "Read! In the Name of your Lord, Who has created.",
       "theme": "knowledge, learning, beginning",
-      "emotions": ["seeking knowledge", "starting journey", "education"]
+      "emotions": [
+        "seeking knowledge",
+        "starting journey",
+        "education"
+      ]
     },
     {
       "id": 52,
@@ -598,7 +838,11 @@
       "arabic": "إِنَّا أَنزَلْنَاهُ فِي لَيْلَةِ الْقَدْرِ",
       "translation": "Indeed, We sent the Qur'an down during the Night of Decree.",
       "theme": "special night, blessings, divine decree",
-      "emotions": ["seeking blessings", "spiritual elevation", "special moments"]
+      "emotions": [
+        "seeking blessings",
+        "spiritual elevation",
+        "special moments"
+      ]
     },
     {
       "id": 53,
@@ -608,7 +852,11 @@
       "arabic": "جَزَاؤُهُمْ عِندَ رَبِّهِمْ جَنَّاتُ عَدْنٍ تَجْرِي مِن تَحْتِهَا الْأَنْهَارُ",
       "translation": "Their reward with Allah will be gardens of perpetual residence beneath which rivers flow.",
       "theme": "reward, paradise, hope",
-      "emotions": ["hopeful", "working towards goals", "seeking reward"]
+      "emotions": [
+        "hopeful",
+        "working towards goals",
+        "seeking reward"
+      ]
     },
     {
       "id": 54,
@@ -618,7 +866,11 @@
       "arabic": "فَمَن يَعْمَلْ مِثْقَالَ ذَرَّةٍ خَيْرًا يَرَهُ",
       "translation": "So whoever does an atom's weight of good will see it.",
       "theme": "accountability, good deeds, justice",
-      "emotions": ["motivated to do good", "accountability", "justice"]
+      "emotions": [
+        "motivated to do good",
+        "accountability",
+        "justice"
+      ]
     },
     {
       "id": 55,
@@ -628,7 +880,11 @@
       "arabic": "إِنَّ الْإِنسَانَ لِرَبِّهِ لَكَنُودٌ",
       "translation": "Indeed mankind, to his Lord, is ungrateful.",
       "theme": "gratitude, human nature, reminder",
-      "emotions": ["ungrateful", "need reminder", "self-reflection"]
+      "emotions": [
+        "ungrateful",
+        "need reminder",
+        "self-reflection"
+      ]
     },
     {
       "id": 56,
@@ -638,7 +894,11 @@
       "arabic": "يَوْمَ يَكُونُ النَّاسُ كَالْفَرَاشِ الْمَبْثُوثِ",
       "translation": "It is the Day when people will be like moths, dispersed.",
       "theme": "day of judgment, preparation, awareness",
-      "emotions": ["preparing for afterlife", "accountability", "awareness"]
+      "emotions": [
+        "preparing for afterlife",
+        "accountability",
+        "awareness"
+      ]
     },
     {
       "id": 57,
@@ -648,7 +908,11 @@
       "arabic": "أَلْهَاكُمُ التَّكَاثُرُ",
       "translation": "Competition in worldly increase diverts you.",
       "theme": "worldly distractions, priorities, warning",
-      "emotions": ["distracted by world", "materialistic", "need focus"]
+      "emotions": [
+        "distracted by world",
+        "materialistic",
+        "need focus"
+      ]
     },
     {
       "id": 58,
@@ -658,7 +922,11 @@
       "arabic": "وَالْعَصْرِ",
       "translation": "By time,",
       "theme": "time, urgency, preciousness of time",
-      "emotions": ["time management", "urgency", "productivity"]
+      "emotions": [
+        "time management",
+        "urgency",
+        "productivity"
+      ]
     },
     {
       "id": 59,
@@ -668,7 +936,11 @@
       "arabic": "إِلَّا الَّذِينَ آمَنُوا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ",
       "translation": "Except for those who have believed and done righteous deeds and advised each other to truth and advised each other to patience.",
       "theme": "success formula, community, patience, truth",
-      "emotions": ["seeking success", "community building", "perseverance"]
+      "emotions": [
+        "seeking success",
+        "community building",
+        "perseverance"
+      ]
     },
     {
       "id": 60,
@@ -678,7 +950,11 @@
       "arabic": "وَيْلٌ لِّكُلِّ هُمَزَةٍ لُّمَزَةٍ",
       "translation": "Woe to every scorner and mocker.",
       "theme": "character, behavior, warning against mockery",
-      "emotions": ["improving character", "avoiding negativity", "respect for others"]
+      "emotions": [
+        "improving character",
+        "avoiding negativity",
+        "respect for others"
+      ]
     },
     {
       "id": 61,
@@ -688,7 +964,11 @@
       "arabic": "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ",
       "translation": "Did He not make their plan into misguidance?",
       "theme": "divine protection, failed plots, Allah's power",
-      "emotions": ["facing enemies", "divine protection", "trust in Allah"]
+      "emotions": [
+        "facing enemies",
+        "divine protection",
+        "trust in Allah"
+      ]
     },
     {
       "id": 62,
@@ -698,7 +978,11 @@
       "arabic": "الَّذِي أَطْعَمَهُم مِّن جُوعٍ وَآمَنَهُم مِّنْ خَوْفٍ",
       "translation": "Who has fed them, saving them from hunger and made them safe, saving them from fear.",
       "theme": "provision, security, gratitude for basics",
-      "emotions": ["grateful for basics", "security", "provision"]
+      "emotions": [
+        "grateful for basics",
+        "security",
+        "provision"
+      ]
     },
     {
       "id": 63,
@@ -708,7 +992,11 @@
       "arabic": "وَيَمْنَعُونَ الْمَاعُونَ",
       "translation": "But refuse small kindnesses.",
       "theme": "kindness, charity, helping others",
-      "emotions": ["wanting to help", "kindness", "charitable giving"]
+      "emotions": [
+        "wanting to help",
+        "kindness",
+        "charitable giving"
+      ]
     },
     {
       "id": 64,
@@ -718,7 +1006,11 @@
       "arabic": "إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ",
       "translation": "Indeed, We have granted you abundance.",
       "theme": "abundance, blessings, gratitude",
-      "emotions": ["grateful for abundance", "recognizing blessings", "thankful"]
+      "emotions": [
+        "grateful for abundance",
+        "recognizing blessings",
+        "thankful"
+      ]
     },
     {
       "id": 65,
@@ -728,7 +1020,11 @@
       "arabic": "لَكُمْ دِينُكُمْ وَلِيَ دِينِ",
       "translation": "For you is your religion, and for me is my religion.",
       "theme": "tolerance, respect, religious freedom",
-      "emotions": ["tolerance", "respecting differences", "peaceful coexistence"]
+      "emotions": [
+        "tolerance",
+        "respecting differences",
+        "peaceful coexistence"
+      ]
     },
     {
       "id": 66,
@@ -738,7 +1034,11 @@
       "arabic": "فَسَبِّحْ بِحَمْدِ رَبِّكَ وَاسْتَغْفِرْهُ ۚ إِنَّهُ كَانَ تَوَّابًا",
       "translation": "Then exalt Him with praise of your Lord and ask forgiveness of Him. Indeed, He is ever Accepting of repentance.",
       "theme": "praise, forgiveness, repentance",
-      "emotions": ["seeking forgiveness", "praising Allah", "repentance"]
+      "emotions": [
+        "seeking forgiveness",
+        "praising Allah",
+        "repentance"
+      ]
     },
     {
       "id": 67,
@@ -748,7 +1048,11 @@
       "arabic": "تَبَّتْ يَدَا أَبِي لَهَبٍ وَتَبَّ",
       "translation": "May the hands of Abu Lahab be ruined, and ruined is he.",
       "theme": "consequences, divine justice, opposition to truth",
-      "emotions": ["facing opposition", "divine justice", "consequences"]
+      "emotions": [
+        "facing opposition",
+        "divine justice",
+        "consequences"
+      ]
     },
     {
       "id": 68,
@@ -758,7 +1062,11 @@
       "arabic": "قُلْ هُوَ اللَّهُ أَحَدٌ",
       "translation": "Say, He is Allah, the One!",
       "theme": "monotheism, unity of Allah, pure faith",
-      "emotions": ["seeking clarity about Allah", "pure faith", "monotheism"]
+      "emotions": [
+        "seeking clarity about Allah",
+        "pure faith",
+        "monotheism"
+      ]
     },
     {
       "id": 69,
@@ -768,7 +1076,11 @@
       "arabic": "اللَّهُ الصَّمَدُ",
       "translation": "Allah, the Eternal Refuge.",
       "theme": "Allah's attributes, refuge, eternal",
-      "emotions": ["seeking refuge", "eternal support", "divine attributes"]
+      "emotions": [
+        "seeking refuge",
+        "eternal support",
+        "divine attributes"
+      ]
     },
     {
       "id": 70,
@@ -778,7 +1090,11 @@
       "arabic": "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ",
       "translation": "Say, I seek refuge in the Lord of daybreak.",
       "theme": "protection, seeking refuge, morning",
-      "emotions": ["seeking protection", "starting new day", "refuge"]
+      "emotions": [
+        "seeking protection",
+        "starting new day",
+        "refuge"
+      ]
     },
     {
       "id": 71,
@@ -788,7 +1104,11 @@
       "arabic": "مِن شَرِّ مَا خَلَقَ",
       "translation": "From the evil of that which He created.",
       "theme": "protection from evil, general protection",
-      "emotions": ["fear of evil", "seeking general protection", "anxiety"]
+      "emotions": [
+        "fear of evil",
+        "seeking general protection",
+        "anxiety"
+      ]
     },
     {
       "id": 72,
@@ -798,7 +1118,11 @@
       "arabic": "قُلْ أَعُوذُ بِرَبِّ النَّاسِ",
       "translation": "Say, I seek refuge in the Lord of mankind.",
       "theme": "protection, Lord of humanity, refuge",
-      "emotions": ["seeking protection", "human community", "refuge"]
+      "emotions": [
+        "seeking protection",
+        "human community",
+        "refuge"
+      ]
     },
     {
       "id": 73,
@@ -808,7 +1132,11 @@
       "arabic": "مِنَ الْجِنَّةِ وَالنَّاسِ",
       "translation": "From among the jinn and mankind.",
       "theme": "protection from whispers, evil influences",
-      "emotions": ["protection from negative influences", "mental peace", "clarity"]
+      "emotions": [
+        "protection from negative influences",
+        "mental peace",
+        "clarity"
+      ]
     },
     {
       "id": 74,
@@ -818,7 +1146,11 @@
       "arabic": "ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ",
       "translation": "This is the Book about which there is no doubt, a guidance for those conscious of Allah.",
       "theme": "guidance, certainty, book of Allah",
-      "emotions": ["seeking guidance", "certainty", "spiritual direction"]
+      "emotions": [
+        "seeking guidance",
+        "certainty",
+        "spiritual direction"
+      ]
     },
     {
       "id": 75,
@@ -828,7 +1160,11 @@
       "arabic": "يَا أَيُّهَا النَّاسُ اعْبُدُوا رَبَّكُمُ الَّذِي خَلَقَكُمْ وَالَّذِينَ مِن قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ",
       "translation": "O mankind, worship your Lord, who created you and those before you, that you may become righteous.",
       "theme": "worship, creation, righteousness",
-      "emotions": ["seeking righteousness", "understanding purpose", "worship"]
+      "emotions": [
+        "seeking righteousness",
+        "understanding purpose",
+        "worship"
+      ]
     },
     {
       "id": 76,
@@ -838,7 +1174,12 @@
       "arabic": "قُلْنَا اهْبِطُوا مِنْهَا جَمِيعًا ۖ فَإِمَّا يَأْتِيَنَّكُم مِّنِّي هُدًى فَمَن تَبِعَ هُدَايَ فَلَا خَوْفٌ عَلَيْهِمْ وَلَا هُمْ يَحْزَنُونَ",
       "translation": "We said, Go down from it, all of you. And when guidance comes to you from Me, whoever follows My guidance - there will be no fear concerning them, nor will they grieve.",
       "theme": "guidance, no fear, following divine path",
-      "emotions": ["fearful", "grieving", "seeking guidance", "peace"]
+      "emotions": [
+        "fearful",
+        "grieving",
+        "seeking guidance",
+        "peace"
+      ]
     },
     {
       "id": 77,
@@ -848,7 +1189,11 @@
       "arabic": "إِنَّ الَّذِينَ آمَنُوا وَالَّذِينَ هَادُوا وَالنَّصَارَىٰ وَالصَّابِئِينَ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ وَعَمِلَ صَالِحًا فَلَهُمْ أَجْرُهُمْ عِندَ رَبِّهِمْ",
       "translation": "Indeed, those who believed and those who were Jews or Christians or Sabeans - those who believed in Allah and the Last Day and did righteousness - will have their reward with their Lord.",
       "theme": "inclusivity, righteousness, divine reward",
-      "emotions": ["inclusive", "righteous", "working towards reward"]
+      "emotions": [
+        "inclusive",
+        "righteous",
+        "working towards reward"
+      ]
     },
     {
       "id": 78,
@@ -858,7 +1203,11 @@
       "arabic": "وَلِلَّهِ الْمَشْرِقُ وَالْمَغْرِبُ ۚ فَأَيْنَمَا تُوَلُّوا فَثَمَّ وَجْهُ اللَّهِ",
       "translation": "And to Allah belongs the east and the west. So wherever you turn, there is the face of Allah.",
       "theme": "Allah's presence everywhere, direction",
-      "emotions": ["feeling Allah's presence", "spiritual connection", "divine nearness"]
+      "emotions": [
+        "feeling Allah's presence",
+        "spiritual connection",
+        "divine nearness"
+      ]
     },
     {
       "id": 79,
@@ -868,7 +1217,11 @@
       "arabic": "فَاذْكُرُونِي أَذْكُرْكُمْ وَاشْكُرُوا لِي وَلَا تَكْفُرُونِ",
       "translation": "So remember Me; I will remember you. And be grateful to Me and do not deny Me.",
       "theme": "remembrance, gratitude, mutual relationship",
-      "emotions": ["grateful", "remembering Allah", "seeking connection"]
+      "emotions": [
+        "grateful",
+        "remembering Allah",
+        "seeking connection"
+      ]
     },
     {
       "id": 80,
@@ -878,7 +1231,12 @@
       "arabic": "يَا أَيُّهَا الَّذِينَ آمَنُوا اسْتَعِينُوا بِالصَّبْرِ وَالصَّلَاةِ ۚ إِنَّ اللَّهَ مَعَ الصَّابِرِينَ",
       "translation": "O you who have believed, seek help through patience and prayer. Indeed, Allah is with the patient.",
       "theme": "patience, prayer, divine support",
-      "emotions": ["need patience", "seeking help", "prayer", "endurance"]
+      "emotions": [
+        "need patience",
+        "seeking help",
+        "prayer",
+        "endurance"
+      ]
     },
     {
       "id": 81,
@@ -888,7 +1246,13 @@
       "arabic": "وَلَنَبْلُوَنَّكُم بِشَيْءٍ مِّنَ الْخَوْفِ وَالْجُوعِ وَنَقْصٍ مِّنَ الْأَمْوَالِ وَالْأَنفُسِ وَالثَّمَرَاتِ ۗ وَبَشِّرِ الصَّابِرِينَ",
       "translation": "And We will surely test you with something of fear and hunger and a loss of wealth and lives and fruits, but give good tidings to the patient.",
       "theme": "tests, trials, patience, good news",
-      "emotions": ["facing trials", "fear", "loss", "need patience", "hope"]
+      "emotions": [
+        "facing trials",
+        "fear",
+        "loss",
+        "need patience",
+        "hope"
+      ]
     },
     {
       "id": 82,
@@ -898,7 +1262,13 @@
       "arabic": "الَّذِينَ إِذَا أَصَابَتْهُم مُّصِيبَةٌ قَالُوا إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
       "translation": "Who, when disaster strikes them, say, Indeed we belong to Allah, and indeed to Him we will return.",
       "theme": "acceptance, return to Allah, dealing with calamity",
-      "emotions": ["facing disaster", "acceptance", "loss", "grief", "surrender"]
+      "emotions": [
+        "facing disaster",
+        "acceptance",
+        "loss",
+        "grief",
+        "surrender"
+      ]
     },
     {
       "id": 83,
@@ -908,7 +1278,11 @@
       "arabic": "لَّيْسَ الْبِرَّ أَن تُوَلُّوا وُجُوهَكُمْ قِبَلَ الْمَشْرِقِ وَالْمَغْرِبِ وَلَٰكِنَّ الْبِرَّ مَنْ آمَنَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ",
       "translation": "Righteousness is not that you turn your faces toward the east or the west, but righteousness is in one who believes in Allah, the Last Day, the angels, the Book, and the prophets.",
       "theme": "true righteousness, belief, comprehensive faith",
-      "emotions": ["seeking true righteousness", "understanding faith", "spiritual depth"]
+      "emotions": [
+        "seeking true righteousness",
+        "understanding faith",
+        "spiritual depth"
+      ]
     },
     {
       "id": 84,
@@ -918,7 +1292,11 @@
       "arabic": "وَتَزَوَّدُوا فَإِنَّ خَيْرَ الزَّادِ التَّقْوَىٰ ۚ وَاتَّقُونِ يَا أُولِي الْأَلْبَابِ",
       "translation": "And take provisions, but indeed, the best provision is righteousness. So fear Me, O you of understanding.",
       "theme": "preparation, righteousness, wisdom",
-      "emotions": ["preparing for journey", "seeking wisdom", "righteousness"]
+      "emotions": [
+        "preparing for journey",
+        "seeking wisdom",
+        "righteousness"
+      ]
     },
     {
       "id": 85,
@@ -928,7 +1306,11 @@
       "arabic": "كُتِبَ عَلَيْكُمُ الْقِتَالُ وَهُوَ كُرْهٌ لَّكُمْ ۖ وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ",
       "translation": "Fighting is prescribed for you though you dislike it. But perhaps you hate a thing and it is good for you.",
       "theme": "divine wisdom, acceptance, hidden good",
-      "emotions": ["disliking something", "trusting divine wisdom", "acceptance"]
+      "emotions": [
+        "disliking something",
+        "trusting divine wisdom",
+        "acceptance"
+      ]
     },
     {
       "id": 86,
@@ -938,7 +1320,11 @@
       "arabic": "إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ",
       "translation": "Indeed, Allah loves those who are constantly repentant and loves those who purify themselves.",
       "theme": "repentance, purification, divine love",
-      "emotions": ["seeking repentance", "purification", "divine love"]
+      "emotions": [
+        "seeking repentance",
+        "purification",
+        "divine love"
+      ]
     },
     {
       "id": 87,
@@ -948,7 +1334,11 @@
       "arabic": "مَّثَلُ الَّذِينَ يُنفِقُونَ أَمْوَالَهُمْ فِي سَبِيلِ اللَّهِ كَمَثَلِ حَبَّةٍ أَنبَتَتْ سَبْعَ سَنَابِلَ فِي كُلِّ سُنبُلَةٍ مِّائَةُ حَبَّةٍ",
       "translation": "The example of those who spend their wealth in the way of Allah is like a seed of grain which grows seven spikes; in each spike is a hundred grains.",
       "theme": "charity, multiplication, divine reward",
-      "emotions": ["charitable", "seeking reward", "generous giving"]
+      "emotions": [
+        "charitable",
+        "seeking reward",
+        "generous giving"
+      ]
     },
     {
       "id": 88,
@@ -958,7 +1348,11 @@
       "arabic": "يَا أَيُّهَا الَّذِينَ آمَنُوا أَنفِقُوا مِن طَيِّبَاتِ مَا كَسَبْتُمْ وَمِمَّا أَخْرَجْنَا لَكُم مِّنَ الْأَرْضِ",
       "translation": "O you who have believed, spend from the good things which you have earned and from that which We have produced for you from the earth.",
       "theme": "spending good earnings, charity, gratitude",
-      "emotions": ["grateful for earnings", "charitable giving", "sharing blessings"]
+      "emotions": [
+        "grateful for earnings",
+        "charitable giving",
+        "sharing blessings"
+      ]
     },
     {
       "id": 89,
@@ -968,7 +1362,11 @@
       "arabic": "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ",
       "translation": "The Messenger has believed in what was revealed to him from his Lord, and so have the believers. All of them have believed in Allah and His angels and His books and His messengers.",
       "theme": "comprehensive belief, faith pillars, unity of faith",
-      "emotions": ["strengthening faith", "comprehensive belief", "unity"]
+      "emotions": [
+        "strengthening faith",
+        "comprehensive belief",
+        "unity"
+      ]
     },
     {
       "id": 90,
@@ -978,7 +1376,11 @@
       "arabic": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ",
       "translation": "Our Lord, let not our hearts deviate after You have guided us and grant us from Yourself mercy. Indeed, You are the Bestower.",
       "theme": "seeking guidance continuity, mercy, divine gifts",
-      "emotions": ["fearing deviation", "seeking steady guidance", "mercy"]
+      "emotions": [
+        "fearing deviation",
+        "seeking steady guidance",
+        "mercy"
+      ]
     },
     {
       "id": 91,
@@ -988,7 +1390,11 @@
       "arabic": "قُلِ اللَّهُمَّ مَالِكَ الْمُلْكِ تُؤْتِي الْمُلْكَ مَن تَشَاءُ وَتَنزِعُ الْمُلْكَ مِمَّن تَشَاءُ",
       "translation": "Say, O Allah, Owner of Sovereignty, You give sovereignty to whom You will and You take sovereignty away from whom You will.",
       "theme": "divine sovereignty, power, control",
-      "emotions": ["recognizing divine control", "accepting Allah's decisions", "sovereignty"]
+      "emotions": [
+        "recognizing divine control",
+        "accepting Allah's decisions",
+        "sovereignty"
+      ]
     },
     {
       "id": 92,
@@ -998,7 +1404,11 @@
       "arabic": "الَّذِينَ يُنفِقُونَ فِي السَّرَّاءِ وَالضَّرَّاءِ وَالْكَاظِمِينَ الْغَيْظَ وَالْعَافِينَ عَنِ النَّاسِ",
       "translation": "Who spend in prosperity and in adversity and who restrain anger and who pardon the people.",
       "theme": "consistent charity, anger management, forgiveness",
-      "emotions": ["controlling anger", "forgiving others", "consistent giving"]
+      "emotions": [
+        "controlling anger",
+        "forgiving others",
+        "consistent giving"
+      ]
     },
     {
       "id": 93,
@@ -1008,7 +1418,11 @@
       "arabic": "كُلُّ نَفْسٍ ذَائِقَةُ الْمَوْتِ ۗ وَإِنَّمَا تُوَفَّوْنَ أُجُورَكُمْ يَوْمَ الْقِيَامَةِ",
       "translation": "Every soul will taste death, and you will only be given your full compensation on the Day of Resurrection.",
       "theme": "death, resurrection, full compensation",
-      "emotions": ["contemplating death", "preparing for afterlife", "seeking reward"]
+      "emotions": [
+        "contemplating death",
+        "preparing for afterlife",
+        "seeking reward"
+      ]
     },
     {
       "id": 94,
@@ -1018,7 +1432,12 @@
       "arabic": "يَا أَيُّهَا الَّذِينَ آمَنُوا اصْبِرُوا وَصَابِرُوا وَرَابِطُوا وَاتَّقُوا اللَّهَ لَعَلَّكُمْ تُفْلِحُونَ",
       "translation": "O you who have believed, persevere and endure and remain stationed and fear Allah that you may be successful.",
       "theme": "perseverance, endurance, success, fear of Allah",
-      "emotions": ["need perseverance", "seeking success", "endurance", "righteousness"]
+      "emotions": [
+        "need perseverance",
+        "seeking success",
+        "endurance",
+        "righteousness"
+      ]
     },
     {
       "id": 95,
@@ -1028,7 +1447,11 @@
       "arabic": "يَا أَيُّهَا النَّاسُ اتَّقُوا رَبَّكُمُ الَّذِي خَلَقَكُم مِّن نَّفْسٍ وَاحِدَةٍ",
       "translation": "O mankind, fear your Lord, who created you from one soul.",
       "theme": "unity of humanity, common origin, righteousness",
-      "emotions": ["human unity", "common brotherhood", "righteousness"]
+      "emotions": [
+        "human unity",
+        "common brotherhood",
+        "righteousness"
+      ]
     },
     {
       "id": 96,
@@ -1038,7 +1461,11 @@
       "arabic": "إِنَّ اللَّهَ لَا يَظْلِمُ مِثْقَالَ ذَرَّةٍ ۖ وَإِن تَكُ حَسَنَةً يُضَاعِفْهَا وَيُؤْتِ مِن لَّدُنْهُ أَجْرًا عَظِيمًا",
       "translation": "Indeed, Allah does not do injustice, even as much as an atom's weight; while if there is a good deed, He multiplies it and gives from Himself a great reward.",
       "theme": "divine justice, multiplication of good deeds, great reward",
-      "emotions": ["seeking justice", "motivated to do good", "hope for reward"]
+      "emotions": [
+        "seeking justice",
+        "motivated to do good",
+        "hope for reward"
+      ]
     },
     {
       "id": 97,
@@ -1048,7 +1475,11 @@
       "arabic": "مَّا أَصَابَكَ مِنْ حَسَنَةٍ فَمِنَ اللَّهِ ۖ وَمَا أَصَابَكَ مِن سَيِّئَةٍ فَمِن نَّفْسِكَ",
       "translation": "What comes to you of good is from Allah, but what comes to you of evil is from yourself.",
       "theme": "accountability, source of good and evil, self-reflection",
-      "emotions": ["self-accountability", "recognizing Allah's goodness", "self-reflection"]
+      "emotions": [
+        "self-accountability",
+        "recognizing Allah's goodness",
+        "self-reflection"
+      ]
     },
     {
       "id": 98,
@@ -1058,7 +1489,12 @@
       "arabic": "مَّا يَفْعَلُ اللَّهُ بِعَذَابِكُمْ إِن شَكَرْتُمْ وَآمَنتُمْ ۚ وَكَانَ اللَّهُ شَاكِرًا عَلِيمًا",
       "translation": "What would Allah do with your punishment if you are grateful and believe? And ever is Allah Appreciative and Knowing.",
       "theme": "gratitude, belief, Allah's appreciation",
-      "emotions": ["grateful", "believing", "appreciative", "avoiding punishment"]
+      "emotions": [
+        "grateful",
+        "believing",
+        "appreciative",
+        "avoiding punishment"
+      ]
     },
     {
       "id": 99,
@@ -1068,7 +1504,11 @@
       "arabic": "يَهْدِي بِهِ اللَّهُ مَنِ اتَّبَعَ رِضْوَانَهُ سُبُلَ السَّلَامِ وَيُخْرِجُهُم مِّنَ الظُّلُمَاتِ إِلَى النُّورِ",
       "translation": "By which Allah guides those who pursue His pleasure to the ways of peace and brings them out from darknesses into the light.",
       "theme": "guidance to peace, light from darkness, divine pleasure",
-      "emotions": ["seeking peace", "guidance from darkness", "divine pleasure"]
+      "emotions": [
+        "seeking peace",
+        "guidance from darkness",
+        "divine pleasure"
+      ]
     },
     {
       "id": 100,
@@ -1078,7 +1518,11 @@
       "arabic": "يَا أَيُّهَا الَّذِينَ آمَنُوا مَن يَرْتَدَّ مِنكُمْ عَن دِينِهِ فَسَوْفَ يَأْتِي اللَّهُ بِقَوْمٍ يُحِبُّهُمْ وَيُحِبُّونَهُ",
       "translation": "O you who have believed, whoever of you should revert from his religion - Allah will bring forth a people He will love and who will love Him.",
       "theme": "divine love, mutual love, steadfastness in faith",
-      "emotions": ["seeking divine love", "steadfast in faith", "mutual love with Allah"]
+      "emotions": [
+        "seeking divine love",
+        "steadfast in faith",
+        "mutual love with Allah"
+      ]
     },
     {
       "id": 101,
@@ -1088,7 +1532,12 @@
       "arabic": "قُلْ بِفَضْلِ اللَّهِ وَبِرَحْمَتِهِ فَبِذَٰلِكَ فَلْيَفْرَحُوا ۖ هَٰذَا خَيْرٌ مِّمَّا يَجْمَعُونَ",
       "translation": "Say, 'In the bounty of Allah and in His mercy — in that let them rejoice; that is better than what they accumulate.'",
       "theme": "joy, mercy, gratitude",
-      "emotions": ["happy", "rejoicing", "grateful", "joyful"]
+      "emotions": [
+        "happy",
+        "rejoicing",
+        "grateful",
+        "joyful"
+      ]
     },
     {
       "id": 102,
@@ -1098,7 +1547,12 @@
       "arabic": "وَسَيُؤْتِيكَ رَبُّكَ فَتَرْضَىٰ",
       "translation": "And your Lord is going to give you, and you will be satisfied.",
       "theme": "comfort, provision, satisfaction",
-      "emotions": ["hopeful", "content", "satisfied", "happy"]
+      "emotions": [
+        "hopeful",
+        "content",
+        "satisfied",
+        "happy"
+      ]
     },
     {
       "id": 103,
@@ -1108,7 +1562,12 @@
       "arabic": "إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا",
       "translation": "Indeed, We have given you a clear conquest.",
       "theme": "victory, success, celebration",
-      "emotions": ["joyful", "victorious", "celebration", "grateful"]
+      "emotions": [
+        "joyful",
+        "victorious",
+        "celebration",
+        "grateful"
+      ]
     },
     {
       "id": 104,
@@ -1118,7 +1577,12 @@
       "arabic": "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا",
       "translation": "And of His signs is that He created for you from yourselves mates that you may find tranquility in them.",
       "theme": "love, family, tranquility",
-      "emotions": ["content", "blessed", "love", "gratitude"]
+      "emotions": [
+        "content",
+        "blessed",
+        "love",
+        "gratitude"
+      ]
     },
     {
       "id": 105,
@@ -1128,7 +1592,12 @@
       "arabic": "وَمِنْهُم مَّن يَقُولُ رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً",
       "translation": "And among them are those who say, 'Our Lord, give us in this world [that which is] good and in the Hereafter [that which is] good.'",
       "theme": "supplication, well-being, balanced life",
-      "emotions": ["hopeful", "seeking good", "content", "happy"]
+      "emotions": [
+        "hopeful",
+        "seeking good",
+        "content",
+        "happy"
+      ]
     },
     {
       "id": 106,
@@ -1138,7 +1607,11 @@
       "arabic": "فَكُلُوا مِمَّا رَزَقَكُمُ اللَّهُ حَلَالًا طَيِّبًا",
       "translation": "So eat of what Allah has provided for you [that is] lawful and good.",
       "theme": "provision, gratitude, lawful bounty",
-      "emotions": ["content", "grateful", "blessed"]
+      "emotions": [
+        "content",
+        "grateful",
+        "blessed"
+      ]
     },
     {
       "id": 107,
@@ -1148,7 +1621,11 @@
       "arabic": "إِذْ أَوَى الْفِتْيَةُ إِلَى الْكَهْفِ فَقَالُوا رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
       "translation": "When the youths retreated to the cave and said, 'Our Lord, grant us mercy from Yourself and prepare for us from our affair right guidance.'",
       "theme": "protection, mercy, guidance",
-      "emotions": ["hopeful", "protected", "grateful"]
+      "emotions": [
+        "hopeful",
+        "protected",
+        "grateful"
+      ]
     },
     {
       "id": 108,
@@ -1158,7 +1635,11 @@
       "arabic": "يَا أَيَّتُهَا النَّفْسُ الْمُطْمَئِنَّةُ",
       "translation": "O reassured soul.",
       "theme": "peace, reassurance, contentment",
-      "emotions": ["content", "peaceful", "happy"]
+      "emotions": [
+        "content",
+        "peaceful",
+        "happy"
+      ]
     },
     {
       "id": 109,
@@ -1168,7 +1649,11 @@
       "arabic": "فَإِنَّ مَعَ الْعُسْرِ يُسْرًا",
       "translation": "For indeed, with hardship comes ease.",
       "theme": "comfort, ease after hardship, hope",
-      "emotions": ["relieved", "hopeful", "grateful"]
+      "emotions": [
+        "relieved",
+        "hopeful",
+        "grateful"
+      ]
     },
     {
       "id": 110,
@@ -1178,7 +1663,1929 @@
       "arabic": "وَمِنْ آيَاتِهِ أَنْ خَلَقَ لَكُمْ مِنْ أَنفُسِكُمْ أَزْوَاجًا لِتَسْكُنُوا إِلَيْهَا",
       "translation": "And of His signs is that He created for you from yourselves mates that you may find tranquility in them.",
       "theme": "love, family, tranquility",
-      "emotions": ["blessed", "content", "love"]
+      "emotions": [
+        "blessed",
+        "content",
+        "love"
+      ]
+    },
+    {
+      "id": 119,
+      "surah": "Al-Fatihah",
+      "surahNumber": 1,
+      "ayahNumber": 3,
+      "arabic": "ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+      "translation": "The Most Gracious, the Most Merciful.",
+      "theme": "mercy, compassion, divine attributes",
+      "emotions": [
+        "grateful",
+        "peaceful",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 120,
+      "surah": "Al-Fatihah",
+      "surahNumber": 1,
+      "ayahNumber": 4,
+      "arabic": "مَٰلِكِ يَوۡمِ ٱلدِّينِ",
+      "translation": "Master of the Day of Judgment.",
+      "theme": "accountability, divine power, hereafter",
+      "emotions": [
+        "humble",
+        "reflective",
+        "awe"
+      ]
+    },
+    {
+      "id": 121,
+      "surah": "Al-Fatihah",
+      "surahNumber": 1,
+      "ayahNumber": 5,
+      "arabic": "إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ",
+      "translation": "You alone we worship, and You alone we ask for help.",
+      "theme": "worship, sincerity, seeking help",
+      "emotions": [
+        "devoted",
+        "seeking",
+        "humble"
+      ]
+    },
+    {
+      "id": 122,
+      "surah": "Al-Fatihah",
+      "surahNumber": 1,
+      "ayahNumber": 6,
+      "arabic": "ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ",
+      "translation": "Guide us to the straight path.",
+      "theme": "guidance, prayer, direction",
+      "emotions": [
+        "seeking",
+        "hopeful",
+        "lost"
+      ]
+    },
+    {
+      "id": 123,
+      "surah": "Al-Fatihah",
+      "surahNumber": 1,
+      "ayahNumber": 7,
+      "arabic": "صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ",
+      "translation": "The path of those upon whom You have bestowed favor, not of those who have earned anger or of those who are astray.",
+      "theme": "guidance, favor, right path",
+      "emotions": [
+        "seeking",
+        "hopeful",
+        "grateful"
+      ]
+    },
+    {
+      "id": 124,
+      "surah": "Al-Baqarah",
+      "surahNumber": 2,
+      "ayahNumber": 45,
+      "arabic": "وَٱسۡتَعِينُواْ بِٱلصَّبۡرِ وَٱلصَّلَوٰةِۚ وَإِنَّهَا لَكَبِيرَةٌ إِلَّا عَلَى ٱلۡخَٰشِعِينَ",
+      "translation": "And seek help through patience and prayer, and indeed, it is difficult except for the humbly submissive to Allah.",
+      "theme": "patience, prayer, humility",
+      "emotions": [
+        "anxious",
+        "stressed",
+        "seeking"
+      ]
+    },
+    {
+      "id": 125,
+      "surah": "Al-Baqarah",
+      "surahNumber": 2,
+      "ayahNumber": 183,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ كُتِبَ عَلَيۡكُمُ ٱلصِّيَامُ كَمَا كُتِبَ عَلَى ٱلَّذِينَ مِن قَبۡلِكُمۡ لَعَلَّكُمۡ تَتَّقُونَ",
+      "translation": "O you who have believed, decreed upon you is fasting as it was decreed upon those before you that you may become righteous.",
+      "theme": "fasting, righteousness, discipline",
+      "emotions": [
+        "devoted",
+        "self-improvement",
+        "discipline"
+      ]
+    },
+    {
+      "id": 126,
+      "surah": "Al-Baqarah",
+      "surahNumber": 2,
+      "ayahNumber": 238,
+      "arabic": "حَٰفِظُواْ عَلَى ٱلصَّلَوَٰتِ وَٱلصَّلَوٰةِ ٱلۡوُسۡطَىٰ وَقُومُواْ لِلَّهِ قَٰنِتِينَ",
+      "translation": "Maintain with care the obligatory prayers and the middle prayer and stand before Allah, devoutly obedient.",
+      "theme": "prayer, devotion, worship",
+      "emotions": [
+        "devoted",
+        "discipline",
+        "peaceful"
+      ]
+    },
+    {
+      "id": 127,
+      "surah": "Al-Baqarah",
+      "surahNumber": 2,
+      "ayahNumber": 269,
+      "arabic": "يُؤۡتِي ٱلۡحِكۡمَةَ مَن يَشَآءُۚ وَمَن يُؤۡتَ ٱلۡحِكۡمَةَ فَقَدۡ أُوتِيَ خَيۡرٗا كَثِيرٗاۗ وَمَا يَذَّكَّرُ إِلَّآ أُوْلُواْ ٱلۡأَلۡبَٰبِ",
+      "translation": "He gives wisdom to whom He wills, and whoever has been given wisdom has certainly been given much good.",
+      "theme": "wisdom, knowledge, divine gift",
+      "emotions": [
+        "seeking",
+        "grateful",
+        "reflective"
+      ]
+    },
+    {
+      "id": 128,
+      "surah": "Al-Imran",
+      "surahNumber": 3,
+      "ayahNumber": 31,
+      "arabic": "قُلۡ إِن كُنتُمۡ تُحِبُّونَ ٱللَّهَ فَٱتَّبِعُونِي يُحۡبِبۡكُمُ ٱللَّهُ وَيَغۡفِرۡ لَكُمۡ ذُنُوبَكُمۡۚ وَٱللَّهُ غَفُورٞ رَّحِيمٞ",
+      "translation": "Say, If you should love Allah, then follow me, so Allah will love you and forgive you your sins.",
+      "theme": "love of Allah, following Prophet, forgiveness",
+      "emotions": [
+        "devoted",
+        "seeking love",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 129,
+      "surah": "Al-Imran",
+      "surahNumber": 3,
+      "ayahNumber": 92,
+      "arabic": "لَن تَنَالُواْ ٱلۡبِرَّ حَتَّىٰ تُنفِقُواْ مِمَّا تُحِبُّونَۚ وَمَا تُنفِقُواْ مِن شَيۡءٖ فَإِنَّ ٱللَّهَ بِهِۦ عَلِيمٞ",
+      "translation": "Never will you attain the good until you spend from that which you love.",
+      "theme": "charity, sacrifice, righteousness",
+      "emotions": [
+        "generous",
+        "devoted",
+        "seeking righteousness"
+      ]
+    },
+    {
+      "id": 130,
+      "surah": "Al-Imran",
+      "surahNumber": 3,
+      "ayahNumber": 139,
+      "arabic": "وَلَا تَهِنُواْ وَلَا تَحۡزَنُواْ وَأَنتُمُ ٱلۡأَعۡلَوۡنَ إِن كُنتُم مُّؤۡمِنِينَ",
+      "translation": "So do not weaken and do not grieve, and you will be superior if you are believers.",
+      "theme": "strength, faith, victory",
+      "emotions": [
+        "weak",
+        "grieving",
+        "hopeless"
+      ]
+    },
+    {
+      "id": 131,
+      "surah": "Al-Imran",
+      "surahNumber": 3,
+      "ayahNumber": 173,
+      "arabic": "ٱلَّذِينَ قَالَ لَهُمُ ٱلنَّاسُ إِنَّ ٱلنَّاسَ قَدۡ جَمَعُواْ لَكُمۡ فَٱخۡشَوۡهُمۡ فَزَادَهُمۡ إِيمَٰنٗا وَقَالُواْ حَسۡبُنَا ٱللَّهُ وَنِعۡمَ ٱلۡوَكِيلُ",
+      "translation": "Sufficient for us is Allah, and He is the best Disposer of affairs.",
+      "theme": "trust, sufficiency, reliance",
+      "emotions": [
+        "anxious",
+        "fearful",
+        "uncertain"
+      ]
+    },
+    {
+      "id": 132,
+      "surah": "An-Nisa",
+      "surahNumber": 4,
+      "ayahNumber": 32,
+      "arabic": "وَلَا تَتَمَنَّوۡاْ مَا فَضَّلَ ٱللَّهُ بِهِۦ بَعۡضَكُمۡ عَلَىٰ بَعۡضٖۚ لِّلرِّجَالِ نَصِيبٞ مِّمَّا ٱكۡتَسَبُواْۖ وَلِلنِّسَآءِ نَصِيبٞ مِّمَّا ٱكۡتَسَبۡنَۚ وَسۡـَٔلُواْ ٱللَّهَ مِن فَضۡلِهِۦٓۚ إِنَّ ٱللَّهَ كَانَ بِكُلِّ شَيۡءٍ عَلِيمٗا",
+      "translation": "And do not wish for that by which Allah has made some of you exceed others.",
+      "theme": "contentment, acceptance, gratitude",
+      "emotions": [
+        "envious",
+        "discontent",
+        "comparing"
+      ]
+    },
+    {
+      "id": 133,
+      "surah": "An-Nisa",
+      "surahNumber": 4,
+      "ayahNumber": 128,
+      "arabic": "وَإِنِ ٱمۡرَأَةٌ خَافَتۡ مِنۢ بَعۡلِهَا نُشُوزًا أَوۡ إِعۡرَاضٗا فَلَا جُنَاحَ عَلَيۡهِمَآ أَن يُصۡلِحَا بَيۡنَهُمَا صُلۡحٗاۚ وَٱلصُّلۡحُ خَيۡرٞۗ وَأُحۡضِرَتِ ٱلۡأَنفُسُ ٱلشُّحَّۚ وَإِن تُحۡسِنُواْ وَتَتَّقُواْ فَإِنَّ ٱللَّهَ كَانَ بِمَا تَعۡمَلُونَ خَبِيرٗا",
+      "translation": "And if a woman fears from her husband contempt or evasion, there is no sin upon them if they make terms of settlement between them.",
+      "theme": "marriage, reconciliation, peace",
+      "emotions": [
+        "relationship issues",
+        "conflict",
+        "seeking peace"
+      ]
+    },
+    {
+      "id": 134,
+      "surah": "Al-Ma'idah",
+      "surahNumber": 5,
+      "ayahNumber": 2,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لَا تُحِلُّواْ شَعَـٰٓئِرَ ٱللَّهِ وَلَا ٱلشَّهۡرَ ٱلۡحَرَامَ وَلَا ٱلۡهَدۡيَ وَلَا ٱلۡقَلَـٰٓئِدَ وَلَآ ءَآمِّينَ ٱلۡبَيۡتَ ٱلۡحَرَامَ يَبۡتَغُونَ فَضۡلٗا مِّن رَّبِّهِمۡ وَرِضۡوَٰنٗاۚ وَإِذَا حَلَلۡتُمۡ فَٱصۡطَادُواْۚ وَلَا يَجۡرِمَنَّكُمۡ شَنَـَٔانُ قَوۡمٍ أَن صَدُّوكُمۡ عَنِ ٱلۡمَسۡجِدِ ٱلۡحَرَامِ أَن تَعۡتَدُواْۘ وَتَعَاوَنُواْ عَلَى ٱلۡبِرِّ وَٱلتَّقۡوَىٰۖ وَلَا تَعَاوَنُواْ عَلَى ٱلۡإِثۡمِ وَٱلۡعُدۡوَٰنِۚ وَٱتَّقُواْ ٱللَّهَۖ إِنَّ ٱللَّهَ شَدِيدُ ٱلۡعِقَابِ",
+      "translation": "And cooperate in righteousness and piety, but do not cooperate in sin and aggression.",
+      "theme": "cooperation, righteousness, community",
+      "emotions": [
+        "seeking guidance",
+        "community",
+        "moral guidance"
+      ]
+    },
+    {
+      "id": 135,
+      "surah": "Al-Ma'idah",
+      "surahNumber": 5,
+      "ayahNumber": 32,
+      "arabic": "مِنۡ أَجۡلِ ذَٰلِكَ كَتَبۡنَا عَلَىٰ بَنِيٓ إِسۡرَـٰٓءِيلَ أَنَّهُۥ مَن قَتَلَ نَفۡسَۢا بِغَيۡرِ نَفۡسٍ أَوۡ فَسَادٖ فِي ٱلۡأَرۡضِ فَكَأَنَّمَا قَتَلَ ٱلنَّاسَ جَمِيعٗا وَمَنۡ أَحۡيَاهَا فَكَأَنَّمَآ أَحۡيَا ٱلنَّاسَ جَمِيعٗاۚ وَلَقَدۡ جَآءَتۡهُمۡ رُسُلُنَا بِٱلۡبَيِّنَٰتِ ثُمَّ إِنَّ كَثِيرٗا مِّنۡهُم بَعۡدَ ذَٰلِكَ فِي ٱلۡأَرۡضِ لَمُسۡرِفُونَ",
+      "translation": "Whoever kills a soul unless for a soul or for corruption in the land, it is as if he had slain mankind entirely.",
+      "theme": "sanctity of life, justice, humanity",
+      "emotions": [
+        "reflective",
+        "moral guidance",
+        "justice"
+      ]
+    },
+    {
+      "id": 136,
+      "surah": "Al-Ma'idah",
+      "surahNumber": 5,
+      "ayahNumber": 119,
+      "arabic": "قَالَ ٱللَّهُ هَٰذَا يَوۡمُ يَنفَعُ ٱلصَّـٰدِقِينَ صِدۡقُهُمۡۚ لَهُمۡ جَنَّـٰتٞ تَجۡرِي مِن تَحۡتِهَا ٱلۡأَنۡهَٰرُ خَٰلِدِينَ فِيهَآ أَبَدٗاۖ رَّضِيَ ٱللَّهُ عَنۡهُمۡ وَرَضُواْ عَنۡهُۚ ذَٰلِكَ ٱلۡفَوۡزُ ٱلۡعَظِيمُ",
+      "translation": "This is the Day when the truthful will benefit from their truthfulness.",
+      "theme": "truth, reward, Day of Judgment",
+      "emotions": [
+        "seeking truth",
+        "accountable",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 137,
+      "surah": "Al-An'am",
+      "surahNumber": 6,
+      "ayahNumber": 59,
+      "arabic": "۞وَعِندَهُۥ مَفَاتِحُ ٱلۡغَيۡبِ لَا يَعۡلَمُهَآ إِلَّا هُوَۚ وَيَعۡلَمُ مَا فِي ٱلۡبَرِّ وَٱلۡبَحۡرِۚ وَمَا تَسۡقُطُ مِن وَرَقَةٍ إِلَّا يَعۡلَمُهَا وَلَا حَبَّةٖ فِي ظُلُمَٰتِ ٱلۡأَرۡضِ وَلَا رَطۡبٖ وَلَا يَابِسٍ إِلَّا فِي كِتَٰبٖ مُّبِينٖ",
+      "translation": "And with Him are the keys of the unseen; none knows them except Him.",
+      "theme": "divine knowledge, unseen, trust",
+      "emotions": [
+        "uncertain",
+        "seeking knowledge",
+        "humble"
+      ]
+    },
+    {
+      "id": 138,
+      "surah": "Al-An'am",
+      "surahNumber": 6,
+      "ayahNumber": 162,
+      "arabic": "قُلۡ إِنَّ صَلَاتِي وَنُسُكِي وَمَحۡيَايَ وَمَمَاتِي لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ",
+      "translation": "Say, Indeed, my prayer, my rites of sacrifice, my living and my dying are for Allah, Lord of the worlds.",
+      "theme": "devotion, sincerity, submission",
+      "emotions": [
+        "devoted",
+        "purposeful",
+        "surrendered"
+      ]
+    },
+    {
+      "id": 139,
+      "surah": "Al-A'raf",
+      "surahNumber": 7,
+      "ayahNumber": 55,
+      "arabic": "ٱدۡعُواْ رَبَّكُمۡ تَضَرُّعٗا وَخُفۡيَةًۚ إِنَّهُۥ لَا يُحِبُّ ٱلۡمُعۡتَدِينَ",
+      "translation": "Call upon your Lord in humility and privately; indeed, He does not like transgressors.",
+      "theme": "prayer, humility, private worship",
+      "emotions": [
+        "seeking",
+        "humble",
+        "devoted"
+      ]
+    },
+    {
+      "id": 140,
+      "surah": "Al-A'raf",
+      "surahNumber": 7,
+      "ayahNumber": 156,
+      "arabic": "۞وَٱكۡتُبۡ لَنَا فِي هَٰذِهِ ٱلدُّنۡيَا حَسَنَةٗ وَفِي ٱلۡأٓخِرَةِ إِنَّا هُدۡنَآ إِلَيۡكَۚ قَالَ عَذَابِيٓ أُصِيبُ بِهِۦ مَنۡ أَشَآءُۖ وَرَحۡمَتِي وَسِعَتۡ كُلَّ شَيۡءٖۚ فَسَأَكۡتُبُهَا لِلَّذِينَ يَتَّقُونَ وَيُؤۡتُونَ ٱلزَّكَوٰةَ وَٱلَّذِينَ هُم بِـَٔايَٰتِنَا يُؤۡمِنُونَ",
+      "translation": "And My mercy encompasses all things.",
+      "theme": "mercy, hope, divine attribute",
+      "emotions": [
+        "hopeless",
+        "sinful",
+        "seeking mercy"
+      ]
+    },
+    {
+      "id": 141,
+      "surah": "Al-A'raf",
+      "surahNumber": 7,
+      "ayahNumber": 205,
+      "arabic": "وَٱذۡكُر رَّبَّكَ فِي نَفۡسِكَ تَضَرُّعٗا وَخِيفَةٗ وَدُونَ ٱلۡجَهۡرِ مِنَ ٱلۡقَوۡلِ بِٱلۡغُدُوِّ وَٱلۡأٓصَالِ وَلَا تَكُن مِّنَ ٱلۡغَٰفِلِينَ",
+      "translation": "And remember your Lord within yourself in humility and in fear without being apparent in speech.",
+      "theme": "remembrance, humility, private worship",
+      "emotions": [
+        "seeking closeness",
+        "devoted",
+        "peaceful"
+      ]
+    },
+    {
+      "id": 142,
+      "surah": "Al-Anfal",
+      "surahNumber": 8,
+      "ayahNumber": 2,
+      "arabic": "إِنَّمَا ٱلۡمُؤۡمِنُونَ ٱلَّذِينَ إِذَا ذُكِرَ ٱللَّهُ وَجِلَتۡ قُلُوبُهُمۡ وَإِذَا تُلِيَتۡ عَلَيۡهِمۡ ءَايَٰتُهُۥ زَادَتۡهُمۡ إِيمَٰنٗا وَعَلَىٰ رَبِّهِمۡ يَتَوَكَّلُونَ",
+      "translation": "The believers are only those who, when Allah is mentioned, their hearts become fearful, and when His verses are recited to them, it increases them in faith.",
+      "theme": "faith, heart, Quran",
+      "emotions": [
+        "seeking faith",
+        "devoted",
+        "reflective"
+      ]
+    },
+    {
+      "id": 143,
+      "surah": "Al-Anfal",
+      "surahNumber": 8,
+      "ayahNumber": 46,
+      "arabic": "وَأَطِيعُواْ ٱللَّهَ وَرَسُولَهُۥ وَلَا تَنَٰزَعُواْ فَتَفۡشَلُواْ وَتَذۡهَبَ رِيحُكُمۡۖ وَٱصۡبِرُوٓاْۚ إِنَّ ٱللَّهَ مَعَ ٱلصَّـٰبِرِينَ",
+      "translation": "And obey Allah and His Messenger, and do not dispute and thus lose courage and your strength would depart.",
+      "theme": "obedience, unity, strength",
+      "emotions": [
+        "conflicted",
+        "divided",
+        "weak"
+      ]
+    },
+    {
+      "id": 144,
+      "surah": "At-Tawbah",
+      "surahNumber": 9,
+      "ayahNumber": 40,
+      "arabic": "إِلَّا تَنصُرُوهُ فَقَدۡ نَصَرَهُ ٱللَّهُ إِذۡ أَخۡرَجَهُ ٱلَّذِينَ كَفَرُواْ ثَانِيَ ٱثۡنَيۡنِ إِذۡ هُمَا فِي ٱلۡغَارِ إِذۡ يَقُولُ لِصَٰحِبِهِۦ لَا تَحۡزَنۡ إِنَّ ٱللَّهَ مَعَنَاۖ فَأَنزَلَ ٱللَّهُ سَكِينَتَهُۥ عَلَيۡهِ وَأَيَّدَهُۥ بِجُنُودٖ لَّمۡ تَرَوۡهَا وَجَعَلَ كَلِمَةَ ٱلَّذِينَ كَفَرُواْ ٱلسُّفۡلَىٰۗ وَكَلِمَةُ ٱللَّهِ هِيَ ٱلۡعُلۡيَاۗ وَٱللَّهُ عَزِيزٌ حَكِيمٌ",
+      "translation": "Do not grieve; indeed Allah is with us.",
+      "theme": "companionship with Allah, comfort, reassurance",
+      "emotions": [
+        "grieving",
+        "lonely",
+        "fearful"
+      ]
+    },
+    {
+      "id": 145,
+      "surah": "At-Tawbah",
+      "surahNumber": 9,
+      "ayahNumber": 51,
+      "arabic": "قُل لَّن يُصِيبَنَآ إِلَّا مَا كَتَبَ ٱللَّهُ لَنَا هُوَ مَوۡلَىٰنَاۚ وَعَلَى ٱللَّهِ فَلۡيَتَوَكَّلِ ٱلۡمُؤۡمِنُونَ",
+      "translation": "Say, Never will we be struck except by what Allah has decreed for us; He is our protector.",
+      "theme": "decree, protection, acceptance",
+      "emotions": [
+        "anxious",
+        "fearful",
+        "accepting"
+      ]
+    },
+    {
+      "id": 146,
+      "surah": "At-Tawbah",
+      "surahNumber": 9,
+      "ayahNumber": 128,
+      "arabic": "لَقَدۡ جَآءَكُمۡ رَسُولٞ مِّنۡ أَنفُسِكُمۡ عَزِيزٌ عَلَيۡهِ مَا عَنِتُّمۡ حَرِيصٌ عَلَيۡكُم بِٱلۡمُؤۡمِنِينَ رَءُوفٞ رَّحِيمٞ",
+      "translation": "There has certainly come to you a Messenger from among yourselves. Grievous to him is what you suffer.",
+      "theme": "Prophet's care, compassion, messenger",
+      "emotions": [
+        "lonely",
+        "suffering",
+        "seeking support"
+      ]
+    },
+    {
+      "id": 147,
+      "surah": "Yunus",
+      "surahNumber": 10,
+      "ayahNumber": 62,
+      "arabic": "أَلَآ إِنَّ أَوۡلِيَآءَ ٱللَّهِ لَا خَوۡفٌ عَلَيۡهِمۡ وَلَا هُمۡ يَحۡزَنُونَ",
+      "translation": "Unquestionably, for the allies of Allah there will be no fear concerning them, nor will they grieve.",
+      "theme": "friendship with Allah, no fear, no grief",
+      "emotions": [
+        "fearful",
+        "grieving",
+        "seeking peace"
+      ]
+    },
+    {
+      "id": 148,
+      "surah": "Yunus",
+      "surahNumber": 10,
+      "ayahNumber": 107,
+      "arabic": "وَإِن يَمۡسَسۡكَ ٱللَّهُ بِضُرّٖ فَلَا كَاشِفَ لَهُۥٓ إِلَّا هُوَۖ وَإِن يُرِدۡكَ بِخَيۡرٖ فَلَا رَآدَّ لِفَضۡلِهِۦۚ يُصِيبُ بِهِۦ مَن يَشَآءُ مِنۡ عِبَادِهِۦۚ وَهُوَ ٱلۡغَفُورُ ٱلرَّحِيمُ",
+      "translation": "And if Allah should touch you with adversity, there is no remover of it except Him.",
+      "theme": "adversity, only Allah can help, trust",
+      "emotions": [
+        "suffering",
+        "helpless",
+        "seeking relief"
+      ]
+    },
+    {
+      "id": 149,
+      "surah": "Hud",
+      "surahNumber": 11,
+      "ayahNumber": 6,
+      "arabic": "۞وَمَا مِن دَآبَّةٖ فِي ٱلۡأَرۡضِ إِلَّا عَلَى ٱللَّهِ رِزۡقُهَا وَيَعۡلَمُ مُسۡتَقَرَّهَا وَمُسۡتَوۡدَعَهَاۚ كُلّٞ فِي كِتَٰبٖ مُّبِينٖ",
+      "translation": "And there is no creature on earth but that upon Allah is its provision.",
+      "theme": "provision, trust, sustenance",
+      "emotions": [
+        "financial worry",
+        "anxious",
+        "trusting"
+      ]
+    },
+    {
+      "id": 150,
+      "surah": "Hud",
+      "surahNumber": 11,
+      "ayahNumber": 88,
+      "arabic": "قَالَ يَٰقَوۡمِ أَرَءَيۡتُمۡ إِن كُنتُ عَلَىٰ بَيِّنَةٖ مِّن رَّبِّي وَرَزَقَنِي مِنۡهُ رِزۡقًا حَسَنٗاۚ وَمَآ أُرِيدُ أَنۡ أُخَالِفَكُمۡ إِلَىٰ مَآ أَنۡهَىٰكُمۡ عَنۡهُۚ إِنۡ أُرِيدُ إِلَّا ٱلۡإِصۡلَٰحَ مَا ٱسۡتَطَعۡتُۚ وَمَا تَوۡفِيقِيٓ إِلَّا بِٱللَّهِۚ عَلَيۡهِ تَوَكَّلۡتُ وَإِلَيۡهِ أُنِيبُ",
+      "translation": "And my success is not but through Allah. Upon Him I have relied, and to Him I return.",
+      "theme": "success from Allah, reliance, return",
+      "emotions": [
+        "seeking success",
+        "trusting",
+        "devoted"
+      ]
+    },
+    {
+      "id": 151,
+      "surah": "Yusuf",
+      "surahNumber": 12,
+      "ayahNumber": 18,
+      "arabic": "وَجَآءُو عَلَىٰ قَمِيصِهِۦ بِدَمٖ كَذِبٖۚ قَالَ بَلۡ سَوَّلَتۡ لَكُمۡ أَنفُسُكُمۡ أَمۡرٗاۖ فَصَبۡرٞ جَمِيلٞۖ وَٱللَّهُ ٱلۡمُسۡتَعَانُ عَلَىٰ مَا تَصِفُونَ",
+      "translation": "So patience is most fitting. And Allah is the one sought for help against that which you describe.",
+      "theme": "patience, seeking help, trials",
+      "emotions": [
+        "patient",
+        "tested",
+        "seeking help"
+      ]
+    },
+    {
+      "id": 152,
+      "surah": "Yusuf",
+      "surahNumber": 12,
+      "ayahNumber": 53,
+      "arabic": "۞وَمَآ أُبَرِّئُ نَفۡسِيٓۚ إِنَّ ٱلنَّفۡسَ لَأَمَّارَةُۢ بِٱلسُّوٓءِ إِلَّا مَا رَحِمَ رَبِّيٓۚ إِنَّ رَبِّي غَفُورٞ رَّحِيمٞ",
+      "translation": "And I do not acquit myself. Indeed, the soul is a persistent enjoiner of evil, except those upon which my Lord has mercy.",
+      "theme": "self-awareness, soul, mercy",
+      "emotions": [
+        "guilty",
+        "self-reflection",
+        "seeking mercy"
+      ]
+    },
+    {
+      "id": 153,
+      "surah": "Yusuf",
+      "surahNumber": 12,
+      "ayahNumber": 86,
+      "arabic": "قَالَ إِنَّمَآ أَشۡكُواْ بَثِّي وَحُزۡنِيٓ إِلَى ٱللَّهِ وَأَعۡلَمُ مِنَ ٱللَّهِ مَا لَا تَعۡلَمُونَ",
+      "translation": "I only complain of my suffering and my grief to Allah, and I know from Allah that which you do not know.",
+      "theme": "complaining to Allah, grief, hope",
+      "emotions": [
+        "grieving",
+        "suffering",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 154,
+      "surah": "Yusuf",
+      "surahNumber": 12,
+      "ayahNumber": 87,
+      "arabic": "يَٰبَنِيَّ ٱذۡهَبُواْ فَتَحَسَّسُواْ مِن يُوسُفَ وَأَخِيهِ وَلَا تَاْيۡـَٔسُواْ مِن رَّوۡحِ ٱللَّهِۖ إِنَّهُۥ لَا يَاْيۡـَٔسُ مِن رَّوۡحِ ٱللَّهِ إِلَّا ٱلۡقَوۡمُ ٱلۡكَٰفِرُونَ",
+      "translation": "And do not despair of relief from Allah. Indeed, no one despairs of relief from Allah except the disbelieving people.",
+      "theme": "hope, relief, no despair",
+      "emotions": [
+        "hopeless",
+        "despairing",
+        "seeking relief"
+      ]
+    },
+    {
+      "id": 155,
+      "surah": "Ar-Ra'd",
+      "surahNumber": 13,
+      "ayahNumber": 11,
+      "arabic": "لَهُۥ مُعَقِّبَٰتٞ مِّنۢ بَيۡنِ يَدَيۡهِ وَمِنۡ خَلۡفِهِۦ يَحۡفَظُونَهُۥ مِنۡ أَمۡرِ ٱللَّهِۗ إِنَّ ٱللَّهَ لَا يُغَيِّرُ مَا بِقَوۡمٍ حَتَّىٰ يُغَيِّرُواْ مَا بِأَنفُسِهِمۡۗ وَإِذَآ أَرَادَ ٱللَّهُ بِقَوۡمٖ سُوٓءٗا فَلَا مَرَدَّ لَهُۥۚ وَمَا لَهُم مِّن دُونِهِۦ مِن وَالٍ",
+      "translation": "Indeed, Allah will not change the condition of a people until they change what is in themselves.",
+      "theme": "self-change, effort, divine help",
+      "emotions": [
+        "stuck",
+        "seeking change",
+        "motivated"
+      ]
+    },
+    {
+      "id": 156,
+      "surah": "Ibrahim",
+      "surahNumber": 14,
+      "ayahNumber": 34,
+      "arabic": "وَءَاتَىٰكُم مِّن كُلِّ مَا سَأَلۡتُمُوهُۚ وَإِن تَعُدُّواْ نِعۡمَتَ ٱللَّهِ لَا تُحۡصُوهَآۗ إِنَّ ٱلۡإِنسَٰنَ لَظَلُومٞ كَفَّارٞ",
+      "translation": "And if you should count the favors of Allah, you could not enumerate them.",
+      "theme": "gratitude, countless blessings, reflection",
+      "emotions": [
+        "grateful",
+        "reflective",
+        "humble"
+      ]
+    },
+    {
+      "id": 157,
+      "surah": "Al-Hijr",
+      "surahNumber": 15,
+      "ayahNumber": 56,
+      "arabic": "قَالَ وَمَن يَقۡنَطُ مِن رَّحۡمَةِ رَبِّهِۦٓ إِلَّا ٱلضَّآلُّونَ",
+      "translation": "And who despairs of the mercy of his Lord except for those astray?",
+      "theme": "hope in mercy, no despair",
+      "emotions": [
+        "hopeless",
+        "astray",
+        "seeking mercy"
+      ]
+    },
+    {
+      "id": 158,
+      "surah": "An-Nahl",
+      "surahNumber": 16,
+      "ayahNumber": 90,
+      "arabic": "۞إِنَّ ٱللَّهَ يَأۡمُرُ بِٱلۡعَدۡلِ وَٱلۡإِحۡسَٰنِ وَإِيتَآيِٕ ذِي ٱلۡقُرۡبَىٰ وَيَنۡهَىٰ عَنِ ٱلۡفَحۡشَآءِ وَٱلۡمُنكَرِ وَٱلۡبَغۡيِۚ يَعِظُكُمۡ لَعَلَّكُمۡ تَذَكَّرُونَ",
+      "translation": "Indeed, Allah orders justice and good conduct and giving to relatives.",
+      "theme": "justice, good conduct, family ties",
+      "emotions": [
+        "seeking guidance",
+        "moral direction",
+        "family"
+      ]
+    },
+    {
+      "id": 159,
+      "surah": "An-Nahl",
+      "surahNumber": 16,
+      "ayahNumber": 97,
+      "arabic": "مَنۡ عَمِلَ صَٰلِحٗا مِّن ذَكَرٍ أَوۡ أُنثَىٰ وَهُوَ مُؤۡمِنٞ فَلَنُحۡيِيَنَّهُۥ حَيَوٰةٗ طَيِّبَةٗۖ وَلَنَجۡزِيَنَّهُمۡ أَجۡرَهُم بِأَحۡسَنِ مَا كَانُواْ يَعۡمَلُونَ",
+      "translation": "Whoever does righteousness, whether male or female, while he is a believer - We will surely cause him to live a good life.",
+      "theme": "good life, righteousness, faith",
+      "emotions": [
+        "seeking purpose",
+        "hopeful",
+        "devoted"
+      ]
+    },
+    {
+      "id": 160,
+      "surah": "An-Nahl",
+      "surahNumber": 16,
+      "ayahNumber": 128,
+      "arabic": "إِنَّ ٱللَّهَ مَعَ ٱلَّذِينَ ٱتَّقَواْ وَّٱلَّذِينَ هُم مُّحۡسِنُونَ",
+      "translation": "Indeed, Allah is with those who fear Him and those who are doers of good.",
+      "theme": "God-consciousness, good deeds, Allah's support",
+      "emotions": [
+        "devoted",
+        "fearful of Allah",
+        "doing good"
+      ]
+    },
+    {
+      "id": 161,
+      "surah": "Al-Isra",
+      "surahNumber": 17,
+      "ayahNumber": 23,
+      "arabic": "۞وَقَضَىٰ رَبُّكَ أَلَّا تَعۡبُدُوٓاْ إِلَّآ إِيَّاهُ وَبِٱلۡوَٰلِدَيۡنِ إِحۡسَٰنًاۚ إِمَّا يَبۡلُغَنَّ عِندَكَ ٱلۡكِبَرَ أَحَدُهُمَآ أَوۡ كِلَاهُمَا فَلَا تَقُل لَّهُمَآ أُفّٖ وَلَا تَنۡهَرۡهُمَا وَقُل لَّهُمَا قَوۡلٗا كَرِيمٗا",
+      "translation": "And your Lord has decreed that you not worship except Him, and to parents, good treatment.",
+      "theme": "monotheism, parents, kindness",
+      "emotions": [
+        "family",
+        "devoted",
+        "seeking guidance"
+      ]
+    },
+    {
+      "id": 162,
+      "surah": "Al-Isra",
+      "surahNumber": 17,
+      "ayahNumber": 80,
+      "arabic": "وَقُل رَّبِّ أَدۡخِلۡنِي مُدۡخَلَ صِدۡقٖ وَأَخۡرِجۡنِي مُخۡرَجَ صِدۡقٖ وَٱجۡعَل لِّي مِن لَّدُنكَ سُلۡطَٰنٗا نَّصِيرٗا",
+      "translation": "My Lord, cause me to enter a sound entrance and to exit a sound exit and grant me from Yourself a supporting authority.",
+      "theme": "protection, support, authority",
+      "emotions": [
+        "entering new chapter",
+        "seeking support",
+        "anxious"
+      ]
+    },
+    {
+      "id": 163,
+      "surah": "Al-Isra",
+      "surahNumber": 17,
+      "ayahNumber": 82,
+      "arabic": "وَنُنَزِّلُ مِنَ ٱلۡقُرۡءَانِ مَا هُوَ شِفَآءٞ وَرَحۡمَةٞ لِّلۡمُؤۡمِنِينَ وَلَا يَزِيدُ ٱلظَّـٰلِمِينَ إِلَّا خَسَارٗا",
+      "translation": "And We send down of the Qur'an that which is healing and mercy for the believers.",
+      "theme": "Quran as healing, mercy, believers",
+      "emotions": [
+        "sick",
+        "seeking healing",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 164,
+      "surah": "Al-Kahf",
+      "surahNumber": 18,
+      "ayahNumber": 29,
+      "arabic": "وَقُلِ ٱلۡحَقُّ مِن رَّبِّكُمۡۖ فَمَن شَآءَ فَلۡيُؤۡمِن وَمَن شَآءَ فَلۡيَكۡفُرۡۚ إِنَّآ أَعۡتَدۡنَا لِلظَّـٰلِمِينَ نَارًا أَحَاطَ بِهِمۡ سُرَادِقُهَاۚ وَإِن يَسۡتَغِيثُواْ يُغَاثُواْ بِمَآءٖ كَٱلۡمُهۡلِ يَشۡوِي ٱلۡوُجُوهَۚ بِئۡسَ ٱلشَّرَابُ وَسَآءَتۡ مُرۡتَفَقًا",
+      "translation": "And say, 'The truth is from your Lord, so whoever wills - let him believe; and whoever wills - let him disbelieve.'",
+      "theme": "truth, free will, faith",
+      "emotions": [
+        "seeking truth",
+        "uncertain",
+        "reflective"
+      ]
+    },
+    {
+      "id": 165,
+      "surah": "Al-Kahf",
+      "surahNumber": 18,
+      "ayahNumber": 46,
+      "arabic": "ٱلۡمَالُ وَٱلۡبَنُونَ زِينَةُ ٱلۡحَيَوٰةِ ٱلدُّنۡيَاۖ وَٱلۡبَٰقِيَٰتُ ٱلصَّـٰلِحَٰتُ خَيۡرٌ عِندَ رَبِّكَ ثَوَابٗا وَخَيۡرٌ أَمَلٗا",
+      "translation": "Wealth and children are the adornment of the worldly life. But the enduring good deeds are better to your Lord for reward and better for hope.",
+      "theme": "good deeds, worldly life, hope",
+      "emotions": [
+        "worldly concerns",
+        "priorities",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 166,
+      "surah": "Al-Kahf",
+      "surahNumber": 18,
+      "ayahNumber": 109,
+      "arabic": "قُل لَّوۡ كَانَ ٱلۡبَحۡرُ مِدَادٗا لِّكَلِمَٰتِ رَبِّي لَنَفِدَ ٱلۡبَحۡرُ قَبۡلَ أَن تَنفَدَ كَلِمَٰتُ رَبِّي وَلَوۡ جِئۡنَا بِمِثۡلِهِۦ مَدَدٗا",
+      "translation": "Say, 'If the sea were ink for the words of my Lord, the sea would be exhausted before the words of my Lord were exhausted.'",
+      "theme": "Allah's infinite knowledge, awe, reflection",
+      "emotions": [
+        "seeking knowledge",
+        "awe",
+        "humble"
+      ]
+    },
+    {
+      "id": 167,
+      "surah": "Maryam",
+      "surahNumber": 19,
+      "ayahNumber": 65,
+      "arabic": "رَّبُّ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِ وَمَا بَيۡنَهُمَا فَٱعۡبُدۡهُ وَٱصۡطَبِرۡ لِعِبَٰدَتِهِۦۚ هَلۡ تَعۡلَمُ لَهُۥ سَمِيّٗا",
+      "translation": "Lord of the heavens and the earth and whatever is between them - so worship Him and have patience in His worship. Do you know of any similarity to Him?",
+      "theme": "worship, patience, uniqueness of Allah",
+      "emotions": [
+        "devoted",
+        "patient",
+        "seeking"
+      ]
+    },
+    {
+      "id": 168,
+      "surah": "Maryam",
+      "surahNumber": 19,
+      "ayahNumber": 96,
+      "arabic": "إِنَّ ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّـٰلِحَٰتِ سَيَجۡعَلُ لَهُمُ ٱلرَّحۡمَٰنُ وُدّٗا",
+      "translation": "Indeed, those who have believed and done righteous deeds - the Most Merciful will appoint for them affection.",
+      "theme": "love, righteousness, divine affection",
+      "emotions": [
+        "seeking love",
+        "devoted",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 169,
+      "surah": "Ta-Ha",
+      "surahNumber": 20,
+      "ayahNumber": 25,
+      "arabic": "قَالَ رَبِّ ٱشۡرَحۡ لِي صَدۡرِي",
+      "translation": "My Lord, expand for me my breast.",
+      "theme": "ease, comfort, confidence",
+      "emotions": [
+        "anxious",
+        "lacking confidence",
+        "seeking ease"
+      ]
+    },
+    {
+      "id": 170,
+      "surah": "Ta-Ha",
+      "surahNumber": 20,
+      "ayahNumber": 114,
+      "arabic": "فَتَعَٰلَى ٱللَّهُ ٱلۡمَلِكُ ٱلۡحَقُّۗ وَلَا تَعۡجَلۡ بِٱلۡقُرۡءَانِ مِن قَبۡلِ أَن يُقۡضَىٰٓ إِلَيۡكَ وَحۡيُهُۥۖ وَقُل رَّبِّ زِدۡنِي عِلۡمٗا",
+      "translation": "And say, 'My Lord, increase me in knowledge.'",
+      "theme": "knowledge, learning, prayer",
+      "emotions": [
+        "seeking knowledge",
+        "student",
+        "humble"
+      ]
+    },
+    {
+      "id": 171,
+      "surah": "Al-Anbiya",
+      "surahNumber": 21,
+      "ayahNumber": 83,
+      "arabic": "۞وَأَيُّوبَ إِذۡ نَادَىٰ رَبَّهُۥٓ أَنِّي مَسَّنِيَ ٱلضُّرُّ وَأَنتَ أَرۡحَمُ ٱلرَّـٰحِمِينَ",
+      "translation": "And Job, when he called to his Lord, 'Indeed, adversity has touched me, and you are the Most Merciful of the merciful.'",
+      "theme": "adversity, patience, mercy",
+      "emotions": [
+        "suffering",
+        "patient",
+        "seeking mercy"
+      ]
+    },
+    {
+      "id": 172,
+      "surah": "Al-Hajj",
+      "surahNumber": 22,
+      "ayahNumber": 77,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱرۡكَعُواْ وَٱسۡجُدُواْۤ وَٱعۡبُدُواْ رَبَّكُمۡ وَٱفۡعَلُواْ ٱلۡخَيۡرَ لَعَلَّكُمۡ تُفۡلِحُونَ۩",
+      "translation": "O you who have believed, bow and prostrate and worship your Lord and do good - that you may succeed.",
+      "theme": "worship, good deeds, success",
+      "emotions": [
+        "seeking success",
+        "devoted",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 173,
+      "surah": "Al-Hajj",
+      "surahNumber": 22,
+      "ayahNumber": 78,
+      "arabic": "وَجَٰهِدُواْ فِي ٱللَّهِ حَقَّ جِهَادِهِۦۚ هُوَ ٱجۡتَبَىٰكُمۡ وَمَا جَعَلَ عَلَيۡكُمۡ فِي ٱلدِّينِ مِنۡ حَرَجٖۚ مِّلَّةَ أَبِيكُمۡ إِبۡرَٰهِيمَۚ هُوَ سَمَّىٰكُمُ ٱلۡمُسۡلِمِينَ مِن قَبۡلُ وَفِي هَٰذَا لِيَكُونَ ٱلرَّسُولُ شَهِيدًا عَلَيۡكُمۡ وَتَكُونُواْ شُهَدَآءَ عَلَى ٱلنَّاسِۚ فَأَقِيمُواْ ٱلصَّلَوٰةَ وَءَاتُواْ ٱلزَّكَوٰةَ وَٱعۡتَصِمُواْ بِٱللَّهِ هُوَ مَوۡلَىٰكُمۡۖ فَنِعۡمَ ٱلۡمَوۡلَىٰ وَنِعۡمَ ٱلنَّصِيرُ",
+      "translation": "And strive for Allah with the striving due to Him. He has chosen you.",
+      "theme": "striving, chosen, effort",
+      "emotions": [
+        "motivated",
+        "purposeful",
+        "devoted"
+      ]
+    },
+    {
+      "id": 174,
+      "surah": "Al-Mu'minun",
+      "surahNumber": 23,
+      "ayahNumber": 115,
+      "arabic": "أَفَحَسِبۡتُمۡ أَنَّمَا خَلَقۡنَٰكُمۡ عَبَثٗا وَأَنَّكُمۡ إِلَيۡنَا لَا تُرۡجَعُونَ",
+      "translation": "Then did you think that We created you uselessly and that to Us you would not be returned?",
+      "theme": "purpose, return to Allah, meaning",
+      "emotions": [
+        "questioning purpose",
+        "lost",
+        "seeking meaning"
+      ]
+    },
+    {
+      "id": 175,
+      "surah": "Al-Mu'minun",
+      "surahNumber": 23,
+      "ayahNumber": 118,
+      "arabic": "وَقُل رَّبِّ ٱغۡفِرۡ وَٱرۡحَمۡ وَأَنتَ خَيۡرُ ٱلرَّـٰحِمِينَ",
+      "translation": "And say, 'My Lord, forgive and have mercy, and You are the best of the merciful.'",
+      "theme": "forgiveness, mercy, prayer",
+      "emotions": [
+        "guilty",
+        "seeking mercy",
+        "humble"
+      ]
+    },
+    {
+      "id": 176,
+      "surah": "An-Nur",
+      "surahNumber": 24,
+      "ayahNumber": 21,
+      "arabic": "۞يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لَا تَتَّبِعُواْ خُطُوَٰتِ ٱلشَّيۡطَٰنِۚ وَمَن يَتَّبِعۡ خُطُوَٰتِ ٱلشَّيۡطَٰنِ فَإِنَّهُۥ يَأۡمُرُ بِٱلۡفَحۡشَآءِ وَٱلۡمُنكَرِۚ وَلَوۡلَا فَضۡلُ ٱللَّهِ عَلَيۡكُمۡ وَرَحۡمَتُهُۥ مَا زَكَىٰ مِنكُم مِّنۡ أَحَدٍ أَبَدٗا وَلَٰكِنَّ ٱللَّهَ يُزَكِّي مَن يَشَآءُۗ وَٱللَّهُ سَمِيعٌ عَلِيمٞ",
+      "translation": "O you who have believed, do not follow the footsteps of Satan.",
+      "theme": "avoiding evil, guidance, protection",
+      "emotions": [
+        "tempted",
+        "struggling",
+        "seeking guidance"
+      ]
+    },
+    {
+      "id": 177,
+      "surah": "An-Nur",
+      "surahNumber": 24,
+      "ayahNumber": 26,
+      "arabic": "ٱلۡخَبِيثَٰتُ لِلۡخَبِيثِينَ وَٱلۡخَبِيثُونَ لِلۡخَبِيثَٰتِۖ وَٱلطَّيِّبَٰتُ لِلطَّيِّبِينَ وَٱلطَّيِّبُونَ لِلطَّيِّبَٰتِۚ أُوْلَـٰٓئِكَ مُبَرَّءُونَ مِمَّا يَقُولُونَۖ لَهُم مَّغۡفِرَةٞ وَرِزۡقٞ كَرِيمٞ",
+      "translation": "Good women are for good men, and good men are for good women.",
+      "theme": "marriage, compatibility, purity",
+      "emotions": [
+        "seeking spouse",
+        "relationship",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 178,
+      "surah": "Al-Furqan",
+      "surahNumber": 25,
+      "ayahNumber": 63,
+      "arabic": "وَعِبَادُ ٱلرَّحۡمَٰنِ ٱلَّذِينَ يَمۡشُونَ عَلَى ٱلۡأَرۡضِ هَوۡنٗا وَإِذَا خَاطَبَهُمُ ٱلۡجَٰهِلُونَ قَالُواْ سَلَٰمٗا",
+      "translation": "And the servants of the Most Merciful are those who walk upon the earth easily, and when the ignorant address them, they say, 'Peace!'",
+      "theme": "humility, peace, good character",
+      "emotions": [
+        "seeking peace",
+        "character building",
+        "humble"
+      ]
+    },
+    {
+      "id": 179,
+      "surah": "Al-Furqan",
+      "surahNumber": 25,
+      "ayahNumber": 74,
+      "arabic": "وَٱلَّذِينَ يَقُولُونَ رَبَّنَا هَبۡ لَنَا مِنۡ أَزۡوَٰجِنَا وَذُرِّيَّـٰتِنَا قُرَّةَ أَعۡيُنٖ وَٱجۡعَلۡنَا لِلۡمُتَّقِينَ إِمَامًا",
+      "translation": "Our Lord, grant us from among our wives and offspring comfort to our eyes and make us an example for the righteous.",
+      "theme": "family, righteousness, prayer",
+      "emotions": [
+        "family",
+        "seeking blessing",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 180,
+      "surah": "Ash-Shu'ara",
+      "surahNumber": 26,
+      "ayahNumber": 80,
+      "arabic": "وَإِذَا مَرِضۡتُ فَهُوَ يَشۡفِينِ",
+      "translation": "And when I am ill, it is He who cures me.",
+      "theme": "healing, illness, trust in Allah",
+      "emotions": [
+        "sick",
+        "seeking healing",
+        "trusting"
+      ]
+    },
+    {
+      "id": 181,
+      "surah": "Ash-Shu'ara",
+      "surahNumber": 26,
+      "ayahNumber": 89,
+      "arabic": "إِلَّا مَنۡ أَتَى ٱللَّهَ بِقَلۡبٖ سَلِيمٖ",
+      "translation": "But only one who comes to Allah with a sound heart.",
+      "theme": "pure heart, sincerity, salvation",
+      "emotions": [
+        "seeking purity",
+        "heart",
+        "devoted"
+      ]
+    },
+    {
+      "id": 182,
+      "surah": "An-Naml",
+      "surahNumber": 27,
+      "ayahNumber": 19,
+      "arabic": "فَتَبَسَّمَ ضَاحِكٗا مِّن قَوۡلِهَا وَقَالَ رَبِّ أَوۡزِعۡنِيٓ أَنۡ أَشۡكُرَ نِعۡمَتَكَ ٱلَّتِيٓ أَنۡعَمۡتَ عَلَيَّ وَعَلَىٰ وَٰلِدَيَّ وَأَنۡ أَعۡمَلَ صَٰلِحٗا تَرۡضَىٰهُ وَأَدۡخِلۡنِي بِرَحۡمَتِكَ فِي عِبَادِكَ ٱلصَّـٰلِحِينَ",
+      "translation": "My Lord, enable me to be grateful for Your favor which You have bestowed upon me.",
+      "theme": "gratitude, favor, prayer",
+      "emotions": [
+        "grateful",
+        "blessed",
+        "humble"
+      ]
+    },
+    {
+      "id": 183,
+      "surah": "Al-Qasas",
+      "surahNumber": 28,
+      "ayahNumber": 24,
+      "arabic": "فَسَقَىٰ لَهُمَا ثُمَّ تَوَلَّىٰٓ إِلَى ٱلظِّلِّ فَقَالَ رَبِّ إِنِّي لِمَآ أَنزَلۡتَ إِلَيَّ مِنۡ خَيۡرٖ فَقِيرٞ",
+      "translation": "My Lord, indeed I am, for whatever good You would send down to me, in need.",
+      "theme": "need, provision, humility",
+      "emotions": [
+        "needy",
+        "seeking provision",
+        "humble"
+      ]
+    },
+    {
+      "id": 184,
+      "surah": "Al-Qasas",
+      "surahNumber": 28,
+      "ayahNumber": 56,
+      "arabic": "إِنَّكَ لَا تَهۡدِي مَنۡ أَحۡبَبۡتَ وَلَٰكِنَّ ٱللَّهَ يَهۡدِي مَن يَشَآءُۚ وَهُوَ أَعۡلَمُ بِٱلۡمُهۡتَدِينَ",
+      "translation": "Indeed, you do not guide whom you like, but Allah guides whom He wills.",
+      "theme": "guidance, Allah's will, humility",
+      "emotions": [
+        "concerned for others",
+        "seeking guidance",
+        "humble"
+      ]
+    },
+    {
+      "id": 185,
+      "surah": "Al-Ankabut",
+      "surahNumber": 29,
+      "ayahNumber": 45,
+      "arabic": "ٱتۡلُ مَآ أُوحِيَ إِلَيۡكَ مِنَ ٱلۡكِتَٰبِ وَأَقِمِ ٱلصَّلَوٰةَۖ إِنَّ ٱلصَّلَوٰةَ تَنۡهَىٰ عَنِ ٱلۡفَحۡشَآءِ وَٱلۡمُنكَرِۗ وَلَذِكۡرُ ٱللَّهِ أَكۡبَرُۗ وَٱللَّهُ يَعۡلَمُ مَا تَصۡنَعُونَ",
+      "translation": "Indeed, prayer prohibits immorality and wrongdoing, and the remembrance of Allah is greater.",
+      "theme": "prayer, protection from evil, remembrance",
+      "emotions": [
+        "seeking protection",
+        "devoted",
+        "struggling with sin"
+      ]
+    },
+    {
+      "id": 186,
+      "surah": "Al-Ankabut",
+      "surahNumber": 29,
+      "ayahNumber": 69,
+      "arabic": "وَٱلَّذِينَ جَٰهَدُواْ فِينَا لَنَهۡدِيَنَّهُمۡ سُبُلَنَاۚ وَإِنَّ ٱللَّهَ لَمَعَ ٱلۡمُحۡسِنِينَ",
+      "translation": "And those who strive for Us - We will surely guide them to Our ways.",
+      "theme": "striving, guidance, effort",
+      "emotions": [
+        "seeking guidance",
+        "striving",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 187,
+      "surah": "Ar-Rum",
+      "surahNumber": 30,
+      "ayahNumber": 30,
+      "arabic": "فَأَقِمۡ وَجۡهَكَ لِلدِّينِ حَنِيفٗاۚ فِطۡرَتَ ٱللَّهِ ٱلَّتِي فَطَرَ ٱلنَّاسَ عَلَيۡهَاۚ لَا تَبۡدِيلَ لِخَلۡقِ ٱللَّهِۚ ذَٰلِكَ ٱلدِّينُ ٱلۡقَيِّمُ وَلَٰكِنَّ أَكۡثَرَ ٱلنَّاسِ لَا يَعۡلَمُونَ",
+      "translation": "So direct your face toward the religion, inclining to truth. Adhere to the fitrah of Allah upon which He has created people.",
+      "theme": "natural religion, truth, creation",
+      "emotions": [
+        "seeking truth",
+        "lost",
+        "natural"
+      ]
+    },
+    {
+      "id": 188,
+      "surah": "Luqman",
+      "surahNumber": 31,
+      "ayahNumber": 12,
+      "arabic": "وَلَقَدۡ ءَاتَيۡنَا لُقۡمَٰنَ ٱلۡحِكۡمَةَ أَنِ ٱشۡكُرۡ لِلَّهِۚ وَمَن يَشۡكُرۡ فَإِنَّمَا يَشۡكُرُ لِنَفۡسِهِۦۖ وَمَن كَفَرَ فَإِنَّ ٱللَّهَ غَنِيٌّ حَمِيدٞ",
+      "translation": "And We had certainly given Luqman wisdom, saying, 'Be grateful to Allah.'",
+      "theme": "wisdom, gratitude, Luqman",
+      "emotions": [
+        "seeking wisdom",
+        "grateful",
+        "reflective"
+      ]
+    },
+    {
+      "id": 189,
+      "surah": "Luqman",
+      "surahNumber": 31,
+      "ayahNumber": 14,
+      "arabic": "وَوَصَّيۡنَا ٱلۡإِنسَٰنَ بِوَٰلِدَيۡهِ حَمَلَتۡهُ أُمُّهُۥ وَهۡنًا عَلَىٰ وَهۡنٖ وَفِصَٰلُهُۥ فِي عَامَيۡنِ أَنِ ٱشۡكُرۡ لِي وَلِوَٰلِدَيۡكَ إِلَيَّ ٱلۡمَصِيرُ",
+      "translation": "And We have enjoined upon man to be grateful to his parents.",
+      "theme": "parents, gratitude, duty",
+      "emotions": [
+        "family",
+        "grateful",
+        "dutiful"
+      ]
+    },
+    {
+      "id": 190,
+      "surah": "Luqman",
+      "surahNumber": 31,
+      "ayahNumber": 18,
+      "arabic": "وَلَا تُصَعِّرۡ خَدَّكَ لِلنَّاسِ وَلَا تَمۡشِ فِي ٱلۡأَرۡضِ مَرَحًاۖ إِنَّ ٱللَّهَ لَا يُحِبُّ كُلَّ مُخۡتَالٖ فَخُورٖ",
+      "translation": "And do not turn your cheek in contempt toward people and do not walk through the earth exultantly.",
+      "theme": "humility, arrogance, character",
+      "emotions": [
+        "pride",
+        "character building",
+        "humble"
+      ]
+    },
+    {
+      "id": 191,
+      "surah": "Luqman",
+      "surahNumber": 31,
+      "ayahNumber": 19,
+      "arabic": "وَٱقۡصِدۡ فِي مَشۡيِكَ وَٱغۡضُضۡ مِن صَوۡتِكَۚ إِنَّ أَنكَرَ ٱلۡأَصۡوَٰتِ لَصَوۡتُ ٱلۡحَمِيرِ",
+      "translation": "And be moderate in your pace and lower your voice; indeed, the most disagreeable of sounds is the voice of donkeys.",
+      "theme": "moderation, voice, character",
+      "emotions": [
+        "manners",
+        "self-improvement",
+        "calm"
+      ]
+    },
+    {
+      "id": 192,
+      "surah": "As-Sajdah",
+      "surahNumber": 32,
+      "ayahNumber": 17,
+      "arabic": "فَلَا تَعۡلَمُ نَفۡسٞ مَّآ أُخۡفِيَ لَهُم مِّن قُرَّةِ أَعۡيُنٖ جَزَآءَۢ بِمَا كَانُواْ يَعۡمَلُونَ",
+      "translation": "And no soul knows what has been hidden for them of comfort for eyes as reward for what they used to do.",
+      "theme": "hidden rewards, paradise, good deeds",
+      "emotions": [
+        "hopeful",
+        "seeking reward",
+        "motivated"
+      ]
+    },
+    {
+      "id": 193,
+      "surah": "Al-Ahzab",
+      "surahNumber": 33,
+      "ayahNumber": 21,
+      "arabic": "لَّقَدۡ كَانَ لَكُمۡ فِي رَسُولِ ٱللَّهِ أُسۡوَةٌ حَسَنَةٞ لِّمَن كَانَ يَرۡجُواْ ٱللَّهَ وَٱلۡيَوۡمَ ٱلۡأٓخِرَ وَذَكَرَ ٱللَّهَ كَثِيرٗا",
+      "translation": "There has certainly been for you in the Messenger of Allah an excellent pattern for anyone whose hope is in Allah and the Last Day.",
+      "theme": "Prophet as example, following sunnah, hope",
+      "emotions": [
+        "seeking guidance",
+        "devoted",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 194,
+      "surah": "Al-Ahzab",
+      "surahNumber": 33,
+      "ayahNumber": 35,
+      "arabic": "إِنَّ ٱلۡمُسۡلِمِينَ وَٱلۡمُسۡلِمَٰتِ وَٱلۡمُؤۡمِنِينَ وَٱلۡمُؤۡمِنَٰتِ وَٱلۡقَٰنِتِينَ وَٱلۡقَٰنِتَٰتِ وَٱلصَّـٰدِقِينَ وَٱلصَّـٰدِقَٰتِ وَٱلصَّـٰبِرِينَ وَٱلصَّـٰبِرَٰتِ وَٱلۡخَٰشِعِينَ وَٱلۡخَٰشِعَٰتِ وَٱلۡمُتَصَدِّقِينَ وَٱلۡمُتَصَدِّقَٰتِ وَٱلصَّـٰٓئِمِينَ وَٱلصَّـٰٓئِمَٰتِ وَٱلۡحَٰفِظِينَ فُرُوجَهُمۡ وَٱلۡحَٰفِظَٰتِ وَٱلذَّـٰكِرِينَ ٱللَّهَ كَثِيرٗا وَٱلذَّـٰكِرَٰتِ أَعَدَّ ٱللَّهُ لَهُم مَّغۡفِرَةٗ وَأَجۡرًا عَظِيمٗا",
+      "translation": "Indeed, the Muslim men and Muslim women, the believing men and believing women... for them Allah has prepared forgiveness and a great reward.",
+      "theme": "equality in faith, reward, forgiveness",
+      "emotions": [
+        "devoted",
+        "seeking reward",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 195,
+      "surah": "Al-Ahzab",
+      "surahNumber": 33,
+      "ayahNumber": 41,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱذۡكُرُواْ ٱللَّهَ ذِكۡرٗا كَثِيرٗا",
+      "translation": "O you who have believed, remember Allah with much remembrance.",
+      "theme": "remembrance, dhikr, devotion",
+      "emotions": [
+        "seeking peace",
+        "devoted",
+        "peaceful"
+      ]
+    },
+    {
+      "id": 196,
+      "surah": "Al-Ahzab",
+      "surahNumber": 33,
+      "ayahNumber": 56,
+      "arabic": "إِنَّ ٱللَّهَ وَمَلَـٰٓئِكَتَهُۥ يُصَلُّونَ عَلَى ٱلنَّبِيِّۚ يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ صَلُّواْ عَلَيۡهِ وَسَلِّمُواْ تَسۡلِيمًا",
+      "translation": "Indeed, Allah confers blessing upon the Prophet, and His angels ask Him to do so. O you who have believed, ask Allah to confer blessing upon him.",
+      "theme": "blessings on Prophet, prayer",
+      "emotions": [
+        "devoted",
+        "seeking blessings",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 197,
+      "surah": "Fatir",
+      "surahNumber": 35,
+      "ayahNumber": 2,
+      "arabic": "مَّا يَفۡتَحِ ٱللَّهُ لِلنَّاسِ مِن رَّحۡمَةٖ فَلَا مُمۡسِكَ لَهَاۖ وَمَا يُمۡسِكۡ فَلَا مُرۡسِلَ لَهُۥ مِنۢ بَعۡدِهِۦۚ وَهُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ",
+      "translation": "Whatever Allah grants to people of mercy - none can withhold it; and whatever He withholds - none can release it thereafter.",
+      "theme": "Allah's mercy, provision, trust",
+      "emotions": [
+        "seeking mercy",
+        "trusting",
+        "patient"
+      ]
+    },
+    {
+      "id": 198,
+      "surah": "Fatir",
+      "surahNumber": 35,
+      "ayahNumber": 28,
+      "arabic": "وَمِنَ ٱلنَّاسِ وَٱلدَّوَآبِّ وَٱلۡأَنۡعَٰمِ مُخۡتَلِفٌ أَلۡوَٰنُهُۥ كَذَٰلِكَۗ إِنَّمَا يَخۡشَى ٱللَّهَ مِنۡ عِبَادِهِ ٱلۡعُلَمَـٰٓؤُاْۗ إِنَّ ٱللَّهَ عَزِيزٌ غَفُورٌ",
+      "translation": "Only those fear Allah, from among His servants, who have knowledge.",
+      "theme": "knowledge, fear of Allah, scholars",
+      "emotions": [
+        "seeking knowledge",
+        "devoted",
+        "humble"
+      ]
+    },
+    {
+      "id": 199,
+      "surah": "Fatir",
+      "surahNumber": 35,
+      "ayahNumber": 34,
+      "arabic": "وَقَالُواْ ٱلۡحَمۡدُ لِلَّهِ ٱلَّذِيٓ أَذۡهَبَ عَنَّا ٱلۡحَزَنَۖ إِنَّ رَبَّنَا لَغَفُورٞ شَكُورٌ",
+      "translation": "And they will say, 'Praise to Allah, who has removed from us all sorrow.'",
+      "theme": "paradise, removal of sorrow, gratitude",
+      "emotions": [
+        "sorrowful",
+        "hopeful",
+        "patient"
+      ]
+    },
+    {
+      "id": 200,
+      "surah": "Ya-Sin",
+      "surahNumber": 36,
+      "ayahNumber": 82,
+      "arabic": "إِنَّمَآ أَمۡرُهُۥٓ إِذَآ أَرَادَ شَيۡـًٔا أَن يَقُولَ لَهُۥ كُن فَيَكُونُ",
+      "translation": "His command is only when He intends a thing that He says to it, 'Be,' and it is.",
+      "theme": "Allah's power, creation, divine will",
+      "emotions": [
+        "awe",
+        "trusting",
+        "humble"
+      ]
+    },
+    {
+      "id": 201,
+      "surah": "As-Saffat",
+      "surahNumber": 37,
+      "ayahNumber": 99,
+      "arabic": "وَقَالَ إِنِّي ذَاهِبٌ إِلَىٰ رَبِّي سَيَهۡدِينِ",
+      "translation": "And he said, 'Indeed, I will go to my Lord; He will guide me.'",
+      "theme": "migration, trust, guidance",
+      "emotions": [
+        "leaving comfort zone",
+        "trusting",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 202,
+      "surah": "Sad",
+      "surahNumber": 38,
+      "ayahNumber": 26,
+      "arabic": "يَٰدَاوُۥدُ إِنَّا جَعَلۡنَٰكَ خَلِيفَةٗ فِي ٱلۡأَرۡضِ فَٱحۡكُم بَيۡنَ ٱلنَّاسِ بِٱلۡحَقِّ وَلَا تَتَّبِعِ ٱلۡهَوَىٰ فَيُضِلَّكَ عَن سَبِيلِ ٱللَّهِۚ إِنَّ ٱلَّذِينَ يَضِلُّونَ عَن سَبِيلِ ٱللَّهِ لَهُمۡ عَذَابٞ شَدِيدُۢ بِمَا نَسُواْ يَوۡمَ ٱلۡحِسَابِ",
+      "translation": "O David, indeed We have made you a successor upon the earth, so judge between the people in truth and do not follow your own desire.",
+      "theme": "leadership, justice, truth",
+      "emotions": [
+        "leader",
+        "seeking justice",
+        "responsible"
+      ]
+    },
+    {
+      "id": 203,
+      "surah": "Sad",
+      "surahNumber": 38,
+      "ayahNumber": 86,
+      "arabic": "قُلۡ مَآ أَسۡـَٔلُكُمۡ عَلَيۡهِ مِنۡ أَجۡرٖ وَمَآ أَنَا۠ مِنَ ٱلۡمُتَكَلِّفِينَ",
+      "translation": "Say, 'I do not ask you for it any payment, and I am not of the pretentious.'",
+      "theme": "sincerity, no payment, humility",
+      "emotions": [
+        "sincere",
+        "humble",
+        "devoted"
+      ]
+    },
+    {
+      "id": 204,
+      "surah": "Az-Zumar",
+      "surahNumber": 39,
+      "ayahNumber": 10,
+      "arabic": "قُلۡ يَٰعِبَادِ ٱلَّذِينَ ءَامَنُواْ ٱتَّقُواْ رَبَّكُمۡۚ لِلَّذِينَ أَحۡسَنُواْ فِي هَٰذِهِ ٱلدُّنۡيَا حَسَنَةٞۗ وَأَرۡضُ ٱللَّهِ وَٰسِعَةٌۗ إِنَّمَا يُوَفَّى ٱلصَّـٰبِرُونَ أَجۡرَهُم بِغَيۡرِ حِسَابٖ",
+      "translation": "Say, 'O My servants who have believed, fear your Lord. For those who do good in this world is good.'",
+      "theme": "God-consciousness, good deeds, reward",
+      "emotions": [
+        "devoted",
+        "seeking good",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 205,
+      "surah": "Ghafir",
+      "surahNumber": 40,
+      "ayahNumber": 44,
+      "arabic": "فَسَتَذۡكُرُونَ مَآ أَقُولُ لَكُمۡۚ وَأُفَوِّضُ أَمۡرِيٓ إِلَى ٱللَّهِۚ إِنَّ ٱللَّهَ بَصِيرُۢ بِٱلۡعِبَادِ",
+      "translation": "And I entrust my affair to Allah. Indeed, Allah is Seeing of His servants.",
+      "theme": "trust, entrusting to Allah, divine sight",
+      "emotions": [
+        "trusting",
+        "vulnerable",
+        "relying on Allah"
+      ]
+    },
+    {
+      "id": 206,
+      "surah": "Fussilat",
+      "surahNumber": 41,
+      "ayahNumber": 34,
+      "arabic": "وَلَا تَسۡتَوِي ٱلۡحَسَنَةُ وَلَا ٱلسَّيِّئَةُۚ ٱدۡفَعۡ بِٱلَّتِي هِيَ أَحۡسَنُ فَإِذَا ٱلَّذِي بَيۡنَكَ وَبَيۡنَهُۥ عَدَٰوَةٞ كَأَنَّهُۥ وَلِيٌّ حَمِيمٞ",
+      "translation": "And not equal are the good deed and the bad. Repel evil by that which is better.",
+      "theme": "repelling evil with good, character, patience",
+      "emotions": [
+        "angry",
+        "wronged",
+        "seeking patience"
+      ]
+    },
+    {
+      "id": 207,
+      "surah": "Ash-Shura",
+      "surahNumber": 42,
+      "ayahNumber": 36,
+      "arabic": "فَمَآ أُوتِيتُم مِّن شَيۡءٖ فَمَتَٰعُ ٱلۡحَيَوٰةِ ٱلدُّنۡيَاۚ وَمَا عِندَ ٱللَّهِ خَيۡرٞ وَأَبۡقَىٰ لِلَّذِينَ ءَامَنُواْ وَعَلَىٰ رَبِّهِمۡ يَتَوَكَّلُونَ",
+      "translation": "So whatever thing you have been given - it is but for enjoyment of the worldly life. But what is with Allah is better and more lasting.",
+      "theme": "worldly life, hereafter, priorities",
+      "emotions": [
+        "materialistic",
+        "worldly concerns",
+        "seeking perspective"
+      ]
+    },
+    {
+      "id": 208,
+      "surah": "Ash-Shura",
+      "surahNumber": 42,
+      "ayahNumber": 38,
+      "arabic": "وَٱلَّذِينَ ٱسۡتَجَابُواْ لِرَبِّهِمۡ وَأَقَامُواْ ٱلصَّلَوٰةَ وَأَمۡرُهُمۡ شُورَىٰ بَيۡنَهُمۡ وَمِمَّا رَزَقۡنَٰهُمۡ يُنفِقُونَ",
+      "translation": "And those who have responded to their lord and established prayer and whose affair is consultation among themselves.",
+      "theme": "consultation, prayer, community",
+      "emotions": [
+        "leadership",
+        "seeking advice",
+        "community"
+      ]
+    },
+    {
+      "id": 209,
+      "surah": "Az-Zukhruf",
+      "surahNumber": 43,
+      "ayahNumber": 32,
+      "arabic": "أَهُمۡ يَقۡسِمُونَ رَحۡمَتَ رَبِّكَۚ نَحۡنُ قَسَمۡنَا بَيۡنَهُم مَّعِيشَتَهُمۡ فِي ٱلۡحَيَوٰةِ ٱلدُّنۡيَاۚ وَرَفَعۡنَا بَعۡضَهُمۡ فَوۡقَ بَعۡضٖ دَرَجَٰتٖ لِّيَتَّخِذَ بَعۡضُهُم بَعۡضٗا سُخۡرِيّٗاۗ وَرَحۡمَتُ رَبِّكَ خَيۡرٞ مِّمَّا يَجۡمَعُونَ",
+      "translation": "And We have apportioned among them their livelihood in the life of this world and have raised some of them above others in degrees.",
+      "theme": "provision, degrees, wisdom",
+      "emotions": [
+        "comparing",
+        "envious",
+        "accepting"
+      ]
+    },
+    {
+      "id": 210,
+      "surah": "Az-Zukhruf",
+      "surahNumber": 43,
+      "ayahNumber": 67,
+      "arabic": "ٱلۡأَخِلَّآءُ يَوۡمَئِذِۭ بَعۡضُهُمۡ لِبَعۡضٍ عَدُوٌّ إِلَّا ٱلۡمُتَّقِينَ",
+      "translation": "Close friends, that Day, will be enemies to each other - except for the righteous.",
+      "theme": "friendship, Day of Judgment, righteousness",
+      "emotions": [
+        "friendship",
+        "seeking good company",
+        "reflective"
+      ]
+    },
+    {
+      "id": 211,
+      "surah": "Al-Jathiyah",
+      "surahNumber": 45,
+      "ayahNumber": 13,
+      "arabic": "وَسَخَّرَ لَكُم مَّا فِي ٱلسَّمَٰوَٰتِ وَمَا فِي ٱلۡأَرۡضِ جَمِيعٗا مِّنۡهُۚ إِنَّ فِي ذَٰلِكَ لَأٓيَٰتٖ لِّقَوۡمٖ يَتَفَكَّرُونَ",
+      "translation": "And He has subjected to you whatever is in the heavens and whatever is on the earth - all from Him. Indeed in that are signs for a people who give thought.",
+      "theme": "creation, signs, reflection",
+      "emotions": [
+        "reflective",
+        "grateful",
+        "awe"
+      ]
+    },
+    {
+      "id": 212,
+      "surah": "Muhammad",
+      "surahNumber": 47,
+      "ayahNumber": 7,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓاْ إِن تَنصُرُواْ ٱللَّهَ يَنصُرۡكُمۡ وَيُثَبِّتۡ أَقۡدَامَكُمۡ",
+      "translation": "O you who have believed, if you support Allah, He will support you and plant firmly your feet.",
+      "theme": "supporting Allah's cause, divine support, steadfastness",
+      "emotions": [
+        "seeking support",
+        "activist",
+        "devoted"
+      ]
+    },
+    {
+      "id": 213,
+      "surah": "Al-Fath",
+      "surahNumber": 48,
+      "ayahNumber": 4,
+      "arabic": "هُوَ ٱلَّذِيٓ أَنزَلَ ٱلسَّكِينَةَ فِي قُلُوبِ ٱلۡمُؤۡمِنِينَ لِيَزۡدَادُوٓاْ إِيمَٰنٗا مَّعَ إِيمَٰنِهِمۡۗ وَلِلَّهِ جُنُودُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۚ وَكَانَ ٱللَّهُ عَلِيمًا حَكِيمٗا",
+      "translation": "It is He who sent down tranquility into the hearts of the believers that they would increase in faith along with their present faith.",
+      "theme": "tranquility, faith increase, hearts",
+      "emotions": [
+        "anxious",
+        "seeking peace",
+        "faithful"
+      ]
+    },
+    {
+      "id": 214,
+      "surah": "Al-Hujurat",
+      "surahNumber": 49,
+      "ayahNumber": 10,
+      "arabic": "إِنَّمَا ٱلۡمُؤۡمِنُونَ إِخۡوَةٞ فَأَصۡلِحُواْ بَيۡنَ أَخَوَيۡكُمۡۚ وَٱتَّقُواْ ٱللَّهَ لَعَلَّكُمۡ تُرۡحَمُونَ",
+      "translation": "The believers are but brothers, so make settlement between your brothers.",
+      "theme": "brotherhood, reconciliation, unity",
+      "emotions": [
+        "conflict",
+        "brotherhood",
+        "seeking peace"
+      ]
+    },
+    {
+      "id": 215,
+      "surah": "Al-Hujurat",
+      "surahNumber": 49,
+      "ayahNumber": 11,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ لَا يَسۡخَرۡ قَوۡمٞ مِّن قَوۡمٍ عَسَىٰٓ أَن يَكُونُواْ خَيۡرٗا مِّنۡهُمۡ وَلَا نِسَآءٞ مِّن نِّسَآءٍ عَسَىٰٓ أَن يَكُنَّ خَيۡرٗا مِّنۡهُنَّۖ وَلَا تَلۡمِزُوٓاْ أَنفُسَكُمۡ وَلَا تَنَابَزُواْ بِٱلۡأَلۡقَٰبِۖ بِئۡسَ ٱلِٱسۡمُ ٱلۡفُسُوقُ بَعۡدَ ٱلۡإِيمَٰنِۚ وَمَن لَّمۡ يَتُبۡ فَأُوْلَـٰٓئِكَ هُمُ ٱلظَّـٰلِمُونَ",
+      "translation": "O you who have believed, let not a people ridicule another people.",
+      "theme": "respect, no mockery, character",
+      "emotions": [
+        "bullied",
+        "character",
+        "seeking justice"
+      ]
+    },
+    {
+      "id": 216,
+      "surah": "Al-Hujurat",
+      "surahNumber": 49,
+      "ayahNumber": 12,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱجۡتَنِبُواْ كَثِيرٗا مِّنَ ٱلظَّنِّ إِنَّ بَعۡضَ ٱلظَّنِّ إِثۡمٞۖ وَلَا تَجَسَّسُواْ وَلَا يَغۡتَب بَّعۡضُكُم بَعۡضًاۚ أَيُحِبُّ أَحَدُكُمۡ أَن يَأۡكُلَ لَحۡمَ أَخِيهِ مَيۡتٗا فَكَرِهۡتُمُوهُۚ وَٱتَّقُواْ ٱللَّهَۚ إِنَّ ٱللَّهَ تَوَّابٞ رَّحِيمٞ",
+      "translation": "O you who have believed, avoid much negative assumption. Indeed, some assumption is sin.",
+      "theme": "avoiding suspicion, good thoughts, sin",
+      "emotions": [
+        "suspicious",
+        "negative thinking",
+        "seeking purity"
+      ]
+    },
+    {
+      "id": 217,
+      "surah": "Al-Hujurat",
+      "surahNumber": 49,
+      "ayahNumber": 13,
+      "arabic": "يَـٰٓأَيُّهَا ٱلنَّاسُ إِنَّا خَلَقۡنَٰكُم مِّن ذَكَرٖ وَأُنثَىٰ وَجَعَلۡنَٰكُمۡ شُعُوبٗا وَقَبَآئِلَ لِتَعَارَفُوٓاْۚ إِنَّ أَكۡرَمَكُمۡ عِندَ ٱللَّهِ أَتۡقَىٰكُمۡۚ إِنَّ ٱللَّهَ عَلِيمٌ خَبِيرٞ",
+      "translation": "O mankind, indeed We have created you from male and female and made you peoples and tribes that you may know one another.",
+      "theme": "human unity, diversity, knowing each other",
+      "emotions": [
+        "racist thoughts",
+        "unity",
+        "humanity"
+      ]
+    },
+    {
+      "id": 218,
+      "surah": "Qaf",
+      "surahNumber": 50,
+      "ayahNumber": 16,
+      "arabic": "وَلَقَدۡ خَلَقۡنَا ٱلۡإِنسَٰنَ وَنَعۡلَمُ مَا تُوَسۡوِسُ بِهِۦ نَفۡسُهُۥۖ وَنَحۡنُ أَقۡرَبُ إِلَيۡهِ مِنۡ حَبۡلِ ٱلۡوَرِيدِ",
+      "translation": "And We have already created man and know what his soul whispers to him, and We are closer to him than his jugular vein.",
+      "theme": "Allah's closeness, knowledge, soul",
+      "emotions": [
+        "lonely",
+        "seeking closeness",
+        "comforted"
+      ]
+    },
+    {
+      "id": 219,
+      "surah": "Adh-Dhariyat",
+      "surahNumber": 51,
+      "ayahNumber": 56,
+      "arabic": "وَمَا خَلَقۡتُ ٱلۡجِنَّ وَٱلۡإِنسَ إِلَّا لِيَعۡبُدُونِ",
+      "translation": "And I did not create the jinn and mankind except to worship Me.",
+      "theme": "purpose of life, worship, meaning",
+      "emotions": [
+        "seeking purpose",
+        "lost",
+        "questioning"
+      ]
+    },
+    {
+      "id": 220,
+      "surah": "An-Najm",
+      "surahNumber": 53,
+      "ayahNumber": 32,
+      "arabic": "ٱلَّذِينَ يَجۡتَنِبُونَ كَبَـٰٓئِرَ ٱلۡإِثۡمِ وَٱلۡفَوَٰحِشَ إِلَّا ٱللَّمَمَۚ إِنَّ رَبَّكَ وَٰسِعُ ٱلۡمَغۡفِرَةِۚ هُوَ أَعۡلَمُ بِكُمۡ إِذۡ أَنشَأَكُم مِّنَ ٱلۡأَرۡضِ وَإِذۡ أَنتُمۡ أَجِنَّةٞ فِي بُطُونِ أُمَّهَٰتِكُمۡۖ فَلَا تُزَكُّوٓاْ أَنفُسَكُمۡۖ هُوَ أَعۡلَمُ بِمَنِ ٱتَّقَىٰٓ",
+      "translation": "Those who avoid the major sins and immoralities, only committing slight ones. Indeed, your Lord is vast in forgiveness.",
+      "theme": "avoiding major sins, forgiveness, mercy",
+      "emotions": [
+        "guilty",
+        "seeking forgiveness",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 221,
+      "surah": "An-Najm",
+      "surahNumber": 53,
+      "ayahNumber": 39,
+      "arabic": "وَأَن لَّيۡسَ لِلۡإِنسَٰنِ إِلَّا مَا سَعَىٰ",
+      "translation": "And that there is not for man except that for which he strives.",
+      "theme": "effort, striving, personal responsibility",
+      "emotions": [
+        "lazy",
+        "motivated",
+        "seeking success"
+      ]
+    },
+    {
+      "id": 222,
+      "surah": "Al-Qamar",
+      "surahNumber": 54,
+      "ayahNumber": 17,
+      "arabic": "وَلَقَدۡ يَسَّرۡنَا ٱلۡقُرۡءَانَ لِلذِّكۡرِ فَهَلۡ مِن مُّدَّكِرٖ",
+      "translation": "And We have certainly made the Quran easy for remembrance, so is there any who will remember?",
+      "theme": "Quran made easy, remembrance, learning",
+      "emotions": [
+        "seeking to learn Quran",
+        "hopeful",
+        "motivated"
+      ]
+    },
+    {
+      "id": 223,
+      "surah": "Ar-Rahman",
+      "surahNumber": 55,
+      "ayahNumber": 60,
+      "arabic": "هَلۡ جَزَآءُ ٱلۡإِحۡسَٰنِ إِلَّا ٱلۡإِحۡسَٰنُ",
+      "translation": "Is the reward for good anything but good?",
+      "theme": "reward for good, justice, hope",
+      "emotions": [
+        "seeking reward",
+        "hopeful",
+        "motivated"
+      ]
+    },
+    {
+      "id": 224,
+      "surah": "Al-Waqiah",
+      "surahNumber": 56,
+      "ayahNumber": 10,
+      "arabic": "وَٱلسَّـٰبِقُونَ ٱلسَّـٰبِقُونَ",
+      "translation": "And the forerunners, the forerunners - Those are the ones brought near to Allah.",
+      "theme": "forerunners, nearness to Allah, excellence",
+      "emotions": [
+        "seeking nearness",
+        "ambitious",
+        "devoted"
+      ]
+    },
+    {
+      "id": 225,
+      "surah": "Al-Hadid",
+      "surahNumber": 57,
+      "ayahNumber": 4,
+      "arabic": "هُوَ ٱلَّذِي خَلَقَ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَ فِي سِتَّةِ أَيَّامٖ ثُمَّ ٱسۡتَوَىٰ عَلَى ٱلۡعَرۡشِۖ يَعۡلَمُ مَا يَلِجُ فِي ٱلۡأَرۡضِ وَمَا يَخۡرُجُ مِنۡهَا وَمَا يَنزِلُ مِنَ ٱلسَّمَآءِ وَمَا يَعۡرُجُ فِيهَاۖ وَهُوَ مَعَكُمۡ أَيۡنَ مَا كُنتُمۡۚ وَٱللَّهُ بِمَا تَعۡمَلُونَ بَصِيرٞ",
+      "translation": "He is with you wherever you are. And Allah, of what you do, is Seeing.",
+      "theme": "Allah's presence, awareness, comfort",
+      "emotions": [
+        "lonely",
+        "seeking comfort",
+        "aware"
+      ]
+    },
+    {
+      "id": 226,
+      "surah": "Al-Hadid",
+      "surahNumber": 57,
+      "ayahNumber": 25,
+      "arabic": "لَقَدۡ أَرۡسَلۡنَا رُسُلَنَا بِٱلۡبَيِّنَٰتِ وَأَنزَلۡنَا مَعَهُمُ ٱلۡكِتَٰبَ وَٱلۡمِيزَانَ لِيَقُومَ ٱلنَّاسُ بِٱلۡقِسۡطِۖ وَأَنزَلۡنَا ٱلۡحَدِيدَ فِيهِ بَأۡسٞ شَدِيدٞ وَمَنَٰفِعُ لِلنَّاسِ وَلِيَعۡلَمَ ٱللَّهُ مَن يَنصُرُهُۥ وَرُسُلَهُۥ بِٱلۡغَيۡبِۚ إِنَّ ٱللَّهَ قَوِيٌّ عَزِيزٞ",
+      "translation": "And We sent down iron, wherein is great military might and benefits for the people.",
+      "theme": "provision, strength, benefits",
+      "emotions": [
+        "seeking strength",
+        "provision",
+        "grateful"
+      ]
+    },
+    {
+      "id": 227,
+      "surah": "Al-Mujadilah",
+      "surahNumber": 58,
+      "ayahNumber": 11,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓاْ إِذَا قِيلَ لَكُمۡ تَفَسَّحُواْ فِي ٱلۡمَجَٰلِسِ فَٱفۡسَحُواْ يَفۡسَحِ ٱللَّهُ لَكُمۡۖ وَإِذَا قِيلَ ٱنشُزُواْ فَٱنشُزُواْ يَرۡفَعِ ٱللَّهُ ٱلَّذِينَ ءَامَنُواْ مِنكُمۡ وَٱلَّذِينَ أُوتُواْ ٱلۡعِلۡمَ دَرَجَٰتٖۚ وَٱللَّهُ بِمَا تَعۡمَلُونَ خَبِيرٞ",
+      "translation": "Allah will raise those who have believed among you and those who were given knowledge, by degrees.",
+      "theme": "knowledge, ranks, faith",
+      "emotions": [
+        "seeking knowledge",
+        "hopeful",
+        "devoted"
+      ]
+    },
+    {
+      "id": 228,
+      "surah": "Al-Hashr",
+      "surahNumber": 59,
+      "ayahNumber": 18,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱتَّقُواْ ٱللَّهَ وَلۡتَنظُرۡ نَفۡسٞ مَّا قَدَّمَتۡ لِغَدٖۖ وَٱتَّقُواْ ٱللَّهَۚ إِنَّ ٱللَّهَ خَبِيرُۢ بِمَا تَعۡمَلُونَ",
+      "translation": "O you who have believed, fear Allah. And let every soul look to what it has put forth for tomorrow.",
+      "theme": "preparation, accountability, foresight",
+      "emotions": [
+        "planning",
+        "seeking guidance",
+        "accountable"
+      ]
+    },
+    {
+      "id": 229,
+      "surah": "Al-Hashr",
+      "surahNumber": 59,
+      "ayahNumber": 19,
+      "arabic": "وَلَا تَكُونُواْ كَٱلَّذِينَ نَسُواْ ٱللَّهَ فَأَنسَىٰهُمۡ أَنفُسَهُمۡۚ أُوْلَـٰٓئِكَ هُمُ ٱلۡفَٰسِقُونَ",
+      "translation": "And be not like those who forgot Allah, so He made them forget themselves.",
+      "theme": "remembering Allah, self-awareness, warning",
+      "emotions": [
+        "forgetful",
+        "lost",
+        "seeking remembrance"
+      ]
+    },
+    {
+      "id": 230,
+      "surah": "Al-Hashr",
+      "surahNumber": 59,
+      "ayahNumber": 22,
+      "arabic": "هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَۖ عَٰلِمُ ٱلۡغَيۡبِ وَٱلشَّهَٰدَةِۖ هُوَ ٱلرَّحۡمَٰنُ ٱلرَّحِيمُ",
+      "translation": "He is Allah, other than whom there is no deity, Knower of the unseen and the witnessed. He is the Most Merciful, the Especially Merciful.",
+      "theme": "Allah's attributes, mercy, knowledge",
+      "emotions": [
+        "seeking knowledge of Allah",
+        "devoted",
+        "awe"
+      ]
+    },
+    {
+      "id": 231,
+      "surah": "Al-Hashr",
+      "surahNumber": 59,
+      "ayahNumber": 23,
+      "arabic": "هُوَ ٱللَّهُ ٱلَّذِي لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡمَلِكُ ٱلۡقُدُّوسُ ٱلسَّلَٰمُ ٱلۡمُؤۡمِنُ ٱلۡمُهَيۡمِنُ ٱلۡعَزِيزُ ٱلۡجَبَّارُ ٱلۡمُتَكَبِّرُۚ سُبۡحَٰنَ ٱللَّهِ عَمَّا يُشۡرِكُونَ",
+      "translation": "He is Allah, other than whom there is no deity, the Sovereign, the Pure, the Perfection, the Bestower of Faith, the Overseer, the Exalted in Might, the Compeller, the Superior.",
+      "theme": "Allah's names, attributes, majesty",
+      "emotions": [
+        "awe",
+        "devoted",
+        "humble"
+      ]
+    },
+    {
+      "id": 232,
+      "surah": "Al-Hashr",
+      "surahNumber": 59,
+      "ayahNumber": 24,
+      "arabic": "هُوَ ٱللَّهُ ٱلۡخَٰلِقُ ٱلۡبَارِئُ ٱلۡمُصَوِّرُۖ لَهُ ٱلۡأَسۡمَآءُ ٱلۡحُسۡنَىٰۚ يُسَبِّحُ لَهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضِۖ وَهُوَ ٱلۡعَزِيزُ ٱلۡحَكِيمُ",
+      "translation": "He is Allah, the Creator, the Inventor, the Fashioner; to Him belong the best names.",
+      "theme": "creation, beautiful names, Allah",
+      "emotions": [
+        "awe",
+        "grateful",
+        "humble"
+      ]
+    },
+    {
+      "id": 233,
+      "surah": "As-Saff",
+      "surahNumber": 61,
+      "ayahNumber": 10,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ هَلۡ أَدُلُّكُمۡ عَلَىٰ تِجَٰرَةٖ تُنجِيكُم مِّنۡ عَذَابٍ أَلِيمٖ",
+      "translation": "O you who have believed, shall I guide you to a transaction that will save you from a painful punishment?",
+      "theme": "transaction with Allah, salvation, guidance",
+      "emotions": [
+        "seeking salvation",
+        "hopeful",
+        "devoted"
+      ]
+    },
+    {
+      "id": 234,
+      "surah": "At-Taghabun",
+      "surahNumber": 64,
+      "ayahNumber": 11,
+      "arabic": "مَآ أَصَابَ مِن مُّصِيبَةٍ إِلَّا بِإِذۡنِ ٱللَّهِۗ وَمَن يُؤۡمِنۢ بِٱللَّهِ يَهۡدِ قَلۡبَهُۥۚ وَٱللَّهُ بِكُلِّ شَيۡءٍ عَلِيمٞ",
+      "translation": "No disaster strikes except by permission of Allah. And whoever believes in Allah - He will guide his heart.",
+      "theme": "trials, belief, heart guidance",
+      "emotions": [
+        "disaster struck",
+        "grieving",
+        "seeking guidance"
+      ]
+    },
+    {
+      "id": 235,
+      "surah": "At-Taghabun",
+      "surahNumber": 64,
+      "ayahNumber": 16,
+      "arabic": "فَٱتَّقُواْ ٱللَّهَ مَا ٱسۡتَطَعۡتُمۡ وَٱسۡمَعُواْ وَأَطِيعُواْ وَأَنفِقُواْ خَيۡرٗا لِّأَنفُسِكُمۡۗ وَمَن يُوقَ شُحَّ نَفۡسِهِۦ فَأُوْلَـٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ",
+      "translation": "So fear Allah as much as you are able and listen and obey and spend in the way of Allah; it is better for your selves.",
+      "theme": "fearing Allah, charity, obedience",
+      "emotions": [
+        "seeking guidance",
+        "devoted",
+        "generous"
+      ]
+    },
+    {
+      "id": 236,
+      "surah": "At-Talaq",
+      "surahNumber": 65,
+      "ayahNumber": 2,
+      "arabic": "فَإِذَا بَلَغۡنَ أَجَلَهُنَّ فَأَمۡسِكُوهُنَّ بِمَعۡرُوفٍ أَوۡ فَارِقُوهُنَّ بِمَعۡرُوفٖ وَأَشۡهِدُواْ ذَوَيۡ عَدۡلٖ مِّنكُمۡ وَأَقِيمُواْ ٱلشَّهَٰدَةَ لِلَّهِۚ ذَٰلِكُمۡ يُوعَظُ بِهِۦ مَن كَانَ يُؤۡمِنُ بِٱللَّهِ وَٱلۡيَوۡمِ ٱلۡأٓخِرِۚ وَمَن يَتَّقِ ٱللَّهَ يَجۡعَل لَّهُۥ مَخۡرَجٗا",
+      "translation": "And whoever fears Allah - He will make for him a way out.",
+      "theme": "fearing Allah, way out, relief",
+      "emotions": [
+        "stuck",
+        "seeking solution",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 237,
+      "surah": "At-Talaq",
+      "surahNumber": 65,
+      "ayahNumber": 7,
+      "arabic": "لِيُنفِقۡ ذُو سَعَةٖ مِّن سَعَتِهِۦۖ وَمَن قُدِرَ عَلَيۡهِ رِزۡقُهُۥ فَلۡيُنفِقۡ مِمَّآ ءَاتَىٰهُ ٱللَّهُۚ لَا يُكَلِّفُ ٱللَّهُ نَفۡسًا إِلَّا مَآ ءَاتَىٰهَاۚ سَيَجۡعَلُ ٱللَّهُ بَعۡدَ عُسۡرٖ يُسۡرٗا",
+      "translation": "Allah will bring about, after hardship, ease.",
+      "theme": "ease after hardship, hope, relief",
+      "emotions": [
+        "suffering",
+        "patient",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 238,
+      "surah": "At-Tahrim",
+      "surahNumber": 66,
+      "ayahNumber": 8,
+      "arabic": "يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ تُوبُوٓاْ إِلَى ٱللَّهِ تَوۡبَةٗ نَّصُوحًا عَسَىٰ رَبُّكُمۡ أَن يُكَفِّرَ عَنكُمۡ سَيِّـَٔاتِكُمۡ وَيُدۡخِلَكُمۡ جَنَّـٰتٖ تَجۡرِي مِن تَحۡتِهَا ٱلۡأَنۡهَٰرُ يَوۡمَ لَا يُخۡزِي ٱللَّهُ ٱلنَّبِيَّ وَٱلَّذِينَ ءَامَنُواْ مَعَهُۥۖ نُورُهُمۡ يَسۡعَىٰ بَيۡنَ أَيۡدِيهِمۡ وَبِأَيۡمَٰنِهِمۡ يَقُولُونَ رَبَّنَآ أَتۡمِمۡ لَنَا نُورَنَا وَٱغۡفِرۡ لَنَآۖ إِنَّكَ عَلَىٰ كُلِّ شَيۡءٖ قَدِيرٞ",
+      "translation": "O you who have believed, repent to Allah with sincere repentance.",
+      "theme": "repentance, sincerity, forgiveness",
+      "emotions": [
+        "guilty",
+        "seeking forgiveness",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 239,
+      "surah": "Al-Mulk",
+      "surahNumber": 67,
+      "ayahNumber": 3,
+      "arabic": "ٱلَّذِي خَلَقَ سَبۡعَ سَمَٰوَٰتٖ طِبَاقٗاۖ مَّا تَرَىٰ فِي خَلۡقِ ٱلرَّحۡمَٰنِ مِن تَفَٰوُتٖۖ فَٱرۡجِعِ ٱلۡبَصَرَ هَلۡ تَرَىٰ مِن فُطُورٖ",
+      "translation": "Who created seven heavens in layers. You do not see in the creation of the Most Merciful any inconsistency.",
+      "theme": "creation, perfection, reflection",
+      "emotions": [
+        "doubting",
+        "seeking signs",
+        "reflective"
+      ]
+    },
+    {
+      "id": 240,
+      "surah": "Al-Haqqah",
+      "surahNumber": 69,
+      "ayahNumber": 51,
+      "arabic": "وَإِنَّهُۥ لَحَقُّ ٱلۡيَقِينِ",
+      "translation": "And indeed, the Qur'an is the truth of certain belief.",
+      "theme": "Quran is truth, certainty, belief",
+      "emotions": [
+        "doubting",
+        "seeking truth",
+        "faithful"
+      ]
+    },
+    {
+      "id": 241,
+      "surah": "Al-Ma'arij",
+      "surahNumber": 70,
+      "ayahNumber": 19,
+      "arabic": "۞إِنَّ ٱلۡإِنسَٰنَ خُلِقَ هَلُوعًا",
+      "translation": "Indeed, mankind was created anxious.",
+      "theme": "human nature, anxiety, understanding",
+      "emotions": [
+        "anxious",
+        "understanding self",
+        "patient"
+      ]
+    },
+    {
+      "id": 242,
+      "surah": "Nuh",
+      "surahNumber": 71,
+      "ayahNumber": 10,
+      "arabic": "فَقُلۡتُ ٱسۡتَغۡفِرُواْ رَبَّكُمۡ إِنَّهُۥ كَانَ غَفَّارٗا",
+      "translation": "And said, 'Ask forgiveness of your Lord. Indeed, He is ever a Perpetual Forgiver.'",
+      "theme": "seeking forgiveness, Allah forgives, hope",
+      "emotions": [
+        "guilty",
+        "seeking forgiveness",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 243,
+      "surah": "Nuh",
+      "surahNumber": 71,
+      "ayahNumber": 28,
+      "arabic": "رَّبِّ ٱغۡفِرۡ لِي وَلِوَٰلِدَيَّ وَلِمَن دَخَلَ بَيۡتِيَ مُؤۡمِنٗا وَلِلۡمُؤۡمِنِينَ وَٱلۡمُؤۡمِنَٰتِۖ وَلَا تَزِدِ ٱلظَّـٰلِمِينَ إِلَّا تَبَارَۢا",
+      "translation": "My Lord, forgive me and my parents and whoever enters my house a believer and the believing men and believing women.",
+      "theme": "forgiveness for all, community prayer, parents",
+      "emotions": [
+        "praying for others",
+        "family",
+        "community"
+      ]
+    },
+    {
+      "id": 244,
+      "surah": "Al-Jinn",
+      "surahNumber": 72,
+      "ayahNumber": 18,
+      "arabic": "وَأَنَّ ٱلۡمَسَٰجِدَ لِلَّهِ فَلَا تَدۡعُواْ مَعَ ٱللَّهِ أَحَدٗا",
+      "translation": "And that the masjids are for Allah, so do not invoke with Allah anyone.",
+      "theme": "monotheism, masjid, pure worship",
+      "emotions": [
+        "devoted",
+        "seeking purity",
+        "monotheistic"
+      ]
+    },
+    {
+      "id": 245,
+      "surah": "Al-Qiyamah",
+      "surahNumber": 75,
+      "ayahNumber": 2,
+      "arabic": "وَلَآ أُقۡسِمُ بِٱلنَّفۡسِ ٱللَّوَّامَةِ",
+      "translation": "And I swear by the reproaching soul.",
+      "theme": "self-accountability, conscience, soul",
+      "emotions": [
+        "guilty",
+        "self-aware",
+        "reflective"
+      ]
+    },
+    {
+      "id": 246,
+      "surah": "Al-Ma'arij",
+      "surahNumber": 70,
+      "ayahNumber": 23,
+      "arabic": "ٱلَّذِينَ هُمۡ عَلَىٰ صَلَاتِهِمۡ دَآئِمُونَ",
+      "translation": "Those who are constant in their prayer.",
+      "theme": "prayer, consistency, devotion",
+      "emotions": [
+        "seeking consistency",
+        "devoted",
+        "struggling with prayer"
+      ]
+    },
+    {
+      "id": 247,
+      "surah": "Al-Insan",
+      "surahNumber": 76,
+      "ayahNumber": 1,
+      "arabic": "هَلۡ أَتَىٰ عَلَى ٱلۡإِنسَٰنِ حِينٞ مِّنَ ٱلدَّهۡرِ لَمۡ يَكُن شَيۡـٔٗا مَّذۡكُورًا",
+      "translation": "Has there not come upon man a period of time when he was not a thing even mentioned?",
+      "theme": "creation, humility, reflection",
+      "emotions": [
+        "arrogant",
+        "reflective",
+        "humble"
+      ]
+    },
+    {
+      "id": 248,
+      "surah": "Al-Insan",
+      "surahNumber": 76,
+      "ayahNumber": 3,
+      "arabic": "إِنَّا هَدَيۡنَٰهُ ٱلسَّبِيلَ إِمَّا شَاكِرٗا وَإِمَّا كَفُورًا",
+      "translation": "Indeed, We guided him to the way, be he grateful or be he ungrateful.",
+      "theme": "guidance, choice, gratitude",
+      "emotions": [
+        "seeking guidance",
+        "grateful",
+        "choosing"
+      ]
+    },
+    {
+      "id": 249,
+      "surah": "An-Naba",
+      "surahNumber": 78,
+      "ayahNumber": 8,
+      "arabic": "وَخَلَقۡنَٰكُمۡ أَزۡوَٰجٗا",
+      "translation": "And created you in pairs.",
+      "theme": "creation, pairs, mercy",
+      "emotions": [
+        "lonely",
+        "seeking spouse",
+        "grateful"
+      ]
+    },
+    {
+      "id": 250,
+      "surah": "An-Nazi'at",
+      "surahNumber": 79,
+      "ayahNumber": 37,
+      "arabic": "فَأَمَّا مَن طَغَىٰ",
+      "translation": "So as for he who transgressed and preferred the life of the world, then indeed, Hellfire will be his refuge.",
+      "theme": "worldly life, hereafter, warning",
+      "emotions": [
+        "worldly concerns",
+        "seeking perspective",
+        "reflective"
+      ]
+    },
+    {
+      "id": 251,
+      "surah": "Abasa",
+      "surahNumber": 80,
+      "ayahNumber": 1,
+      "arabic": "عَبَسَ وَتَوَلَّىٰٓ",
+      "translation": "He frowned and turned away.",
+      "theme": "lesson, humility, all matter to Allah",
+      "emotions": [
+        "arrogant",
+        "humble",
+        "reflective"
+      ]
+    },
+    {
+      "id": 252,
+      "surah": "At-Takwir",
+      "surahNumber": 81,
+      "ayahNumber": 29,
+      "arabic": "وَمَا تَشَآءُونَ إِلَّآ أَن يَشَآءَ ٱللَّهُ رَبُّ ٱلۡعَٰلَمِينَ",
+      "translation": "And you do not will except that Allah wills - Lord of the worlds.",
+      "theme": "Allah's will, surrender, trust",
+      "emotions": [
+        "controlling",
+        "trusting",
+        "surrendering"
+      ]
+    },
+    {
+      "id": 253,
+      "surah": "Al-Infitar",
+      "surahNumber": 82,
+      "ayahNumber": 6,
+      "arabic": "يَـٰٓأَيُّهَا ٱلۡإِنسَٰنُ مَا غَرَّكَ بِرَبِّكَ ٱلۡكَرِيمِ",
+      "translation": "O mankind, what has deceived you concerning your Lord, the Generous?",
+      "theme": "reflection, Allah's generosity, accountability",
+      "emotions": [
+        "heedless",
+        "reflective",
+        "grateful"
+      ]
+    },
+    {
+      "id": 254,
+      "surah": "Al-Mutaffifin",
+      "surahNumber": 83,
+      "ayahNumber": 26,
+      "arabic": "خِتَٰمُهُۥ مِسۡكٞۚ وَفِي ذَٰلِكَ فَلۡيَتَنَافَسِ ٱلۡمُتَنَٰفِسُونَ",
+      "translation": "The last of it is musk. So for this let the competitors compete.",
+      "theme": "paradise, competition in good, aspiration",
+      "emotions": [
+        "motivated",
+        "aspiring",
+        "hopeful"
+      ]
+    },
+    {
+      "id": 255,
+      "surah": "Al-A'la",
+      "surahNumber": 87,
+      "ayahNumber": 14,
+      "arabic": "قَدۡ أَفۡلَحَ مَن تَزَكَّىٰ",
+      "translation": "He has certainly succeeded who purifies himself.",
+      "theme": "purification, success, self-improvement",
+      "emotions": [
+        "seeking purification",
+        "self-improvement",
+        "hopeful"
+      ]
     }
   ]
 }

@@ -426,6 +426,39 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+/* ===== MOOD CHIPS ===== */
+.mood-chip {
+    padding: 8px 14px;
+    border: 2px solid var(--primary);
+    border-radius: 20px;
+    background: white;
+    color: var(--primary-dark);
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.mood-chip:hover {
+    background: rgba(114, 186, 174, 0.15);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(114, 186, 174, 0.2);
+}
+
+.mood-chip:active, .mood-chip.active {
+    background: var(--gradient-primary);
+    color: white;
+    border-color: transparent;
+    transform: translateY(0);
+}
+
+.mood-chips-container {
+    margin-bottom: 16px;
+}
+
 .secondary-button {
     background: white;
     color: var(--primary-dark);
