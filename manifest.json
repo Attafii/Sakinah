@@ -27,10 +27,10 @@
     }
   ],
   "icons": {
-    "16": "icons/Tosca modern minimalist Islamic center logo .png",
-    "32": "icons/Tosca modern minimalist Islamic center logo .png",
-    "48": "icons/Tosca modern minimalist Islamic center logo .png",
-    "128": "icons/Tosca modern minimalist Islamic center logo .png"
+    "16": "icons/Sakinah.png",
+    "32": "icons/Sakinah.png",
+    "48": "icons/Sakinah.png",
+    "128": "icons/Sakinah.png"
   },
   "action": {
     "default_popup": "popup.html",

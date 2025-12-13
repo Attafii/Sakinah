@@ -2,7 +2,8 @@
 
 class AIGuide {
     constructor() {
-        this.groqEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
+        // Use proxy server instead of direct Groq API
+        this.proxyEndpoint = CONFIG.PROXY_URL;
         this.conversationHistory = [];
         this.maxHistoryLength = 10; // Keep last 10 messages for context
     }
@@ -10,16 +11,7 @@ class AIGuide {
     // Main function to get AI guidance based on user input
     async getGuidance(userInput, ayahDatabase, options = {}) {
         try {
-            const settings = await this.getSettings();
             const forceArabic = options.forceArabic || false;
-            
-            if (!settings.groqApiKey) {
-                return {
-                    success: false,
-                    error: 'no_api_key',
-                    message: forceArabic ? 'يرجى إعداد مفتاح API الخاص بـ Groq في الإعدادات.' : 'Please configure your Groq API key in settings to use the AI Guide.'
-                };
-            }
 
             // Add user message to history
             this.conversationHistory.push({
@@ -32,7 +24,7 @@ class AIGuide {
                 this.conversationHistory = this.conversationHistory.slice(-this.maxHistoryLength);
             }
 
-            const result = await this.callGroqAPI(userInput, ayahDatabase, settings.groqApiKey, forceArabic);
+            const result = await this.callGroqAPI(userInput, ayahDatabase, forceArabic);
             
             if (result.success) {
                 // Add assistant response to history
@@ -55,7 +47,7 @@ class AIGuide {
     }
 
     // Call Groq API for guidance
-    async callGroqAPI(userInput, ayahDatabase, apiKey, forceArabic = false) {
+    async callGroqAPI(userInput, ayahDatabase, forceArabic = false) {
         try {
             // Build context from ayah database
             const ayahContext = this.buildAyahContext(ayahDatabase);
@@ -92,10 +84,9 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
                 ...this.conversationHistory
             ];
 
-            const response = await fetch(this.groqEndpoint, {
+            const response = await fetch(this.proxyEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${apiKey}`,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({

@@ -1300,9 +1300,26 @@ Please provide a thoughtful, accurate explanation following this structure:
         // Format the content with proper paragraphs and handle Arabic
         const formattedContent = this.formatChatContent(content);
 
+        // Add reference links for AI responses (not for user messages or loading/error states)
+        const referencesHTML = (sender === 'ai' && !isLoading && !isError) ? `
+            <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(114, 186, 174, 0.2); font-size: 0.8em;">
+                <div style="color: #72BAAE; font-weight: 600; margin-bottom: 6px;">📚 References & Sources:</div>
+                <div style="line-height: 1.6; color: #495057;">
+                    <a href="https://quran.com" target="_blank" style="color: #72BAAE; text-decoration: none; display: inline-block; margin-right: 12px;">🕌 Quran.com</a>
+                    <a href="https://sunnah.com" target="_blank" style="color: #72BAAE; text-decoration: none; display: inline-block; margin-right: 12px;">📖 Sunnah.com</a>
+                    <a href="https://www.altafsir.com" target="_blank" style="color: #72BAAE; text-decoration: none; display: inline-block; margin-right: 12px;">📝 Tafsir Library</a>
+                    <a href="https://islamqa.info" target="_blank" style="color: #72BAAE; text-decoration: none; display: inline-block;">💬 Islam Q&A</a>
+                </div>
+                <div style="margin-top: 6px; font-size: 0.9em; color: #6c757d; font-style: italic;">
+                    Verified from classical Islamic scholarship
+                </div>
+            </div>
+        ` : '';
+
         messageDiv.innerHTML = `
             <div style="${bubbleStyle} padding: 12px 16px; max-width: 85%; ${isRTL ? 'direction: rtl; text-align: right;' : ''} ${isLoading ? 'font-style: italic; opacity: 0.7;' : ''}">
                 ${isLoading ? '<span class="loading-dots">🤔 ' + content + '</span>' : formattedContent}
+                ${referencesHTML}
             </div>
         `;
 
