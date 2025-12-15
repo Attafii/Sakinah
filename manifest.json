@@ -1,31 +1,17 @@
 {
   "manifest_version": 3,
   "name": "Sakinah",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Find peace through the Qur'an with random Ayahs, AI-guided spiritual guidance, and customizable notifications.",
 
   "permissions": [
     "storage",
     "alarms",
-    "notifications",
-    "activeTab",
-    "scripting",
-    "tabs",
-    "system.display"
-  ],
-  "host_permissions": [
-    "<all_urls>"
+    "notifications"
   ],
   "background": {
     "service_worker": "background.js"
   },
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js"],
-      "run_at": "document_idle"
-    }
-  ],
   "icons": {
     "16": "icons/Sakinah.png",
     "32": "icons/Sakinah.png",
@@ -37,12 +23,6 @@
     "default_title": "Sakinah - Find peace through the Qur'an"
   },
   "options_page": "options.html",
-  "web_accessible_resources": [
-    {
-      "resources": ["quran.json", "notification.html", "notification-popup.js"],
-      "matches": ["<all_urls>"]
-    }
-  ],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }

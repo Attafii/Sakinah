@@ -3,7 +3,7 @@
 class AIGuide {
     constructor() {
         // Use proxy server instead of direct Groq API
-        this.proxyEndpoint = CONFIG.PROXY_URL;
+        this.proxyEndpoint = 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
         this.conversationHistory = [];
         this.maxHistoryLength = 10; // Keep last 10 messages for context
     }

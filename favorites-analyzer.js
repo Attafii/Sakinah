@@ -2,18 +2,17 @@
 
 class FavoritesAnalyzer {
     constructor() {
-        // API key loaded from CONFIG
-        this.groqApiKey = CONFIG.GROQ_API_KEY;
-        this.apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
+        // Use proxy endpoint instead of direct API
+        this.proxyEndpoint = CONFIG.PROXY_URL;
     }
 
     /**
      * Analyze favorites and produce a summary
      * @param {Array} favorites - Array of saved Ayahs and Ahadith
-     * @param {boolean} useLLM - Whether to use LLM (requires API key and consent)
+     * @param {string} language - Language for analysis response ('english' or 'arabic')
      * @returns {Promise<Object>} Analysis result with interests, needs, meaning, and actions
      */
-    async analyzeFavorites(favorites) {
+    async analyzeFavorites(favorites, language = 'english') {
         if (!favorites || favorites.length === 0) {
             return {
                 success: false,
@@ -22,8 +21,8 @@ class FavoritesAnalyzer {
         }
 
         try {
-            // Always use LLM analysis with hardcoded API key
-            return await this.analyzeFavoritesWithLLM(favorites);
+            // Always use LLM analysis with language preference
+            return await this.analyzeFavoritesWithLLM(favorites, language);
         } catch (error) {
             console.error('Error analyzing favorites:', error);
             // Fallback to offline analysis only on error
@@ -118,11 +117,12 @@ class FavoritesAnalyzer {
     }
 
     /**
-     * LLM-assisted analysis using Groq API
+     * LLM-assisted analysis using Groq API via proxy
      * @param {Array} favorites - Array of saved items
+     * @param {string} language - Language for analysis response
      * @returns {Promise<Object>} Rich analysis from LLM
      */
-    async analyzeFavoritesWithLLM(favorites) {
+    async analyzeFavoritesWithLLM(favorites, language = 'english') {
         try {
             // Prepare data for LLM (no personal identifiers)
             const favoritesData = favorites.map(item => ({
@@ -133,20 +133,19 @@ class FavoritesAnalyzer {
                 source: item.surah || item.source || ''
             }));
 
-            const prompt = this.buildLLMPrompt(favoritesData);
+            const prompt = this.buildLLMPrompt(favoritesData, language);
 
-            const response = await fetch(this.apiEndpoint, {
+            const response = await fetch(this.proxyEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${this.groqApiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     model: 'llama-3.3-70b-versatile',
                     messages: [
                         {
                             role: 'system',
-                            content: 'You are a thoughtful Islamic scholar and spiritual guide with deep knowledge of the Quran and Hadith. Analyze the user\'s saved verses to provide personalized, insightful spiritual guidance. Be specific, contextual, and meaningful in your analysis. Draw connections between the verses and provide actionable spiritual advice based on patterns you observe.'
+                            content: this.buildSystemPrompt(language)
                         },
                         {
                             role: 'user',
@@ -159,7 +158,8 @@ class FavoritesAnalyzer {
             });
 
             if (!response.ok) {
-                throw new Error(`Groq API error: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`Proxy API error: ${response.status} - ${errorText}`);
             }
 
             const result = await response.json();
@@ -183,9 +183,24 @@ class FavoritesAnalyzer {
     }
 
     /**
+     * Build system prompt with language instruction
+     */
+    buildSystemPrompt(language) {
+        const isArabic = language && language.toLowerCase() === 'arabic';
+        
+        if (isArabic) {
+            return 'أنت عالم إسلامي متأمل ومرشد روحي لديك معرفة عميقة بالقرآن والحديث. قم بتحليل الآيات المحفوظة للمستخدم لتقديم إرشاد روحي شخصي ومفيد. كن محددًا وسياقيًا وذا معنى في تحليلك. اربط بين الآيات وقدم نصائح روحية قابلة للتنفيذ بناءً على الأنماط التي تلاحظها. مهم جدًا: يجب أن تكون جميع الإجابات باللغة العربية فقط. استخدم الحروف العربية حصريًا. لا تستخدم أي كلمات من لغات أخرى (لا إنجليزية، لا روسية، لا صينية، لا فرنسية، إلخ). يجب أن تكون كل كلمة بالعربية.';
+        }
+        
+        return 'You are a thoughtful Islamic scholar and spiritual guide with deep knowledge of the Quran and Hadith. Analyze the user\'s saved verses to provide personalized, insightful spiritual guidance. Be specific, contextual, and meaningful in your analysis. Draw connections between the verses and provide actionable spiritual advice based on patterns you observe.';
+    }
+
+    /**
      * Build prompt for LLM analysis
      */
-    buildLLMPrompt(favoritesData) {
+    buildLLMPrompt(favoritesData, language = 'english') {
+        const isArabic = language && language.toLowerCase() === 'arabic';
+        
         const summary = favoritesData.map((item, index) => {
             const text = item.text || '';
             const arabic = item.arabic || '';
@@ -193,8 +208,31 @@ class FavoritesAnalyzer {
             const emotions = item.emotions || [];
             const source = item.source || '';
             
-            return `${index + 1}. "${text.substring(0, 200)}${text.length > 200 ? '...' : ''}"\n   Arabic: ${arabic.substring(0, 100)}\n   Source: ${source}\n   Themes: ${theme}\n   Related emotions: ${emotions.join(', ')}`;
+            return `${index + 1}. "${text.substring(0, 200)}${text.length > 200 ? '...' : ''}"}\n   Arabic: ${arabic.substring(0, 100)}\n   Source: ${source}\n   Themes: ${theme}\n   Related emotions: ${emotions.join(', ')}`;
         }).join('\n\n');
+
+        if (isArabic) {
+            return `بصفتك عالمًا إسلاميًا، قم بتحليل هذه ${favoritesData.length} آيات قرآنية وأحاديث نبوية المحفوظة التي قام مسلم بحفظها للإرشاد الروحي. انظر بعمق في الأنماط والموضوعات والرسائل الروحية التي تكشفها.
+
+العناصر المحفوظة:
+${summary}
+
+قدم تحليلاً روحياً مدروساً وشخصياً مع هذه الأقسام:
+
+1. **الاهتمامات**: حدد المواضيع والموضوعات الروحية الرئيسية التي ينجذب إليها هذا الشخص. ماذا يكشف اختياره عن تركيزه الروحي؟ كن محددًا وبصيرًا.
+
+2. **الاحتياجات**: بناءً على الآيات التي يحفظها، ما هي الاحتياجات الروحية أو العاطفية التي يمكنك استنتاجها؟ ماذا يبحثون عنه؟ (على سبيل المثال، السلام أثناء المحن، التوجيه للقرارات، القوة في الإيمان، الراحة في الخسارة، إلخ.)
+
+3. **المعنى**: قدم تركيبًا ذا معنى يربط بين هذه الآيات معًا. ما القصة التي ترويها عن رحلة هذا الشخص الروحية؟ ما هي الأنماط الأعمق التي تظهر؟ كيف تكمل هذه الاختيارات بعضها البعض؟
+
+4. **الإجراءات**: اقترح 4-6 إجراءات محددة وعملية يمكنهم اتخاذها لتعميق ارتباطهم بهذه التعاليم. كن ملموسًا وقابلاً للتنفيذ.
+
+قم بتنسيق إجابتك بالضبط على النحو التالي:
+الاهتمامات: [تحليلك التفصيلي]
+الاحتياجات: [رؤيتك حول احتياجاتهم الروحية]
+المعنى: [تركيبك والمعنى الأعمق]
+الإجراءات:\n1. [الإجراء الأول]\n2. [الإجراء الثاني]\n3. [الإجراء الثالث]\n4. [الإجراء الرابع]\n5. [الإجراء الخامس]`;
+        }
 
         return `As an Islamic scholar, analyze these ${favoritesData.length} saved Quranic verses and Hadith that a Muslim has bookmarked for spiritual guidance. Look deeply at the patterns, themes, and spiritual messages they reveal.
 
@@ -233,22 +271,22 @@ ACTIONS:\n1. [first action]\n2. [second action]\n3. [third action]\n4. [fourth a
         };
 
         try {
-            // Extract sections using regex
-            const interestsMatch = aiResponse.match(/INTERESTS:?\s*([^\n]+(?:\n(?!NEEDS:|MEANING:|ACTIONS:)[^\n]+)*)/i);
-            const needsMatch = aiResponse.match(/NEEDS:?\s*([^\n]+(?:\n(?!INTERESTS:|MEANING:|ACTIONS:)[^\n]+)*)/i);
-            const meaningMatch = aiResponse.match(/MEANING:?\s*([^\n]+(?:\n(?!INTERESTS:|NEEDS:|ACTIONS:)[^\n]+)*)/i);
-            const actionsMatch = aiResponse.match(/ACTIONS:?\s*([\s\S]+?)(?=\n\n|$)/i);
+            // Extract sections using regex (support both English and Arabic markers)
+            const interestsMatch = aiResponse.match(/(?:INTERESTS|الاهتمامات):?\s*([^\n]+(?:\n(?!(?:NEEDS|MEANING|ACTIONS|الاحتياجات|المعنى|الإجراءات):)[^\n]+)*)/i);
+            const needsMatch = aiResponse.match(/(?:NEEDS|الاحتياجات):?\s*([^\n]+(?:\n(?!(?:INTERESTS|MEANING|ACTIONS|الاهتمامات|المعنى|الإجراءات):)[^\n]+)*)/i);
+            const meaningMatch = aiResponse.match(/(?:MEANING|المعنى):?\s*([^\n]+(?:\n(?!(?:INTERESTS|NEEDS|ACTIONS|الاهتمامات|الاحتياجات|الإجراءات):)[^\n]+)*)/i);
+            const actionsMatch = aiResponse.match(/(?:ACTIONS|الإجراءات):?\s*([\s\S]+?)(?=\n\n|$)/i);
 
             if (interestsMatch) sections.interests = interestsMatch[1].trim();
             if (needsMatch) sections.needs = needsMatch[1].trim();
             if (meaningMatch) sections.meaning = meaningMatch[1].trim();
             
             if (actionsMatch) {
-                // Extract numbered actions
+                // Extract numbered actions (support both English and Arabic numbering)
                 const actionText = actionsMatch[1];
                 const actionItems = actionText.split(/\n/).filter(line => {
-                    return line.match(/^\d+\./) || line.match(/^[-•]/);
-                }).map(line => line.replace(/^\d+\.\s*|^[-•]\s*/, '').trim());
+                    return line.match(/^\d+\./) || line.match(/^[\u0660-\u0669]+\./) || line.match(/^[-•]/);
+                }).map(line => line.replace(/^\d+\.\s*|^[\u0660-\u0669]+\.\s*|^[-•]\s*/, '').trim());
                 
                 sections.actions = actionItems.length > 0 ? actionItems : [actionText.trim()];
             }

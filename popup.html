@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sakinah</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="lucide.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -20,27 +21,27 @@
         <!-- Tab Navigation -->
         <nav class="tabs">
             <button class="tab-button active" data-tab="random">
-                <span class="tab-icon">📖</span>
+                <span class="tab-icon"><i data-lucide="book-open"></i></span>
                 Random Ayah
             </button>
             <button class="tab-button" data-tab="ahadith">
-                <span class="tab-icon">🕋</span>
+                <span class="tab-icon"><i data-lucide="building"></i></span>
                 Ahadith
             </button>
             <button class="tab-button" data-tab="ai-guide">
-                <span class="tab-icon">🤲</span>
+                <span class="tab-icon"><i data-lucide="sparkles"></i></span>
                 AI Guide
             </button>
             <button class="tab-button" data-tab="favorites">
-                <span class="tab-icon">❤️</span>
+                <span class="tab-icon"><i data-lucide="heart"></i></span>
                 Favorites
             </button>
             <button class="tab-button" data-tab="hifdh">
-                <span class="tab-icon">🎯</span>
+                <span class="tab-icon"><i data-lucide="target"></i></span>
                 Hifdh
             </button>
             <button class="tab-button" data-tab="settings">
-                <span class="tab-icon">⚙️</span>
+                <span class="tab-icon"><i data-lucide="settings"></i></span>
                 Settings
             </button>
         </nav>
@@ -62,16 +63,16 @@
                 </div>
                 <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
                     <button class="refresh-button" id="refresh-ayah" aria-label="New Ayah">
-                    <span>🔄</span>
+                    <span><i data-lucide="refresh-cw"></i></span>
                     New Ayah
                     </button>
-                    <button class="icon-button" id="save-favorite" aria-label="Save Ayah to favorites" title="Save to favorites">🤍</button>
-                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🤖 Explain</button>
+                    <button class="icon-button" id="save-favorite" aria-label="Save Ayah to favorites" title="Save to favorites"><i data-lucide="heart"></i></button>
+                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;"><i data-lucide="bot"></i> Explain</button>
                 </div>
                 <div id="ayah-explanation" style="display:none; margin-top:16px; padding:16px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <h4 style="margin:0; color:#2B8C7B;">🤖 AI Explanation</h4>
-                        <button id="close-ayah-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
+                        <h4 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="bot"></i> AI Explanation</h4>
+                        <button id="close-ayah-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;"><i data-lucide="x"></i></button>
                     </div>
                     <div id="ayah-explanation-content" style="line-height:1.8; color:#333;"></div>
                 </div>
@@ -82,13 +83,13 @@
                 <div class="ai-guide-container" style="display:flex; flex-direction:column; height:100%;">
                     <!-- Header with clear button -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <h3 style="margin:0; color:#2B8C7B;">🤖 AI Spiritual Guide</h3>
+                        <h3 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="sparkles"></i> AI Spiritual Guide</h3>
                         <div style="display:flex; gap:8px; align-items:center;">
                             <label style="display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85em; color:#555;" title="Force responses in Arabic">
                                 <input type="checkbox" id="arabic-mode-toggle" style="cursor:pointer;">
                                 <span>عربي</span>
                             </label>
-                            <button id="clear-chat" class="secondary-button" style="padding:6px 12px; font-size:0.85em;">🗑️ Clear Chat</button>
+                            <button id="clear-chat" class="secondary-button" style="padding:6px 12px; font-size:0.85em; display:flex; align-items:center; gap:4px;"><i data-lucide="trash-2"></i> Clear Chat</button>
                         </div>
                     </div>
                     
@@ -100,14 +101,14 @@
                     <div id="mood-chips-container" style="margin-bottom:12px;">
                         <p style="font-size:0.85em; color:#888; margin-bottom:8px;">Quick topics:</p>
                         <div id="mood-chips" style="display:flex; flex-wrap:wrap; gap:6px;">
-                            <button class="mood-chip" data-mood="anxious" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">😰 Anxious</button>
-                            <button class="mood-chip" data-mood="sad" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">😢 Sad</button>
-                            <button class="mood-chip" data-mood="stressed" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">😫 Stressed</button>
-                            <button class="mood-chip" data-mood="lonely" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">🥺 Lonely</button>
-                            <button class="mood-chip" data-mood="seeking guidance" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">🔍 Guidance</button>
-                            <button class="mood-chip" data-mood="grateful" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">🙏 Grateful</button>
-                            <button class="mood-chip" data-mood="hopeless" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">😞 Hopeless</button>
-                            <button class="mood-chip" data-mood="guilty" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease;">😔 Guilty</button>
+                            <button class="mood-chip" data-mood="anxious" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="alert-circle" style="width:14px; height:14px;"></i> Anxious</button>
+                            <button class="mood-chip" data-mood="sad" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="cloud-rain" style="width:14px; height:14px;"></i> Sad</button>
+                            <button class="mood-chip" data-mood="stressed" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="zap" style="width:14px; height:14px;"></i> Stressed</button>
+                            <button class="mood-chip" data-mood="lonely" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="user" style="width:14px; height:14px;"></i> Lonely</button>
+                            <button class="mood-chip" data-mood="seeking guidance" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="compass" style="width:14px; height:14px;"></i> Guidance</button>
+                            <button class="mood-chip" data-mood="grateful" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="smile" style="width:14px; height:14px;"></i> Grateful</button>
+                            <button class="mood-chip" data-mood="hopeless" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="frown" style="width:14px; height:14px;"></i> Hopeless</button>
+                            <button class="mood-chip" data-mood="guilty" style="padding:6px 12px; border:1.5px solid #72BAAE; border-radius:16px; background:white; color:#2B8C7B; cursor:pointer; font-size:0.85em; transition:all 0.2s ease; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="circle-minus" style="width:14px; height:14px;"></i> Guilty</button>
                         </div>
                     </div>
 
@@ -136,8 +137,8 @@
                                 rows="2"
                                 style="flex:1; resize:none; padding:12px; border-radius:12px; border:2px solid rgba(114, 186, 174, 0.3); font-family:inherit; font-size:0.95em; transition:all 0.3s ease;"
                             ></textarea>
-                            <button class="guide-button" id="get-guidance" style="padding:12px 20px; margin:0; white-space:nowrap;">
-                                Send 📤
+                            <button class="guide-button" id="get-guidance" style="padding:12px 20px; margin:0; white-space:nowrap; display:flex; align-items:center; gap:6px;">
+                                Send <i data-lucide="send"></i>
                             </button>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -188,16 +189,16 @@
 
                     <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; align-items:center;">
                         <button class="refresh-button" id="hadith-random" aria-label="New Hadith">
-                            <span>🔄</span>
+                            <span><i data-lucide="refresh-cw"></i></span>
                             New Hadith
                         </button>
-                        <button class="icon-button" id="save-hadith-favorite" aria-label="Save Hadith to favorites" title="Save to favorites">🤍</button>
-                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🤖 Explain</button>
+                        <button class="icon-button" id="save-hadith-favorite" aria-label="Save Hadith to favorites" title="Save to favorites"><i data-lucide="heart"></i></button>
+                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;"><i data-lucide="bot"></i> Explain</button>
                     </div>
                     <div id="hadith-explanation" style="display:none; margin-top:16px; padding:16px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                            <h4 style="margin:0; color:#2B8C7B;">🤖 AI Explanation</h4>
-                            <button id="close-hadith-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;">✖</button>
+                            <h4 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="bot"></i> AI Explanation</h4>
+                            <button id="close-hadith-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;"><i data-lucide="x"></i></button>
                         </div>
                         <div id="hadith-explanation-content" style="line-height:1.8; color:#333;"></div>
                     </div>
@@ -209,7 +210,7 @@
                 <div class="hifdh-container">
                     <!-- Header -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                        <h3 style="color:#2B8C7B; margin:0;">🎯 Hifdh — Memorize the Qur'an</h3>
+                        <h3 style="color:#2B8C7B; margin:0; display:flex; align-items:center; gap:8px;"><i data-lucide="target"></i> Hifdh — Memorize the Qur'an</h3>
                         <div id="hifdh-stats" style="font-size:0.8em; color:#666; background:rgba(114,186,174,0.1); padding:4px 10px; border-radius:12px;">
                             <span id="memorized-count">0</span> memorized
                         </div>
@@ -223,14 +224,14 @@
 
                     <!-- Mode Buttons -->
                     <div style="display:flex; gap:8px; margin-bottom:12px;">
-                        <button id="hifdh-learn" class="hifdh-mode-btn active" style="flex:1; padding:10px; border:2px solid #72BAAE; border-radius:10px; background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; font-weight:600; cursor:pointer; transition:all 0.3s ease;">
-                            📖 Learn
+                        <button id="hifdh-learn" class="hifdh-mode-btn active" style="flex:1; padding:10px; border:2px solid #72BAAE; border-radius:10px; background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            <i data-lucide="book-open"></i> Learn
                         </button>
-                        <button id="hifdh-quiz" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease;">
-                            📝 Quiz
+                        <button id="hifdh-quiz" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            <i data-lucide="clipboard-check"></i> Quiz
                         </button>
-                        <button id="hifdh-listen" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease;">
-                            🎧 Listen
+                        <button id="hifdh-listen" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
+                            <i data-lucide="headphones"></i> Listen
                         </button>
                     </div>
 
@@ -266,7 +267,7 @@
                             <!-- Quiz Score Header -->
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:12px 16px; background:linear-gradient(135deg, rgba(114,186,174,0.15) 0%, rgba(168,235,216,0.1) 100%); border-radius:12px;">
                                 <div style="display:flex; align-items:center; gap:8px;">
-                                    <span style="font-size:1.5em;">🎮</span>
+                                    <i data-lucide="gamepad-2" style="width:24px; height:24px;"></i>
                                     <span style="font-weight:600; color:#2B8C7B;">Quiz Game</span>
                                 </div>
                                 <div style="display:flex; gap:16px; font-size:0.9em;">
@@ -333,17 +334,17 @@
 
                     <!-- Navigation -->
                     <div style="display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
-                        <button id="hifdh-prev" class="secondary-button" style="padding:10px 16px;">◀ Prev</button>
-                        <button id="hifdh-mark" class="secondary-button" style="padding:10px 16px; background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">
-                            <span id="hifdh-mark-icon">☐</span> Mark Memorized
+                        <button id="hifdh-prev" class="secondary-button" style="padding:10px 16px; display:flex; align-items:center; gap:6px;"><i data-lucide="chevron-left"></i> Prev</button>
+                        <button id="hifdh-mark" class="secondary-button" style="padding:10px 16px; background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;">
+                            <span id="hifdh-mark-icon"><i data-lucide="square"></i></span> Mark Memorized
                         </button>
-                        <button id="hifdh-next" class="secondary-button" style="padding:10px 16px;">Next ▶</button>
+                        <button id="hifdh-next" class="secondary-button" style="padding:10px 16px; display:flex; align-items:center; gap:6px;">Next <i data-lucide="chevron-right"></i></button>
                     </div>
 
                     <!-- Bottom Actions -->
                     <div style="display:flex; gap:8px; margin-top:12px; justify-content:center;">
-                        <button id="hifdh-reset" class="secondary-button" style="font-size:0.85em; padding:8px 12px;">🔄 Reset Progress</button>
-                        <button id="hifdh-random" class="secondary-button" style="font-size:0.85em; padding:8px 12px;">🎲 Random Ayah</button>
+                        <button id="hifdh-reset" class="secondary-button" style="font-size:0.85em; padding:8px 12px; display:flex; align-items:center; gap:6px;"><i data-lucide="rotate-ccw"></i> Reset Progress</button>
+                        <button id="hifdh-random" class="secondary-button" style="font-size:0.85em; padding:8px 12px; display:flex; align-items:center; gap:6px;"><i data-lucide="shuffle"></i> Random Ayah</button>
                     </div>
 
                     <!-- Keyboard Shortcuts Hint -->
@@ -401,9 +402,6 @@
                             <button class="options-button" id="open-options">
                                 Open Advanced Settings
                             </button>
-                            <button class="options-button" id="test-notification">
-                                Test Notification
-                            </button>
                             <button class="options-button" id="export-data">
                                 Export Data
                             </button>
@@ -422,7 +420,15 @@
         </footer>
     </div>
 
+    <!-- Resize Handle -->
+    <div class="resize-handle" title="Drag to resize">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 1L1 15M15 6L6 15M15 11L11 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+    </div>
+
     <script src="config.js"></script>
+    <script src="init-icons.js"></script>
     <script src="ai.js"></script>
     <script src="favorites-analyzer.js"></script>
     <script src="popup.js"></script>

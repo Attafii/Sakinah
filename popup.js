@@ -1,5 +1,12 @@
 // popup.js - Main popup functionality
 
+// Helper function to initialize Lucide icons
+function initLucideIcons() {
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
+}
+
 class SakinahPopup {
     constructor() {
         this.currentTab = 'random';
@@ -13,6 +20,8 @@ class SakinahPopup {
         this.loadSettings();
         this.showRandomAyah();
         this.loadFavorites();
+        // Initialize Lucide icons after page load
+        setTimeout(() => initLucideIcons(), 100);
         // hadith state
         this.hadithData = null;
         this.currentHadithIndex = -1;
@@ -165,41 +174,6 @@ class SakinahPopup {
 
         const openOptionsEl = document.getElementById('open-options');
         if (openOptionsEl) openOptionsEl.addEventListener('click', () => chrome.runtime.openOptionsPage());
-
-        // Test Notification button (sends a message to background to show a random ayah notification)
-        const testNotificationBtn = document.getElementById('test-notification');
-        if (testNotificationBtn) testNotificationBtn.addEventListener('click', async () => {
-            try {
-                // Update button to show loading state
-                const originalText = testNotificationBtn.textContent;
-                testNotificationBtn.textContent = '⏳ Sending...';
-                testNotificationBtn.disabled = true;
-
-                chrome.runtime.sendMessage({ action: 'showRandomAyah' }, (resp) => {
-                    if (chrome.runtime.lastError) {
-                        // This is expected if service worker needs to wake up
-                        console.log('Test notification note:', chrome.runtime.lastError.message);
-                    }
-                    
-                    // Show success regardless - the Windows notification will appear
-                    // The in-browser notification only works on regular web pages
-                    testNotificationBtn.textContent = '✅ Sent!';
-                    testNotificationBtn.title = 'Windows notification sent! In-browser notification requires an open web page.';
-                    setTimeout(() => {
-                        testNotificationBtn.textContent = originalText;
-                        testNotificationBtn.disabled = false;
-                        testNotificationBtn.title = '';
-                    }, 2500);
-                });
-            } catch (err) {
-                console.error('Error requesting test notification:', err);
-                testNotificationBtn.textContent = '❌ Error';
-                setTimeout(() => {
-                    testNotificationBtn.textContent = 'Test Notification';
-                    testNotificationBtn.disabled = false;
-                }, 2000);
-            }
-        });
 
         // Export Data placeholder (or real export of favorites)
         const exportBtn = document.getElementById('export-data');
@@ -513,7 +487,8 @@ class SakinahPopup {
         // Reset heart icon for new hadith
         const saveBtn = document.getElementById('save-hadith-favorite');
         if (saveBtn) {
-            saveBtn.innerHTML = '🤍';
+            saveBtn.innerHTML = '<i data-lucide="heart"></i>';
+            initLucideIcons();
             saveBtn.classList.remove('saved');
         }
     }
@@ -535,7 +510,8 @@ class SakinahPopup {
             if (exists) {
                 // Visual feedback - already saved
                 if (saveBtn) {
-                    saveBtn.innerHTML = '❤️';
+                    saveBtn.innerHTML = '<i data-lucide="heart"></i>';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
                     saveBtn.classList.add('saved');
                 }
                 return;
@@ -548,7 +524,8 @@ class SakinahPopup {
             
             // Visual feedback - heart animation
             if (saveBtn) {
-                saveBtn.innerHTML = '❤️';
+                saveBtn.innerHTML = '<i data-lucide="heart"></i>';
+                if (typeof lucide !== 'undefined') lucide.createIcons();
                 saveBtn.classList.add('saved');
             }
         } catch (err) {
@@ -594,7 +571,8 @@ class SakinahPopup {
             // Reset heart icon for new ayah
             const saveBtn = document.getElementById('save-favorite');
             if (saveBtn) {
-                saveBtn.innerHTML = '🤍';
+                saveBtn.innerHTML = '<i data-lucide="heart"></i>';
+                initLucideIcons();
                 saveBtn.classList.remove('saved');
             }
         }
@@ -621,7 +599,8 @@ class SakinahPopup {
             if (exists) {
                 // Visual feedback - already saved
                 if (saveBtn) {
-                    saveBtn.innerHTML = '❤️';
+                    saveBtn.innerHTML = '<i data-lucide="heart"></i>';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
                     saveBtn.classList.add('saved');
                 }
                 return;
@@ -633,7 +612,8 @@ class SakinahPopup {
             
             // Visual feedback - heart animation
             if (saveBtn) {
-                saveBtn.innerHTML = '❤️';
+                saveBtn.innerHTML = '<i data-lucide="heart"></i>';
+                if (typeof lucide !== 'undefined') lucide.createIcons();
                 saveBtn.classList.add('saved');
             }
         } catch (err) {
@@ -664,20 +644,20 @@ class SakinahPopup {
             div.id = 'favorites-tab';
             div.innerHTML = `
                 <div class="favorites-container">
-                    <h3 style="color:#2B8C7B; display:flex; align-items:center; gap:8px;">❤️ Your Favorites</h3>
+                    <h3 style="color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="heart"></i> Your Favorites</h3>
                     <div id="favorites-analysis-result" style="display:none; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); padding:18px; border-radius:12px; margin-bottom:16px; border-left:4px solid #72BAAE;">
-                        <h4 style="margin:0 0 12px 0; color:#2B8C7B;">📊 Your Spiritual Journey</h4>
+                        <h4 style="margin:0 0 12px 0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="bar-chart-2"></i> Your Spiritual Journey</h4>
                         <div id="analysis-content"></div>
                         <div style="margin-top:12px; display:flex; gap:8px;">
-                            <button id="regenerate-analysis" class="secondary-button">🔄 Regenerate</button>
-                            <button id="close-analysis" class="secondary-button">✖ Close</button>
+                            <button id="regenerate-analysis" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="refresh-cw"></i> Regenerate</button>
+                            <button id="close-analysis" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="x"></i> Close</button>
                         </div>
                     </div>
                     <div id="favorites-list" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;"></div>
                     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;">🧠 Analyze Favorites</button>
-                        <button id="export-favorites" class="secondary-button">📤 Export</button>
-                        <button id="clear-favorites" class="secondary-button">🗑️ Clear All</button>
+                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;"><i data-lucide="brain"></i> Analyze Favorites</button>
+                        <button id="export-favorites" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="download"></i> Export</button>
+                        <button id="clear-favorites" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="trash-2"></i> Clear All</button>
                     </div>
                 </div>
             `;
@@ -706,7 +686,8 @@ class SakinahPopup {
         listRoot.innerHTML = '';
 
         if (!favorites || favorites.length === 0) {
-            listRoot.innerHTML = '<div class="empty-favorites" style="text-align:center; padding:40px 20px; color:#6c757d;"><span style="font-size:3em; display:block; margin-bottom:16px; opacity:0.5;">🤍</span><p>No favorites yet.<br>Tap the heart icon to save Ayahs for later reflection.</p></div>';
+            listRoot.innerHTML = '<div class="empty-favorites" style="text-align:center; padding:40px 20px; color:#6c757d;"><span style="font-size:3em; display:block; margin-bottom:16px; opacity:0.5;"><i data-lucide="heart" style="width:64px; height:64px;"></i></span><p>No favorites yet.<br>Tap the heart icon to save Ayahs for later reflection.</p></div>';
+            initLucideIcons();
             return;
         }
 
@@ -719,21 +700,22 @@ class SakinahPopup {
 
             if (ayah.type === 'hadith') {
                 item.innerHTML = `
-                    <div style="font-weight:600; color:#2B8C7B;">💬 Hadith • ${ayah.source}</div>
+                    <div style="font-weight:600; color:#2B8C7B; display:flex; align-items:center; gap:6px;"><i data-lucide="message-square"></i> Hadith • ${ayah.source}</div>
                     <div style="margin-top:8px; font-style:italic; direction:rtl; font-family:'Amiri', serif;">${ayah.arabic_text}</div>
                     <div style="margin-top:8px; color:#495057; line-height:1.7;">${ayah.english_translation}</div>
                     <div style="margin-top:10px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open">📖 Open</button>
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove" style="color:#ee5253;">💔 Remove</button>
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open" style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> Open</button>
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove" style="color:#ee5253; display:flex; align-items:center; gap:6px;"><i data-lucide="heart-crack"></i> Remove</button>
                     </div>
                 `;
             } else {
                 item.innerHTML = `
-                    <div style="font-weight:600; color:#2B8C7B;">📖 ${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}</div>
+                    <div style="font-weight:600; color:#2B8C7B; display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> ${ayah.surah || 'Ayah'} ${ayah.surahNumber ? '('+ayah.surahNumber+':'+ayah.ayahNumber+')' : ''}</div>
+                    ${ayah.arabic ? '<div style="margin-top:10px; direction:rtl; font-size:1.3em; font-family:\'Scheherazade\', \'Amiri\', \'Traditional Arabic\', serif; color:#1a3a36; line-height:1.9;">' + ayah.arabic + '</div>' : ''}
                     <div style="margin-top:8px; font-style:italic; color:#495057; line-height:1.7;">${ayah.translation || ayah.english_translation || ''}</div>
                     <div style="margin-top:10px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="open">📖 Open</button>
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove" style="color:#ee5253;">💔 Remove</button>
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="open" style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> Open</button>
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove" style="color:#ee5253; display:flex; align-items:center; gap:6px;"><i data-lucide="heart-crack"></i> Remove</button>
                     </div>
                 `;
             }
@@ -849,14 +831,21 @@ class SakinahPopup {
                 return;
             }
 
+            // Get language preference from settings
+            const settings = await chrome.storage.sync.get({ explanationLanguage: 'english' });
+            const language = settings.explanationLanguage || 'english';
+
             // Show loading state
             const analyzeBtn = document.getElementById('analyze-favorites');
             const originalText = analyzeBtn.textContent;
             analyzeBtn.disabled = true;
-            analyzeBtn.textContent = '🤖 AI is analyzing your spiritual journey...';
+            analyzeBtn.textContent = 'AI is analyzing your spiritual journey...';
+            analyzeBtn.prepend(document.createElement('i'));
+            analyzeBtn.firstChild.setAttribute('data-lucide', 'loader');
+            if (typeof lucide !== 'undefined') lucide.createIcons();
 
-            // Perform AI analysis (always uses LLM with hardcoded key)
-            const result = await window.FavoritesAnalyzer.analyzeFavorites(favorites);
+            // Perform AI analysis with language preference
+            const result = await window.FavoritesAnalyzer.analyzeFavorites(favorites, language);
 
             // Reset button
             analyzeBtn.disabled = false;
@@ -891,8 +880,8 @@ class SakinahPopup {
 
         // Method badge
         const methodBadge = method === 'llm' 
-            ? '<span style="background:#4CAF50; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em;">🤖 AI-Powered</span>'
-            : '<span style="background:#2196F3; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em;">📊 Offline Analysis</span>';
+            ? '<span style="background:#4CAF50; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="sparkles" style="width:14px; height:14px;"></i> AI-Powered</span>'
+            : '<span style="background:#2196F3; color:white; padding:4px 8px; border-radius:4px; font-size:0.8em; display:inline-flex; align-items:center; gap:4px;"><i data-lucide="bar-chart-2" style="width:14px; height:14px;"></i> Offline Analysis</span>';
         
         html += `<div style="margin-bottom:12px;">${methodBadge}</div>`;
 
@@ -900,7 +889,7 @@ class SakinahPopup {
         if (analysis.interests) {
             html += `
                 <div style="margin-bottom:16px;">
-                    <h5 style="margin:0 0 8px 0; color:#1976d2;">🎯 Your Interests</h5>
+                    <h5 style="margin:0 0 8px 0; color:#1976d2; display:flex; align-items:center; gap:6px;"><i data-lucide="target"></i> Your Interests</h5>
                     <p style="margin:0; line-height:1.6;">${analysis.interests}</p>
                 </div>
             `;
@@ -910,7 +899,7 @@ class SakinahPopup {
         if (analysis.needs) {
             html += `
                 <div style="margin-bottom:16px;">
-                    <h5 style="margin:0 0 8px 0; color:#1976d2;">💭 Spiritual Needs</h5>
+                    <h5 style="margin:0 0 8px 0; color:#1976d2; display:flex; align-items:center; gap:6px;"><i data-lucide="message-circle"></i> Spiritual Needs</h5>
                     <p style="margin:0; line-height:1.6;">${analysis.needs}</p>
                 </div>
             `;
@@ -920,7 +909,7 @@ class SakinahPopup {
         if (analysis.meaning) {
             html += `
                 <div style="margin-bottom:16px;">
-                    <h5 style="margin:0 0 8px 0; color:#1976d2;">✨ Meaning & Synthesis</h5>
+                    <h5 style="margin:0 0 8px 0; color:#1976d2; display:flex; align-items:center; gap:6px;"><i data-lucide="sparkles"></i> Meaning & Synthesis</h5>
                     <p style="margin:0; line-height:1.6; font-style:italic;">${analysis.meaning}</p>
                 </div>
             `;
@@ -930,7 +919,7 @@ class SakinahPopup {
         if (analysis.actions && analysis.actions.length > 0) {
             html += `
                 <div style="margin-bottom:16px;">
-                    <h5 style="margin:0 0 8px 0; color:#1976d2;">🎯 Suggested Actions</h5>
+                    <h5 style="margin:0 0 8px 0; color:#1976d2; display:flex; align-items:center; gap:6px;"><i data-lucide="check-circle"></i> Suggested Actions</h5>
                     <ol style="margin:0; padding-left:20px; line-height:1.8;">
                         ${analysis.actions.map(action => `<li>${action}</li>`).join('')}
                     </ol>
@@ -950,6 +939,11 @@ class SakinahPopup {
 
         contentDiv.innerHTML = html;
         resultDiv.style.display = 'block';
+        
+        // Initialize Lucide icons in the analysis content
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
 
         // Scroll to result
         resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -965,14 +959,16 @@ class SakinahPopup {
             const explainBtn = document.getElementById('explain-ayah');
             const originalText = explainBtn.textContent;
             explainBtn.disabled = true;
-            explainBtn.textContent = '🤖 Thinking...';
+            explainBtn.innerHTML = '<i data-lucide="loader"></i> Thinking...';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+            
             // Load explanation language preference and request explanation
             const stored = await chrome.storage.sync.get({ explanationLanguage: 'english' });
             const lang = stored.explanationLanguage || 'english';
             const explanation = await this.getAIExplanation(this.currentAyah, 'ayah', lang);
 
             explainBtn.disabled = false;
-            explainBtn.textContent = originalText;
+            explainBtn.innerHTML = originalText;
 
             const explanationDiv = document.getElementById('ayah-explanation');
             const contentDiv = document.getElementById('ayah-explanation-content');
@@ -985,7 +981,8 @@ class SakinahPopup {
 
             if (typeof explanation === 'object' && explanation.status) {
                 if (explanation.status === 'no_key') {
-                    contentDiv.innerHTML = '<div class="explain-warning"><strong>Groq API key not found.</strong><br>To enable AI explanations, please configure your Groq API key in the extension options.<div style="margin-top:10px;"><button id="open-options-for-key" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:#1a3a36; border:none; padding:8px 16px; border-radius:8px; cursor:pointer;">⚙️ Open Settings</button></div></div>';
+                    contentDiv.innerHTML = '<div class="explain-warning"><strong>Groq API key not found.</strong><br>To enable AI explanations, please configure your Groq API key in the extension options.<div style="margin-top:10px;"><button id="open-options-for-key" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:#1a3a36; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="settings"></i> Open Settings</button></div></div>';
+                    if (typeof lucide !== 'undefined') lucide.createIcons();
                     setTimeout(() => {
                         const btn = document.getElementById('open-options-for-key');
                         if (btn) btn.addEventListener('click', () => chrome.runtime.openOptionsPage());
@@ -1056,7 +1053,7 @@ class SakinahPopup {
                             <strong>Groq API key not found.</strong><br>
                             To enable AI explanations, please configure your Groq API key in the extension options.
                             <div style="margin-top:10px;">
-                                <button id="open-options-for-key-hadith" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:#1a3a36; border:none;">⚙️ Open Settings</button>
+                                <button id="open-options-for-key-hadith" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:#1a3a36; border:none; display:inline-flex; align-items:center; gap:6px;"><i data-lucide="settings"></i> Open Settings</button>
                             </div>
                         </div>`;
                     // Add click handler for the button
@@ -1096,13 +1093,7 @@ class SakinahPopup {
     }
 
     async getAIExplanation(item, type, language = 'english') {
-        const apiKey = (typeof CONFIG !== 'undefined' && CONFIG && CONFIG.GROQ_API_KEY) ? CONFIG.GROQ_API_KEY : '';
-        const apiEndpoint = 'https://api.groq.com/openai/v1/chat/completions';
-
-        // If no key, return structured status so callers can show inline guidance
-        if (!apiKey || apiKey === 'GROQ_API_KEY') {
-            return { status: 'no_key' };
-        }
+        const proxyEndpoint = 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
 
         let prompt = '';
         let systemPrompt = '';
@@ -1172,11 +1163,10 @@ Please provide a thoughtful, accurate explanation following this structure:
         }
 
         try {
-            const response = await fetch(apiEndpoint, {
+            const response = await fetch(proxyEndpoint, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
                     model: 'llama-3.3-70b-versatile',
@@ -1190,12 +1180,12 @@ Please provide a thoughtful, accurate explanation following this structure:
             });
 
             if (response.status === 401) {
-                console.error('Groq API 401: invalid API key');
+                console.error('Proxy API 401: authentication failed');
                 return { status: 'auth_failed' };
             }
 
             if (!response.ok) {
-                console.error('Groq API error:', response.status);
+                console.error('Proxy API error:', response.status);
                 return { status: 'api_error', code: response.status };
             }
 
@@ -1208,7 +1198,7 @@ Please provide a thoughtful, accurate explanation following this structure:
             return explanation.replace(/\n\n/g, '</p><p>').replace(/^/, '<p>').replace(/$/, '</p>');
 
         } catch (error) {
-            console.error('Error calling Groq API:', error);
+            console.error('Error calling Proxy API:', error);
             return { status: 'network_error' };
         }
     }
@@ -1303,7 +1293,7 @@ Please provide a thoughtful, accurate explanation following this structure:
         // Add reference links for AI responses (not for user messages or loading/error states)
         const referencesHTML = (sender === 'ai' && !isLoading && !isError) ? `
             <div style="margin-top: 12px; padding-top: 8px; border-top: 1px solid rgba(114, 186, 174, 0.2); font-size: 0.8em;">
-                <div style="color: #72BAAE; font-weight: 600; margin-bottom: 6px;">📚 References & Sources:</div>
+                <div style="color: #72BAAE; font-weight: 600; margin-bottom: 6px; display:flex; align-items:center; gap:6px;"><i data-lucide="book-marked"></i> References & Sources:</div>
                 <div style="line-height: 1.6; color: #495057;">
                     <a href="https://quran.com" target="_blank" style="color: #72BAAE; text-decoration: none; display: inline-block; margin-right: 12px;">🕌 Quran.com</a>
                     <a href="https://sunnah.com" target="_blank" style="color: #72BAAE; text-decoration: none; display: inline-block; margin-right: 12px;">📖 Sunnah.com</a>
@@ -1529,27 +1519,27 @@ Please provide a thoughtful, accurate explanation following this structure:
                     </div>
                     
                     <div style="margin-bottom: 16px;">
-                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">📿 Ahadith</h3>
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0; display:flex; align-items:center; gap:6px;"><i data-lucide="building"></i> Ahadith</h3>
                         <p style="margin: 0; color: #555; font-size: 0.9em;">Browse prophetic traditions from various collections including Forties collections (Nawawi, etc.).</p>
                     </div>
                     
                     <div style="margin-bottom: 16px;">
-                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🤖 AI Guide</h3>
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0; display:flex; align-items:center; gap:6px;"><i data-lucide="sparkles"></i> AI Guide</h3>
                         <p style="margin: 0; color: #555; font-size: 0.9em;">Share your feelings and get personalized spiritual guidance with relevant Quranic verses. Toggle "عربي" for Arabic responses.</p>
                     </div>
                     
                     <div style="margin-bottom: 16px;">
-                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">❤️ Favorites</h3>
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0; display:flex; align-items:center; gap:6px;"><i data-lucide="heart"></i> Favorites</h3>
                         <p style="margin: 0; color: #555; font-size: 0.9em;">Save and review your favorite verses and hadiths. Use AI analysis to discover patterns in your selections.</p>
                     </div>
                     
                     <div style="margin-bottom: 16px;">
-                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🎯 Hifdh</h3>
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0; display:flex; align-items:center; gap:6px;"><i data-lucide="target"></i> Hifdh</h3>
                         <p style="margin: 0; color: #555; font-size: 0.9em;">Memorize the Quran with Learn and Quiz modes. Track your progress surah by surah.</p>
                     </div>
                     
                     <div style="margin-bottom: 16px;">
-                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0;">🔔 Notifications</h3>
+                        <h3 style="color: #2B8C7B; margin: 0 0 8px 0; display:flex; align-items:center; gap:6px;"><i data-lucide="bell"></i> Notifications</h3>
                         <p style="margin: 0; color: #555; font-size: 0.9em;">Enable periodic reminders with Quranic verses. Customize frequency from 15 minutes to daily.</p>
                     </div>
                     
@@ -1563,6 +1553,11 @@ Please provide a thoughtful, accurate explanation following this structure:
         `;
 
         document.body.appendChild(modal);
+        
+        // Initialize Lucide icons in the modal
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
 
         // Close handlers
         document.getElementById('close-help-modal').addEventListener('click', () => modal.remove());
@@ -2287,6 +2282,7 @@ Please provide a thoughtful, accurate explanation following this structure:
 // Initialize the popup when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new SakinahPopup();
+    initResizeHandle();
 });
 
 // Handle messages from background script
@@ -2296,3 +2292,46 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         console.log('Notification ayah:', request.ayah);
     }
 });
+
+// Resize functionality for the popup
+function initResizeHandle() {
+    const resizeHandle = document.querySelector('.resize-handle');
+    if (!resizeHandle) return;
+
+    let isResizing = false;
+    let startX, startY, startWidth, startHeight;
+
+    resizeHandle.addEventListener('mousedown', (e) => {
+        isResizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startWidth = document.body.offsetWidth;
+        startHeight = document.body.offsetHeight;
+        
+        document.body.style.cursor = 'nwse-resize';
+        document.body.style.userSelect = 'none';
+        
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return;
+
+        const deltaX = e.clientX - startX;
+        const deltaY = e.clientY - startY;
+        
+        const newWidth = Math.max(400, Math.min(800, startWidth + deltaX));
+        const newHeight = Math.max(520, Math.min(900, startHeight + deltaY));
+        
+        document.body.style.width = newWidth + 'px';
+        document.body.style.height = newHeight + 'px';
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isResizing) {
+            isResizing = false;
+            document.body.style.cursor = '';
+            document.body.style.userSelect = '';
+        }
+    });
+}

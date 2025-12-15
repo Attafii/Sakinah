@@ -53,7 +53,8 @@ async function checkIfFavorited() {
         const isFavorited = favorites.some(f => f.id === currentAyah.id);
         if (isFavorited) {
             const saveBtn = document.getElementById('save-btn');
-            saveBtn.innerHTML = '<span>❤️</span> Saved';
+            saveBtn.innerHTML = '<i data-lucide="heart"></i> Saved';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
             saveBtn.classList.add('saved');
         }
     } catch (err) {
@@ -178,35 +179,19 @@ async function explainAyah() {
     pauseTimer();
 
     // Show loading
-    explainBtn.innerHTML = '<span>🤖</span> Thinking...';
+    explainBtn.innerHTML = '<i data-lucide="loader"></i> Thinking...';
+    if (typeof lucide !== 'undefined') lucide.createIcons();
     explainBtn.disabled = true;
     
     explanationSection.style.display = 'block';
     explanationContent.innerHTML = '<div class="explanation-loading"><div class="spinner"></div>Generating explanation...</div>';
 
     try {
-        // Get API key
+        // Get settings
         const settings = await chrome.storage.sync.get({ explanationLanguage: 'english' });
         
-        // Try to get API key from config.js or storage
-        let apiKey = '';
-        try {
-            if (typeof CONFIG !== 'undefined' && CONFIG.GROQ_API_KEY && CONFIG.GROQ_API_KEY !== 'GROQ_API_KEY') {
-                apiKey = CONFIG.GROQ_API_KEY;
-            }
-        } catch (e) {}
-        
-        if (!apiKey) {
-            const stored = await chrome.storage.sync.get({ groqApiKey: '' });
-            apiKey = stored.groqApiKey;
-        }
-        
-        if (!apiKey) {
-            explanationContent.innerHTML = '<div style="color: #856404; background: #fff3cd; padding: 12px; border-radius: 8px;"><strong>API key not configured.</strong><br>Please set up your Groq API key in the extension settings.</div>';
-            explainBtn.innerHTML = '<span>🤖</span> Explain Ayah';
-            explainBtn.disabled = false;
-            return;
-        }
+        // Use proxy endpoint
+        const proxyEndpoint = 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
 
         const langInstruction = settings.explanationLanguage === 'arabic' 
             ? 'CRITICAL: Respond ONLY in Arabic (العربية). Use Arabic script EXCLUSIVELY. Do NOT include ANY words from other languages (no English, no Russian, no Chinese, no French, etc.). Every single word must be in Arabic. If you need to use a technical term, use its Arabic equivalent or transliterate it into Arabic script.' 
@@ -239,11 +224,10 @@ Follow Ibn Kathir's tafsir methodology in your explanation:
 - Keep the tone scholarly yet accessible and spiritually uplifting.
 - Aim for approximately 250-350 words.`;
 
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        const response = await fetch(proxyEndpoint, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 model: 'llama-3.3-70b-versatile',
@@ -258,7 +242,8 @@ Follow Ibn Kathir's tafsir methodology in your explanation:
 
         if (response.status === 401) {
             explanationContent.innerHTML = '<div style="color: #721c24; background: #f8d7da; padding: 12px; border-radius: 8px;">API authentication failed. Check your API key.</div>';
-            explainBtn.innerHTML = '<span>🤖</span> Explain Ayah';
+            explainBtn.innerHTML = '<i data-lucide="bot"></i> Explain Ayah';
+            if (typeof lucide !== 'undefined') lucide.createIcons();
             explainBtn.disabled = false;
             return;
         }
@@ -276,7 +261,8 @@ Follow Ibn Kathir's tafsir methodology in your explanation:
             .replace(/$/, '</p>');
         
         explanationContent.innerHTML = formattedExplanation;
-        explainBtn.innerHTML = '<span>✅</span> Explained';
+        explainBtn.innerHTML = '<i data-lucide="check-circle"></i> Explained';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
         
         // Check if scroll button should appear after content loads
         setTimeout(checkScrollButton, 100);
@@ -284,7 +270,8 @@ Follow Ibn Kathir's tafsir methodology in your explanation:
     } catch (error) {
         console.error('Error explaining ayah:', error);
         explanationContent.innerHTML = '<div style="color: #721c24; background: #f8d7da; padding: 12px; border-radius: 8px;">Error generating explanation. Please try again.</div>';
-        explainBtn.innerHTML = '<span>🤖</span> Explain Ayah';
+        explainBtn.innerHTML = '<i data-lucide="bot"></i> Explain Ayah';
+        if (typeof lucide !== 'undefined') lucide.createIcons();
         explainBtn.disabled = false;
         checkScrollButton();
     }
