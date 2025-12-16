@@ -47,11 +47,6 @@ class SakinahOptions {
             this.resetSettings();
         });
 
-        // Groq API toggle
-        document.getElementById('use-groq-api').addEventListener('change', () => {
-            this.checkAIStatus();
-        });
-
     }
 
     async loadSettings() {
@@ -76,8 +71,6 @@ class SakinahOptions {
                 aiContextHistory: false,
                 aiResponseStyle: 'detailed',
                 explanationLanguage: 'english',
-                useGroqAPI: true,
-                groqApiKey: CONFIG.GROQ_API_KEY,
                 
                 // Privacy settings
                 offlineMode: true,
@@ -101,7 +94,6 @@ class SakinahOptions {
             document.getElementById('ai-detailed-explanations').checked = settings.aiDetailedExplanations;
             document.getElementById('ai-context-history').checked = settings.aiContextHistory;
             document.getElementById('ai-response-style').value = settings.aiResponseStyle;
-            document.getElementById('use-groq-api').checked = settings.useGroqAPI;
             document.getElementById('explanation-language').value = settings.explanationLanguage || 'english';
 
             // Load privacy settings
@@ -115,9 +107,6 @@ class SakinahOptions {
             // Update visibility
             this.toggleNotificationOptions(settings.notificationsEnabled);
             this.updateNotificationTypeVisibility(settings.notificationType);
-
-            // Check AI status
-            this.checkAIStatus();
 
         } catch (error) {
             console.error('Error loading settings:', error);
@@ -199,7 +188,6 @@ class SakinahOptions {
                 aiContextHistory: document.getElementById('ai-context-history').checked,
                 aiResponseStyle: document.getElementById('ai-response-style').value,
                 explanationLanguage: document.getElementById('explanation-language').value,
-                useGroqAPI: document.getElementById('use-groq-api').checked,
                 
                 // Privacy settings
                 offlineMode: document.getElementById('offline-mode').checked,
@@ -289,54 +277,7 @@ class SakinahOptions {
         }
     }
 
-    async checkAIStatus() {
-        const statusElement = document.getElementById('ai-status');
-        const useGroqAPI = document.getElementById('use-groq-api').checked;
-        
-        if (!useGroqAPI) {
-            statusElement.innerHTML = '<small>📱 Offline mode - Using local AI analysis</small>';
-            statusElement.className = 'ai-status offline';
-            return;
-        }
 
-        statusElement.innerHTML = '<small>🔄 Checking AI service status...</small>';
-        statusElement.className = 'ai-status checking';
-
-        try {
-            // Check whether a Groq API key is stored, and perform a minimal authenticated request if available
-            const stored = await chrome.storage.sync.get({ groqApiKey: '' });
-            const apiKey = stored.groqApiKey;
-
-            if (!apiKey) {
-                throw new Error('No Groq API key configured');
-            }
-
-            // Minimal test request to validate the key (small token usage)
-            const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Authorization': `Bearer ${apiKey}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    model: 'llama-3.1-70b-versatile',
-                    messages: [{ role: 'user', content: 'ping' }],
-                    max_tokens: 1
-                })
-            });
-
-            if (response.ok) {
-                statusElement.innerHTML = '<small>✅ AI service connected and ready</small>';
-                statusElement.className = 'ai-status online';
-            } else {
-                throw new Error('API connection failed');
-            }
-        } catch (error) {
-            console.log('Groq API check failed:', error);
-            statusElement.innerHTML = '';
-            statusElement.className = 'ai-status';
-        }
-    }
 }
 
 // Initialize options page when DOM is loaded
