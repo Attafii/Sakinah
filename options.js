@@ -155,6 +155,8 @@ class SakinahOptions {
             input.addEventListener('change', (e) => {
                 const index = parseInt(e.target.dataset.index);
                 this.customTimes[index] = e.target.value;
+                // Auto-save when time changes
+                this.saveAllSettings();
             });
         });
 
