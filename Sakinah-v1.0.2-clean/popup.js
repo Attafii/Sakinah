@@ -2283,42 +2283,7 @@ Please provide a thoughtful, accurate explanation following this structure:
 document.addEventListener('DOMContentLoaded', () => {
     new SakinahPopup();
     initResizeHandle();
-    initLanguageToggle();
 });
-
-// Initialize language toggle functionality
-function initLanguageToggle() {
-    const langButtons = document.querySelectorAll('.lang-btn');
-    
-    // Set active button based on current language
-    const updateActiveButton = () => {
-        const currentLang = translator.getCurrentLanguage();
-        langButtons.forEach(btn => {
-            if (btn.dataset.lang === currentLang) {
-                btn.classList.add('active');
-            } else {
-                btn.classList.remove('active');
-            }
-        });
-    };
-    
-    // Initialize active state
-    updateActiveButton();
-    
-    // Add click handlers
-    langButtons.forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const newLang = btn.dataset.lang;
-            await translator.setLanguage(newLang);
-            updateActiveButton();
-        });
-    });
-    
-    // Listen for language changes from other parts of the extension
-    document.addEventListener('languageChanged', () => {
-        updateActiveButton();
-    });
-}
 
 // Handle messages from background script
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {

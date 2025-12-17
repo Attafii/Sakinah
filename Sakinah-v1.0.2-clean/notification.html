@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakinah - Ayah Notification</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <script src="lucide.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            background: linear-gradient(165deg, #ffffff 0%, #f0faf7 50%, #e8f8f3 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .notification-container {
+            padding: 0;
+            animation: slideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .notification-card {
+            background: linear-gradient(165deg, #ffffff 0%, #f0faf7 50%, #e8f8f3 100%);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .notification-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #A8EBD8 0%, #72BAAE 30%, #2B8C7B 70%, #1a6b5a 100%);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 18px 22px 16px;
+            background: linear-gradient(135deg, rgba(168, 235, 216, 0.25) 0%, rgba(114, 186, 174, 0.1) 100%);
+            border-bottom: 1px solid rgba(114, 186, 174, 0.15);
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #72BAAE 0%, #2B8C7B 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+            box-shadow: 0 6px 16px rgba(43, 140, 123, 0.4);
+            animation: pulse 3s ease-in-out infinite;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            inset: -3px;
+            border-radius: 17px;
+            background: linear-gradient(135deg, rgba(168, 235, 216, 0.5) 0%, rgba(43, 140, 123, 0.3) 100%);
+            z-index: -1;
+            animation: glow 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { opacity: 0.5; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .logo span {
+            font-size: 24px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .title-group {
+            flex: 1;
+        }
+
+        .title {
+            color: #2B8C7B;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: 0.5px;
+        }
+
+        .subtitle {
+            color: #72BAAE;
+            font-size: 12px;
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        .close-btn {
+            background: rgba(114, 186, 174, 0.12);
+            border: none;
+            color: #72BAAE;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+        }
+
+        .close-btn:hover {
+            background: rgba(220, 53, 69, 0.12);
+            color: #dc3545;
+            transform: scale(1.1) rotate(90deg);
+        }
+
+        .content {
+            padding: 28px 26px;
+            position: relative;
+        }
+
+        .content::before {
+            content: '❝';
+            position: absolute;
+            top: 12px;
+            left: 16px;
+            font-size: 52px;
+            color: rgba(114, 186, 174, 0.12);
+            line-height: 1;
+        }
+
+        .content::after {
+            content: '❞';
+            position: absolute;
+            bottom: 60px;
+            right: 16px;
+            font-size: 52px;
+            color: rgba(114, 186, 174, 0.08);
+            line-height: 1;
+        }
+
+        .arabic {
+            font-family: 'Amiri', 'Traditional Arabic', serif;
+            font-size: 26px;
+            line-height: 2;
+            text-align: right;
+            direction: rtl;
+            margin-bottom: 20px;
+            color: #1a3a36;
+            position: relative;
+            z-index: 1;
+        }
+
+        .translation {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: #495057;
+            font-style: italic;
+            padding: 14px 14px 14px 20px;
+            border-left: 4px solid rgba(114, 186, 174, 0.4);
+            background: linear-gradient(90deg, rgba(114, 186, 174, 0.08) 0%, transparent 100%);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .reference {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: white;
+            background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+            padding: 10px 18px;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(43, 140, 123, 0.35);
+        }
+
+        .reference::before {
+            content: '📖';
+            font-size: 14px;
+        }
+
+        .actions {
+            padding: 0 22px 22px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 14px;
+            padding: 14px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
+            color: #1a3a36;
+            box-shadow: 0 6px 18px rgba(114, 186, 174, 0.45);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(114, 186, 174, 0.55);
+        }
+
+        .btn-secondary {
+            background: rgba(255,255,255,0.9);
+            color: #2B8C7B;
+            border: 2px solid rgba(114, 186, 174, 0.35);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(114, 186, 174, 0.15);
+            border-color: #72BAAE;
+            transform: translateY(-3px);
+        }
+
+        .btn-secondary.saved {
+            background: linear-gradient(135deg, #d4edda 0%, #b8e0c2 100%);
+            color: #155724;
+            border-color: transparent;
+        }
+
+        .progress-container {
+            height: 4px;
+            background: rgba(114, 186, 174, 0.15);
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #A8EBD8 0%, #72BAAE 50%, #2B8C7B 100%);
+            animation: progress 15s linear forwards;
+            box-shadow: 0 0 10px rgba(114, 186, 174, 0.5);
+        }
+
+        @keyframes progress {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        .timer {
+            position: absolute;
+            bottom: 28px;
+            right: 26px;
+            font-size: 12px;
+            color: #adb5bd;
+            font-weight: 600;
+            background: rgba(255,255,255,0.8);
+            padding: 4px 10px;
+            border-radius: 10px;
+        }
+
+        /* Loading state */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            gap: 16px;
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(114, 186, 174, 0.2);
+            border-top-color: #72BAAE;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #72BAAE;
+            font-size: 14px;
+        }
+
+        .explanation-section {
+            margin: 0 22px 22px;
+            background: linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.1) 100%);
+            border-radius: 14px;
+            border: 1px solid rgba(114, 186, 174, 0.2);
+            overflow: hidden;
+        }
+
+        .explanation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(114, 186, 174, 0.15);
+            font-weight: 600;
+            color: #2B8C7B;
+            font-size: 14px;
+        }
+
+        .close-explanation {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #72BAAE;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+
+        .close-explanation:hover {
+            color: #dc3545;
+        }
+
+        .explanation-content {
+            padding: 16px;
+            font-size: 13px;
+            line-height: 1.7;
+            color: #495057;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .explanation-content p {
+            margin-bottom: 10px;
+        }
+
+        .explanation-loading {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #72BAAE;
+        }
+
+        .explanation-loading .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(114, 186, 174, 0.2);
+            border-top-color: #72BAAE;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        /* Scroll down button */
+        .scroll-down-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(43, 140, 123, 0.4);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-down-btn:hover {
+            transform: translateX(-50%) scale(1.1);
+            box-shadow: 0 6px 20px rgba(43, 140, 123, 0.5);
+        }
+
+        .scroll-down-btn.visible {
+            display: flex;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-8px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-4px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notification-container" id="notification-container">
+        <div class="loading" id="loading">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">Loading Ayah...</div>
+        </div>
+
+        <div class="notification-card" id="notification-card" style="display: none;">
+            <div class="header">
+                <div class="logo">
+                    <i data-lucide="moon" style="width:28px; height:28px; color:white;"></i>
+                </div>
+                <div class="title-group">
+                    <div class="title">سكينة Sakinah</div>
+                    <div class="subtitle" style="display:flex; align-items:center; gap:4px;"><i data-lucide="sparkles" style="width:12px; height:12px;"></i> A verse of peace for your soul</div>
+                </div>
+                <button class="close-btn" id="close-btn" title="Close">×</button>
+            </div>
+            
+            <div class="content">
+                <div class="arabic" id="arabic-text"></div>
+                <div class="translation" id="translation-text"></div>
+                <div class="reference" id="reference-text"></div>
+                <div class="timer" id="timer">15s</div>
+            </div>
+            
+            <div class="actions">
+                <button class="btn btn-primary" id="explain-btn" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i data-lucide="bot"></i> Explain Ayah
+                </button>
+                <button class="btn btn-secondary" id="save-btn" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i data-lucide="heart"></i> Save
+                </button>
+            </div>
+
+            <div class="explanation-section" id="explanation-section" style="display: none;">
+                <div class="explanation-header">
+                    <span style="display:flex; align-items:center; gap:6px;"><i data-lucide="bot"></i> AI Explanation</span>
+                    <button class="close-explanation" id="close-explanation">×</button>
+                </div>
+                <div class="explanation-content" id="explanation-content"></div>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+        </div>
+
+        <!-- Scroll down button -->
+        <button class="scroll-down-btn" id="scroll-down-btn" title="Scroll down for more">
+            ↓
+        </button>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="init-icons.js"></script>
+    <script src="notification-popup.js"></script>
+</body>
+</html>

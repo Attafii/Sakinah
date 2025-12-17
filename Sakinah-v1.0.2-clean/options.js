@@ -12,11 +12,6 @@ class SakinahOptions {
     }
 
     setupEventListeners() {
-        // Interface language change
-        document.getElementById('interface-language').addEventListener('change', async (e) => {
-            await translator.setLanguage(e.target.value);
-        });
-
         // Enable/disable notifications
         document.getElementById('enable-notifications').addEventListener('change', (e) => {
             this.toggleNotificationOptions(e.target.checked);
@@ -57,9 +52,6 @@ class SakinahOptions {
     async loadSettings() {
         try {
             const settings = await chrome.storage.sync.get({
-                // Language settings
-                interfaceLanguage: 'en',
-                
                 // Notification settings
                 notificationsEnabled: false,
                 notificationType: 'interval',
@@ -84,9 +76,6 @@ class SakinahOptions {
                 offlineMode: true,
                 anonymousUsage: false
             });
-
-            // Load language settings
-            document.getElementById('interface-language').value = settings.interfaceLanguage || 'en';
 
             // Load notification settings
             document.getElementById('enable-notifications').checked = settings.notificationsEnabled;
@@ -182,9 +171,6 @@ class SakinahOptions {
     async saveAllSettings() {
         try {
             const settings = {
-                // Language settings
-                interfaceLanguage: document.getElementById('interface-language').value,
-                
                 // Notification settings
                 notificationsEnabled: document.getElementById('enable-notifications').checked,
                 notificationType: document.getElementById('notification-type').value,

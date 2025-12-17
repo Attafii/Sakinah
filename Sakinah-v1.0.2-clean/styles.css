@@ -49,29 +49,6 @@ body {
     }
 }
 
-/* ===== RTL SUPPORT ===== */
-[dir="rtl"] {
-    direction: rtl;
-}
-
-[dir="rtl"] .header-content {
-    text-align: right;
-}
-
-[dir="rtl"] .tabs {
-    direction: rtl;
-}
-
-[dir="rtl"] .tab-icon {
-    margin-left: 8px;
-    margin-right: 0;
-}
-
-[dir="rtl"] .language-toggle {
-    left: 20px;
-    right: auto;
-}
-
 /* ===== SCROLLBAR STYLING ===== */
 ::-webkit-scrollbar {
     width: 6px;
@@ -145,59 +122,6 @@ body:hover .resize-handle {
 }
 
 /* ===== HEADER STYLES ===== */
-.header {
-    background: var(--gradient-dark);
-    color: white;
-    padding: 24px 20px;
-    text-align: center;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header-content {
-    flex: 1;
-    text-align: center;
-}
-
-.language-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    gap: 4px;
-    z-index: 10;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 4px;
-}
-
-.lang-btn {
-    background: transparent;
-    border: none;
-    color: rgba(255, 255, 255, 0.7);
-    padding: 6px 12px;
-    border-radius: 16px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 600;
-    transition: all var(--transition-fast);
-}
-
-.lang-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-}
-
-.lang-btn.active {
-    background: rgba(255, 255, 255, 0.3);
-    color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
 .header {
     background: var(--gradient-dark);
     color: white;
