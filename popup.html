@@ -59,7 +59,7 @@
                 <div class="ayah-container">
                     <div class="ayah-loading" id="ayah-loading">
                         <div class="spinner"></div>
-                        <p>Loading Ayah...</p>
+                        <p data-i18n="popup.loading">Loading Ayah...</p>
                     </div>
                     <div class="ayah-content" id="ayah-content" style="display: none;">
                         <div class="ayah-arabic" id="ayah-arabic"></div>
@@ -70,10 +70,10 @@
                 <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap;">
                     <button class="refresh-button" id="refresh-ayah" aria-label="New Ayah">
                     <span><i data-lucide="refresh-cw"></i></span>
-                    New Ayah
+                    <span data-i18n="popup.refresh">New Ayah</span>
                     </button>
                     <button class="icon-button" id="save-favorite" aria-label="Save Ayah to favorites" title="Save to favorites"><i data-lucide="heart"></i></button>
-                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;"><i data-lucide="bot"></i> Explain</button>
+                    <button class="secondary-button" id="explain-ayah" aria-label="Explain this Ayah with AI" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none;"><i data-lucide="bot"></i> <span data-i18n="popup.explainAyah">Explain</span></button>
                 </div>
                 <div id="ayah-explanation" style="display:none; margin-top:16px; padding:16px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -89,17 +89,17 @@
                 <div class="ai-guide-container" style="display:flex; flex-direction:column; height:100%;">
                     <!-- Header with clear button -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <h3 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="sparkles"></i> AI Spiritual Guide</h3>
+                        <h3 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="sparkles"></i> <span data-i18n="aiGuide.title">AI Spiritual Guide</span></h3>
                         <div style="display:flex; gap:8px; align-items:center;">
                             <label style="display:flex; align-items:center; gap:4px; cursor:pointer; font-size:0.85em; color:#555;" title="Force responses in Arabic">
                                 <input type="checkbox" id="arabic-mode-toggle" style="cursor:pointer;">
                                 <span>عربي</span>
                             </label>
-                            <button id="clear-chat" class="secondary-button" style="padding:6px 12px; font-size:0.85em; display:flex; align-items:center; gap:4px;"><i data-lucide="trash-2"></i> Clear Chat</button>
+                            <button id="clear-chat" class="secondary-button" style="padding:6px 12px; font-size:0.85em; display:flex; align-items:center; gap:4px;"><i data-lucide="trash-2"></i> <span data-i18n="common.clear">Clear Chat</span></button>
                         </div>
                     </div>
                     
-                    <p class="guide-instruction" style="margin-bottom:12px; color:#666; font-size:0.9em;">
+                    <p class="guide-instruction" style="margin-bottom:12px; color:#666; font-size:0.9em;" data-i18n="aiGuide.placeholder">
                         Share what's on your mind, and I'll provide Islamic guidance and relevant Quranic verses.
                     </p>
 
@@ -139,12 +139,13 @@
                             <textarea 
                                 id="emotional-state" 
                                 placeholder="Type your message here... (Press Enter to send)"
+                                data-i18n-placeholder="aiGuide.inputPlaceholder"
                                 maxlength="1000"
                                 rows="2"
                                 style="flex:1; resize:none; padding:12px; border-radius:12px; border:2px solid rgba(114, 186, 174, 0.3); font-family:inherit; font-size:0.95em; transition:all 0.3s ease;"
                             ></textarea>
                             <button class="guide-button" id="get-guidance" style="padding:12px 20px; margin:0; white-space:nowrap; display:flex; align-items:center; gap:6px;">
-                                Send <i data-lucide="send"></i>
+                                <span data-i18n="aiGuide.askButton">Send</span> <i data-lucide="send"></i>
                             </button>
                         </div>
                         <div style="display:flex; justify-content:space-between; align-items:center;">
@@ -170,21 +171,21 @@
                 <div class="hadith-container">
                     <!-- Collection Filter -->
                     <div style="margin-bottom:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
-                        <label for="hadith-collection-filter" style="font-size:0.9em; color:#2B8C7B; font-weight:600;">Collection:</label>
+                        <label for="hadith-collection-filter" style="font-size:0.9em; color:#2B8C7B; font-weight:600;" data-i18n="hadith.title">Collection:</label>
                         <select id="hadith-collection-filter" style="flex:1; padding:8px 12px; border-radius:10px; border:2px solid rgba(114, 186, 174, 0.3); background:white; cursor:pointer; font-size:0.9em;">
                             <option value="all">All Collections</option>
                             <option value="bukhari">Sahih al-Bukhari</option>
                             <option value="muslim">Sahih Muslim</option>
-                            <option value="nawawi">40 Hadith Nawawi</option>
-                            <option value="qudsi">40 Hadith Qudsi</option>
-                            <option value="shahwaliullah">40 Hadith Shah Waliullah</option>
+                            <option value="nawawi" data-i18n="hadith.nawawi40">40 Hadith Nawawi</option>
+                            <option value="qudsi" data-i18n="hadith.qudsi40">40 Hadith Qudsi</option>
+                            <option value="shahwaliullah" data-i18n="hadith.shahwaliullah40">40 Hadith Shah Waliullah</option>
                         </select>
                     </div>
                     
                     <div class="ayah-container">
                         <div class="ayah-loading" id="hadith-loading">
                             <div class="spinner"></div>
-                            <p>Loading Hadith...</p>
+                            <p data-i18n="popup.loading">Loading Hadith...</p>
                         </div>
                         <div class="ayah-content" id="hadith-content" style="display: none;">
                             <div class="ayah-arabic" id="hadith-arabic"></div>
@@ -196,14 +197,14 @@
                     <div style="display:flex; gap:8px; justify-content:center; margin-top:12px; flex-wrap:wrap; align-items:center;">
                         <button class="refresh-button" id="hadith-random" aria-label="New Hadith">
                             <span><i data-lucide="refresh-cw"></i></span>
-                            New Hadith
+                            <span data-i18n="popup.refresh">New Hadith</span>
                         </button>
                         <button class="icon-button" id="save-hadith-favorite" aria-label="Save Hadith to favorites" title="Save to favorites"><i data-lucide="heart"></i></button>
-                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;"><i data-lucide="bot"></i> Explain</button>
+                        <button class="secondary-button" id="explain-hadith" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;"><i data-lucide="bot"></i> <span data-i18n="popup.explainAyah">Explain</span></button>
                     </div>
                     <div id="hadith-explanation" style="display:none; margin-top:16px; padding:16px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                            <h4 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="bot"></i> AI Explanation</h4>
+                            <h4 style="margin:0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="bot"></i> <span data-i18n="ayah.tafsir">AI Explanation</span></h4>
                             <button id="close-hadith-explanation" style="background:none; border:none; cursor:pointer; font-size:18px; color:#666;"><i data-lucide="x"></i></button>
                         </div>
                         <div id="hadith-explanation-content" style="line-height:1.8; color:#333;"></div>
@@ -216,28 +217,28 @@
                 <div class="hifdh-container">
                     <!-- Header -->
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-                        <h3 style="color:#2B8C7B; margin:0; display:flex; align-items:center; gap:8px;"><i data-lucide="target"></i> Hifdh — Memorize the Qur'an</h3>
+                        <h3 style="color:#2B8C7B; margin:0; display:flex; align-items:center; gap:8px;"><i data-lucide="target"></i> <span data-i18n="hifdh.title">Hifdh — Memorize the Qur'an</span></h3>
                         <div id="hifdh-stats" style="font-size:0.8em; color:#666; background:rgba(114,186,174,0.1); padding:4px 10px; border-radius:12px;">
-                            <span id="memorized-count">0</span> memorized
+                            <span id="memorized-count">0</span> <span data-i18n="hifdh.completed">memorized</span>
                         </div>
                     </div>
 
                     <!-- Surah Selection -->
                     <div style="display:flex; gap:8px; margin-bottom:12px; align-items:center;">
-                        <label for="surah-select" style="font-size:0.9em; color:#2B8C7B; font-weight:600; white-space:nowrap;">Surah:</label>
+                        <label for="surah-select" style="font-size:0.9em; color:#2B8C7B; font-weight:600; white-space:nowrap;" data-i18n="ayah.surah">Surah:</label>
                         <select id="surah-select" style="flex:1; padding:10px 14px; border-radius:12px; border:2px solid rgba(114, 186, 174, 0.3); background:white; cursor:pointer; font-size:0.95em;"></select>
                     </div>
 
                     <!-- Mode Buttons -->
                     <div style="display:flex; gap:8px; margin-bottom:12px;">
                         <button id="hifdh-learn" class="hifdh-mode-btn active" style="flex:1; padding:10px; border:2px solid #72BAAE; border-radius:10px; background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
-                            <i data-lucide="book-open"></i> Learn
+                            <i data-lucide="book-open"></i> <span data-i18n="hifdh.memorize">Learn</span>
                         </button>
                         <button id="hifdh-quiz" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
-                            <i data-lucide="clipboard-check"></i> Quiz
+                            <i data-lucide="clipboard-check"></i> <span>Quiz</span>
                         </button>
                         <button id="hifdh-listen" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
-                            <i data-lucide="headphones"></i> Listen
+                            <i data-lucide="headphones"></i> <span>Listen</span>
                         </button>
                     </div>
 
@@ -349,8 +350,8 @@
 
                     <!-- Bottom Actions -->
                     <div style="display:flex; gap:8px; margin-top:12px; justify-content:center;">
-                        <button id="hifdh-reset" class="secondary-button" style="font-size:0.85em; padding:8px 12px; display:flex; align-items:center; gap:6px;"><i data-lucide="rotate-ccw"></i> Reset Progress</button>
-                        <button id="hifdh-random" class="secondary-button" style="font-size:0.85em; padding:8px 12px; display:flex; align-items:center; gap:6px;"><i data-lucide="shuffle"></i> Random Ayah</button>
+                        <button id="hifdh-reset" class="secondary-button" style="font-size:0.85em; padding:8px 12px; display:flex; align-items:center; gap:6px;"><i data-lucide="rotate-ccw"></i> <span data-i18n="hifdh.reset">Reset Progress</span></button>
+                        <button id="hifdh-random" class="secondary-button" style="font-size:0.85em; padding:8px 12px; display:flex; align-items:center; gap:6px;"><i data-lucide="shuffle"></i> <span data-i18n="popup.refresh">Random Ayah</span></button>
                     </div>
 
                     <!-- Keyboard Shortcuts Hint -->
@@ -364,16 +365,16 @@
             <div class="tab-content" id="settings-tab">
                 <div class="settings-container">
                     <div class="setting-group">
-                        <h3>Notifications</h3>
+                        <h3 data-i18n="options.notificationSection">Notifications</h3>
                         <label class="setting-item">
                             <input type="checkbox" id="notifications-enabled">
                             <span class="checkmark"></span>
-                            Enable notifications
+                            <span data-i18n="options.enableNotifications">Enable notifications</span>
                         </label>
                         
                         <div class="notification-frequency" id="notification-settings">
                             <label class="setting-item">
-                                <span class="setting-label">Frequency:</span>
+                                <span class="setting-label" data-i18n="options.notificationInterval">Frequency:</span>
                                 <select id="notification-frequency">
                                     <option value="15">Every 15 minutes</option>
                                     <option value="30">Every 30 minutes</option>
@@ -389,30 +390,30 @@
                     </div>
 
                     <div class="setting-group">
-                        <h3>Display</h3>
+                        <h3 data-i18n="options.displaySection">Display</h3>
                         <label class="setting-item">
                             <input type="checkbox" id="show-arabic" checked>
                             <span class="checkmark"></span>
-                            Show Arabic text
+                            <span data-i18n="options.showArabic">Show Arabic text</span>
                         </label>
                         
                         <label class="setting-item">
                             <input type="checkbox" id="show-translation" checked>
                             <span class="checkmark"></span>
-                            Show English translation
+                            <span data-i18n="options.showTranslation">Show English translation</span>
                         </label>
                     </div>
 
                     <div class="setting-group">
                         <div style="display:flex; gap:8px; flex-wrap:wrap;">
                             <button class="options-button" id="open-options">
-                                Open Advanced Settings
+                                <span data-i18n="popup.settings">Open Advanced Settings</span>
                             </button>
                             <button class="options-button" id="export-data">
-                                Export Data
+                                <span data-i18n="options.exportSettings">Export Data</span>
                             </button>
                             <button class="options-button" id="help-button">
-                                Help
+                                <span>Help</span>
                             </button>
                         </div>
                     </div>
@@ -422,7 +423,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>May Allah grant you peace and tranquility</p>
+            <p data-i18n="popup.footer">May Allah grant you peace and tranquility</p>
         </footer>
     </div>
 

@@ -2317,6 +2317,10 @@ function initLanguageToggle() {
     // Listen for language changes from other parts of the extension
     document.addEventListener('languageChanged', () => {
         updateActiveButton();
+        // Reinitialize Lucide icons after language change
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     });
 }
 

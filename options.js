@@ -52,6 +52,11 @@ class SakinahOptions {
             this.resetSettings();
         });
 
+        // Language change
+        document.getElementById('interface-language').addEventListener('change', async (e) => {
+            await translator.setLanguage(e.target.value);
+        });
+
     }
 
     async loadSettings() {

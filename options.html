@@ -296,40 +296,40 @@
         <header class="options-header">
             <h1>
                 <span class="arabic">سكينة</span>
-                <span class="english">Sakinah Settings</span>
+                <span class="english" data-i18n="options.title">Sakinah Settings</span>
             </h1>
-            <p>Configure your spiritual companion</p>
+            <p data-i18n="options.subtitle">Configure your spiritual companion</p>
         </header>
 
         <main>
             <!-- Notification Settings -->
             <section class="section">
-                <h3>📅 Notification Schedule</h3>
+                <h3>📅 <span data-i18n="options.notificationSection">Notification Schedule</span></h3>
                 
                 <label class="setting-item">
                     <input type="checkbox" id="enable-notifications">
                     <span class="checkmark"></span>
-                    Enable automatic notifications
+                    <span data-i18n="options.enableNotifications">Enable automatic notifications</span>
                 </label>
 
                 <div id="notification-options" style="display: none;">
                     <div class="setting-group">
                         <label class="setting-item">
-                            <span class="setting-label">Notification Type:</span>
+                            <span class="setting-label" data-i18n="options.notificationType">Notification Type:</span>
                             <select id="notification-type">
-                                <option value="interval">Regular intervals</option>
-                                <option value="custom">Custom times</option>
-                                <option value="both">Both</option>
+                                <option value="interval" data-i18n="options.intervalBased">Regular intervals</option>
+                                <option value="custom" data-i18n="options.customTimes">Custom times</option>
+                                <option value="both" data-i18n="options.both">Both</option>
                             </select>
                         </label>
                     </div>
 
                     <div id="interval-settings">
                         <label class="setting-item">
-                            <span class="setting-label">Frequency:</span>
+                            <span class="setting-label" data-i18n="options.notificationInterval">Frequency:</span>
                             <select id="notification-interval">
-                                <option value="15">Every 15 minutes</option>
-                                <option value="30">Every 30 minutes</option>
+                                <option value="15">Every 15 <span data-i18n="options.minutes">minutes</span></option>
+                                <option value="30">Every 30 <span data-i18n="options.minutes">minutes</span></option>
                                 <option value="60" selected>Every hour</option>
                                 <option value="120">Every 2 hours</option>
                                 <option value="180">Every 3 hours</option>
@@ -341,19 +341,19 @@
                     </div>
 
                     <div id="custom-times-settings">
-                        <h4>Custom Notification Times</h4>
+                        <h4 data-i18n="options.customTimesLabel">Custom Notification Times</h4>
                         <div class="custom-times" id="custom-times-container">
                             <!-- Custom times will be added here -->
                         </div>
-                        <button class="add-time-btn" id="add-custom-time">+ Add Time</button>
+                        <button class="add-time-btn" id="add-custom-time"><span data-i18n="options.addTime">+ Add Time</span></button>
                     </div>
 
                     <div class="setting-group">
                         <label class="setting-item">
-                            <span class="setting-label">Quiet Hours:</span>
+                            <span class="setting-label" data-i18n="options.quietHours">Quiet Hours:</span>
                             <div style="display: flex; gap: 10px; align-items: center;">
                                 <input type="time" id="quiet-start" value="22:00">
-                                <span>to</span>
+                                <span data-i18n="common.to">to</span>
                                 <input type="time" id="quiet-end" value="07:00">
                             </div>
                         </label>
@@ -380,32 +380,32 @@
 
             <!-- Display Settings -->
             <section class="section">
-                <h3>🎨 Display Preferences</h3>
+                <h3>🎨 <span data-i18n="options.displaySection">Display Preferences</span></h3>
                 
                 <label class="setting-item">
                     <input type="checkbox" id="show-arabic-text" checked>
                     <span class="checkmark"></span>
-                    Show Arabic text
+                    <span data-i18n="options.showArabic">Show Arabic text</span>
                 </label>
 
                 <label class="setting-item">
                     <input type="checkbox" id="show-english-translation" checked>
                     <span class="checkmark"></span>
-                    Show English translation
+                    <span data-i18n="options.showTranslation">Show English translation</span>
                 </label>
 
                 <label class="setting-item">
                     <input type="checkbox" id="show-surah-info" checked>
                     <span class="checkmark"></span>
-                    Show Surah and Ayah reference
+                    <span data-i18n="options.showSurahInfo">Show Surah and Ayah reference</span>
                 </label>
 
                 <label class="setting-item">
-                    <span class="setting-label">Font Size:</span>
+                    <span class="setting-label" data-i18n="options.fontSize">Font Size:</span>
                     <select id="font-size">
-                        <option value="small">Small</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="large">Large</option>
+                        <option value="small" data-i18n="options.small">Small</option>
+                        <option value="medium" selected data-i18n="options.medium">Medium</option>
+                        <option value="large" data-i18n="options.large">Large</option>
                         <option value="extra-large">Extra Large</option>
                     </select>
                 </label>
@@ -413,38 +413,38 @@
 
             <!-- AI Guide Settings -->
             <section class="section">
-                <h3>🤲 AI Guide Preferences</h3>
+                <h3>🤲 <span data-i18n="options.aiSection">AI Guide Preferences</span></h3>
                 
                 <div class="setting-note">
-                    <small>⚡ Advanced AI analysis with Groq API is always enabled for enhanced emotion analysis and accurate Ayah suggestions.</small>
+                    <small data-i18n="options.aiAlwaysEnabled">⚡ Advanced AI analysis with Groq API is always enabled for enhanced emotion analysis and accurate Ayah suggestions.</small>
                 </div>
                 
                 <label class="setting-item">
                     <input type="checkbox" id="ai-detailed-explanations" checked>
                     <span class="checkmark"></span>
-                    Show detailed explanations
+                    <span data-i18n="options.detailedExplanations">Show detailed explanations</span>
                 </label>
 
                 <label class="setting-item">
                     <input type="checkbox" id="ai-context-history">
                     <span class="checkmark"></span>
-                    Remember previous contexts for better suggestions
+                    <span data-i18n="options.contextHistory">Remember previous contexts for better suggestions</span>
                 </label>
 
                 <label class="setting-item">
-                    <span class="setting-label">Response Style:</span>
+                    <span class="setting-label" data-i18n="options.responseStyle">Response Style:</span>
                     <select id="ai-response-style">
-                        <option value="concise">Concise</option>
-                        <option value="detailed" selected>Detailed</option>
-                        <option value="scholarly">Scholarly</option>
+                        <option value="concise" data-i18n="options.concise">Concise</option>
+                        <option value="detailed" selected data-i18n="options.detailed">Detailed</option>
+                        <option value="scholarly" data-i18n="options.scholarly">Scholarly</option>
                     </select>
                 </label>
 
                 <label class="setting-item">
-                    <span class="setting-label">Explanation Language:</span>
+                    <span class="setting-label" data-i18n="options.explanationLanguage">Explanation Language:</span>
                     <select id="explanation-language">
-                        <option value="english" selected>English</option>
-                        <option value="arabic">Arabic (العربية)</option>
+                        <option value="english" data-i18n="options.english">English</option>
+                        <option value="arabic" data-i18n="options.arabic">Arabic (العربية)</option>
                     </select>
                 </label>
 
@@ -481,30 +481,30 @@
 
             <!-- Data & Privacy -->
             <section class="section">
-                <h3>🔒 Data & Privacy</h3>
+                <h3>🔒 <span data-i18n="options.privacySection">Data & Privacy</span></h3>
                 
                 <label class="setting-item">
                     <input type="checkbox" id="offline-mode" checked>
                     <span class="checkmark"></span>
-                    Store all data locally (recommended for privacy)
+                    <span data-i18n="options.offlineMode">Store all data locally (recommended for privacy)</span>
                 </label>
 
                 <label class="setting-item">
                     <input type="checkbox" id="anonymous-usage">
                     <span class="checkmark"></span>
-                    Allow anonymous usage statistics
+                    <span data-i18n="options.anonymousUsage">Allow anonymous usage statistics</span>
                 </label>
 
                 <div class="setting-group">
-                    <button class="secondary-button" id="export-settings">Export Settings</button>
-                    <button class="secondary-button" id="import-settings">Import Settings</button>
-                    <button class="secondary-button" id="reset-settings">Reset to Defaults</button>
+                    <button class="secondary-button" id="export-settings"><span data-i18n="options.exportSettings">Export Settings</span></button>
+                    <button class="secondary-button" id="import-settings"><span data-i18n="options.importSettings">Import Settings</span></button>
+                    <button class="secondary-button" id="reset-settings"><span data-i18n="options.resetSettings">Reset to Defaults</span></button>
                 </div>
             </section>
 
-            <button class="save-button" id="save-settings">Save All Settings</button>
+            <button class="save-button" id="save-settings"><span data-i18n="options.saveSettings">Save All Settings</span></button>
             <div class="success-message" id="success-message">
-                Settings saved successfully! ✅
+                <span data-i18n="options.settingsSaved">Settings saved successfully! ✅</span>
             </div>
         </main>
     </div>

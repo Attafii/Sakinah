@@ -24,6 +24,7 @@ const TRANSLATIONS = {
             noResults: "No results found",
             error: "An error occurred",
             tryAgain: "Try again",
+            footer: "May Allah grant you peace and tranquility",
         },
         
         // Random Ayah Section
@@ -53,6 +54,7 @@ const TRANSLATIONS = {
         aiGuide: {
             title: "AI Spiritual Guide",
             placeholder: "How are you feeling? Describe your emotional state...",
+            inputPlaceholder: "Type your message here... (Press Enter to send)",
             examplePrompts: "Example prompts:",
             example1: "I'm feeling anxious about the future",
             example2: "I need guidance on patience",
@@ -95,6 +97,7 @@ const TRANSLATIONS = {
             inProgress: "In Progress",
             completedOnly: "Completed",
             search: "Search Surahs...",
+            reset: "Reset Progress",
         },
         
         // Options Page
@@ -183,6 +186,8 @@ const TRANSLATIONS = {
             share: "Share",
             more: "More",
             less: "Less",
+            to: "to",
+            clear: "Clear Chat",
         },
     },
     
@@ -208,6 +213,7 @@ const TRANSLATIONS = {
             noResults: "لم يتم العثور على نتائج",
             error: "حدث خطأ",
             tryAgain: "حاول مرة أخرى",
+            footer: "جعل الله لك السكينة والطمأنينة",
         },
         
         // Random Ayah Section
@@ -237,6 +243,7 @@ const TRANSLATIONS = {
         aiGuide: {
             title: "المرشد الروحي الذكي",
             placeholder: "كيف تشعر؟ صِف حالتك النفسية...",
+            inputPlaceholder: "اكتب رسالتك هنا... (اضغط Enter للإرسال)",
             examplePrompts: "أمثلة على الأسئلة:",
             example1: "أشعر بالقلق بشأن المستقبل",
             example2: "أحتاج إلى إرشاد حول الصبر",
@@ -279,6 +286,7 @@ const TRANSLATIONS = {
             inProgress: "قيد التقدم",
             completedOnly: "المكتمل فقط",
             search: "البحث عن السور...",
+            reset: "إعادة تعيين التقدم",
         },
         
         // Options Page
@@ -367,6 +375,8 @@ const TRANSLATIONS = {
             share: "مشاركة",
             more: "المزيد",
             less: "أقل",
+            to: "إلى",
+            clear: "مسح المحادثة",
         },
     },
 };
