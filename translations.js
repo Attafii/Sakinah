@@ -48,6 +48,9 @@ const TRANSLATIONS = {
             arabic: "Arabic",
             english: "English",
             reference: "Reference",
+            allCollections: "All Collections",
+            bukhari: "Sahih al-Bukhari",
+            muslim: "Sahih Muslim",
         },
         
         // AI Guide Section
@@ -69,6 +72,7 @@ const TRANSLATIONS = {
         // Favorites Section
         favorites: {
             title: "My Favorites",
+            yourFavorites: "Your Favorites",
             empty: "No favorites yet",
             emptyDesc: "Add Ayahs to your favorites to see them here",
             analyze: "Analyze Favorites",
@@ -76,6 +80,9 @@ const TRANSLATIONS = {
             insights: "Insights",
             clear: "Clear All",
             confirmClear: "Are you sure you want to remove all favorites?",
+            open: "Open",
+            remove: "Remove",
+            export: "Export",
         },
         
         // Hifdh Progress Section
@@ -98,6 +105,25 @@ const TRANSLATIONS = {
             completedOnly: "Completed",
             search: "Search Surahs...",
             reset: "Reset Progress",
+            quizGame: "Quiz Game",
+            quiz: "Quiz",
+            listen: "Listen",
+            markMemorized: "Mark Memorized",
+            score: "Score",
+            streak: "Streak",
+            quizPrompt: "Complete the verse - what comes next?",
+            prev: "Prev",
+            next: "Next",
+            memorized: "Memorized",
+            play: "Play",
+            repeat: "Repeat",
+            ayahOf: "Ayah {current} of {total}",
+            nextQuestion: "Next Question",
+            perfectKeepGoing: "Perfect! Keep going!",
+            excellentMashallah: "Excellent! Masha'Allah!",
+            amazingGotIt: "Amazing! You got it!",
+            brilliantWellDone: "Brilliant! Well done!",
+            notQuiteCorrect: "Not quite! The correct answer is highlighted above.",
         },
         
         // Options Page
@@ -237,6 +263,9 @@ const TRANSLATIONS = {
             arabic: "العربية",
             english: "الإنجليزية",
             reference: "المرجع",
+            allCollections: "جميع المجموعات",
+            bukhari: "صحيح البخاري",
+            muslim: "صحيح مسلم",
         },
         
         // AI Guide Section
@@ -258,6 +287,7 @@ const TRANSLATIONS = {
         // Favorites Section
         favorites: {
             title: "مفضلاتي",
+            yourFavorites: "مفضلاتك",
             empty: "لا توجد مفضلات بعد",
             emptyDesc: "أضف آيات إلى مفضلاتك لرؤيتها هنا",
             analyze: "تحليل المفضلات",
@@ -265,6 +295,9 @@ const TRANSLATIONS = {
             insights: "رؤى تحليلية",
             clear: "مسح الكل",
             confirmClear: "هل أنت متأكد من حذف جميع المفضلات؟",
+            open: "فتح",
+            remove: "إزالة",
+            export: "تصدير",
         },
         
         // Hifdh Progress Section
@@ -273,7 +306,7 @@ const TRANSLATIONS = {
             totalProgress: "التقدم الكلي",
             surahs: "السور",
             ayahs: "الآيات",
-            lastUpdated: "آخر تحديث",
+            lastUpdated: "أخر تحديث",
             surahName: "اسم السورة",
             progress: "التقدم",
             completed: "مكتمل",
@@ -287,6 +320,25 @@ const TRANSLATIONS = {
             completedOnly: "المكتمل فقط",
             search: "البحث عن السور...",
             reset: "إعادة تعيين التقدم",
+            quizGame: "لعبة الاختبار",
+            quiz: "اختبار",
+            listen: "استماع",
+            markMemorized: "تحديد كمحفوظ",
+            score: "النقاط",
+            streak: "التسلسل",
+            quizPrompt: "أكمل الآية - ما الذي يأتي بعد ذلك؟",
+            prev: "السابق",
+            next: "التالي",
+            memorized: "تم الحفظ",
+            play: "تشغيل",
+            repeat: "إعادة",
+            ayahOf: "الآية {current} من {total}",
+            nextQuestion: "السؤال التالي",
+            perfectKeepGoing: "ممتاز! استمر!",
+            excellentMashallah: "ممتاز! ماشاء الله!",
+            amazingGotIt: "رائع! أحسنت!",
+            brilliantWellDone: "رائع! أحسن عمل!",
+            notQuiteCorrect: "ليس تماماً! الإجابة الصحيحة مظللة أعلاه.",
         },
         
         // Options Page

@@ -173,9 +173,9 @@
                     <div style="margin-bottom:12px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
                         <label for="hadith-collection-filter" style="font-size:0.9em; color:#2B8C7B; font-weight:600;" data-i18n="hadith.title">Collection:</label>
                         <select id="hadith-collection-filter" style="flex:1; padding:8px 12px; border-radius:10px; border:2px solid rgba(114, 186, 174, 0.3); background:white; cursor:pointer; font-size:0.9em;">
-                            <option value="all">All Collections</option>
-                            <option value="bukhari">Sahih al-Bukhari</option>
-                            <option value="muslim">Sahih Muslim</option>
+                            <option value="all" data-i18n="hadith.allCollections">All Collections</option>
+                            <option value="bukhari" data-i18n="hadith.bukhari">Sahih al-Bukhari</option>
+                            <option value="muslim" data-i18n="hadith.muslim">Sahih Muslim</option>
                             <option value="nawawi" data-i18n="hadith.nawawi40">40 Hadith Nawawi</option>
                             <option value="qudsi" data-i18n="hadith.qudsi40">40 Hadith Qudsi</option>
                             <option value="shahwaliullah" data-i18n="hadith.shahwaliullah40">40 Hadith Shah Waliullah</option>
@@ -235,10 +235,10 @@
                             <i data-lucide="book-open"></i> <span data-i18n="hifdh.memorize">Learn</span>
                         </button>
                         <button id="hifdh-quiz" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
-                            <i data-lucide="clipboard-check"></i> <span>Quiz</span>
+                            <i data-lucide="clipboard-check"></i> <span data-i18n="hifdh.quiz">Quiz</span>
                         </button>
                         <button id="hifdh-listen" class="hifdh-mode-btn" style="flex:1; padding:10px; border:2px solid rgba(114,186,174,0.3); border-radius:10px; background:white; color:#2B8C7B; font-weight:600; cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; justify-content:center; gap:6px;">
-                            <i data-lucide="headphones"></i> <span>Listen</span>
+                            <i data-lucide="headphones"></i> <span data-i18n="hifdh.listen">Listen</span>
                         </button>
                     </div>
 
@@ -275,23 +275,23 @@
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding:12px 16px; background:linear-gradient(135deg, rgba(114,186,174,0.15) 0%, rgba(168,235,216,0.1) 100%); border-radius:12px;">
                                 <div style="display:flex; align-items:center; gap:8px;">
                                     <i data-lucide="gamepad-2" style="width:24px; height:24px;"></i>
-                                    <span style="font-weight:600; color:#2B8C7B;">Quiz Game</span>
+                                    <span style="font-weight:600; color:#2B8C7B;" data-i18n="hifdh.quizGame">Quiz Game</span>
                                 </div>
                                 <div style="display:flex; gap:16px; font-size:0.9em;">
                                     <div style="text-align:center;">
                                         <div id="quiz-score" style="font-size:1.3em; font-weight:700; color:#28a745;">0</div>
-                                        <div style="color:#666; font-size:0.8em;">Score</div>
+                                        <div style="color:#666; font-size:0.8em;" data-i18n="hifdh.score">Score</div>
                                     </div>
                                     <div style="text-align:center;">
                                         <div id="quiz-streak" style="font-size:1.3em; font-weight:700; color:#ffc107;">0</div>
-                                        <div style="color:#666; font-size:0.8em;">🔥 Streak</div>
+                                        <div style="color:#666; font-size:0.8em;" data-i18n="hifdh.streak">🔥 Streak</div>
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Question -->
                             <div style="text-align:center; margin-bottom:16px;">
-                                <p style="margin:0 0 8px 0; font-size:0.9em; color:#666;">Complete the verse - what comes next?</p>
+                                <p style="margin:0 0 8px 0; font-size:0.9em; color:#666;" data-i18n="hifdh.quizPrompt">Complete the verse - what comes next?</p>
                                 <div id="quiz-arabic-display" style="direction:rtl; font-size:1.4em; font-family:'Scheherazade', 'Amiri', serif; color:#1a3a36; line-height:1.8; padding:16px; background:rgba(114,186,174,0.08); border-radius:12px; border:2px dashed rgba(114,186,174,0.3);">
                                     <span id="quiz-prompt"></span><span style="color:#72BAAE; font-weight:bold;"> ___</span>
                                 </div>
@@ -318,7 +318,7 @@
                                 <div id="feedback-icon" style="font-size:2.5em; margin-bottom:8px;"></div>
                                 <div id="feedback-text" style="font-size:1em;"></div>
                                 <button id="quiz-next-btn" style="margin-top:12px; padding:10px 24px; background:linear-gradient(135deg, #72BAAE, #2B8C7B); color:white; border:none; border-radius:8px; font-weight:600; cursor:pointer; display:none;">
-                                    Next Question →
+                                    <span data-i18n="hifdh.nextQuestion">Next Question</span> →
                                 </button>
                             </div>
                         </div>
@@ -326,8 +326,8 @@
                         <!-- Listen Area -->
                         <div id="hifdh-listen-area" style="display:none; margin-top:16px;">
                             <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
-                                <button id="hifdh-play" class="secondary-button" style="padding:10px 20px;">▶️ Play</button>
-                                <button id="hifdh-repeat" class="secondary-button" style="padding:10px 20px;">🔁 Repeat</button>
+                                <button id="hifdh-play" class="secondary-button" style="padding:10px 20px;"><span data-i18n="hifdh.play">▶️ Play</span></button>
+                                <button id="hifdh-repeat" class="secondary-button" style="padding:10px 20px;"><span data-i18n="hifdh.repeat">🔁 Repeat</span></button>
                                 <select id="hifdh-reciter" style="padding:10px; border-radius:8px; border:2px solid rgba(114,186,174,0.3);">
                                     <option value="ar.alafasy">Mishary Alafasy</option>
                                     <option value="ar.abdulbasit">Abdul Basit</option>
@@ -341,11 +341,11 @@
 
                     <!-- Navigation -->
                     <div style="display:flex; gap:8px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
-                        <button id="hifdh-prev" class="secondary-button" style="padding:10px 16px; display:flex; align-items:center; gap:6px;"><i data-lucide="chevron-left"></i> Prev</button>
+                        <button id="hifdh-prev" class="secondary-button" style="padding:10px 16px; display:flex; align-items:center; gap:6px;"><i data-lucide="chevron-left"></i> <span data-i18n="hifdh.prev">Prev</span></button>
                         <button id="hifdh-mark" class="secondary-button" style="padding:10px 16px; background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;">
-                            <span id="hifdh-mark-icon"><i data-lucide="square"></i></span> Mark Memorized
+                            <span id="hifdh-mark-icon"><i data-lucide="square"></i></span> <span data-i18n="hifdh.markMemorized">Mark Memorized</span>
                         </button>
-                        <button id="hifdh-next" class="secondary-button" style="padding:10px 16px; display:flex; align-items:center; gap:6px;">Next <i data-lucide="chevron-right"></i></button>
+                        <button id="hifdh-next" class="secondary-button" style="padding:10px 16px; display:flex; align-items:center; gap:6px;"><span data-i18n="hifdh.next">Next</span> <i data-lucide="chevron-right"></i></button>
                     </div>
 
                     <!-- Bottom Actions -->

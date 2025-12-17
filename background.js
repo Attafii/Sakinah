@@ -189,10 +189,57 @@ class SakinahBackground {
     }
 
     // Handle notification clicks
-    handleNotificationClick(notificationId) {
+    async handleNotificationClick(notificationId) {
         if (notificationId.startsWith('sakinah-')) {
-            // Open the extension popup
-            chrome.action.openPopup();
+            try {
+                // Get the stored ayah data
+                const data = await chrome.storage.local.get(['lastNotificationAyah', 'pendingNotificationAyah', 'showArabic', 'showTranslation']);
+                
+                // Use the most recent ayah
+                const ayah = data.pendingNotificationAyah || data.lastNotificationAyah;
+                
+                if (ayah) {
+                    // Store it as pending for the notification popup
+                    await chrome.storage.local.set({ 
+                        pendingNotificationAyah: ayah,
+                        showArabic: data.showArabic !== false,
+                        showTranslation: data.showTranslation !== false
+                    });
+                }
+
+                // Open the notification popup window
+                const popupWidth = 450;
+                const popupHeight = 520;
+
+                let windowOptions = {
+                    url: chrome.runtime.getURL('notification.html'),
+                    type: 'popup',
+                    width: popupWidth,
+                    height: popupHeight,
+                    focused: true
+                };
+
+                // Try to position in top-right
+                try {
+                    const displays = await chrome.system.display.getInfo();
+                    if (displays && displays.length > 0) {
+                        const primaryDisplay = displays[0];
+                        const screenWidth = primaryDisplay.workArea.width;
+                        windowOptions.left = screenWidth - popupWidth - 30;
+                        windowOptions.top = 30;
+                    }
+                } catch (displayErr) {
+                    console.log('Background: Could not get display info, using default position');
+                }
+
+                await chrome.windows.create(windowOptions);
+                
+                // Close the notification after opening the popup
+                chrome.notifications.clear(notificationId);
+                
+            } catch (error) {
+                console.error('Background: Error opening notification popup:', error);
+            }
         }
     }
 
@@ -411,7 +458,7 @@ class SakinahBackground {
                 type: 'basic',
                 title: title,
                 message: message || `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
-                iconUrl: chrome.runtime.getURL('icons/Tosca modern minimalist Islamic center logo .png'),
+                iconUrl: chrome.runtime.getURL('icons/Sakinah.png'),
                 contextMessage: `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
                 priority: 2,
                 requireInteraction: false

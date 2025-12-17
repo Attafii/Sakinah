@@ -52,6 +52,11 @@ class SakinahOptions {
             this.resetSettings();
         });
 
+        // Test notification
+        document.getElementById('test-notification').addEventListener('click', () => {
+            this.testNotification();
+        });
+
         // Language change
         document.getElementById('interface-language').addEventListener('change', async (e) => {
             await translator.setLanguage(e.target.value);
@@ -295,6 +300,41 @@ class SakinahOptions {
                 console.error('Error resetting settings:', error);
                 alert('Error resetting settings.');
             }
+        }
+    }
+
+    async testNotification() {
+        try {
+            // Send message to background script to trigger notification
+            const response = await chrome.runtime.sendMessage({ 
+                action: 'showRandomAyah' 
+            });
+
+            if (response && response.success) {
+                // Show temporary success message
+                const button = document.getElementById('test-notification');
+                const originalText = button.innerHTML;
+                button.innerHTML = '✅ Notification Sent!';
+                button.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 3000);
+            } else {
+                throw new Error('Failed to send test notification');
+            }
+        } catch (error) {
+            console.error('Error testing notification:', error);
+            const button = document.getElementById('test-notification');
+            const originalText = button.innerHTML;
+            button.innerHTML = '❌ Failed to send';
+            button.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
+            
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.background = '';
+            }, 3000);
         }
     }
 

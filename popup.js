@@ -644,7 +644,7 @@ class SakinahPopup {
             div.id = 'favorites-tab';
             div.innerHTML = `
                 <div class="favorites-container">
-                    <h3 style="color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="heart"></i> Your Favorites</h3>
+                    <h3 style="color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="heart"></i> <span data-i18n="favorites.yourFavorites">Your Favorites</span></h3>
                     <div id="favorites-analysis-result" style="display:none; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%); padding:18px; border-radius:12px; margin-bottom:16px; border-left:4px solid #72BAAE;">
                         <h4 style="margin:0 0 12px 0; color:#2B8C7B; display:flex; align-items:center; gap:8px;"><i data-lucide="bar-chart-2"></i> Your Spiritual Journey</h4>
                         <div id="analysis-content"></div>
@@ -655,9 +655,9 @@ class SakinahPopup {
                     </div>
                     <div id="favorites-list" style="display:flex;flex-direction:column;gap:12px;margin-top:10px;"></div>
                     <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
-                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;"><i data-lucide="brain"></i> Analyze Favorites</button>
-                        <button id="export-favorites" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="download"></i> Export</button>
-                        <button id="clear-favorites" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="trash-2"></i> Clear All</button>
+                        <button id="analyze-favorites" class="secondary-button" style="background:linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color:white; border:none; display:flex; align-items:center; gap:6px;"><i data-lucide="brain"></i> <span data-i18n="favorites.analyze">Analyze Favorites</span></button>
+                        <button id="export-favorites" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="download"></i> <span data-i18n="favorites.export">Export</span></button>
+                        <button id="clear-favorites" class="secondary-button" style="display:flex; align-items:center; gap:6px;"><i data-lucide="trash-2"></i> <span data-i18n="favorites.clear">Clear All</span></button>
                     </div>
                 </div>
             `;
@@ -704,8 +704,8 @@ class SakinahPopup {
                     <div style="margin-top:8px; font-style:italic; direction:rtl; font-family:'Amiri', serif;">${ayah.arabic_text}</div>
                     <div style="margin-top:8px; color:#495057; line-height:1.7;">${ayah.english_translation}</div>
                     <div style="margin-top:10px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open" style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> Open</button>
-                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove" style="color:#ee5253; display:flex; align-items:center; gap:6px;"><i data-lucide="heart-crack"></i> Remove</button>
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="open" style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> <span data-i18n="favorites.open">Open</span></button>
+                        <button class="secondary-button" data-id="${ayah.hadith_id}" data-action="remove" style="color:#ee5253; display:flex; align-items:center; gap:6px;"><i data-lucide="heart-crack"></i> <span data-i18n="favorites.remove">Remove</span></button>
                     </div>
                 `;
             } else {
@@ -714,8 +714,8 @@ class SakinahPopup {
                     ${ayah.arabic ? '<div style="margin-top:10px; direction:rtl; font-size:1.3em; font-family:\'Scheherazade\', \'Amiri\', \'Traditional Arabic\', serif; color:#1a3a36; line-height:1.9;">' + ayah.arabic + '</div>' : ''}
                     <div style="margin-top:8px; font-style:italic; color:#495057; line-height:1.7;">${ayah.translation || ayah.english_translation || ''}</div>
                     <div style="margin-top:10px; display:flex; gap:8px;">
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="open" style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> Open</button>
-                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove" style="color:#ee5253; display:flex; align-items:center; gap:6px;"><i data-lucide="heart-crack"></i> Remove</button>
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="open" style="display:flex; align-items:center; gap:6px;"><i data-lucide="book-open"></i> <span data-i18n="favorites.open">Open</span></button>
+                        <button class="secondary-button" data-id="${ayah.id}" data-action="remove" style="color:#ee5253; display:flex; align-items:center; gap:6px;"><i data-lucide="heart-crack"></i> <span data-i18n="favorites.remove">Remove</span></button>
                     </div>
                 `;
             }
@@ -1677,8 +1677,9 @@ Please provide a thoughtful, accurate explanation following this structure:
         if (!markBtn || !markIcon) return;
         
         const isMemorized = this.hifdhState.memorized[this.hifdhState.ayahIndex];
+        const buttonText = isMemorized ? translator.get('hifdh.memorized') : translator.get('hifdh.markMemorized');
         markIcon.textContent = isMemorized ? '✓' : '☐';
-        markBtn.innerHTML = `<span id="hifdh-mark-icon">${isMemorized ? '✓' : '☐'}</span> ${isMemorized ? 'Memorized!' : 'Mark Memorized'}`;
+        markBtn.innerHTML = `<span id="hifdh-mark-icon">${isMemorized ? '✓' : '☐'}</span> ${buttonText}`;
         
         if (isMemorized) {
             markBtn.style.background = 'linear-gradient(135deg, #28a745 0%, #218838 100%)';
@@ -1913,19 +1914,19 @@ Please provide a thoughtful, accurate explanation following this structure:
             feedback.style.border = '2px solid rgba(40, 167, 69, 0.3)';
             
             const messages = [
-                { icon: '🎉', text: 'Excellent! Masha\'Allah!' },
-                { icon: '⭐', text: 'Perfect! Keep going!' },
-                { icon: '🌟', text: 'Amazing! You got it!' },
-                { icon: '✨', text: 'Brilliant! Well done!' }
+                { icon: '🎉', key: 'hifdh.excellentMashallah' },
+                { icon: '⭐', key: 'hifdh.perfectKeepGoing' },
+                { icon: '🌟', key: 'hifdh.amazingGotIt' },
+                { icon: '✨', key: 'hifdh.brilliantWellDone' }
             ];
             const msg = messages[Math.floor(Math.random() * messages.length)];
             
             if (feedbackIcon) feedbackIcon.textContent = msg.icon;
             if (feedbackText) {
                 feedbackText.style.color = '#155724';
-                feedbackText.textContent = msg.text;
+                feedbackText.textContent = translator.get(msg.key);
                 if (this.quizState.streak >= 3) {
-                    feedbackText.textContent += ` 🔥 ${this.quizState.streak} streak!`;
+                    feedbackText.textContent += ` 🔥 ${this.quizState.streak} ${translator.get('hifdh.streak')}!`;
                 }
             }
         } else {
@@ -1935,7 +1936,7 @@ Please provide a thoughtful, accurate explanation following this structure:
             if (feedbackIcon) feedbackIcon.textContent = '📚';
             if (feedbackText) {
                 feedbackText.style.color = '#721c24';
-                feedbackText.textContent = 'Not quite! The correct answer is highlighted above.';
+                feedbackText.textContent = translator.get('hifdh.notQuiteCorrect');
             }
         }
 
@@ -1973,11 +1974,16 @@ Please provide a thoughtful, accurate explanation following this structure:
         const current = this.hifdhState.ayahIndex + 1;
         
         if (info) {
-            info.textContent = `${s.name || 'Surah ' + s.number} — Ayah ${current} of ${total}`;
+            // Get translation for "Ayah X of Y"
+            const ayahText = translator.get('hifdh.ayahOf')
+                .replace('{current}', current)
+                .replace('{total}', total);
+            info.textContent = `${s.name || 'Surah ' + s.number} — ${ayahText}`;
         }
         
         if (badge) {
-            badge.textContent = `Ayah ${current}`;
+            const ayahLabel = translator.get('ayah.ayah') || 'Ayah';
+            badge.textContent = `${ayahLabel} ${current}`;
         }
 
         this.updateHifdhStatsUI();
@@ -2320,6 +2326,19 @@ function initLanguageToggle() {
         // Reinitialize Lucide icons after language change
         if (typeof lucide !== 'undefined') {
             lucide.createIcons();
+        }
+        // Refresh dynamic content with new translations
+        if (typeof app !== 'undefined') {
+            // Refresh favorites if visible
+            const favTab = document.getElementById('favorites-tab');
+            if (favTab && favTab.style.display !== 'none') {
+                app.displayFavorites();
+            }
+            // Refresh hifdh UI if visible
+            const hifdhTab = document.getElementById('hifdh-tab');
+            if (hifdhTab && hifdhTab.style.display !== 'none') {
+                app.updateHifdhProgressUI();
+            }
         }
     });
 }
