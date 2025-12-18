@@ -244,12 +244,19 @@ class SakinahBackground {
     }
 
     // Handle installation
-    handleInstallation(details) {
+    async handleInstallation(details) {
+        // Check if onboarding has been completed
+        const { onboardingCompleted } = await chrome.storage.sync.get({ onboardingCompleted: false });
+        
         if (details.reason === 'install') {
             console.log('Background: Extension installed');
-            // Could show welcome notification or open options page
+            if (!onboardingCompleted) {
+                // Open onboarding page on first install only
+                chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
+            }
         } else if (details.reason === 'update') {
             console.log('Background: Extension updated');
+            // Don't open onboarding on update if already completed
         }
     }
 

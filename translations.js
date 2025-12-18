@@ -180,6 +180,7 @@ const TRANSLATIONS = {
             exportSettings: "Export Settings",
             importSettings: "Import Settings",
             resetSettings: "Reset to Defaults",
+            showOnboarding: "Show Onboarding",
             settingsSaved: "Settings saved successfully!",
             settingsReset: "Settings reset to defaults",
             
@@ -214,6 +215,27 @@ const TRANSLATIONS = {
             less: "Less",
             to: "to",
             clear: "Clear Chat",
+        },
+        
+        // Onboarding
+        onboarding: {
+            welcome: "Welcome to Sakinah",
+            welcomeText: "Your spiritual companion for finding peace through the Qur'an",
+            feature1Title: "Random Ayahs",
+            feature1Desc: "Receive beautiful verses throughout your day",
+            feature2Title: "AI Spiritual Guide",
+            feature2Desc: "Get personalized guidance based on your emotions",
+            feature3Title: "Hifdh Progress",
+            feature3Desc: "Track your Quran memorization journey",
+            getStarted: "Get Started",
+            chooseLanguage: "Choose Your Language",
+            languageText: "Select your preferred interface language",
+            language: "Language",
+            chooseTimezone: "Choose Your Timezone",
+            timezoneText: "This helps us send notifications at the right time",
+            detectedTimezone: "Detected Timezone:",
+            timezone: "Timezone",
+            finish: "Finish Setup",
         },
     },
     
@@ -394,8 +416,7 @@ const TRANSLATIONS = {
             saveSettings: "حفظ الإعدادات",
             exportSettings: "تصدير الإعدادات",
             importSettings: "استيراد الإعدادات",
-            resetSettings: "إعادة تعيين إلى الافتراضي",
-            settingsSaved: "تم حفظ الإعدادات بنجاح!",
+            resetSettings: "إعادة تعيين إلى الافتراضي",            showOnboarding: "عرض البداية",            settingsSaved: "تم حفظ الإعدادات بنجاح!",
             settingsReset: "تم إعادة تعيين الإعدادات إلى الافتراضي",
             
             // Language Settings
@@ -429,6 +450,27 @@ const TRANSLATIONS = {
             less: "أقل",
             to: "إلى",
             clear: "مسح المحادثة",
+        },
+        
+        // Onboarding
+        onboarding: {
+            welcome: "مرحباً بك في سكينة",
+            welcomeText: "رفيقك الروحي لإيجاد السكينة من خلال القرآن",
+            feature1Title: "آيات عشوائية",
+            feature1Desc: "استقبل آيات جميلة على مدار يومك",
+            feature2Title: "المرشد الروحي الذكي",
+            feature2Desc: "احصل على إرشاد شخصي بناءً على مشاعرك",
+            feature3Title: "تقدم الحفظ",
+            feature3Desc: "تتبع رحلتك في حفظ القرآن",
+            getStarted: "ابدأ الآن",
+            chooseLanguage: "اختر لغتك",
+            languageText: "اختر لغة الواجهة المفضلة لديك",
+            language: "اللغة",
+            chooseTimezone: "اختر منطقتك الزمنية",
+            timezoneText: "هذا يساعدنا على إرسال الإشعارات في الوقت المناسب",
+            detectedTimezone: "المنطقة الزمنية المكتشفة:",
+            timezone: "المنطقة الزمنية",
+            finish: "إنهاء الإعداد",
         },
     },
 };

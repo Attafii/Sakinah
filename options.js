@@ -57,6 +57,11 @@ class SakinahOptions {
             this.testNotification();
         });
 
+        // Show onboarding
+        document.getElementById('show-onboarding').addEventListener('click', () => {
+            chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
+        });
+
         // Language change
         document.getElementById('interface-language').addEventListener('change', async (e) => {
             await translator.setLanguage(e.target.value);
