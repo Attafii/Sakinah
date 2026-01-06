@@ -131,8 +131,33 @@ const TRANSLATIONS = {
             title: "Settings",
             subtitle: "Configure Sakinah Extension",
             
+            // New Tab Settings
+            newTabSection: "New Tab Experience",
+            enableNewTab: "Enable Sakinah New Tab",
+            newTabDesc: "Replace Chrome's default new tab with a calm Islamic interface",
+            showAdhkar: "Show Adhkar module",
+            showQuiz: "Show Daily Quiz module",
+            ayahRotation: "Ayah Rotation",
+            daily: "Daily",
+            random: "Random",
+            fixed: "Fixed",
+            
+            // New Tab UI
+            newtab: {
+                subtitle: "A calm beginning",
+                customize: "Customize New Tab",
+                enableSakinah: "Enable Sakinah New Tab",
+                disabledTitle: "Sakinah is resting",
+                disabledDesc: "The Islamic New Tab experience is currently disabled.",
+                searchPlaceholder: "Search with peace...",
+                dailyQuiz: "Daily Quiz",
+                dailyAdhkar: "Daily Adhkar",
+                favorites: "Favorites",
+                recentTabs: "Recent Tabs"
+            },
+            
             // Notification Settings
-            notificationSection: "Notification Settings",
+            notificationSection: "Notification Schedule",
             enableNotifications: "Enable notifications",
             notificationType: "Notification Type",
             intervalBased: "Interval-based",
@@ -156,6 +181,10 @@ const TRANSLATIONS = {
             small: "Small",
             medium: "Medium",
             large: "Large",
+            
+            // Recitation Settings
+            recitationSection: "Recitation Settings",
+            reciter: "Reciter",
             
             // AI Guide Settings
             aiSection: "AI Guide Preferences",
@@ -207,6 +236,7 @@ const TRANSLATIONS = {
             next: "Next",
             previous: "Previous",
             save: "Save",
+            stop: "Stop",
             delete: "Delete",
             edit: "Edit",
             copy: "Copy",
@@ -227,6 +257,8 @@ const TRANSLATIONS = {
             feature2Desc: "Get personalized guidance based on your emotions",
             feature3Title: "Hifdh Progress",
             feature3Desc: "Track your Quran memorization journey",
+            feature4Title: "New Tab Experience",
+            feature4Desc: "A calm Islamic interface for your daily computer use",
             getStarted: "Get Started",
             chooseLanguage: "Choose Your Language",
             languageText: "Select your preferred interface language",
@@ -236,6 +268,15 @@ const TRANSLATIONS = {
             detectedTimezone: "Detected Timezone:",
             timezone: "Timezone",
             finish: "Finish Setup",
+            preferences: "Preferences",
+            preferencesText: "Customize your experience",
+            aiResponseStyle: "AI Response Style",
+            explanationLanguage: "Explanation Language",
+            concise: "Concise",
+            detailed: "Detailed",
+            scholarly: "Scholarly",
+            english: "English",
+            arabic: "Arabic",
         },
     },
     
@@ -368,6 +409,31 @@ const TRANSLATIONS = {
             title: "الإعدادات",
             subtitle: "تكوين إضافة سكينة",
             
+            // New Tab Settings
+            newTabSection: "تجربة التبويب الجديد",
+            enableNewTab: "تفعيل صفحة سكينة للتبويب الجديد",
+            newTabDesc: "استبدال صفحة التبويب الجديد في كروم بواجهة إسلامية هادئة",
+            showAdhkar: "عرض وحدة الأذكار",
+            showQuiz: "عرض وحدة الاختبار اليومي",
+            ayahRotation: "تدوير الآيات",
+            daily: "يومي",
+            random: "عشوائي",
+            fixed: "ثابت",
+            
+            // New Tab UI
+            newtab: {
+                subtitle: "بداية هادئة",
+                customize: "تخصيص التبويب الجديد",
+                enableSakinah: "تفعيل صفحة سكينة",
+                disabledTitle: "سكينة في وضع الراحة",
+                disabledDesc: "تجربة التبويب الجديد الإسلامية معطلة حالياً.",
+                searchPlaceholder: "ابحث بسلام...",
+                dailyQuiz: "اختبار اليوم",
+                dailyAdhkar: "أذكار اليوم",
+                favorites: "المفضلة",
+                recentTabs: "علامات التبويب الأخيرة"
+            },
+            
             // Notification Settings
             notificationSection: "إعدادات الإشعارات",
             enableNotifications: "تفعيل الإشعارات",
@@ -393,6 +459,10 @@ const TRANSLATIONS = {
             small: "صغير",
             medium: "متوسط",
             large: "كبير",
+            
+            // Recitation Settings
+            recitationSection: "إعدادات التلاوة",
+            reciter: "القارئ",
             
             // AI Guide Settings
             aiSection: "تفضيلات المرشد الذكي",
@@ -442,6 +512,7 @@ const TRANSLATIONS = {
             next: "التالي",
             previous: "السابق",
             save: "حفظ",
+            stop: "إيقاف",
             delete: "حذف",
             edit: "تعديل",
             copy: "نسخ",
@@ -460,6 +531,8 @@ const TRANSLATIONS = {
             feature1Desc: "استقبل آيات جميلة على مدار يومك",
             feature2Title: "المرشد الروحي الذكي",
             feature2Desc: "احصل على إرشاد شخصي بناءً على مشاعرك",
+            feature4Title: "تجربة التبويب الجديد",
+            feature4Desc: "واجهة إسلامية هادئة لاستخدامك اليومي للكمبيوتر",
             feature3Title: "تقدم الحفظ",
             feature3Desc: "تتبع رحلتك في حفظ القرآن",
             getStarted: "ابدأ الآن",
@@ -471,6 +544,15 @@ const TRANSLATIONS = {
             detectedTimezone: "المنطقة الزمنية المكتشفة:",
             timezone: "المنطقة الزمنية",
             finish: "إنهاء الإعداد",
+            preferences: "التفضيلات",
+            preferencesText: "تخصيص تجربتك",
+            aiResponseStyle: "أسلوب رد الذكاء الاصطناعي",
+            explanationLanguage: "لغة الشرح",
+            concise: "موجز",
+            detailed: "تفصيلي",
+            scholarly: "علمي",
+            english: "الإنجليزية",
+            arabic: "العربية",
         },
     },
 };

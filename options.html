@@ -4,517 +4,834 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sakinah - Settings</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #72BAAE;
             --primary-light: #A8EBD8;
             --primary-dark: #2B8C7B;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.9);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --sidebar-width: 240px;
         }
-        
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
         }
-        
-        .options-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 35px;
-            box-shadow: 0 20px 60px rgba(43, 140, 123, 0.2);
+
+        .options-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            height: 750px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            overflow: hidden;
             animation: fadeIn 0.5s ease-out;
         }
-        
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
-        .options-header {
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 2px solid rgba(114, 186, 174, 0.2);
-            padding-bottom: 25px;
-        }
-        
-        .options-header h1 {
-            color: var(--primary-dark);
-            font-size: 2em;
-            margin-bottom: 8px;
-        }
-        
-        .options-header h1 .arabic {
-            font-family: 'Amiri', serif;
-            display: block;
-            font-size: 1.3em;
-            margin-bottom: 5px;
-        }
-        
-        .options-header p {
-            color: #6c757d;
-            font-style: italic;
-        }
-        
-        .section {
-            margin-bottom: 30px;
-            padding: 25px;
-            background: linear-gradient(145deg, #fff 0%, #f8faf9 100%);
-            border-radius: 16px;
-            border: 1px solid rgba(114, 186, 174, 0.15);
-            box-shadow: 0 4px 15px rgba(114, 186, 174, 0.08);
-            transition: all 0.3s ease;
-        }
-        
-        .section:hover {
-            box-shadow: 0 8px 25px rgba(114, 186, 174, 0.15);
-            border-color: rgba(114, 186, 174, 0.3);
-        }
-        
-        .section h3 {
-            color: var(--primary-dark);
-            margin-bottom: 20px;
-            font-size: 1.3em;
-            padding-bottom: 12px;
-            border-bottom: 2px solid rgba(114, 186, 174, 0.15);
-        }
-        
-        .custom-times {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-        
-        .time-input {
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: rgba(255, 255, 255, 0.5);
+            border-right: 1px solid var(--glass-border);
             display: flex;
-            align-items: center;
-            gap: 10px;
+            flex-direction: column;
+            padding: 30px 0;
         }
-        
-        .time-input input[type="time"] {
-            padding: 10px 14px;
-            border: 2px solid rgba(114, 186, 174, 0.3);
-            border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s ease;
+
+        .sidebar-header {
+            padding: 0 30px 30px 30px;
+            text-align: center;
         }
-        
-        .time-input input[type="time"]:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(114, 186, 174, 0.15);
-        }
-        
-        .add-time-btn, .remove-time-btn {
-            padding: 10px 18px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-        
-        .add-time-btn {
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            color: white;
-        }
-        
-        .add-time-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(114, 186, 174, 0.4);
-        }
-        
-        .remove-time-btn {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5253 100%);
-            color: white;
-        }
-        
-        .remove-time-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(238, 82, 83, 0.4);
-        }
-        
-        .save-button {
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 25px;
-            font-size: 16px;
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
             font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .sidebar-header .arabic {
+            font-family: 'Amiri', serif;
+            font-size: 1.8rem;
+        }
+
+        .nav-list {
+            list-style: none;
+            flex: 1;
+        }
+
+        .nav-item {
+            padding: 12px 30px;
             cursor: pointer;
-            margin: 25px auto;
-            display: block;
-            min-width: 180px;
-            transition: all 0.3s ease;
-            box-shadow: 0 6px 20px rgba(114, 186, 174, 0.35);
-        }
-        
-        .save-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(114, 186, 174, 0.5);
-        }
-        
-        .save-button:active {
-            transform: translateY(-1px);
-        }
-        
-        .success-message {
-            background: linear-gradient(135deg, rgba(168, 235, 216, 0.3) 0%, rgba(114, 186, 174, 0.2) 100%);
-            color: var(--primary-dark);
-            padding: 15px 20px;
-            border-radius: 12px;
-            margin-top: 15px;
-            text-align: center;
-            display: none;
-            border: 1px solid rgba(114, 186, 174, 0.3);
-            font-weight: 600;
-            animation: slideUp 0.3s ease-out;
-        }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .setting-item {
             display: flex;
             align-items: center;
-            padding: 12px 14px;
-            border-radius: 10px;
-            transition: all 0.2s ease;
-            margin-bottom: 10px;
+            gap: 12px;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            border-left: 4px solid transparent;
         }
-        
-        .setting-item:hover {
-            background: rgba(114, 186, 174, 0.08);
+
+        .nav-item:hover {
+            background: rgba(114, 186, 174, 0.1);
+            color: var(--primary-dark);
         }
-        
-        .setting-item input[type="checkbox"] {
-            appearance: none;
-            width: 22px;
-            height: 22px;
-            border: 2px solid rgba(114, 186, 174, 0.4);
-            border-radius: 6px;
-            margin-right: 12px;
-            position: relative;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            flex-shrink: 0;
+
+        .nav-item.active {
+            background: rgba(114, 186, 174, 0.15);
+            color: var(--primary-dark);
+            border-left-color: var(--primary);
         }
-        
-        .setting-item input[type="checkbox"]:checked {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-color: var(--primary);
+
+        .nav-item svg {
+            width: 18px;
+            height: 18px;
         }
-        
-        .setting-item input[type="checkbox"]:checked::after {
-            content: '✓';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 14px;
-            font-weight: bold;
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            scrollbar-width: none;
         }
-        
-        .setting-item select {
-            padding: 10px 14px;
-            border: 2px solid rgba(114, 186, 174, 0.3);
-            border-radius: 10px;
+
+        .main-content::-webkit-scrollbar { display: none; }
+
+        .section-content {
+            display: none;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .section-content.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .section-header {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .section-header h2 {
+            font-size: 1.4rem;
+            color: var(--primary-dark);
+            font-weight: 600;
+        }
+
+        .section-header p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        /* Form Elements */
+        .setting-card {
             background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+            transition: transform 0.2s;
         }
-        
-        .setting-item select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(114, 186, 174, 0.15);
-        }
-        
-        .setting-label {
-            min-width: 140px;
-            font-weight: 600;
-            color: var(--primary-dark);
-        }
-        
-        .setting-note {
-            margin-top: 8px;
-            padding: 12px 16px;
-            background: rgba(114, 186, 174, 0.08);
-            border-radius: 8px;
-            border-left: 3px solid var(--primary-light);
-            font-size: 14px;
-            line-height: 1.6;
-            color: #495057;
-        }
-        
-        .secondary-button {
-            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,249,0.9) 100%);
-            color: var(--primary-dark);
-            border: 2px solid rgba(114, 186, 174, 0.3);
-            padding: 10px 18px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0 6px 10px 0;
-        }
-        
-        .secondary-button:hover {
-            background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%);
-            color: white;
-            border-color: var(--primary);
+
+        .setting-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(114, 186, 174, 0.3);
         }
-        
-        .ai-status {
-            padding: 12px 16px;
+
+        .setting-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .setting-info {
+            flex: 1;
+        }
+
+        .setting-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .setting-desc {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* Inputs */
+        select, input[type="text"], input[type="time"] {
+            padding: 10px 15px;
             border-radius: 10px;
-            margin-top: 12px;
-            font-size: 14px;
+            border: 1px solid #eee;
+            background: #f9fbfb;
+            font-family: inherit;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+            min-width: 150px;
+        }
+
+        select:focus, input:focus {
+            border-color: var(--primary);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(114, 186, 174, 0.1);
+        }
+
+        /* Switch Toggle */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(114, 186, 174, 0.1);
-            border: 1px solid rgba(114, 186, 174, 0.2);
-            color: var(--primary-dark);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(114, 186, 174, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-main);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+        }
+
+        .btn-danger:hover {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Custom Times List */
+        .custom-times-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .time-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f9fbfb;
+            padding: 8px 15px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .remove-time-btn {
+            background: none;
+            border: none;
+            color: #e74c3c;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background 0.2s;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .remove-time-btn:hover {
+            background: rgba(231, 76, 60, 0.1);
+        }
+
+        /* Success Message */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--primary-dark);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            display: none;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            animation: slideUpToast 0.3s ease-out;
+        }
+
+        @keyframes slideUpToast {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .options-wrapper {
+                flex-direction: column;
+                height: auto;
+                max-height: none;
+            }
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid var(--glass-border);
+                padding: 20px 0;
+            }
+            .nav-list {
+                display: flex;
+                overflow-x: auto;
+                padding: 0 20px;
+                scrollbar-width: none;
+            }
+            .nav-list::-webkit-scrollbar { display: none; }
+            .nav-item {
+                padding: 10px 20px;
+                border-left: none;
+                border-bottom: 3px solid transparent;
+                white-space: nowrap;
+            }
+            .nav-item.active {
+                border-left: none;
+                border-bottom-color: var(--primary);
+            }
+            .main-content {
+                padding: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="options-container">
-        <header class="options-header">
-            <h1>
-                <span class="arabic">سكينة</span>
-                <span class="english" data-i18n="options.title">Sakinah Settings</span>
-            </h1>
-            <p data-i18n="options.subtitle">Configure your spiritual companion</p>
-        </header>
+    <div class="options-wrapper">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1>
+                    <span class="arabic">سكينة</span>
+                    <span>Sakinah</span>
+                </h1>
+            </div>
+            <ul class="nav-list">
+                <li class="nav-item active" data-section="general">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    General
+                </li>
+                <li class="nav-item" data-section="appearance">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+                    Appearance
+                </li>
+                <li class="nav-item" data-section="prayer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    Prayer Times
+                </li>
+                <li class="nav-item" data-section="notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                    Notifications
+                </li>
+                <li class="nav-item" data-section="ai">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z" />
+                        <path d="M17.5 5.5l1 1.5l1.5 1l-1.5 1l-1 1.5l-1-1.5l-1.5-1l1.5-1z" />
+                    </svg>
+                    AI Guide
+                </li>
+                <li class="nav-item" data-section="data">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Data & Privacy
+                </li>
+            </ul>
+            <div style="padding: 20px 30px;">
+                <button class="btn btn-primary" id="save-settings" style="width: 100%; justify-content: center;">
+                    Save Changes
+                </button>
+            </div>
+        </aside>
 
-        <main>
-            <!-- Notification Settings -->
-            <section class="section">
-                <h3>📅 <span data-i18n="options.notificationSection">Notification Schedule</span></h3>
-                
-                <label class="setting-item">
-                    <input type="checkbox" id="enable-notifications">
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.enableNotifications">Enable automatic notifications</span>
-                </label>
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- General Section -->
+            <div id="section-general" class="section-content active">
+                <div class="section-header">
+                    <h2>General Settings</h2>
+                    <p>Configure the core behavior of Sakinah.</p>
+                </div>
 
-                <div id="notification-options" style="display: none;">
-                    <div class="setting-group">
-                        <label class="setting-item">
-                            <span class="setting-label" data-i18n="options.notificationType">Notification Type:</span>
-                            <select id="notification-type">
-                                <option value="interval" data-i18n="options.intervalBased">Regular intervals</option>
-                                <option value="custom" data-i18n="options.customTimes">Custom times</option>
-                                <option value="both" data-i18n="options.both">Both</option>
-                            </select>
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">New Tab Experience</span>
+                            <span class="setting-desc">Replace the default browser new tab with Sakinah.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="enable-newtab">
+                            <span class="slider"></span>
                         </label>
                     </div>
+                </div>
 
-                    <div id="interval-settings">
-                        <label class="setting-item">
-                            <span class="setting-label" data-i18n="options.notificationInterval">Frequency:</span>
+                <div class="setting-card">
+                    <div class="setting-row" style="flex-direction: column; align-items: flex-start;">
+                        <div class="setting-info" style="margin-bottom: 15px;">
+                            <span class="setting-title">Custom Daily Deeds</span>
+                            <span class="setting-desc">Personalize your 5 daily spiritual goals.</span>
+                        </div>
+                        <div class="deeds-inputs" style="width: 100%; display: flex; flex-direction: column; gap: 8px;">
+                            <input type="text" class="deed-input" id="deed-1" placeholder="Deed 1" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <input type="text" class="deed-input" id="deed-2" placeholder="Deed 2" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <input type="text" class="deed-input" id="deed-3" placeholder="Deed 3" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <input type="text" class="deed-input" id="deed-4" placeholder="Deed 4" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                            <input type="text" class="deed-input" id="deed-5" placeholder="Deed 5" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--glass-border);">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Interface Language</span>
+                            <span class="setting-desc">Choose your preferred language for the UI.</span>
+                        </div>
+                        <select id="interface-language">
+                            <option value="en">English</option>
+                            <option value="ar">العربية (Arabic)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Primary Ecosystem</span>
+                            <span class="setting-desc">Optimize links and apps for your preferred account.</span>
+                        </div>
+                        <select id="primary-ecosystem">
+                            <option value="google">Google (Gmail, Drive)</option>
+                            <option value="microsoft">Microsoft (Outlook, Office)</option>
+                            <option value="apple">Apple (iCloud, Mail)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appearance Section -->
+            <div id="section-appearance" class="section-content">
+                <div class="section-header">
+                    <h2>Appearance</h2>
+                    <p>Customize how Sakinah looks and feels.</p>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Theme Mode</span>
+                            <span class="setting-desc">Switch between light, dark, or automatic theme.</span>
+                        </div>
+                        <select id="theme-mode">
+                            <option value="auto">Automatic (Based on time)</option>
+                            <option value="light">Always Light</option>
+                            <option value="dark">Always Dark</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Arabic Script</span>
+                            <span class="setting-desc">Choose the font style for Quranic text.</span>
+                        </div>
+                        <select id="arabic-font">
+                            <option value="font-uthmani">Uthmani (Standard)</option>
+                            <option value="font-indopak">Indo-Pak (Bold)</option>
+                            <option value="font-standard">System Default</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Font Size</span>
+                            <span class="setting-desc">Adjust the text size for better readability.</span>
+                        </div>
+                        <select id="font-size">
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="large">Large</option>
+                            <option value="extra-large">Extra Large</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Show Adhkar Module</span>
+                            <span class="setting-desc">Display daily remembrances on the new tab.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="show-adhkar">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Show Daily Quiz</span>
+                            <span class="setting-desc">Test your knowledge with a daily Quranic quiz.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="show-quiz">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Ayah Rotation</span>
+                            <span class="setting-desc">How often should the displayed verse change?</span>
+                        </div>
+                        <select id="ayah-rotation">
+                            <option value="daily">Daily</option>
+                            <option value="random">Random (Every refresh)</option>
+                            <option value="fixed">Fixed (Stay on one verse)</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prayer Times Section -->
+            <div id="section-prayer" class="section-content">
+                <div class="section-header">
+                    <h2>Prayer Times</h2>
+                    <p>Set your location for accurate prayer timings.</p>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row" style="flex-direction: column; align-items: flex-start;">
+                        <span class="setting-title">Location</span>
+                        <span class="setting-desc">Enter your city and country code (e.g., London, GB).</span>
+                        <div style="display: flex; gap: 10px; width: 100%; margin-top: 10px;">
+                            <input type="text" id="prayer-city" placeholder="City" style="flex: 1;">
+                            <input type="text" id="prayer-country" placeholder="Country Code (e.g. GB)" style="width: 100px;">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Calculation Method</span>
+                            <span class="setting-desc">Choose the authority for prayer time calculation.</span>
+                        </div>
+                        <select id="prayer-method" style="width: 100%;">
+                            <option value="3">Muslim World League</option>
+                            <option value="1">University of Islamic Sciences, Karachi</option>
+                            <option value="2">Islamic Society of North America</option>
+                            <option value="4">Umm Al-Qura University, Makkah</option>
+                            <option value="5">Egyptian General Authority of Survey</option>
+                            <option value="8">Gulf Region</option>
+                            <option value="9">Kuwait</option>
+                            <option value="10">Qatar</option>
+                            <option value="11">Majlis Ugama Islam Singapura</option>
+                            <option value="12">Union Organization islamic de France</option>
+                            <option value="13">Diyanet İşleri Başkanlığı, Turkey</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Notifications Section -->
+            <div id="section-notifications" class="section-content">
+                <div class="section-header">
+                    <h2>Notifications</h2>
+                    <p>Manage how and when you receive spiritual reminders.</p>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Enable Notifications</span>
+                            <span class="setting-desc">Receive periodic Ayahs and Adhkar.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="enable-notifications">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="notification-options-container">
+                    <div class="setting-card">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <span class="setting-title">Notification Type</span>
+                                <span class="setting-desc">Choose between intervals or specific times.</span>
+                            </div>
+                            <select id="notification-type">
+                                <option value="interval">Regular Intervals</option>
+                                <option value="custom">Custom Times</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div id="interval-settings" class="setting-card">
+                        <div class="setting-row">
+                            <div class="setting-info">
+                                <span class="setting-title">Frequency</span>
+                                <span class="setting-desc">How often should we remind you?</span>
+                            </div>
                             <select id="notification-interval">
-                                <option value="15">Every 15 <span data-i18n="options.minutes">minutes</span></option>
-                                <option value="30">Every 30 <span data-i18n="options.minutes">minutes</span></option>
-                                <option value="60" selected>Every hour</option>
+                                <option value="15">Every 15 minutes</option>
+                                <option value="30">Every 30 minutes</option>
+                                <option value="60">Every hour</option>
                                 <option value="120">Every 2 hours</option>
                                 <option value="180">Every 3 hours</option>
-                                <option value="360">Every 6 hours</option>
-                                <option value="720">Every 12 hours</option>
-                                <option value="1440">Daily</option>
                             </select>
-                        </label>
-                    </div>
-
-                    <div id="custom-times-settings">
-                        <h4 data-i18n="options.customTimesLabel">Custom Notification Times</h4>
-                        <div class="custom-times" id="custom-times-container">
-                            <!-- Custom times will be added here -->
                         </div>
-                        <button class="add-time-btn" id="add-custom-time"><span data-i18n="options.addTime">+ Add Time</span></button>
                     </div>
 
-                    <div class="setting-group">
-                        <label class="setting-item">
-                            <span class="setting-label" data-i18n="options.quietHours">Quiet Hours:</span>
-                            <div style="display: flex; gap: 10px; align-items: center;">
-                                <input type="time" id="quiet-start" value="22:00">
-                                <span data-i18n="common.to">to</span>
-                                <input type="time" id="quiet-end" value="07:00">
-                            </div>
+                    <div id="custom-times-settings" class="setting-card">
+                        <span class="setting-title">Custom Times</span>
+                        <span class="setting-desc">Add specific times for notifications.</span>
+                        <div id="custom-times-container" class="custom-times-list">
+                            <!-- Times injected here -->
+                        </div>
+                        <button class="btn btn-secondary" id="add-custom-time" style="margin-top: 15px; width: 100%; justify-content: center;">
+                            + Add New Time
+                        </button>
+                    </div>
+
+                    <div class="setting-card">
+                        <span class="setting-title">Quiet Hours</span>
+                        <span class="setting-desc">No notifications will be sent during this period.</span>
+                        <div style="display: flex; gap: 10px; align-items: center; margin-top: 10px;">
+                            <input type="time" id="quiet-start">
+                            <span>to</span>
+                            <input type="time" id="quiet-end">
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-secondary" id="test-notification" style="width: 100%; justify-content: center;">
+                    🔔 Send Test Notification
+                </button>
+            </div>
+
+            <!-- AI Guide Section -->
+            <div id="section-ai" class="section-content">
+                <div class="section-header">
+                    <h2>AI Guide</h2>
+                    <p>Personalize your spiritual AI companion.</p>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Detailed Explanations</span>
+                            <span class="setting-desc">AI will provide more depth in its responses.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="ai-detailed-explanations">
+                            <span class="slider"></span>
                         </label>
                     </div>
                 </div>
-                
-                <div class="setting-note" style="margin-top: 16px;">
-                    <button class="secondary-button" id="test-notification" style="width: 100%; padding: 12px; font-size: 0.95em; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                        🔔 Test Notification
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Response Style</span>
+                            <span class="setting-desc">Choose the tone of the AI guide.</span>
+                        </div>
+                        <select id="ai-response-style">
+                            <option value="concise">Concise</option>
+                            <option value="detailed">Detailed</option>
+                            <option value="scholarly">Scholarly</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Explanation Language</span>
+                            <span class="setting-desc">Language used for AI-generated insights.</span>
+                        </div>
+                        <select id="explanation-language">
+                            <option value="english">English</option>
+                            <option value="arabic">Arabic (العربية)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="ai-status" id="ai-status" style="padding: 15px; background: rgba(114, 186, 174, 0.1); border-radius: 12px; font-size: 0.85rem; color: var(--primary-dark);">
+                    Checking AI service status...
+                </div>
+            </div>
+
+            <!-- Data Section -->
+            <div id="section-data" class="section-content">
+                <div class="section-header">
+                    <h2>Data & Privacy</h2>
+                    <p>Manage your data and extension state.</p>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Offline Mode</span>
+                            <span class="setting-desc">Store all data locally for maximum privacy.</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="offline-mode">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="btn-group" style="flex-direction: column;">
+                    <button class="btn btn-secondary" id="export-settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Export Settings
                     </button>
-                    <small style="display: block; margin-top: 8px; text-align: center; color: #666;">Click to preview how notifications will appear</small>
+                    <button class="btn btn-secondary" id="import-settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        Export Settings
+                    </button>
+                    <button class="btn btn-secondary" id="show-onboarding">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        Show Onboarding
+                    </button>
+                    <button class="btn btn-danger" id="reset-settings">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                        Reset All Settings
+                    </button>
                 </div>
-            </section>
-
-            <!-- Language Settings -->
-            <section class="section">
-                <h3>🌍 <span data-i18n="options.languageSection">Language Settings</span></h3>
-                
-                <label class="setting-item">
-                    <span class="setting-label" data-i18n="options.interfaceLanguage">Interface Language:</span>
-                    <select id="interface-language">
-                        <option value="en">English</option>
-                        <option value="ar">العربية (Arabic)</option>
-                    </select>
-                </label>
-
-                <div class="setting-note">
-                    <small>🔄 <span data-i18n="options.changeLanguage">Language changes apply immediately to all UI elements</span></small>
-                </div>
-            </section>
-
-            <!-- Display Settings -->
-            <section class="section">
-                <h3>🎨 <span data-i18n="options.displaySection">Display Preferences</span></h3>
-                
-                <label class="setting-item">
-                    <input type="checkbox" id="show-arabic-text" checked>
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.showArabic">Show Arabic text</span>
-                </label>
-
-                <label class="setting-item">
-                    <input type="checkbox" id="show-english-translation" checked>
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.showTranslation">Show English translation</span>
-                </label>
-
-                <label class="setting-item">
-                    <input type="checkbox" id="show-surah-info" checked>
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.showSurahInfo">Show Surah and Ayah reference</span>
-                </label>
-
-                <label class="setting-item">
-                    <span class="setting-label" data-i18n="options.fontSize">Font Size:</span>
-                    <select id="font-size">
-                        <option value="small" data-i18n="options.small">Small</option>
-                        <option value="medium" selected data-i18n="options.medium">Medium</option>
-                        <option value="large" data-i18n="options.large">Large</option>
-                        <option value="extra-large">Extra Large</option>
-                    </select>
-                </label>
-            </section>
-
-            <!-- AI Guide Settings -->
-            <section class="section">
-                <h3>🤲 <span data-i18n="options.aiSection">AI Guide Preferences</span></h3>
-                
-                <div class="setting-note">
-                    <small data-i18n="options.aiAlwaysEnabled">⚡ Advanced AI analysis with Groq API is always enabled for enhanced emotion analysis and accurate Ayah suggestions.</small>
-                </div>
-                
-                <label class="setting-item">
-                    <input type="checkbox" id="ai-detailed-explanations" checked>
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.detailedExplanations">Show detailed explanations</span>
-                </label>
-
-                <label class="setting-item">
-                    <input type="checkbox" id="ai-context-history">
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.contextHistory">Remember previous contexts for better suggestions</span>
-                </label>
-
-                <label class="setting-item">
-                    <span class="setting-label" data-i18n="options.responseStyle">Response Style:</span>
-                    <select id="ai-response-style">
-                        <option value="concise" data-i18n="options.concise">Concise</option>
-                        <option value="detailed" selected data-i18n="options.detailed">Detailed</option>
-                        <option value="scholarly" data-i18n="options.scholarly">Scholarly</option>
-                    </select>
-                </label>
-
-                <label class="setting-item">
-                    <span class="setting-label" data-i18n="options.explanationLanguage">Explanation Language:</span>
-                    <select id="explanation-language">
-                        <option value="english" data-i18n="options.english">English</option>
-                        <option value="arabic" data-i18n="options.arabic">Arabic (العربية)</option>
-                    </select>
-                </label>
-
-                <div class="ai-status" id="ai-status">
-                    <small>🔄 Checking AI service status...</small>
-                </div>
-
-                <div style="margin-top:20px; padding:20px; background:linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.1) 100%); border-radius:12px; border-left:4px solid #72BAAE;">
-                    <h4 style="margin:0 0 14px 0; color:#2B8C7B;">🧠 AI Favorites Analysis</h4>
-                    
-                    <div class="setting-note">
-                        <strong>✨ Powered by AI:</strong> Your saved verses are automatically analyzed using advanced AI to provide personalized spiritual insights.
-                    </div>
-
-                    <div class="setting-note" style="margin-top:12px;">
-                        <strong>How it works:</strong>
-                        <ul style="margin:8px 0; padding-left:20px; line-height:1.6;">
-                            <li><strong>Intelligent analysis:</strong> AI examines patterns in your saved verses to understand your spiritual journey</li>
-                            <li><strong>Personalized insights:</strong> Receives thoughtful analysis of themes, needs, and actionable guidance</li>
-                            <li><strong>Automatic:</strong> No configuration needed - just save verses and click "Analyze Favorites"</li>
-                        </ul>
-                    </div>
-
-                    <div class="setting-note" style="margin-top:12px; padding:14px; background:rgba(114, 186, 174, 0.15); border-radius:8px; border-left:3px solid #72BAAE;">
-                        <strong>🔒 Privacy:</strong>
-                        <ul style="margin:8px 0; padding-left:20px; line-height:1.6;">
-                            <li>Only verse text and themes are analyzed - no personal information</li>
-                            <li>Analysis happens securely via encrypted connection</li>
-                            <li>Results are stored only in your browser's local storage</li>
-                        </ul>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Data & Privacy -->
-            <section class="section">
-                <h3>🔒 <span data-i18n="options.privacySection">Data & Privacy</span></h3>
-                
-                <label class="setting-item">
-                    <input type="checkbox" id="offline-mode" checked>
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.offlineMode">Store all data locally (recommended for privacy)</span>
-                </label>
-
-                <label class="setting-item">
-                    <input type="checkbox" id="anonymous-usage">
-                    <span class="checkmark"></span>
-                    <span data-i18n="options.anonymousUsage">Allow anonymous usage statistics</span>
-                </label>
-
-                <div class="setting-group">
-                    <button class="secondary-button" id="export-settings"><span data-i18n="options.exportSettings">Export Settings</span></button>
-                    <button class="secondary-button" id="import-settings"><span data-i18n="options.importSettings">Import Settings</span></button>
-                    <button class="secondary-button" id="reset-settings"><span data-i18n="options.resetSettings">Reset to Defaults</span></button>
-                    <button class="secondary-button" id="show-onboarding" style="background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%); color: white; border: none;"><span data-i18n="options.showOnboarding">🎯 Show Onboarding</span></button>
-                </div>
-            </section>
-
-            <button class="save-button" id="save-settings"><span data-i18n="options.saveSettings">Save All Settings</span></button>
-            <div class="success-message" id="success-message">
-                <span data-i18n="options.settingsSaved">Settings saved successfully! ✅</span>
             </div>
         </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toast-message">Settings saved successfully!</span>
     </div>
 
     <script src="config.js"></script>

@@ -1,49 +1,76 @@
 // Onboarding script for Sakinah extension
 
 let currentStep = 1;
-const totalSteps = 3;
+const totalSteps = 4;
 let translator;
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', async () => {
-    // Initialize translator
-    translator = new TranslationManager();
-    await translator.init();
-    
-    // Load saved language if any
-    const { interfaceLanguage } = await chrome.storage.sync.get({ interfaceLanguage: 'en' });
-    document.getElementById('language-select').value = interfaceLanguage;
-    translator.setLanguage(interfaceLanguage);
-    
-    // Populate timezone dropdown
-    populateTimezones();
-    
-    // Detect and display current timezone
-    detectTimezone();
-});
-
+// Function declarations (hoisted, so they're available immediately)
 function nextStep() {
-    if (currentStep < totalSteps) {
-        document.getElementById(`step${currentStep}`).classList.remove('active');
-        currentStep++;
-        document.getElementById(`step${currentStep}`).classList.add('active');
+    console.log('nextStep called, currentStep:', currentStep);
+    try {
+        if (currentStep < totalSteps) {
+            const currentStepEl = document.getElementById(`step${currentStep}`);
+            const nextStepEl = document.getElementById(`step${currentStep + 1}`);
+            
+            console.log('Current step element:', currentStepEl);
+            console.log('Next step element:', nextStepEl);
+            
+            if (currentStepEl && nextStepEl) {
+                currentStepEl.classList.remove('active');
+                currentStep++;
+                nextStepEl.classList.add('active');
+                
+                // Re-initialize icons for the new step
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error in nextStep:', error);
     }
 }
 
 function prevStep() {
-    if (currentStep > 1) {
-        document.getElementById(`step${currentStep}`).classList.remove('active');
-        currentStep--;
-        document.getElementById(`step${currentStep}`).classList.add('active');
+    console.log('prevStep called, currentStep:', currentStep);
+    try {
+        if (currentStep > 1) {
+            const currentStepEl = document.getElementById(`step${currentStep}`);
+            const prevStepEl = document.getElementById(`step${currentStep - 1}`);
+            
+            if (currentStepEl && prevStepEl) {
+                currentStepEl.classList.remove('active');
+                currentStep--;
+                prevStepEl.classList.add('active');
+                
+                // Re-initialize icons for the new step
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error in prevStep:', error);
     }
 }
 
 async function handleLanguageChange() {
-    const language = document.getElementById('language-select').value;
-    translator.setLanguage(language);
-    
-    // Save language preference
-    await chrome.storage.sync.set({ interfaceLanguage: language });
+    try {
+        const language = document.getElementById('language-select').value;
+        if (translator) {
+            await translator.setLanguage(language);
+        }
+        
+        // Save language preference
+        await chrome.storage.sync.set({ interfaceLanguage: language });
+        
+        // Re-initialize icons in case direction changed
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    } catch (error) {
+        console.error('Error in handleLanguageChange:', error);
+    }
 }
 
 function populateTimezones() {
@@ -109,21 +136,74 @@ function detectTimezone() {
 }
 
 async function finishOnboarding() {
-    const timezone = document.getElementById('timezone-select').value;
-    const language = document.getElementById('language-select').value;
-    
-    // Save settings
-    await chrome.storage.sync.set({
-        timezone: timezone,
-        interfaceLanguage: language,
-        onboardingCompleted: true,
-        notificationsEnabled: true,
-        notificationInterval: 60,
-        showArabic: true,
-        showTranslation: true
-    });
-    
-    // Close onboarding and open extension popup
-    chrome.tabs.create({ url: 'popup.html' });
-    window.close();
+    try {
+        const timezone = document.getElementById('timezone-select').value;
+        const language = document.getElementById('language-select').value;
+        const aiResponseStyle = document.getElementById('ai-response-style').value;
+        const explanationLanguage = document.getElementById('explanation-language').value;
+        
+        // Start with default settings
+        const settings = { ...CONFIG.DEFAULT_SETTINGS };
+        
+        // Override with onboarding choices
+        settings.timezone = timezone;
+        settings.interfaceLanguage = language;
+        settings.aiResponseStyle = aiResponseStyle;
+        settings.explanationLanguage = explanationLanguage;
+        settings.onboardingCompleted = true;
+        
+        // Save settings
+        await chrome.storage.sync.set(settings);
+        
+        // Close onboarding and open extension popup
+        chrome.tabs.create({ url: 'popup.html' });
+        window.close();
+    } catch (error) {
+        console.error('Error in finishOnboarding:', error);
+    }
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', async () => {
+    try {
+        console.log('Onboarding page loaded');
+        
+        // Initialize icons
+        if (typeof lucide !== 'undefined') {
+            console.log('Lucide loaded, creating icons');
+            lucide.createIcons();
+        } else {
+            console.warn('Lucide not loaded');
+        }
+
+        // Initialize translator
+        console.log('Initializing translator');
+        translator = new TranslationManager();
+        await translator.init();
+        
+        // Load saved language if any
+        const storage = await chrome.storage.sync.get({ interfaceLanguage: 'en' });
+        const interfaceLanguage = storage.interfaceLanguage || 'en';
+        console.log('Language:', interfaceLanguage);
+        
+        const langSelect = document.getElementById('language-select');
+        if (langSelect) {
+            langSelect.value = interfaceLanguage;
+        }
+        
+        if (translator) {
+            await translator.setLanguage(interfaceLanguage);
+        }
+        
+        // Populate timezone dropdown
+        populateTimezones();
+        
+        // Detect and display current timezone
+        detectTimezone();
+        
+        console.log('Onboarding initialization complete');
+    } catch (error) {
+        console.error('Error initializing onboarding:', error);
+        // Continue anyway so the buttons still work
+    }
+});

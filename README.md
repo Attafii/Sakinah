@@ -1,121 +1,78 @@
-# 🌙 Sakinah
+# 🌙 Sakinah - A Calm Beginning
 
-**Sakinah** is a Chrome Extension that brings tranquility and reflection into your daily routine through the Qur’an.  
-It provides **random Ayahs** at configurable intervals, or instantly when you click the extension.  
-It also includes an **AI-powered guide**: describe your emotional or spiritual state, and receive the most fitting Qur’anic Ayah for peace and guidance.
+**Sakinah** is a comprehensive browser extension designed to bring tranquility, spiritual reflection, and organized productivity to your daily digital life.
 
 ---
 
 ## ✨ Features
-- 🎲 **Random Ayah** on demand with one click.
-- ⏰ **Configurable reminders**: set how often and when Ayah notifications appear.
-- 🤖 **AI Emotional Guide**: input your current state (e.g., “I feel anxious”), and get an Ayah tailored to your situation.- 🧠 **AI Favorites Analysis**: Analyze your saved verses to discover spiritual patterns, interests, and personalized guidance.- 🌐 **Arabic + English translation** (default Sahih International).
-- ⭐ Save favorite Ayahs for later reflection.
-- 🔔 Browser **notifications** for scheduled Ayahs.
-- 🕊 Minimal, clean UI designed to encourage calmness.
+
+### 🕋 Spiritual Dashboard (New Tab)
+Transform your new tab into a peaceful sanctuary:
+- **Daily Ayah & Rotation**: Beautifully rendered verses with optional random or daily rotation.
+- **Prayer Times**: Automatic geo-located or city-based prayer timings with real-time "active" prayer highlighting.
+- **Sunnah of the Day**: Rotating prophetic traditions presented in both **Arabic and English**.
+- **Daily Deeds**: Track 5 customizable spiritual goals (e.g., Prayers, Charity, Adhkar) with a clean progress UI.
+- **Gratitude Journal**: A persistent private journal to record daily blessings, featuring a **History Modal** and **.txt Export** functionality.
+- **Bilingual Hijri Calendar**: Seamlessly updated Hijri and Gregorian dates featuring full month names.
+- **Quranic Quiz**: Test your knowledge with interactive verse completion challenges.
+
+### 🤖 Sakinah AI Guide
+- **Empathetic Chat**: Describe your feelings to receive comforting advice and relevant Quranic verses.
+- **Bilingual Explanations**: One-click deep-dives into any Ayah, provided in both **Arabic (العربية الفصحى)** and **English**.
+- **Favorites Analysis**: AI-powered insights that analyze your saved verses to identify spiritual patterns and suggest personalized actions.
+
+### 🛠️ Customization & Productivity
+- **Personalized Wallpapers**: Set custom backgrounds via URL or direct local upload.
+- **Theme Support**: Light, Dark, and "Auto" (sunset-sync) modes.
+- **Ecosystem Integration**: Quick-toggle links and apps for **Google, Microsoft, and Apple** ecosystems.
+- **Bookmarks & Privacy**: A sleek searchable bookmarks sidebar and "Recent Tabs" manager with privacy-first optional permissions.
 
 ---
 
 ## 📂 Project Structure
 sakinah/
-│── manifest.json
-│── background.js
-│── popup.html
-│── popup.js
-│── options.html
-│── options.js
-│── ai.js # AI logic for state → Ayah matching│── favorites-analyzer.js # AI-powered favorites analysis│── quran.json # Local dataset of Qur’an Ayahs + translations
-│── styles.css
-│── icons/ # App icons for Chrome Store
-│── README.md
-
-yaml
-Copy code
+│── manifest.json      # Extension configuration with optional permissions
+│── background.js       # Background logic for notifications and state
+│── newtab.html/js      # Central dashboard experience
+│── popup.html/js       # Quick-access extension popup
+│── options.html/js     # Detailed settings and customization
+│── ai.js               # Dual-language AI integration (Groq/Llama 3)
+│── config.js           # Default settings and proxy endpoints
+│── quran.json          # Curated Quranic dataset
+│── adhkar.json/ahadith.json # Spiritual content libraries
+│── styles.css          # Glassmorphism and responsive design
+│── build.bat           # Deployment and key injection script
+│── icons/              # Islamic branding assets
 
 ---
 
 ## ⚙️ Setup
 
-### 1. Clone and Configure
-```bash
-git clone https://github.com/Attafii/Sakinah.git
-cd sakinah
-```
+### 1. Installation
+1. Clone the repository: `git clone https://github.com/Attafii/Sakinah.git`
+2. Open Chrome -> `chrome://extensions`
+3. Enable **Developer Mode**
+4. Click **Load Unpacked** and select the Sakinah folder.
 
-### 2. Set Up Environment Variables
-```bash
-# Copy the example environment file
-copy .env.example .env
-
-# Edit .env and add your Groq API key
-# Get your free API key from: https://console.groq.com/keys
-```
-
-Your `.env` file should look like:
-```
-GROQ_API_KEY=your_actual_api_key_here
-```
-
-### 3. Build the Extension
-```bash
-# Run the build script to inject your API key
-build.bat
-```
-
-### 4. Load in Chrome
-- Open Chrome → Extensions → Enable **Developer Mode**
-- Click **Load Unpacked** → Select the `sakinah/` folder
-- Click the Sakinah icon → Receive your Ayah 🌙
-
-### 5. Before Committing Changes
-```bash
-# Restore config.js to template version (removes your API key)
-restore-config.bat
-
-# Now safe to commit!
-git add .
-git commit -m "your changes"
-```
-
-**Important**: Never commit your actual API key! The `.env` file is already in `.gitignore`.
-
-🚀 Usage
-Click icon → Random Ayah.
-
-Options page → Set reminder frequency.
-
-AI Guide → Describe your mood/state → Get a comforting Ayah.
-
-🛠 Tech Stack
-Chrome Extension APIs (Manifest v3)
-
-Vanilla JavaScript
-
-Local JSON Qur’an dataset
-Groq API for enhanced NLP mapping.
+### 2. Configuration
+- Get a free API key from [Groq Console](https://console.groq.com/keys).
+- Create a `.env` file or use `build.bat` to inject your `GROQ_API_KEY`.
+- Use `restore-config.bat` before committing to keep your keys private.
 
 ---
 
 ## 🧠 AI Favorites Analysis
-
-**Now Available!** The extension analyzes your saved Ayahs and Ahadith to provide personalized spiritual insights.
-
-### What it does:
-- **Identifies Interests**: Discovers recurring themes in your saved verses (prayer, patience, charity, etc.)
-- **Infers Needs**: Understands your spiritual and emotional needs based on what you save
-- **Provides Meaning**: Connects your saved items into a cohesive narrative about your spiritual journey
-- **Suggests Actions**: Offers 4-6 practical, actionable steps tailored to your interests
-
-### How it works:
-1. Save your favorite Ayahs and Ahadith as you browse
-2. Go to the Favorites tab and click "🧠 Analyze Favorites"
-3. AI analyzes patterns and generates personalized insights
-4. View your spiritual journey summary with interests, needs, meaning, and suggested actions
-5. Regenerate anytime for fresh perspectives
+Go to the **Favorites** tab and click "Analyze Favorites" to see personalized spiritual insights based on what you share with Sakinah.
 
 ### Privacy & Security:
-- ✅ Only verse text and themes are analyzed
-- ✅ No personal information (name, email, etc.) is sent
-- ✅ Secure encrypted connection to AI service
-- ✅ Results stored locally in your browser
-- ✅ No configuration needed - works automatically
+- ✅ **No Personal Data**: Only verse identifiers are used for analysis.
+- ✅ **Local Storage**: All history and settings reside only in your browser.
+- ✅ **Optional Permissions**: Sensitive features (History/Bookmarks) only activate when you choose.
+
+---
+
+## 🛠 Tech Stack
+- **Manifest V3** Chrome Extension API.
+- **Groq AI (Llama 3.3)** for multilingual NLP.
+- **Vanilla JavaScript & Glassmorphism CSS**.
+- **Aladhan API** for precise global prayer timings.

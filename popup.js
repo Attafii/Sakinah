@@ -18,6 +18,7 @@ class SakinahPopup {
         await this.loadQuranData();
         this.setupEventListeners();
         this.loadSettings();
+        this.fetchPrayerTimes();
         this.showRandomAyah();
         this.loadFavorites();
         // Initialize Lucide icons after page load
@@ -1233,7 +1234,7 @@ Please provide a thoughtful, accurate explanation following this structure:
 
         try {
             // Get AI response with forceArabic option
-            const result = await window.AIGuide.getGuidance(userMessage, this.ayahData.ayahs, { forceArabic });
+            const result = await window.sakinahAI.getGuidance(userMessage, this.ayahData.ayahs, { forceArabic });
 
             // Remove loading indicator
             const loadingEl = document.getElementById(loadingId);
@@ -1379,8 +1380,8 @@ Please provide a thoughtful, accurate explanation following this structure:
         const chatMessages = document.getElementById('chat-messages');
         
         // Clear AI guide conversation history
-        if (window.AIGuide) {
-            window.AIGuide.clearHistory();
+        if (window.sakinahAI) {
+            window.sakinahAI.clearHistory();
         }
 
         // Reset chat to welcome message
@@ -1421,12 +1422,8 @@ Please provide a thoughtful, accurate explanation following this structure:
     // Load user settings
     async loadSettings() {
         try {
-            const settings = await chrome.storage.sync.get({
-                notificationsEnabled: false,
-                notificationInterval: 60,
-                showArabic: true,
-                showTranslation: true
-            });
+            const settings = await chrome.storage.sync.get(CONFIG.DEFAULT_SETTINGS);
+            this.settings = settings;
 
             document.getElementById('notifications-enabled').checked = settings.notificationsEnabled;
             document.getElementById('notification-frequency').value = settings.notificationInterval;
@@ -1439,6 +1436,113 @@ Please provide a thoughtful, accurate explanation following this structure:
 
         } catch (error) {
             console.error('Error loading settings:', error);
+        }
+    }
+
+    async fetchPrayerTimes() {
+        try {
+            // If city and country are set in settings, use timingsByCity
+            if (this.settings && this.settings.prayerCity && this.settings.prayerCountry) {
+                await this.getPrayerTimesByCity(this.settings.prayerCity, this.settings.prayerCountry);
+                return;
+            }
+
+            let location = await chrome.storage.local.get(['userLocation']);
+            
+            if (!location.userLocation) {
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    await chrome.storage.local.set({ userLocation: { lat, lng } });
+                    this.getPrayerTimesFromAPI(lat, lng);
+                }, (err) => {
+                    console.warn('Geolocation failed, using default (Makkah):', err);
+                    this.getPrayerTimesFromAPI(21.4225, 39.8262); // Makkah
+                });
+            } else {
+                this.getPrayerTimesFromAPI(location.userLocation.lat, location.userLocation.lng);
+            }
+        } catch (e) {
+            console.error('Error in fetchPrayerTimes:', e);
+        }
+    }
+
+    async getPrayerTimesByCity(city, country) {
+        try {
+            const date = new Date();
+            const day = String(date.getDate()).padStart(2, '0');
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const year = date.getFullYear();
+            const dateStr = `${day}-${month}-${year}`;
+            
+            const method = (this.settings && this.settings.prayerMethod) || 3;
+            const url = `https://api.aladhan.com/v1/timingsByCity/${dateStr}?city=${encodeURIComponent(city)}&country=${encodeURIComponent(country)}&method=${method}`;
+            
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data && data.code === 200) {
+                this.updatePrayerTimesUI(data.data.timings);
+                // Also update Hijri date if needed (though popup might not show it)
+            }
+        } catch (e) {
+            console.error('Failed to fetch prayer times by city:', e);
+            // Fallback to coordinates if city fetch fails
+            let location = await chrome.storage.local.get(['userLocation']);
+            if (location.userLocation) {
+                this.getPrayerTimesFromAPI(location.userLocation.lat, location.userLocation.lng);
+            }
+        }
+    }
+
+    async getPrayerTimesFromAPI(lat, lng) {
+        try {
+            const method = (this.settings && this.settings.prayerMethod) || 3;
+            const url = `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=${method}`;
+            const res = await fetch(url);
+            const data = await res.json();
+
+            if (data && data.code === 200) {
+                this.updatePrayerTimesUI(data.data.timings);
+            }
+        } catch (e) {
+            console.error('Failed to fetch prayer times:', e);
+        }
+    }
+
+    updatePrayerTimesUI(timings) {
+        const prayers = ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
+        const now = new Date();
+        const currentTime = now.getHours() * 60 + now.getMinutes();
+        
+        let nextPrayer = null;
+        let minDiff = Infinity;
+
+        prayers.forEach(p => {
+            const timeStr = timings[p];
+            const el = document.getElementById(`popup-prayer-${p.toLowerCase()}`);
+            if (el) {
+                const timeSpan = el.querySelector('.time');
+                if (timeSpan) timeSpan.textContent = timeStr;
+
+                const [hours, minutes] = timeStr.split(':').map(Number);
+                const prayerMinutes = hours * 60 + minutes;
+                
+                el.classList.remove('active');
+                
+                const diff = prayerMinutes - currentTime;
+                if (diff > 0 && diff < minDiff) {
+                    minDiff = diff;
+                    nextPrayer = el;
+                }
+            }
+        });
+
+        if (!nextPrayer) {
+            const fajrEl = document.getElementById('popup-prayer-fajr');
+            if (fajrEl) fajrEl.classList.add('active');
+        } else {
+            nextPrayer.classList.add('active');
         }
     }
 
@@ -1621,6 +1725,11 @@ Please provide a thoughtful, accurate explanation following this structure:
         }
 
         this.hifdhData = { surahs };
+
+        // Provide the full Quran database to the AI Guide
+        if (window.sakinahAI) {
+            window.sakinahAI.setFullQuranDatabase(this.hifdhData);
+        }
 
         const sel = document.getElementById('surah-select');
         if (sel && this.hifdhData && Array.isArray(this.hifdhData.surahs)) {
@@ -2206,6 +2315,19 @@ Please provide a thoughtful, accurate explanation following this structure:
         return this.calculateSimilarity(a, b);
     }
 
+    mapReciterId(id) {
+        const mapping = {
+            'Alafasy_128kbps': 'ar.alafasy',
+            'Abdul_Basit_Murattal_192kbps': 'ar.abdulbasit',
+            'Abdurrahmaan_As-Sudais_192kbps': 'ar.sudais',
+            'Maher_AlMuaiqly_64kbps': 'ar.mahermuaiqly',
+            'Minshawi_Murattal_128kbps': 'ar.minshawi',
+            'Ahmed_ibn_Ali_al-Ajamy_128kbps': 'ar.ahmedajamy',
+            'Ghamadi_40kbps': 'ar.alafasy'
+        };
+        return mapping[id] || id;
+    }
+
     // Audio playback for Listen mode
     async playHifdhAudio() {
         if (!this.hifdhData) return;
@@ -2216,7 +2338,7 @@ Please provide a thoughtful, accurate explanation following this structure:
 
         const statusEl = document.getElementById('hifdh-audio-status');
         const reciterSelect = document.getElementById('hifdh-reciter');
-        const reciter = reciterSelect ? reciterSelect.value : 'ar.alafasy';
+        const reciter = this.mapReciterId(reciterSelect ? reciterSelect.value : 'ar.alafasy');
         const playBtn = document.getElementById('hifdh-play');
 
         // Get verse number

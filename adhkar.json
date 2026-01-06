@@ -1,0 +1,34 @@
+{
+  "adhkar": [
+    {
+      "id": 1,
+      "arabic": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+      "translation": "Glory be to Allah and praise is to Him.",
+      "benefit": "Whoever says this 100 times a day, his sins will be forgiven even if they were like the foam of the sea."
+    },
+    {
+      "id": 2,
+      "arabic": "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+      "translation": "I seek Allah's forgiveness and I turn to Him in repentance.",
+      "benefit": "The Prophet (peace be upon him) used to say this more than 70 times a day."
+    },
+    {
+      "id": 3,
+      "arabic": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+      "translation": "There is no might nor power except with Allah.",
+      "benefit": "It is a treasure from the treasures of Paradise."
+    },
+    {
+      "id": 4,
+      "arabic": "سُبْحَانَ اللَّهِ الْعَظِيمِ وَبِحَمْدِهِ",
+      "translation": "Glory be to Allah the Magnificent and praise is to Him.",
+      "benefit": "A palm tree is planted for him in Paradise."
+    },
+    {
+      "id": 5,
+      "arabic": "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+      "translation": "None has the right to be worshipped but Allah alone, Who has no partner. His is the dominion and His is the praise, and He is Able to do all things.",
+      "benefit": "Whoever says this 100 times in a day will have a reward equivalent to freeing ten slaves, 100 good deeds will be recorded for him, and 100 bad deeds will be erased from his record."
+    }
+  ]
+}

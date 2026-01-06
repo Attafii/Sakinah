@@ -1,0 +1,39 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "How many pillars of Islam are there?",
+      "options": ["3", "4", "5", "6"],
+      "answer": 2,
+      "explanation": "The five pillars of Islam are Shahada, Salah, Zakat, Sawm, and Hajj."
+    },
+    {
+      "id": 2,
+      "question": "Which Surah is known as the 'Heart of the Qur'an'?",
+      "options": ["Al-Fatihah", "Al-Baqarah", "Yaseen", "Al-Ikhlas"],
+      "answer": 2,
+      "explanation": "Surah Yaseen is often referred to as the heart of the Qur'an."
+    },
+    {
+      "id": 3,
+      "question": "Who was the first prophet in Islam?",
+      "options": ["Ibrahim (AS)", "Nuh (AS)", "Adam (AS)", "Muhammad (SAW)"],
+      "answer": 2,
+      "explanation": "Adam (AS) was the first human and the first prophet."
+    },
+    {
+      "id": 4,
+      "question": "In which month was the Qur'an first revealed?",
+      "options": ["Rajab", "Sha'ban", "Ramadan", "Dhul-Hijjah"],
+      "answer": 2,
+      "explanation": "The Qur'an was first revealed in the month of Ramadan on Laylat al-Qadr."
+    },
+    {
+      "id": 5,
+      "question": "What is the name of the angel who brought the revelation to Prophet Muhammad (SAW)?",
+      "options": ["Mikail", "Israfil", "Jibril", "Azrail"],
+      "answer": 2,
+      "explanation": "Angel Jibril (Gabriel) was responsible for delivering the revelation to the prophets."
+    }
+  ]
+}

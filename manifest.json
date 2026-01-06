@@ -7,7 +7,18 @@
   "permissions": [
     "storage",
     "alarms",
-    "notifications"
+    "notifications",
+    "identity"
+  ],
+  "optional_permissions": [
+    "bookmarks",
+    "sessions",
+    "topSites",
+    "history"
+  ],
+  "host_permissions": [
+    "https://sakinah-ai-proxy.attafiahmed-dev.workers.dev/*",
+    "https://api.aladhan.com/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -23,6 +34,9 @@
     "default_title": "Sakinah - Find peace through the Qur'an"
   },
   "options_page": "options.html",
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self';"
   }

@@ -1399,6 +1399,56 @@ select:hover {
     margin: 20px auto;
 }
 
+/* ===== PRAYER TIMES STYLES ===== */
+.prayer-times-bar {
+    display: flex;
+    justify-content: space-between;
+    background: var(--gradient-subtle);
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(114, 186, 174, 0.2);
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.prayer-times-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.prayer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 60px;
+    padding: 6px 8px;
+    border-radius: var(--radius-md);
+    transition: var(--transition-normal);
+}
+
+.prayer-item.active {
+    background: var(--gradient-dark);
+    color: white;
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-2px);
+}
+
+.prayer-item .name {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+    opacity: 0.8;
+}
+
+.prayer-item.active .name {
+    opacity: 1;
+}
+
+.prayer-item .time {
+    font-size: 13px;
+    font-weight: 600;
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }

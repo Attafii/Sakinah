@@ -3,9 +3,17 @@
 class AIGuide {
     constructor() {
         // Use proxy server instead of direct Groq API
-        this.proxyEndpoint = 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
+        this.proxyEndpoint = (typeof CONFIG !== 'undefined' && CONFIG.PROXY_URL) 
+            ? CONFIG.PROXY_URL 
+            : 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
         this.conversationHistory = [];
         this.maxHistoryLength = 10; // Keep last 10 messages for context
+        this.fullQuranDatabase = null;
+    }
+
+    // Set the full Quran database from quran_hifdh.json
+    setFullQuranDatabase(database) {
+        this.fullQuranDatabase = database;
     }
 
     // Main function to get AI guidance based on user input
@@ -49,6 +57,7 @@ class AIGuide {
     // Call Groq API for guidance
     async callGroqAPI(userInput, ayahDatabase, forceArabic = false) {
         try {
+            console.log('Calling Groq API via proxy:', this.proxyEndpoint);
             // Build context from ayah database
             const ayahContext = this.buildAyahContext(ayahDatabase);
             
@@ -73,8 +82,9 @@ ${languageInstruction}
 7. If the user shares something difficult, acknowledge their feelings first before providing guidance.
 8. Be concise but meaningful. Aim for 2-4 paragraphs unless more detail is needed.
 9. Always end with an encouraging word or a brief dua (supplication).
+10. IMPORTANT: You have access to the FULL Quran database. When you mention a verse, use the format "Surah Name SurahNumber:AyahNumber" (e.g., "Surah Al-Baqarah 2:255"). The system will automatically look up the exact Arabic text from the database to display to the user.
 
-AVAILABLE QURAN VERSES FOR REFERENCE (you can suggest verses from this list or mention others you know):
+AVAILABLE QURAN VERSES FOR REFERENCE (you can suggest verses from this list or any other verse from the full Quran):
 ${ayahContext}
 
 Remember: Your goal is to bring sakinah (tranquility) to the user's heart through the Quran and Islamic wisdom.`;
@@ -97,19 +107,23 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
                 })
             });
 
+            console.log('Proxy response status:', response.status);
+
             if (response.status === 401) {
                 return {
                     success: false,
                     error: 'auth_failed',
-                    message: 'API key authentication failed. Please check your Groq API key in settings.'
+                    message: 'API key authentication failed. Please check your Groq API key in the Cloudflare Worker settings.'
                 };
             }
 
             if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Proxy error response:', errorText);
                 return {
                     success: false,
                     error: 'api_error',
-                    message: `API error (${response.status}). Please try again later.`
+                    message: `API error (${response.status}). Please check your proxy setup.`
                 };
             }
 
@@ -117,6 +131,7 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
             const aiResponse = data.choices?.[0]?.message?.content || '';
 
             if (!aiResponse) {
+                console.error('Empty AI response:', data);
                 return {
                     success: false,
                     error: 'empty_response',
@@ -194,6 +209,11 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
             /Surah\s+(\w+[-\s]?\w*)\s*[(\[]?(\d+):(\d+)/gi,  // Full format
         ];
 
+        // Use full database if available, otherwise use the provided sample database
+        const dbToUse = this.fullQuranDatabase || ayahDatabase;
+
+        if (!dbToUse) return { ayah: null };
+
         for (const pattern of versePatterns) {
             const matches = aiResponse.matchAll(pattern);
             for (const match of matches) {
@@ -208,9 +228,27 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
                 ayahNum = parseInt(ayahNum);
 
                 // Find matching ayah in database
-                const ayah = ayahDatabase.find(a => 
-                    a.surahNumber === surahNum && a.ayahNumber === ayahNum
-                );
+                let ayah = null;
+                if (Array.isArray(dbToUse)) {
+                    ayah = dbToUse.find(a => 
+                        a.surahNumber === surahNum && a.ayahNumber === ayahNum
+                    );
+                } else if (dbToUse.surahs) {
+                    // Handle normalized hifdh structure
+                    const surah = dbToUse.surahs.find(s => s.number === surahNum);
+                    if (surah) {
+                        const foundAyah = surah.ayahs.find(a => a.numberInSurah === ayahNum);
+                        if (foundAyah) {
+                            ayah = {
+                                surah: surah.name || `Surah ${surah.number}`,
+                                surahNumber: surah.number,
+                                ayahNumber: foundAyah.numberInSurah,
+                                arabic: foundAyah.arabic,
+                                translation: foundAyah.translation || ''
+                            };
+                        }
+                    }
+                }
 
                 if (ayah) {
                     return { ayah };
@@ -256,6 +294,26 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
     // Clear conversation history
     clearHistory() {
         this.conversationHistory = [];
+    }
+
+    // Explain a specific ayah using AI
+    async explainAyah(ayah, options = {}) {
+        try {
+            const prompt = `Please explain this Quranic verse in a compassionate and clear way:
+Surah ${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})
+Arabic: ${ayah.arabic}
+Translation: ${ayah.translation}
+
+CRITICAL: Provide the explanation in BOTH Arabic (العربية الفصحى) and English.
+Each section should be clearly labeled.
+Provide context, spiritual lessons, and how it can be applied to daily life.`;
+
+            const result = await this.getGuidance(prompt, [ayah], options);
+            return result.success ? result.response : 'Unable to generate explanation at this time.';
+        } catch (error) {
+            console.error('Error explaining ayah:', error);
+            return 'An error occurred while explaining the verse.';
+        }
     }
 
     // Get user settings
@@ -328,5 +386,5 @@ Remember: Your goal is to bring sakinah (tranquility) to the user's heart throug
 // Create global instance
 (() => {
     const globalScope = (typeof window !== 'undefined') ? window : (typeof self !== 'undefined') ? self : this;
-    globalScope.AIGuide = new AIGuide();
+    globalScope.sakinahAI = new AIGuide();
 })();

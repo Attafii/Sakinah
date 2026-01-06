@@ -1,352 +1,311 @@
-// options.js - Advanced settings page functionality
-
 class SakinahOptions {
     constructor() {
+        this.settings = {};
         this.customTimes = [];
         this.init();
     }
 
     async init() {
-        this.setupEventListeners();
         await this.loadSettings();
-    }
-
-    setupEventListeners() {
-        // Interface language change
-        document.getElementById('interface-language').addEventListener('change', async (e) => {
-            await translator.setLanguage(e.target.value);
-        });
-
-        // Enable/disable notifications
-        document.getElementById('enable-notifications').addEventListener('change', (e) => {
-            this.toggleNotificationOptions(e.target.checked);
-        });
-
-        // Notification type change
-        document.getElementById('notification-type').addEventListener('change', (e) => {
-            this.updateNotificationTypeVisibility(e.target.value);
-        });
-
-        // Add custom time
-        document.getElementById('add-custom-time').addEventListener('click', () => {
-            this.addCustomTime();
-        });
-
-        // Save settings
-        document.getElementById('save-settings').addEventListener('click', () => {
-            this.saveAllSettings();
-        });
-
-        // Export settings
-        document.getElementById('export-settings').addEventListener('click', () => {
-            this.exportSettings();
-        });
-
-        // Import settings
-        document.getElementById('import-settings').addEventListener('click', () => {
-            this.importSettings();
-        });
-
-        // Reset settings
-        document.getElementById('reset-settings').addEventListener('click', () => {
-            this.resetSettings();
-        });
-
-        // Test notification
-        document.getElementById('test-notification').addEventListener('click', () => {
-            this.testNotification();
-        });
-
-        // Show onboarding
-        document.getElementById('show-onboarding').addEventListener('click', () => {
-            chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
-        });
-
-        // Language change
-        document.getElementById('interface-language').addEventListener('change', async (e) => {
-            await translator.setLanguage(e.target.value);
-        });
-
+        this.setupEventListeners();
+        this.setupSidebar();
+        this.checkAIService();
     }
 
     async loadSettings() {
-        try {
-            const settings = await chrome.storage.sync.get({
-                // Language settings
-                interfaceLanguage: 'en',
-                
-                // Notification settings
-                notificationsEnabled: false,
-                notificationType: 'interval',
-                notificationInterval: 60,
-                customTimes: [],
-                quietStart: '22:00',
-                quietEnd: '07:00',
-                
-                // Display settings
-                showArabic: true,
-                showTranslation: true,
-                showSurahInfo: true,
-                fontSize: 'medium',
-                
-                // AI Guide settings
-                aiDetailedExplanations: true,
-                aiContextHistory: false,
-                aiResponseStyle: 'detailed',
-                explanationLanguage: 'english',
-                
-                // Privacy settings
-                offlineMode: true,
-                anonymousUsage: false
+        return new Promise((resolve) => {
+            chrome.storage.sync.get(CONFIG.DEFAULT_SETTINGS, (settings) => {
+                this.settings = settings;
+                this.customTimes = settings.notificationCustomTimes || [];
+                this.applySettingsToUI();
+                resolve();
             });
+        });
+    }
 
-            // Load language settings
-            document.getElementById('interface-language').value = settings.interfaceLanguage || 'en';
+    applySettingsToUI() {
+        // General
+        document.getElementById('enable-newtab').checked = this.settings.newTabEnabled;
+        document.getElementById('interface-language').value = this.settings.language;
+        document.getElementById('primary-ecosystem').value = this.settings.primaryEcosystem || 'google';
 
-            // Load notification settings
-            document.getElementById('enable-notifications').checked = settings.notificationsEnabled;
-            document.getElementById('notification-type').value = settings.notificationType;
-            document.getElementById('notification-interval').value = settings.notificationInterval;
-            document.getElementById('quiet-start').value = settings.quietStart;
-            document.getElementById('quiet-end').value = settings.quietEnd;
-
-            // Load display settings
-            document.getElementById('show-arabic-text').checked = settings.showArabic;
-            document.getElementById('show-english-translation').checked = settings.showTranslation;
-            document.getElementById('show-surah-info').checked = settings.showSurahInfo;
-            document.getElementById('font-size').value = settings.fontSize;
-
-            // Load AI settings
-            document.getElementById('ai-detailed-explanations').checked = settings.aiDetailedExplanations;
-            document.getElementById('ai-context-history').checked = settings.aiContextHistory;
-            document.getElementById('ai-response-style').value = settings.aiResponseStyle;
-            document.getElementById('explanation-language').value = settings.explanationLanguage || 'english';
-
-            // Load privacy settings
-            document.getElementById('offline-mode').checked = settings.offlineMode;
-            document.getElementById('anonymous-usage').checked = settings.anonymousUsage;
-
-            // Load custom times
-            this.customTimes = settings.customTimes || [];
-            this.renderCustomTimes();
-
-            // Update visibility
-            this.toggleNotificationOptions(settings.notificationsEnabled);
-            this.updateNotificationTypeVisibility(settings.notificationType);
-
-        } catch (error) {
-            console.error('Error loading settings:', error);
+        // Daily Deeds
+        if (this.settings.deeds && Array.isArray(this.settings.deeds)) {
+            this.settings.deeds.forEach((deed, index) => {
+                const input = document.getElementById(`deed-${index + 1}`);
+                if (input) input.value = deed;
+            });
         }
-    }
 
-    toggleNotificationOptions(enabled) {
-        const options = document.getElementById('notification-options');
-        options.style.display = enabled ? 'block' : 'none';
-    }
+        // Appearance
+        document.getElementById('theme-mode').value = this.settings.theme;
+        document.getElementById('arabic-font').value = this.settings.arabicFont;
+        document.getElementById('font-size').value = this.settings.fontSize;
+        document.getElementById('show-adhkar').checked = this.settings.showAdhkar;
+        document.getElementById('show-quiz').checked = this.settings.showQuiz;
+        document.getElementById('ayah-rotation').value = this.settings.ayahRotation;
 
-    updateNotificationTypeVisibility(type) {
-        const intervalSettings = document.getElementById('interval-settings');
-        const customSettings = document.getElementById('custom-times-settings');
+        // Prayer
+        document.getElementById('prayer-city').value = this.settings.prayerCity;
+        document.getElementById('prayer-country').value = this.settings.prayerCountry;
+        document.getElementById('prayer-method').value = this.settings.prayerMethod;
 
-        intervalSettings.style.display = (type === 'interval' || type === 'both') ? 'block' : 'none';
-        customSettings.style.display = (type === 'custom' || type === 'both') ? 'block' : 'none';
-    }
+        // Notifications
+        document.getElementById('enable-notifications').checked = this.settings.notificationsEnabled;
+        document.getElementById('notification-type').value = this.settings.notificationType;
+        document.getElementById('notification-interval').value = this.settings.notificationInterval;
+        document.getElementById('quiet-start').value = this.settings.quietHoursStart;
+        document.getElementById('quiet-end').value = this.settings.quietHoursEnd;
 
-    addCustomTime(time = '09:00') {
-        this.customTimes.push(time);
+        // AI
+        document.getElementById('ai-detailed-explanations').checked = this.settings.aiDetailedExplanations;
+        document.getElementById('ai-response-style').value = this.settings.aiResponseStyle;
+        document.getElementById('explanation-language').value = this.settings.explanationLanguage;
+
+        // Data
+        document.getElementById('offline-mode').checked = this.settings.offlineMode;
+
         this.renderCustomTimes();
+        this.toggleNotificationOptions();
     }
 
-    removeCustomTime(index) {
-        this.customTimes.splice(index, 1);
-        this.renderCustomTimes();
+    setupSidebar() {
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section-content');
+
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const sectionId = item.getAttribute('data-section');
+                
+                // Update nav
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+
+                // Update sections
+                sections.forEach(section => {
+                    section.classList.remove('active');
+                    if (section.id === `section-${sectionId}`) {
+                        section.classList.add('active');
+                    }
+                });
+            });
+        });
+    }
+
+    setupEventListeners() {
+        // Save button
+        document.getElementById('save-settings').addEventListener('click', () => this.saveAllSettings());
+
+        // Notification toggles
+        document.getElementById('enable-notifications').addEventListener('change', (e) => {
+            this.toggleNotificationOptions();
+        });
+
+        document.getElementById('notification-type').addEventListener('change', () => {
+            this.toggleNotificationOptions();
+        });
+
+        // Custom times
+        document.getElementById('add-custom-time').addEventListener('click', () => this.addCustomTime());
+
+        // Test notification
+        document.getElementById('test-notification').addEventListener('click', () => this.sendTestNotification());
+
+        // Data actions
+        document.getElementById('export-settings').addEventListener('click', () => this.exportSettings());
+        document.getElementById('import-settings').addEventListener('click', () => this.importSettings());
+        document.getElementById('reset-settings').addEventListener('click', () => this.resetSettings());
+        document.getElementById('show-onboarding').addEventListener('click', () => {
+            chrome.tabs.create({ url: 'onboarding.html' });
+        });
+    }
+
+    toggleNotificationOptions() {
+        const enabled = document.getElementById('enable-notifications').checked;
+        const container = document.getElementById('notification-options-container');
+        const type = document.getElementById('notification-type').value;
+        
+        container.style.display = enabled ? 'block' : 'none';
+        
+        if (enabled) {
+            document.getElementById('interval-settings').style.display = 
+                (type === 'interval' || type === 'both') ? 'block' : 'none';
+            document.getElementById('custom-times-settings').style.display = 
+                (type === 'custom' || type === 'both') ? 'block' : 'none';
+        }
     }
 
     renderCustomTimes() {
         const container = document.getElementById('custom-times-container');
         container.innerHTML = '';
 
-        this.customTimes.forEach((time, index) => {
-            const timeDiv = document.createElement('div');
-            timeDiv.className = 'time-input';
-            timeDiv.innerHTML = `
+        this.customTimes.sort().forEach((time, index) => {
+            const div = document.createElement('div');
+            div.className = 'time-item';
+            div.innerHTML = `
                 <input type="time" value="${time}" data-index="${index}">
-                <button class="remove-time-btn" data-index="${index}">Remove</button>
+                <button class="remove-time-btn" data-index="${index}">✕</button>
             `;
-            container.appendChild(timeDiv);
-        });
-
-        // Add event listeners for time inputs and remove buttons
-        container.querySelectorAll('input[type="time"]').forEach(input => {
-            input.addEventListener('change', (e) => {
-                const index = parseInt(e.target.dataset.index);
+            
+            div.querySelector('input').addEventListener('change', (e) => {
                 this.customTimes[index] = e.target.value;
-                // Auto-save when time changes
-                this.saveAllSettings();
             });
-        });
 
-        container.querySelectorAll('.remove-time-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const index = parseInt(e.target.dataset.index);
-                this.removeCustomTime(index);
+            div.querySelector('.remove-time-btn').addEventListener('click', () => {
+                this.customTimes.splice(index, 1);
+                this.renderCustomTimes();
             });
+
+            container.appendChild(div);
         });
+    }
+
+    addCustomTime() {
+        this.customTimes.push("12:00");
+        this.renderCustomTimes();
     }
 
     async saveAllSettings() {
-        try {
-            const settings = {
-                // Language settings
-                interfaceLanguage: document.getElementById('interface-language').value,
-                
-                // Notification settings
-                notificationsEnabled: document.getElementById('enable-notifications').checked,
-                notificationType: document.getElementById('notification-type').value,
-                notificationInterval: parseInt(document.getElementById('notification-interval').value),
-                customTimes: this.customTimes,
-                quietStart: document.getElementById('quiet-start').value,
-                quietEnd: document.getElementById('quiet-end').value,
-                
-                // Display settings
-                showArabic: document.getElementById('show-arabic-text').checked,
-                showTranslation: document.getElementById('show-english-translation').checked,
-                showSurahInfo: document.getElementById('show-surah-info').checked,
-                fontSize: document.getElementById('font-size').value,
-                
-                // AI Guide settings
-                aiDetailedExplanations: document.getElementById('ai-detailed-explanations').checked,
-                aiContextHistory: document.getElementById('ai-context-history').checked,
-                aiResponseStyle: document.getElementById('ai-response-style').value,
-                explanationLanguage: document.getElementById('explanation-language').value,
-                
-                // Privacy settings
-                offlineMode: document.getElementById('offline-mode').checked,
-                anonymousUsage: document.getElementById('anonymous-usage').checked
-            };
+        const isNewTabEnabled = document.getElementById('enable-newtab').checked;
+        const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history'];
 
-            await chrome.storage.sync.set(settings);
-            
-            // Notify background script of changes
-            chrome.runtime.sendMessage({
-                action: 'settingsUpdated',
-                settings: settings
+        if (isNewTabEnabled) {
+            // Request optional permissions for the new tab experience
+            const granted = await new Promise((resolve) => {
+                chrome.permissions.request({ permissions: optionalPermissions }, (result) => {
+                    resolve(result);
+                });
             });
 
-            this.showSuccessMessage();
-
-        } catch (error) {
-            console.error('Error saving settings:', error);
-            alert('Error saving settings. Please try again.');
+            if (!granted) {
+                this.showToast("Note: Some new tab features may be limited without permissions.");
+                // We still let them enable the tab, but warn them
+            }
+        } else {
+            // Remove optional permissions if disabling the new tab experience
+            chrome.permissions.remove({ permissions: optionalPermissions }, (removed) => {
+                if (removed) {
+                    console.log("Optional permissions removed.");
+                }
+            });
         }
+
+        const newSettings = {
+            newTabEnabled: isNewTabEnabled,
+            language: document.getElementById('interface-language').value,
+            primaryEcosystem: document.getElementById('primary-ecosystem').value,
+            deeds: [
+                document.getElementById('deed-1').value,
+                document.getElementById('deed-2').value,
+                document.getElementById('deed-3').value,
+                document.getElementById('deed-4').value,
+                document.getElementById('deed-5').value
+            ],
+            theme: document.getElementById('theme-mode').value,
+            arabicFont: document.getElementById('arabic-font').value,
+            fontSize: document.getElementById('font-size').value,
+            showAdhkar: document.getElementById('show-adhkar').checked,
+            showQuiz: document.getElementById('show-quiz').checked,
+            ayahRotation: document.getElementById('ayah-rotation').value,
+            prayerCity: document.getElementById('prayer-city').value,
+            prayerCountry: document.getElementById('prayer-country').value,
+            prayerMethod: document.getElementById('prayer-method').value,
+            notificationsEnabled: document.getElementById('enable-notifications').checked,
+            notificationType: document.getElementById('notification-type').value,
+            notificationInterval: parseInt(document.getElementById('notification-interval').value),
+            notificationCustomTimes: this.customTimes,
+            quietHoursStart: document.getElementById('quiet-start').value,
+            quietHoursEnd: document.getElementById('quiet-end').value,
+            aiDetailedExplanations: document.getElementById('ai-detailed-explanations').checked,
+            aiResponseStyle: document.getElementById('ai-response-style').value,
+            explanationLanguage: document.getElementById('explanation-language').value,
+            offlineMode: document.getElementById('offline-mode').checked
+        };
+
+        chrome.storage.sync.set(newSettings, () => {
+            this.showToast("Settings saved successfully!");
+            // Notify background script to update alarms
+            chrome.runtime.sendMessage({ action: 'updateAlarms' });
+        });
     }
 
-    showSuccessMessage() {
-        const message = document.getElementById('success-message');
-        message.style.display = 'block';
+    showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMsg = document.getElementById('toast-message');
+        toastMsg.textContent = message;
+        toast.style.display = 'flex';
         setTimeout(() => {
-            message.style.display = 'none';
+            toast.style.display = 'none';
         }, 3000);
     }
 
-    async exportSettings() {
-        try {
-            const settings = await chrome.storage.sync.get();
-            const dataStr = JSON.stringify(settings, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'sakinah-settings.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+    sendTestNotification() {
+        chrome.runtime.sendMessage({ action: 'sendTestNotification' });
+        this.showToast("Test notification sent!");
+    }
 
-        } catch (error) {
-            console.error('Error exporting settings:', error);
-            alert('Error exporting settings.');
+    async checkAIService() {
+        const statusEl = document.getElementById('ai-status');
+        try {
+            // Simple check if we can reach the worker
+            const response = await fetch(`${CONFIG.WORKER_URL}/health`);
+            if (response.ok) {
+                statusEl.textContent = "✓ AI Service is online and ready.";
+                statusEl.style.color = "var(--primary-dark)";
+            } else {
+                throw new Error();
+            }
+        } catch (e) {
+            statusEl.textContent = "⚠ AI Service is currently offline. Using local fallback.";
+            statusEl.style.color = "#e67e22";
         }
+    }
+
+    exportSettings() {
+        const data = JSON.stringify(this.settings, null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'sakinah-settings.json';
+        a.click();
     }
 
     importSettings() {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = '.json';
-        
-        input.onchange = async (e) => {
+        input.onchange = (e) => {
             const file = e.target.files[0];
-            if (!file) return;
-
-            try {
-                const text = await file.text();
-                const settings = JSON.parse(text);
-                
-                await chrome.storage.sync.set(settings);
-                location.reload(); // Reload page to show imported settings
-
-            } catch (error) {
-                console.error('Error importing settings:', error);
-                alert('Error importing settings. Please check the file format.');
-            }
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                try {
+                    const settings = JSON.parse(event.target.result);
+                    chrome.storage.sync.set(settings, () => {
+                        this.loadSettings();
+                        this.showToast("Settings imported successfully!");
+                    });
+                } catch (err) {
+                    this.showToast("Error: Invalid settings file.");
+                }
+            };
+            reader.readAsText(file);
         };
-
         input.click();
     }
 
-    async resetSettings() {
-        if (confirm('Are you sure you want to reset all settings to defaults? This cannot be undone.')) {
-            try {
-                await chrome.storage.sync.clear();
-                location.reload(); // Reload page to show default settings
-
-            } catch (error) {
-                console.error('Error resetting settings:', error);
-                alert('Error resetting settings.');
-            }
-        }
-    }
-
-    async testNotification() {
-        try {
-            // Send message to background script to trigger notification
-            const response = await chrome.runtime.sendMessage({ 
-                action: 'showRandomAyah' 
+    resetSettings() {
+        if (confirm("Are you sure you want to reset all settings to default?")) {
+            chrome.storage.sync.clear(() => {
+                chrome.storage.sync.set(CONFIG.DEFAULT_SETTINGS, () => {
+                    this.loadSettings();
+                    this.showToast("Settings reset to default.");
+                });
             });
-
-            if (response && response.success) {
-                // Show temporary success message
-                const button = document.getElementById('test-notification');
-                const originalText = button.innerHTML;
-                button.innerHTML = '✅ Notification Sent!';
-                button.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    button.style.background = '';
-                }, 3000);
-            } else {
-                throw new Error('Failed to send test notification');
-            }
-        } catch (error) {
-            console.error('Error testing notification:', error);
-            const button = document.getElementById('test-notification');
-            const originalText = button.innerHTML;
-            button.innerHTML = '❌ Failed to send';
-            button.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
-            
-            setTimeout(() => {
-                button.innerHTML = originalText;
-                button.style.background = '';
-            }, 3000);
         }
     }
-
-
 }
 
-// Initialize options page when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new SakinahOptions();
 });
