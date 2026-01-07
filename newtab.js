@@ -1043,10 +1043,10 @@ class SakinahNewTab {
                 let response = result.response;
                 if (result.suggestedAyah) {
                     const ayah = result.suggestedAyah;
-                    response += `<div style="padding: 10px; background: rgba(114, 186, 174, 0.1); border-radius: 10px; border-left: 3px solid var(--primary); margin-top: 10px; font-size: 0.8rem;">
-                        <div style="font-family: 'Amiri', serif; font-size: 1rem; direction: rtl; margin-bottom: 5px;">${ayah.arabic}</div>
-                        <div>${ayah.translation}</div>
-                        <div style="font-weight: 600; color: var(--primary); margin-top: 3px;">${ayah.surah} ${ayah.surahNumber}:${ayah.ayahNumber}</div>
+                    response += `<div class="suggested-ayah-card">
+                        <div class="suggested-ayah-arabic">${ayah.arabic}</div>
+                        <div class="suggested-ayah-translation">${ayah.translation}</div>
+                        <div class="suggested-ayah-reference">${ayah.surah} ${ayah.surahNumber}:${ayah.ayahNumber}</div>
                     </div>`;
                 }
                 this.addChatMessage('bot', response);
