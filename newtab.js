@@ -18,6 +18,16 @@ class SakinahNewTab {
     async init() {
         await this.loadSettings();
         
+        // Check for missing permissions if new tab is enabled
+        if (this.settings.newTabEnabled) {
+            const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history'];
+            chrome.permissions.contains({ permissions: optionalPermissions }, (hasAll) => {
+                if (!hasAll) {
+                    this.showPermissionBanner();
+                }
+            });
+        }
+
         // If disabled, show the disabled state (minimal tab)
         if (!this.settings.newTabEnabled) {
             this.showDisabledState();
@@ -290,6 +300,67 @@ class SakinahNewTab {
         // Set body background to a clean state
         document.body.style.background = 'none';
         document.body.style.backgroundColor = document.body.classList.contains('dark-mode') ? '#202124' : '#ffffff';
+    }
+
+    showPermissionBanner() {
+        // Create a subtle but noticeable banner at the top
+        const banner = document.createElement('div');
+        banner.id = 'permission-banner';
+        banner.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(114, 186, 174, 0.9);
+            color: #1a3a36;
+            padding: 10px 20px;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            backdrop-filter: blur(10px);
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        `;
+        
+        banner.innerHTML = `
+            <span>🌙 Grant permissions for the full Sakinah experience (Bookmarks, Recent Tabs, and more).</span>
+            <button id="grant-btn" style="
+                background: #1a3a36;
+                color: white;
+                border: none;
+                padding: 6px 15px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: 600;
+                transition: transform 0.2s;
+            ">Grant Access</button>
+            <button id="close-banner" style="
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                opacity: 0.6;
+                font-size: 1.2rem;
+            ">×</button>
+        `;
+        
+        document.body.prepend(banner);
+        
+        document.getElementById('grant-btn').addEventListener('click', () => {
+            const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history'];
+            chrome.permissions.request({ permissions: optionalPermissions }, (granted) => {
+                if (granted) {
+                    banner.remove();
+                    window.location.reload();
+                }
+            });
+        });
+        
+        document.getElementById('close-banner').addEventListener('click', () => {
+            banner.remove();
+        });
     }
 
     setupDisabledEventListeners() {

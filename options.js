@@ -96,6 +96,28 @@ class SakinahOptions {
         // Save button
         document.getElementById('save-settings').addEventListener('click', () => this.saveAllSettings());
 
+        // New Tab Experience toggle - Prompt for permissions immediately
+        document.getElementById('enable-newtab').addEventListener('change', async (e) => {
+            const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history'];
+            if (e.target.checked) {
+                const granted = await new Promise((resolve) => {
+                    chrome.permissions.request({ permissions: optionalPermissions }, resolve);
+                });
+                
+                if (!granted) {
+                    this.showToast("Permission denied. Some new tab features will be disabled.");
+                    // Optional: uncheck if permission is mandatory?
+                    // Better to let them try with limited features.
+                } else {
+                    this.showToast("Permissions granted! Premium features enabled.");
+                }
+            } else {
+                chrome.permissions.remove({ permissions: optionalPermissions }, (removed) => {
+                    if (removed) this.showToast("Permissions revoked.");
+                });
+            }
+        });
+
         // Notification toggles
         document.getElementById('enable-notifications').addEventListener('change', (e) => {
             this.toggleNotificationOptions();

@@ -151,6 +151,16 @@ async function finishOnboarding() {
         settings.aiResponseStyle = aiResponseStyle;
         settings.explanationLanguage = explanationLanguage;
         settings.onboardingCompleted = true;
+
+        // Request optional permissions for the new tab experience
+        // This is critical for displaying the full feature set (bookmarks, top sites, etc.)
+        const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history'];
+        await new Promise((resolve) => {
+            chrome.permissions.request({ permissions: optionalPermissions }, (granted) => {
+                console.log('Permission granted:', granted);
+                resolve(granted);
+            });
+        });
         
         // Save settings
         await chrome.storage.sync.set(settings);
