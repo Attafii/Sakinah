@@ -266,18 +266,17 @@ class SakinahBackground {
 
     // Handle installation
     async handleInstallation(details) {
-        // Check if onboarding has been completed
-        const { onboardingCompleted } = await chrome.storage.sync.get({ onboardingCompleted: false });
-        
         if (details.reason === 'install') {
             console.log('Background: Extension installed');
-            if (!onboardingCompleted) {
-                // Open onboarding page on first install only
+            // Check for existing settings
+            const { settings } = await chrome.storage.sync.get(['settings']);
+            
+            if (!settings || settings.onboardingCompleted !== true) {
+                // Open onboarding page on first install
                 chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
             }
         } else if (details.reason === 'update') {
             console.log('Background: Extension updated');
-            // Don't open onboarding on update if already completed
         }
     }
 
@@ -552,7 +551,7 @@ class SakinahBackground {
                 type: 'basic',
                 title: title,
                 message: message || `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
-                iconUrl: chrome.runtime.getURL('icons/Tosca modern minimalist Islamic center logo .png'),
+                iconUrl: chrome.runtime.getURL('icons/Sakinah.png'),
                 contextMessage: `${ayah.surah} (${ayah.surahNumber}:${ayah.ayahNumber})`,
                 priority: 1
             };

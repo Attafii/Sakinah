@@ -4,7 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Sakinah</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #72BAAE;
+            --primary-light: #A8EBD8;
+            --primary-dark: #2B8C7B;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --text-main: #2d3436;
+            --text-secondary: #636e72;
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,36 +27,92 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background image placeholder */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            z-index: -2;
+            opacity: 0.6;
+        }
+
+        .bg-blur {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            z-index: -1;
+        }
+
+        .bg-blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: var(--primary-light);
+            filter: blur(100px);
+            border-radius: 50%;
+            z-index: -1;
+            opacity: 0.4;
+            animation: float 20s infinite alternate;
+        }
+
+        .blob-1 { top: -100px; right: -100px; }
+        .blob-2 { bottom: -100px; left: -100px; background: #72BAAE; }
+
+        @keyframes float {
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(50px, 50px) scale(1.1); }
         }
 
         .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            box-shadow: var(--shadow);
+            max-width: 650px;
             width: 100%;
             overflow: hidden;
+            position: relative;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
         }
 
         .step {
             display: none;
-            padding: 60px 50px;
-            animation: fadeIn 0.5s ease;
+            padding: 40px 60px;
+            height: 100%;
+            flex-direction: column;
+            justify-content: center;
+            animation: slideIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .step.active {
-            display: block;
+            display: flex;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -51,180 +122,223 @@
         }
 
         .logo-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #A8EBD8 0%, #72BAAE 100%);
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
             border-radius: 20px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             color: white;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 20px rgba(114, 186, 174, 0.3);
         }
 
         h1 {
-            font-size: 32px;
-            color: #2B8C7B;
+            font-size: 2.2rem;
+            color: var(--primary-dark);
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-weight: 700;
         }
 
         .subtitle {
             text-align: center;
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 40px;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 35px;
             line-height: 1.6;
         }
 
         .features {
             list-style: none;
-            margin-bottom: 40px;
+            margin-bottom: 20px;
+            display: grid;
+            gap: 12px;
         }
 
         .feature-item {
             display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: linear-gradient(145deg, #f8faf9 0%, #fff 100%);
-            border-radius: 12px;
-            border-left: 4px solid #72BAAE;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.6);
         }
 
         .feature-icon {
             margin-right: 15px;
-            min-width: 30px;
-            color: #72BAAE;
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+            background: rgba(114, 186, 174, 0.1);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .feature-text h3 {
-            font-size: 16px;
-            color: #2B8C7B;
-            margin-bottom: 5px;
+            font-size: 0.95rem;
+            color: var(--primary-dark);
+            margin-bottom: 2px;
+            font-weight: 600;
         }
 
         .feature-text p {
-            font-size: 14px;
-            color: #666;
-            line-height: 1.5;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.4;
         }
 
         .form-group {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
             font-weight: 600;
-            color: #2B8C7B;
-            margin-bottom: 10px;
-            font-size: 14px;
+            color: var(--primary-dark);
+            margin-bottom: 8px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
         select, input {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid rgba(114, 186, 174, 0.3);
-            border-radius: 10px;
-            font-size: 15px;
+            padding: 14px 18px;
+            border: 1px solid var(--glass-border);
+            border-radius: 14px;
+            font-size: 0.95rem;
             font-family: inherit;
+            background: rgba(255, 255, 255, 0.5);
             transition: all 0.3s ease;
+            outline: none;
         }
 
         select:focus, input:focus {
-            outline: none;
-            border-color: #72BAAE;
-            box-shadow: 0 0 0 3px rgba(114, 186, 174, 0.1);
+            background: white;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(114, 186, 174, 0.1);
         }
 
         .buttons {
             display: flex;
             gap: 15px;
-            margin-top: 40px;
+            margin-top: auto;
+            padding-top: 30px;
         }
 
         button {
             flex: 1;
-            padding: 15px 30px;
+            padding: 16px 25px;
             border: none;
-            border-radius: 10px;
-            font-size: 16px;
+            border-radius: 16px;
+            font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             font-family: inherit;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #72BAAE 0%, #2B8C7B 100%);
+            background: var(--primary);
             color: white;
+            box-shadow: 0 10px 20px rgba(114, 186, 174, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(43, 140, 123, 0.3);
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(43, 140, 123, 0.4);
         }
 
         .btn-secondary {
-            background: rgba(114, 186, 174, 0.1);
-            color: #2B8C7B;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-main);
         }
 
         .btn-secondary:hover {
-            background: rgba(114, 186, 174, 0.2);
+            background: rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
         }
 
         .progress-dots {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 12px;
             margin-bottom: 40px;
         }
 
         .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(114, 186, 174, 0.3);
-            transition: all 0.3s ease;
+            width: 8px;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(114, 186, 174, 0.2);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .dot.active {
-            background: #72BAAE;
-            width: 30px;
-            border-radius: 5px;
+            background: var(--primary);
+            width: 32px;
         }
 
         .timezone-info {
-            background: linear-gradient(135deg, rgba(168, 235, 216, 0.2) 0%, rgba(114, 186, 174, 0.15) 100%);
-            padding: 15px;
-            border-radius: 10px;
+            background: rgba(114, 186, 174, 0.1);
+            padding: 18px;
+            border-radius: 16px;
             margin-bottom: 25px;
-            font-size: 14px;
-            color: #555;
-            line-height: 1.6;
+            font-size: 0.9rem;
+            color: var(--text-main);
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        [dir="rtl"] {
+            font-family: 'Amiri', serif;
         }
 
         [dir="rtl"] .feature-item {
-            border-left: none;
-            border-right: 4px solid #72BAAE;
+            flex-direction: row-reverse;
         }
 
         [dir="rtl"] .feature-icon {
             margin-right: 0;
             margin-left: 15px;
         }
+
+        [dir="rtl"] .timezone-info {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+
+        /* Responsive Improvements */
+        @media (max-width: 480px) {
+            .step { padding: 30px 20px; }
+            h1 { font-size: 1.8rem; }
+            .container { height: auto; min-height: 550px; border-radius: 20px; }
+        }
     </style>
 </head>
 <body>
+    <div class="bg-overlay"></div>
+    <div class="bg-blur"></div>
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+
     <div class="container">
         <!-- Step 1: Welcome -->
         <div class="step active" id="step1">
@@ -233,107 +347,155 @@
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
+                <div class="dot"></div>
             </div>
             
             <div class="logo">
                 <div class="logo-icon">
-                    <i data-lucide="moon" size="40"></i>
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/><path d="M17.5 5.5l1 1.5l1.5 1l-1.5 1l-1 1.5l-1-1.5l-1.5-1l1.5-1z"/></svg>
                 </div>
                 <h1 data-i18n="onboarding.welcome">Welcome to Sakinah</h1>
             </div>
             
             <p class="subtitle" data-i18n="onboarding.welcomeText">
-                Your spiritual companion for finding peace through the Qur'an
+                A calm beginning to your digital day. Find peace through daily verses and spiritual guidance.
             </p>
             
             <ul class="features">
                 <li class="feature-item">
                     <div class="feature-icon">
-                        <i data-lucide="book-open"></i>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                     </div>
                     <div class="feature-text">
-                        <h3 data-i18n="onboarding.feature1Title">Random Ayahs</h3>
-                        <p data-i18n="onboarding.feature1Desc">Receive beautiful verses throughout your day</p>
+                        <h3 data-i18n="onboarding.feature1Title">Daily Verses</h3>
+                        <p data-i18n="onboarding.feature1Desc">Start every new tab with a beautiful Quranic ayah</p>
                     </div>
                 </li>
                 <li class="feature-item">
                     <div class="feature-icon">
-                        <i data-lucide="sparkles"></i>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z"/><path d="M17.5 5.5l1 1.5l1.5 1l-1.5 1l-1 1.5l-1-1.5l-1.5-1l1.5-1z"/></svg>
                     </div>
                     <div class="feature-text">
-                        <h3 data-i18n="onboarding.feature2Title">AI Spiritual Guide</h3>
-                        <p data-i18n="onboarding.feature2Desc">Get personalized guidance based on your emotions</p>
-                    </div>
-                </li>
-                <li class="feature-item">
-                    <div class="feature-icon">
-                        <i data-lucide="graduation-cap"></i>
-                    </div>
-                    <div class="feature-text">
-                        <h3 data-i18n="onboarding.feature3Title">Hifdh Progress</h3>
-                        <p data-i18n="onboarding.feature3Desc">Track your Quran memorization journey</p>
+                        <h3 data-i18n="onboarding.feature2Title">Sakinah Guide</h3>
+                        <p data-i18n="onboarding.feature2Desc">AI-powered spiritual wisdom for your daily challenges</p>
                     </div>
                 </li>
             </ul>
             
             <div class="buttons">
-                <button class="btn-primary" onclick="nextStep()">
+                <button class="btn-primary" id="start-btn">
                     <span data-i18n="onboarding.getStarted">Get Started</span>
-                    <i data-lucide="arrow-right" size="16"></i>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Step 2: Language Selection -->
+        <!-- Step 2: About Info -->
         <div class="step" id="step2">
             <div class="progress-dots">
                 <div class="dot"></div>
                 <div class="dot active"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
+                <div class="dot"></div>
             </div>
             
-            <h1 data-i18n="onboarding.chooseLanguage">Choose Your Language</h1>
-            <p class="subtitle" data-i18n="onboarding.languageText">Select your preferred interface language</p>
+            <h1 data-i18n="onboarding.aboutTitle">How it works</h1>
+            <p class="subtitle" data-i18n="onboarding.aboutSubtitle">Sakinah is built with your peace and privacy as the core principles.</p>
             
-            <div class="form-group">
-                <label data-i18n="onboarding.language">Language</label>
-                <select id="language-select" onchange="handleLanguageChange()">
-                    <option value="en">English</option>
-                    <option value="ar">العربية (Arabic)</option>
-                </select>
+            <div class="about-grid" style="display: grid; gap: 15px; margin-bottom: 25px;">
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: rgba(43, 140, 123, 0.1); color: var(--primary-dark);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h3 data-i18n="onboarding.privacyTitle">Built-in Privacy</h3>
+                        <p data-i18n="onboarding.privacyDesc">Your data never leaves your device. No tracking, no external servers for your personal settings.</p>
+                    </div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon" style="background: rgba(43, 140, 123, 0.1); color: var(--primary-dark);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    </div>
+                    <div class="feature-text">
+                        <h3 data-i18n="onboarding.experienceTitle">Morning & Evening</h3>
+                        <p data-i18n="onboarding.experienceDesc">The interface adapts to the time of day, offering specific Adhkar and Ayahs for your current moment.</p>
+                    </div>
+                </div>
             </div>
             
             <div class="buttons">
-                <button class="btn-secondary" onclick="prevStep()">
-                    <i data-lucide="arrow-left" size="16"></i>
+                <button class="btn-secondary prev-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                     <span data-i18n="common.back">Back</span>
                 </button>
-                <button class="btn-primary" onclick="nextStep()">
+                <button class="btn-primary next-btn">
                     <span data-i18n="common.next">Next</span>
-                    <i data-lucide="arrow-right" size="16"></i>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Step 3: Preferences -->
+        <!-- Step 3: Location & Language -->
         <div class="step" id="step3">
             <div class="progress-dots">
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot active"></div>
                 <div class="dot"></div>
+                <div class="dot"></div>
             </div>
             
-            <h1 data-i18n="onboarding.preferences">Preferences</h1>
-            <p class="subtitle" data-i18n="onboarding.preferencesText">Customize your experience</p>
+            <h1 data-i18n="onboarding.personalize">Personalize</h1>
+            <p class="subtitle">Adjust basic settings for a tailored experience.</p>
             
             <div class="form-group">
-                <label data-i18n="onboarding.aiResponseStyle">AI Response Style</label>
+                <label data-i18n="onboarding.language">Interface Language</label>
+                <select id="language-select">
+                    <option value="en">English (Universal)</option>
+                    <option value="ar">العربية (Arabic)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Prayer Times Location</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="city-input" placeholder="City (e.g. Dubai)" style="flex: 1;">
+                    <input type="text" id="country-input" placeholder="CC (e.g. AE)" style="width: 80px;">
+                </div>
+            </div>
+            
+            <div class="buttons">
+                <button class="btn-secondary prev-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                    <span data-i18n="common.back">Back</span>
+                </button>
+                <button class="btn-primary next-btn">
+                    <span data-i18n="common.next">Next</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 4: AI Preferences -->
+        <div class="step" id="step4">
+            <div class="progress-dots">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot active"></div>
+                <div class="dot"></div>
+            </div>
+            
+            <h1 data-i18n="onboarding.aiGuide">Sakinah Guide</h1>
+            <p class="subtitle">Customize how the AI spiritual guide interacts with you.</p>
+            
+            <div class="form-group">
+                <label data-i18n="onboarding.aiResponseStyle">Response Style</label>
                 <select id="ai-response-style">
-                    <option value="concise" data-i18n="onboarding.concise">Concise</option>
-                    <option value="detailed" selected data-i18n="onboarding.detailed">Detailed</option>
-                    <option value="scholarly" data-i18n="onboarding.scholarly">Scholarly</option>
+                    <option value="concise" data-i18n="onboarding.concise">Concise & Direct</option>
+                    <option value="detailed" selected data-i18n="onboarding.detailed">Empathetic & Detailed</option>
+                    <option value="scholarly" data-i18n="onboarding.scholarly">Scholarly & Reflective</option>
                 </select>
             </div>
 
@@ -346,55 +508,55 @@
             </div>
             
             <div class="buttons">
-                <button class="btn-secondary" onclick="prevStep()">
-                    <i data-lucide="arrow-left" size="16"></i>
+                <button class="btn-secondary prev-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                     <span data-i18n="common.back">Back</span>
                 </button>
-                <button class="btn-primary" onclick="nextStep()">
+                <button class="btn-primary next-btn">
                     <span data-i18n="common.next">Next</span>
-                    <i data-lucide="arrow-right" size="16"></i>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Step 4: Timezone Selection -->
-        <div class="step" id="step4">
+        <!-- Step 5: Final Permissions -->
+        <div class="step" id="step5">
             <div class="progress-dots">
+                <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot"></div>
                 <div class="dot active"></div>
             </div>
             
-            <h1 data-i18n="onboarding.chooseTimezone">Choose Your Timezone</h1>
-            <p class="subtitle" data-i18n="onboarding.timezoneText">This helps us send notifications at the right time</p>
+            <h1 data-i18n="onboarding.finish">Almost Done</h1>
+            <p class="subtitle">Enable the New Tab experience to complete the setup.</p>
             
             <div class="timezone-info">
-                <strong data-i18n="onboarding.detectedTimezone">Detected Timezone:</strong>
-                <span id="detected-timezone"></span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                <span>Sakinah will ask for permissions to access your bookmarks and recent tabs to display them on your dashboard.</span>
             </div>
-            
-            <div class="form-group">
-                <label data-i18n="onboarding.timezone">Timezone</label>
-                <select id="timezone-select">
-                    <!-- Will be populated by JavaScript -->
-                </select>
+
+            <div class="setting-card" style="background: rgba(43, 140, 123, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: center;">
+                <p style="font-size: 0.85rem; color: var(--primary-dark); font-weight: 500;">
+                    Your data is never uploaded. Everything stays local for your privacy.
+                </p>
             </div>
             
             <div class="buttons">
-                <button class="btn-secondary" onclick="prevStep()">
-                    <i data-lucide="arrow-left" size="16"></i>
+                <button class="btn-secondary prev-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
                     <span data-i18n="common.back">Back</span>
                 </button>
-                <button class="btn-primary" onclick="finishOnboarding()">
-                    <span data-i18n="onboarding.finish">Finish Setup</span>
-                    <i data-lucide="check" size="16"></i>
+                <button class="btn-primary" id="finish-btn" style="flex: 2;">
+                    <span data-i18n="onboarding.finish">Enable & Start Experience</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </button>
             </div>
         </div>
     </div>
 
-    <script src="lucide.min.js"></script>
+    <!-- No Lucide used now, switched to SVG for autonomy -->
     <script src="config.js"></script>
     <script src="translations.js"></script>
     <script src="onboarding.js"></script>

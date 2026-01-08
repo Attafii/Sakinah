@@ -9,6 +9,28 @@ class AIGuide {
         this.conversationHistory = [];
         this.maxHistoryLength = 10; // Keep last 10 messages for context
         this.fullQuranDatabase = null;
+        this.loadHistory(); // Load history from storage on init
+    }
+
+    // Load history from storage
+    async loadHistory() {
+        try {
+            const data = await chrome.storage.local.get(['aiConversationHistory']);
+            if (data.aiConversationHistory) {
+                this.conversationHistory = data.aiConversationHistory;
+            }
+        } catch (e) {
+            console.warn('AI: Error loading history:', e);
+        }
+    }
+
+    // Save history to storage
+    async saveHistory() {
+        try {
+            await chrome.storage.local.set({ aiConversationHistory: this.conversationHistory });
+        } catch (e) {
+            console.warn('AI: Error saving history:', e);
+        }
     }
 
     // Set the full Quran database from quran_hifdh.json
@@ -32,6 +54,9 @@ class AIGuide {
                 this.conversationHistory = this.conversationHistory.slice(-this.maxHistoryLength);
             }
 
+            // Save history after user message
+            await this.saveHistory();
+
             const result = await this.callGroqAPI(userInput, ayahDatabase, forceArabic);
             
             if (result.success) {
@@ -40,6 +65,9 @@ class AIGuide {
                     role: 'assistant',
                     content: result.response
                 });
+                
+                // Save history after assistant response
+                await this.saveHistory();
             }
 
             return result;
@@ -54,20 +82,21 @@ class AIGuide {
         }
     }
 
-    // Call Groq API for guidance
-    async callGroqAPI(userInput, ayahDatabase, forceArabic = false) {
-        try {
-            console.log('Calling Groq API via proxy:', this.proxyEndpoint);
-            // Build context from ayah database
-            const ayahContext = this.buildAyahContext(ayahDatabase);
-            
-            const languageInstruction = forceArabic 
-                ? `1. You MUST respond ENTIRELY in Arabic (العربية الفصحى). Even if the user writes in English or any other language, YOUR RESPONSE MUST BE IN ARABIC ONLY. Use formal Arabic script.
+    // Call Groq API for guidance with retry logic
+    async callGroqAPI(userInput, ayahDatabase, forceArabic = false, retries = 2) {
+        for (let attempt = 0; attempt <= retries; attempt++) {
+            try {
+                console.log(`Calling Groq API via proxy (Attempt ${attempt + 1}/${retries + 1}):`, this.proxyEndpoint);
+                // Build context from ayah database
+                const ayahContext = this.buildAyahContext(ayahDatabase);
+                
+                const languageInstruction = forceArabic 
+                    ? `1. You MUST respond ENTIRELY in Arabic (العربية الفصحى). Even if the user writes in English or any other language, YOUR RESPONSE MUST BE IN ARABIC ONLY. Use formal Arabic script.
 2. عند الكتابة بالعربية، استخدم فقط الحروف العربية. لا تخلط اللغات أبداً.`
-                : `1. You MUST respond in the SAME LANGUAGE the user writes in. If they write in Arabic, respond fully in Arabic. If they write in English, respond in English. If they write in French, respond in French, etc.
+                    : `1. You MUST respond in the SAME LANGUAGE the user writes in. If they write in Arabic, respond fully in Arabic. If they write in English, respond in English. If they write in French, respond in French, etc.
 2. When responding in Arabic, use ONLY Arabic script. Never mix languages.`;
 
-            const systemPrompt = `You are Sakinah, a compassionate and knowledgeable Islamic spiritual guide. Your purpose is to help Muslims find peace, guidance, and relevant Quranic verses for their emotional and spiritual states.
+                const systemPrompt = `You are Sakinah, a compassionate and knowledgeable Islamic spiritual guide. Your purpose is to help Muslims find peace, guidance, and relevant Quranic verses for their emotional and spiritual states.
 
 CRITICAL INSTRUCTIONS:
 ${languageInstruction}
@@ -89,69 +118,92 @@ ${ayahContext}
 
 Remember: Your goal is to bring sakinah (tranquility) to the user's heart through the Quran and Islamic wisdom.`;
 
-            const messages = [
-                { role: 'system', content: systemPrompt },
-                ...this.conversationHistory
-            ];
+                const messages = [
+                    { role: 'system', content: systemPrompt },
+                    ...this.conversationHistory
+                ];
 
-            const response = await fetch(this.proxyEndpoint, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    model: 'llama-3.3-70b-versatile',
-                    messages: messages,
-                    temperature: 0.7,
-                    max_completion_tokens: 1500
-                })
-            });
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-            console.log('Proxy response status:', response.status);
+                const response = await fetch(this.proxyEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: 'llama-3.3-70b-versatile',
+                        messages: messages,
+                        temperature: 0.7,
+                        max_completion_tokens: 1500
+                    }),
+                    signal: controller.signal
+                });
 
-            if (response.status === 401) {
+                clearTimeout(timeoutId);
+
+                console.log('Proxy response status:', response.status);
+
+                if (response.status === 401) {
+                    return {
+                        success: false,
+                        error: 'auth_failed',
+                        message: 'API key authentication failed. Please check your Groq API key in the Cloudflare Worker settings.'
+                    };
+                }
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Proxy error response:', errorText);
+                    
+                    if (attempt < retries && (response.status >= 500 || response.status === 429)) {
+                        await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                        continue;
+                    }
+
+                    return {
+                        success: false,
+                        error: 'api_error',
+                        message: `API error (${response.status}). Please check your proxy setup.`
+                    };
+                }
+
+                const data = await response.json();
+                const aiResponse = data.choices?.[0]?.message?.content || '';
+
+                if (!aiResponse) {
+                    console.error('Empty AI response:', data);
+                    return {
+                        success: false,
+                        error: 'empty_response',
+                        message: 'Received empty response from AI. Please try again.'
+                    };
+                }
+
+                // Try to extract a verse reference from the response
+                const verseInfo = this.extractVerseInfo(aiResponse, ayahDatabase);
+
+                return {
+                    success: true,
+                    response: aiResponse,
+                    suggestedAyah: verseInfo.ayah,
+                    detectedEmotions: this.detectEmotions(userInput)
+                };
+
+            } catch (error) {
+                console.error(`Attempt ${attempt + 1} failed:`, error);
+                
+                if (attempt < retries) {
+                    await new Promise(resolve => setTimeout(resolve, 1000 * (attempt + 1)));
+                    continue;
+                }
+
                 return {
                     success: false,
-                    error: 'auth_failed',
-                    message: 'API key authentication failed. Please check your Groq API key in the Cloudflare Worker settings.'
+                    error: 'network_error',
+                    message: 'Network error or timeout. Please check your connection.'
                 };
             }
-
-            if (!response.ok) {
-                const errorText = await response.text();
-                console.error('Proxy error response:', errorText);
-                return {
-                    success: false,
-                    error: 'api_error',
-                    message: `API error (${response.status}). Please check your proxy setup.`
-                };
-            }
-
-            const data = await response.json();
-            const aiResponse = data.choices?.[0]?.message?.content || '';
-
-            if (!aiResponse) {
-                console.error('Empty AI response:', data);
-                return {
-                    success: false,
-                    error: 'empty_response',
-                    message: 'Received empty response from AI. Please try again.'
-                };
-            }
-
-            // Try to extract a verse reference from the response
-            const verseInfo = this.extractVerseInfo(aiResponse, ayahDatabase);
-
-            return {
-                success: true,
-                response: aiResponse,
-                suggestedAyah: verseInfo.ayah,
-                detectedEmotions: this.detectEmotions(userInput)
-            };
-
-        } catch (error) {
-            console.error('Groq API error:', error);
-            throw error;
         }
     }
 

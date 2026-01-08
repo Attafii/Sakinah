@@ -1,219 +1,165 @@
 // Onboarding script for Sakinah extension
 
-let currentStep = 1;
-const totalSteps = 4;
-let translator;
+window.currentStep = 1;
+window.totalSteps = 5;
 
-// Function declarations (hoisted, so they're available immediately)
-function nextStep() {
-    console.log('nextStep called, currentStep:', currentStep);
-    try {
-        if (currentStep < totalSteps) {
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            const nextStepEl = document.getElementById(`step${currentStep + 1}`);
-            
-            console.log('Current step element:', currentStepEl);
-            console.log('Next step element:', nextStepEl);
-            
-            if (currentStepEl && nextStepEl) {
-                currentStepEl.classList.remove('active');
-                currentStep++;
-                nextStepEl.classList.add('active');
-                
-                // Re-initialize icons for the new step
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
+/**
+ * Navigation: Move to next step
+ */
+window.nextStep = function() {
+    if (window.currentStep < window.totalSteps) {
+        const currentStepEl = document.getElementById(`step${window.currentStep}`);
+        const nextStepEl = document.getElementById(`step${window.currentStep + 1}`);
+        
+        if (currentStepEl && nextStepEl) {
+            currentStepEl.classList.remove('active');
+            window.currentStep++;
+            nextStepEl.classList.add('active');
+            window.scrollTo(0, 0);
         }
-    } catch (error) {
-        console.error('Error in nextStep:', error);
     }
 }
 
-function prevStep() {
-    console.log('prevStep called, currentStep:', currentStep);
-    try {
-        if (currentStep > 1) {
-            const currentStepEl = document.getElementById(`step${currentStep}`);
-            const prevStepEl = document.getElementById(`step${currentStep - 1}`);
-            
-            if (currentStepEl && prevStepEl) {
-                currentStepEl.classList.remove('active');
-                currentStep--;
-                prevStepEl.classList.add('active');
-                
-                // Re-initialize icons for the new step
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
+/**
+ * Navigation: Move to previous step
+ */
+window.prevStep = function() {
+    if (window.currentStep > 1) {
+        const currentStepEl = document.getElementById(`step${window.currentStep}`);
+        const prevStepEl = document.getElementById(`step${window.currentStep - 1}`);
+        
+        if (currentStepEl && prevStepEl) {
+            currentStepEl.classList.remove('active');
+            window.currentStep--;
+            prevStepEl.classList.add('active');
+            window.scrollTo(0, 0);
         }
-    } catch (error) {
-        console.error('Error in prevStep:', error);
     }
 }
 
-async function handleLanguageChange() {
+/**
+ * Handle Language selection change
+ */
+window.handleLanguageChange = async function() {
+    console.log('Language change triggered');
     try {
-        const language = document.getElementById('language-select').value;
-        if (translator) {
-            await translator.setLanguage(language);
+        const languageSelection = document.getElementById('language-select').value;
+        const t = window.translator;
+        
+        if (t && t.setLanguage) {
+            await t.setLanguage(languageSelection);
         }
         
-        // Save language preference
-        await chrome.storage.sync.set({ interfaceLanguage: language });
+        // Update document direction
+        document.documentElement.dir = languageSelection === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = languageSelection;
         
-        // Re-initialize icons in case direction changed
-        if (typeof lucide !== 'undefined') {
-            lucide.createIcons();
+        // Sync explanation language for coherence
+        const expLangSelect = document.getElementById('explanation-language');
+        if (expLangSelect) {
+            expLangSelect.value = languageSelection === 'ar' ? 'arabic' : 'english';
+        }
+
+        // Re-translate page
+        if (t && t.applyLanguage) {
+            t.applyLanguage();
         }
     } catch (error) {
-        console.error('Error in handleLanguageChange:', error);
+        console.error('Error changing language:', error);
     }
 }
 
-function populateTimezones() {
-    const timezones = [
-        'Africa/Cairo',
-        'Africa/Casablanca',
-        'Africa/Johannesburg',
-        'Africa/Lagos',
-        'America/Chicago',
-        'America/Los_Angeles',
-        'America/New_York',
-        'America/Toronto',
-        'Asia/Baghdad',
-        'Asia/Beirut',
-        'Asia/Damascus',
-        'Asia/Dubai',
-        'Asia/Istanbul',
-        'Asia/Jakarta',
-        'Asia/Jerusalem',
-        'Asia/Karachi',
-        'Asia/Kolkata',
-        'Asia/Kuala_Lumpur',
-        'Asia/Kuwait',
-        'Asia/Manila',
-        'Asia/Riyadh',
-        'Asia/Shanghai',
-        'Asia/Singapore',
-        'Asia/Tehran',
-        'Asia/Tokyo',
-        'Australia/Sydney',
-        'Europe/Berlin',
-        'Europe/London',
-        'Europe/Moscow',
-        'Europe/Paris',
-        'Europe/Rome',
-        'Pacific/Auckland',
-    ];
-    
-    const select = document.getElementById('timezone-select');
-    
-    timezones.forEach(tz => {
-        const option = document.createElement('option');
-        option.value = tz;
-        option.textContent = tz.replace(/_/g, ' ');
-        select.appendChild(option);
-    });
-}
-
-function detectTimezone() {
+/**
+ * Finalize onboarding process
+ */
+window.finishOnboarding = async function() {
+    console.log('Finish onboarding triggered');
     try {
-        const detectedTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        document.getElementById('detected-timezone').textContent = detectedTz.replace(/_/g, ' ');
+        const languageVal = document.getElementById('language-select').value;
+        const cityVal = document.getElementById('city-input').value.trim() || 'London';
+        const countryVal = document.getElementById('country-input').value.trim() || 'GB';
+        const aiResponseStyleVal = document.getElementById('ai-response-style').value;
+        const explanationLanguageVal = document.getElementById('explanation-language').value;
         
-        // Set the detected timezone as default
-        const select = document.getElementById('timezone-select');
-        if (select.querySelector(`option[value="${detectedTz}"]`)) {
-            select.value = detectedTz;
-        }
-    } catch (error) {
-        console.error('Error detecting timezone:', error);
-        document.getElementById('detected-timezone').textContent = 'Unable to detect';
-    }
-}
-
-async function finishOnboarding() {
-    try {
-        const timezone = document.getElementById('timezone-select').value;
-        const language = document.getElementById('language-select').value;
-        const aiResponseStyle = document.getElementById('ai-response-style').value;
-        const explanationLanguage = document.getElementById('explanation-language').value;
+        // Use CONFIG.DEFAULT_SETTINGS as base (requires config.js to be loaded)
+        const settings = (typeof CONFIG !== 'undefined' && CONFIG.DEFAULT_SETTINGS) ? 
+            JSON.parse(JSON.stringify(CONFIG.DEFAULT_SETTINGS)) : {};
         
-        // Start with default settings
-        const settings = { ...CONFIG.DEFAULT_SETTINGS };
-        
-        // Override with onboarding choices
-        settings.timezone = timezone;
-        settings.interfaceLanguage = language;
-        settings.aiResponseStyle = aiResponseStyle;
-        settings.explanationLanguage = explanationLanguage;
+        // Apply user choices
+        settings.language = languageVal;
+        settings.location = { city: cityVal, country: countryVal };
+        settings.aiResponseStyle = aiResponseStyleVal;
+        settings.explanationLanguage = explanationLanguageVal;
         settings.onboardingCompleted = true;
 
-        // Request optional permissions for the new tab experience
-        // This is critical for displaying the full feature set (bookmarks, top sites, etc.)
-        const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history'];
-        await new Promise((resolve) => {
-            chrome.permissions.request({ permissions: optionalPermissions }, (granted) => {
-                console.log('Permission granted:', granted);
-                resolve(granted);
+        console.log('Saving settings:', settings);
+        const optionalPermissions = ['bookmarks', 'sessions', 'topSites', 'history', 'notifications'];
+        
+        try {
+            await new Promise((resolve) => {
+                chrome.permissions.request({ permissions: optionalPermissions }, (granted) => {
+                    console.log('Permissions granted:', granted);
+                    resolve(granted);
+                });
             });
-        });
+        } catch (pErr) {
+            console.warn('Permission request failed or dismissed', pErr);
+        }
         
-        // Save settings
-        await chrome.storage.sync.set(settings);
+        // Save merged settings
+        await chrome.storage.sync.set({ settings });
         
-        // Close onboarding and open extension popup
-        chrome.tabs.create({ url: 'popup.html' });
-        window.close();
+        // Open the dashboard
+        window.location.href = 'newtab.html';
     } catch (error) {
-        console.error('Error in finishOnboarding:', error);
+        console.error('Error finishing onboarding:', error);
+        // Fallback: try to redirect anyway
+        window.location.href = 'newtab.html';
     }
 }
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', async () => {
+    console.log('Onboarding script initializing...');
+    
+    // Attach event listeners (Required for MV3 CSP)
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) startBtn.addEventListener('click', window.nextStep);
+
+    const finishBtn = document.getElementById('finish-btn');
+    if (finishBtn) finishBtn.addEventListener('click', window.finishOnboarding);
+
+    document.querySelectorAll('.next-btn').forEach(btn => {
+        btn.addEventListener('click', window.nextStep);
+    });
+
+    document.querySelectorAll('.prev-btn').forEach(btn => {
+        btn.addEventListener('click', window.prevStep);
+    });
+
+    const langSelect = document.getElementById('language-select');
+    if (langSelect) {
+        langSelect.addEventListener('change', window.handleLanguageChange);
+    }
+
     try {
-        console.log('Onboarding page loaded');
+        // Use the global translator instance from translations.js
+        if (typeof window.translator !== 'undefined' && window.translator.init) {
+            await window.translator.init();
+        }
         
-        // Initialize icons
-        if (typeof lucide !== 'undefined') {
-            console.log('Lucide loaded, creating icons');
-            lucide.createIcons();
-        } else {
-            console.warn('Lucide not loaded');
+        const browserLang = navigator.language.startsWith('ar') ? 'ar' : 'en';
+        if (langSelect) {
+            langSelect.value = browserLang;
+            // Apply layout direction immediately
+            document.documentElement.dir = browserLang === 'ar' ? 'rtl' : 'ltr';
+            document.documentElement.lang = browserLang;
         }
 
-        // Initialize translator
-        console.log('Initializing translator');
-        translator = new TranslationManager();
-        await translator.init();
-        
-        // Load saved language if any
-        const storage = await chrome.storage.sync.get({ interfaceLanguage: 'en' });
-        const interfaceLanguage = storage.interfaceLanguage || 'en';
-        console.log('Language:', interfaceLanguage);
-        
-        const langSelect = document.getElementById('language-select');
-        if (langSelect) {
-            langSelect.value = interfaceLanguage;
+        if (typeof window.translator !== 'undefined' && window.translator.applyLanguage) {
+            window.translator.applyLanguage();
         }
-        
-        if (translator) {
-            await translator.setLanguage(interfaceLanguage);
-        }
-        
-        // Populate timezone dropdown
-        populateTimezones();
-        
-        // Detect and display current timezone
-        detectTimezone();
-        
-        console.log('Onboarding initialization complete');
     } catch (error) {
-        console.error('Error initializing onboarding:', error);
-        // Continue anyway so the buttons still work
+        console.error('Onboarding init error:', error);
     }
 });

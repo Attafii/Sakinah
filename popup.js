@@ -15,6 +15,7 @@ class SakinahPopup {
     }
 
     async init() {
+        await this.checkOnboarding();
         await this.loadQuranData();
         this.setupEventListeners();
         this.loadSettings();
@@ -42,6 +43,13 @@ class SakinahPopup {
             correctIndex: -1,
             answered: false
         };
+    }
+
+    async checkOnboarding() {
+        const result = await chrome.storage.sync.get(['settings']);
+        if (!result.settings || result.settings.onboardingCompleted !== true) {
+            window.location.href = 'onboarding.html';
+        }
     }
 
     // Load Quran data from JSON file

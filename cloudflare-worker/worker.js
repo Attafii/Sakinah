@@ -6,16 +6,29 @@ export default {
     // CORS headers
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
       'Access-Control-Allow-Headers': 'Content-Type',
     };
+
+    const url = new URL(request.url);
+
+    // Handle health check
+    if (url.pathname === '/health') {
+      return new Response(JSON.stringify({ 
+        status: 'ok', 
+        timestamp: Date.now(),
+        ip: request.headers.get('CF-Connecting-IP')
+      }), { 
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' } 
+      });
+    }
 
     // Handle preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: corsHeaders });
     }
 
-    // Only allow POST
+    // Only allow POST for API calls
     if (request.method !== 'POST') {
       return new Response('Method not allowed', { 
         status: 405,

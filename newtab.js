@@ -16,6 +16,7 @@ class SakinahNewTab {
     }
 
     async init() {
+        await this.checkOnboarding();
         await this.loadSettings();
         
         // Check for missing permissions if new tab is enabled
@@ -57,10 +58,23 @@ class SakinahNewTab {
         this.startClock();
     }
 
+    async checkOnboarding() {
+        const result = await chrome.storage.sync.get(['settings']);
+        if (!result.settings || result.settings.onboardingCompleted !== true) {
+            window.location.href = 'onboarding.html';
+        }
+    }
+
     async loadBookmarks() {
         const sidebarList = document.getElementById('sidebar-bookmarks-list');
-        const otherSidebarList = document.getElementById('sidebar-other-bookmarks-list');
         if (!sidebarList) return;
+
+        // Check if bookmarks API is available
+        if (typeof chrome === 'undefined' || !chrome.bookmarks) {
+            console.warn('Bookmarks API not available');
+            sidebarList.innerHTML = '<div class="sidebar-item">Bookmarks permission required</div>';
+            return;
+        }
 
         try {
             const tree = await chrome.bookmarks.getTree();
@@ -379,10 +393,13 @@ class SakinahNewTab {
 
     async loadData() {
         try {
+            console.log('Loading local JSON data...');
             const loadFile = async (path) => {
                 try {
-                    const res = await fetch(chrome.runtime.getURL(path));
-                    if (!res.ok) throw new Error(`Failed to load ${path}`);
+                    const url = chrome.runtime.getURL(path);
+                    console.log(`Fetching: ${url}`);
+                    const res = await fetch(url);
+                    if (!res.ok) throw new Error(`Failed to load ${path} (Status: ${res.status})`);
                     return await res.json();
                 } catch (e) {
                     console.error(`Error loading ${path}:`, e);

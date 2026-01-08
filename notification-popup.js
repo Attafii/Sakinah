@@ -191,7 +191,9 @@ async function explainAyah() {
         const settings = await chrome.storage.sync.get({ explanationLanguage: 'english' });
         
         // Use proxy endpoint
-        const proxyEndpoint = 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
+        const proxyEndpoint = (typeof CONFIG !== 'undefined' && CONFIG.WORKER_URL) 
+            ? CONFIG.WORKER_URL 
+            : 'https://sakinah-ai-proxy.attafiahmed-dev.workers.dev';
 
         const langInstruction = settings.explanationLanguage === 'arabic' 
             ? 'CRITICAL: Respond ONLY in Arabic (العربية). Use Arabic script EXCLUSIVELY. Do NOT include ANY words from other languages (no English, no Russian, no Chinese, no French, etc.). Every single word must be in Arabic. If you need to use a technical term, use its Arabic equivalent or transliterate it into Arabic script.' 

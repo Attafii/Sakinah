@@ -268,16 +268,25 @@ class SakinahOptions {
 
     async checkAIService() {
         const statusEl = document.getElementById('ai-status');
+        if (!statusEl) return;
+
         try {
-            // Simple check if we can reach the worker
-            const response = await fetch(`${CONFIG.WORKER_URL}/health`);
+            // Ensure URL doesn't have double slashes
+            const baseUrl = CONFIG.WORKER_URL.replace(/\/$/, '');
+            const response = await fetch(`${baseUrl}/health`, {
+                method: 'GET',
+                cache: 'no-cache'
+            });
+
             if (response.ok) {
                 statusEl.textContent = "✓ AI Service is online and ready.";
                 statusEl.style.color = "var(--primary-dark)";
             } else {
-                throw new Error();
+                console.warn(`AI Health Check returned status: ${response.status}`);
+                throw new Error(`Status: ${response.status}`);
             }
         } catch (e) {
+            console.error("AI Health Check failed:", e);
             statusEl.textContent = "⚠ AI Service is currently offline. Using local fallback.";
             statusEl.style.color = "#e67e22";
         }
