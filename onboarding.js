@@ -106,8 +106,8 @@ window.finishOnboarding = async function() {
             console.warn('Permission request failed or dismissed', pErr);
         }
         
-        // Save merged settings
-        await chrome.storage.sync.set({ settings });
+        // Save merged settings at top level
+        await chrome.storage.sync.set(settings);
         
         // Open the dashboard
         window.location.href = 'newtab.html';

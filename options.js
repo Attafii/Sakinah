@@ -10,6 +10,37 @@ class SakinahOptions {
         this.setupEventListeners();
         this.setupSidebar();
         this.checkAIService();
+        this.updateTheme();
+        this.applyDisplaySettings();
+        
+        // Listen for storage changes to update theme in real-time
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'sync') {
+                if (changes.theme) {
+                    this.settings.theme = changes.theme.newValue;
+                    this.updateTheme();
+                }
+                if (changes.arabicFont || changes.fontSize) {
+                    if (changes.arabicFont) this.settings.arabicFont = changes.arabicFont.newValue;
+                    if (changes.fontSize) this.settings.fontSize = changes.fontSize.newValue;
+                    this.applyDisplaySettings();
+                }
+            }
+        });
+    }
+
+    applyDisplaySettings() {
+        const body = document.body;
+        
+        // Apply Arabic Font
+        const fontClass = this.settings.arabicFont || 'font-uthmani';
+        body.classList.remove('font-uthmani', 'font-indopak', 'font-standard');
+        body.classList.add(fontClass);
+
+        // Apply Font Size
+        const sizeClass = `size-${this.settings.fontSize || 'medium'}`;
+        body.classList.remove('size-small', 'size-medium', 'size-large', 'size-extra-large');
+        body.classList.add(sizeClass);
     }
 
     async loadSettings() {
@@ -41,6 +72,7 @@ class SakinahOptions {
         document.getElementById('theme-mode').value = this.settings.theme;
         document.getElementById('arabic-font').value = this.settings.arabicFont;
         document.getElementById('font-size').value = this.settings.fontSize;
+        document.getElementById('reciter').value = this.settings.reciter || 'ar.alafasy';
         document.getElementById('show-adhkar').checked = this.settings.showAdhkar;
         document.getElementById('show-quiz').checked = this.settings.showQuiz;
         document.getElementById('ayah-rotation').value = this.settings.ayahRotation;
@@ -125,6 +157,24 @@ class SakinahOptions {
 
         document.getElementById('notification-type').addEventListener('change', () => {
             this.toggleNotificationOptions();
+        });
+
+        // Theme toggle - Apply immediately
+        document.getElementById('theme-mode').addEventListener('change', (e) => {
+            this.settings.theme = e.target.value;
+            this.updateTheme();
+        });
+
+        // Font change - Apply immediately
+        document.getElementById('arabic-font').addEventListener('change', (e) => {
+            this.settings.arabicFont = e.target.value;
+            this.applyDisplaySettings();
+        });
+
+        // Font size change - Apply immediately
+        document.getElementById('font-size').addEventListener('change', (e) => {
+            this.settings.fontSize = e.target.value;
+            this.applyDisplaySettings();
         });
 
         // Custom times
@@ -226,6 +276,7 @@ class SakinahOptions {
             theme: document.getElementById('theme-mode').value,
             arabicFont: document.getElementById('arabic-font').value,
             fontSize: document.getElementById('font-size').value,
+            reciter: document.getElementById('reciter').value,
             showAdhkar: document.getElementById('show-adhkar').checked,
             showQuiz: document.getElementById('show-quiz').checked,
             ayahRotation: document.getElementById('ayah-rotation').value,
@@ -249,6 +300,33 @@ class SakinahOptions {
             // Notify background script to update alarms
             chrome.runtime.sendMessage({ action: 'updateAlarms' });
         });
+    }
+
+    updateTheme() {
+        const mode = this.settings.theme || 'auto';
+        const body = document.body;
+
+        if (mode === 'dark') {
+            body.classList.add('dark-mode');
+        } else if (mode === 'light') {
+            body.classList.remove('dark-mode');
+        } else {
+            // Auto mode
+            this.checkAutoTheme();
+        }
+    }
+
+    checkAutoTheme() {
+        const body = document.body;
+        const now = new Date();
+        const hour = now.getHours();
+
+        // Simple fallback: dark between 7 PM and 6 AM
+        if (hour >= 19 || hour < 6) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
+        }
     }
 
     showToast(message) {

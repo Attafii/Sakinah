@@ -308,10 +308,38 @@
             opacity: 0.9;
         }
 
-        /* Arabic Font Classes */
-        .font-uthmani { font-family: 'Amiri', serif; }
-        .font-indopak { font-family: 'Amiri', serif; font-weight: 700; } /* Placeholder for actual fonts if available */
-        .font-standard { font-family: sans-serif; }
+        /* Arabic Font & Size Classes */
+        .font-uthmani .arabic-text, 
+        .font-uthmani #sunnah-arabic, 
+        .font-uthmani .adhkar-arabic, 
+        .font-uthmani .hadith-arabic,
+        .font-uthmani .suggested-ayah-arabic,
+        .font-uthmani .arabic { font-family: 'Amiri', serif !important; }
+
+        .font-indopak .arabic-text, 
+        .font-indopak #sunnah-arabic, 
+        .font-indopak .adhkar-arabic, 
+        .font-indopak .hadith-arabic,
+        .font-indopak .suggested-ayah-arabic,
+        .font-indopak .arabic { font-family: 'Amiri', serif !important; font-weight: 700 !important; }
+
+        .font-standard .arabic-text, 
+        .font-standard #sunnah-arabic, 
+        .font-standard .adhkar-arabic, 
+        .font-standard .hadith-arabic,
+        .font-standard .suggested-ayah-arabic,
+        .font-standard .arabic { font-family: sans-serif !important; }
+
+        /* Font Size Applications */
+        .size-small .arabic-text, .size-small #sunnah-arabic, .size-small .adhkar-arabic, .size-small .hadith-arabic { font-size: 1.2rem !important; }
+        .size-medium .arabic-text, .size-medium #sunnah-arabic, .size-medium .adhkar-arabic, .size-medium .hadith-arabic { font-size: 1.5rem !important; }
+        .size-large .arabic-text, .size-large #sunnah-arabic, .size-large .adhkar-arabic, .size-large .hadith-arabic { font-size: 2.1rem !important; }
+        .size-extra-large .arabic-text, .size-extra-large #sunnah-arabic, .size-extra-large .adhkar-arabic, .size-extra-large .hadith-arabic { font-size: 2.8rem !important; }
+
+        .size-small .translation-text, .size-small .adhkar-translation, .size-small .hadith-translation { font-size: 0.8rem !important; }
+        .size-medium .translation-text, .size-medium .adhkar-translation, .size-medium .hadith-translation { font-size: 0.95rem !important; }
+        .size-large .translation-text, .size-large .adhkar-translation, .size-large .hadith-translation { font-size: 1.15rem !important; }
+        .size-extra-large .translation-text, .size-extra-large .adhkar-translation, .size-extra-large .hadith-translation { font-size: 1.35rem !important; }
 
         @keyframes float {
             from { transform: translate(0, 0) scale(1); }
@@ -1521,6 +1549,9 @@
             </button>
             <button id="customize-wallpaper-btn" class="google-apps-btn" title="Customize Wallpaper">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            </button>
+            <button id="top-settings-btn" class="google-apps-btn" title="Settings">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
             <button id="theme-toggle" class="google-apps-btn" title="Toggle Theme" style="margin-right: 10px;">
                 <svg id="theme-icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>

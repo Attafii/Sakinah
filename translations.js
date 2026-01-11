@@ -578,14 +578,14 @@ class TranslationManager {
     
     async init() {
         // Load saved language preference
-        const settings = await chrome.storage.sync.get({ interfaceLanguage: 'en' });
-        this.currentLanguage = settings.interfaceLanguage;
+        const settings = await chrome.storage.sync.get({ language: 'en' });
+        this.currentLanguage = settings.language;
         this.applyLanguage();
     }
     
     async setLanguage(lang) {
         this.currentLanguage = lang;
-        await chrome.storage.sync.set({ interfaceLanguage: lang });
+        await chrome.storage.sync.set({ language: lang });
         this.applyLanguage();
     }
     

@@ -19,7 +19,8 @@
   "optional_permissions": [],
   "host_permissions": [
     "https://sakinah-ai-proxy.attafiahmed-dev.workers.dev/*",
-    "https://api.aladhan.com/*"
+    "https://api.aladhan.com/*",
+    "https://cdn.islamic.network/*"
   ],
   "background": {
     "service_worker": "background.js"
@@ -45,6 +46,6 @@
     "newtab": "newtab.html"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self';"
+    "extension_pages": "script-src 'self'; object-src 'self'; media-src 'self' https://cdn.islamic.network;"
   }
 }

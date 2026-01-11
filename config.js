@@ -12,6 +12,7 @@ const CONFIG = {
         theme: 'auto',
         arabicFont: 'font-uthmani',
         fontSize: 'medium',
+        reciter: 'ar.alafasy',
         showAdhkar: true,
         showQuiz: true,
         ayahRotation: 'daily',

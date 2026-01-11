@@ -269,9 +269,9 @@ class SakinahBackground {
         if (details.reason === 'install') {
             console.log('Background: Extension installed');
             // Check for existing settings
-            const { settings } = await chrome.storage.sync.get(['settings']);
+            const result = await chrome.storage.sync.get(['onboardingCompleted']);
             
-            if (!settings || settings.onboardingCompleted !== true) {
+            if (result.onboardingCompleted !== true) {
                 // Open onboarding page on first install
                 chrome.tabs.create({ url: chrome.runtime.getURL('onboarding.html') });
             }

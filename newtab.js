@@ -59,14 +59,15 @@ class SakinahNewTab {
     }
 
     async checkOnboarding() {
-        const result = await chrome.storage.sync.get(['settings']);
-        if (!result.settings || result.settings.onboardingCompleted !== true) {
+        const result = await chrome.storage.sync.get(['onboardingCompleted']);
+        if (result.onboardingCompleted !== true) {
             window.location.href = 'onboarding.html';
         }
     }
 
     async loadBookmarks() {
         const sidebarList = document.getElementById('sidebar-bookmarks-list');
+        const otherSidebarList = document.getElementById('sidebar-other-bookmarks-list');
         if (!sidebarList) return;
 
         // Check if bookmarks API is available
@@ -80,8 +81,9 @@ class SakinahNewTab {
             const tree = await chrome.bookmarks.getTree();
             if (!tree[0] || !tree[0].children) return;
 
-            const bookmarksBar = tree[0].children[0] || { children: [] };
-            const otherBookmarks = tree[0].children[1] || { children: [] };
+            const rootChildren = tree[0].children;
+            const bookmarksBar = rootChildren.find(c => c.id === '1') || { children: [] };
+            const others = rootChildren.filter(c => c.id !== '1');
 
             const renderItem = (node, isChild = false) => {
                 const childClass = isChild ? 'child-item' : '';
@@ -112,12 +114,33 @@ class SakinahNewTab {
 
             // Populate Sidebar - Bookmarks Bar
             if (sidebarList) {
-                sidebarList.innerHTML = bookmarksBar.children.map(node => renderItem(node)).join('');
+                const barItems = (bookmarksBar.children || []).map(node => renderItem(node)).join('');
+                sidebarList.innerHTML = barItems || '<div class="sidebar-item" style="opacity: 0.5; font-size: 0.7rem;">Empty</div>';
             }
 
             // Populate Sidebar - Other Bookmarks
             if (otherSidebarList) {
-                otherSidebarList.innerHTML = otherBookmarks.children.map(node => renderItem(node)).join('');
+                // Combine all other top-level folders (Other Bookmarks, Mobile Bookmarks, etc.)
+                let otherItems = '';
+                others.forEach(folder => {
+                    if (folder.children && folder.children.length > 0) {
+                        // If it's the "Other Bookmarks" (usually id: '2'), we don't necessarily need a folder heading
+                        // but for others like "Mobile Bookmarks", it's better to show it.
+                        if (folder.id === '2') {
+                            otherItems += folder.children.map(node => renderItem(node)).join('');
+                        } else {
+                            otherItems += renderItem(folder);
+                        }
+                    }
+                });
+                
+                otherSidebarList.innerHTML = otherItems;
+                
+                // Hide the section if no other bookmarks
+                const otherSection = otherSidebarList.closest('.sidebar-section');
+                if (otherSection) {
+                    otherSection.style.display = otherItems ? 'block' : 'none';
+                }
             }
 
         } catch (e) {
@@ -249,6 +272,10 @@ class SakinahNewTab {
                 try { 
                     const url = new URL(t.url);
                     hostname = url.hostname; 
+                    // Skip local or invalid hostnames for favicon fetching
+                    if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1' || hostname.includes('extension')) {
+                        throw new Error('Invalid hostname');
+                    }
                 } catch (e) { 
                     return ''; 
                 }
@@ -687,7 +714,7 @@ class SakinahNewTab {
         const themeToggleBtn = document.getElementById('theme-toggle');
         if (themeToggleBtn) {
             themeToggleBtn.addEventListener('click', async () => {
-                const currentMode = this.settings.themeMode || 'auto';
+                const currentMode = this.settings.theme || 'auto';
                 let newMode = 'dark';
                 
                 // If currently dark (either explicitly or via auto), switch to light
@@ -697,8 +724,8 @@ class SakinahNewTab {
                     newMode = 'dark';
                 }
                 
-                this.settings.themeMode = newMode;
-                await chrome.storage.sync.set({ themeMode: newMode });
+                this.settings.theme = newMode;
+                await chrome.storage.sync.set({ theme: newMode });
                 this.updateTheme();
             });
         }
@@ -787,22 +814,24 @@ class SakinahNewTab {
     }
 
     applyDisplaySettings() {
-        // Apply Arabic Font
-        const arabicElements = document.querySelectorAll('.arabic-text, .adhkar-arabic, .hadith-arabic, .sunnah-arabic, #quiz-question div, .quiz-option');
-        const fontClass = this.settings.arabicFont || 'font-uthmani';
+        const body = document.body;
         
-        arabicElements.forEach(el => {
-            // Remove existing font classes
-            el.classList.remove('font-uthmani', 'font-indopak', 'font-standard');
-            el.classList.add(fontClass);
-        });
+        // Apply Arabic Font
+        const fontClass = this.settings.arabicFont || 'font-uthmani';
+        body.classList.remove('font-uthmani', 'font-indopak', 'font-standard');
+        body.classList.add(fontClass);
+
+        // Apply Font Size
+        const sizeClass = `size-${this.settings.fontSize || 'medium'}`;
+        body.classList.remove('size-small', 'size-medium', 'size-large', 'size-extra-large');
+        body.classList.add(sizeClass);
 
         // Apply Theme Mode
         this.updateTheme();
     }
 
     updateTheme() {
-        const mode = this.settings.themeMode || 'auto';
+        const mode = this.settings.theme || 'auto';
         const body = document.body;
         const sunIcon = document.getElementById('theme-icon-sun');
         const moonIcon = document.getElementById('theme-icon-moon');
@@ -907,6 +936,13 @@ class SakinahNewTab {
         document.getElementById('customize-btn').addEventListener('click', () => {
             chrome.runtime.openOptionsPage();
         });
+
+        const topSettingsBtn = document.getElementById('top-settings-btn');
+        if (topSettingsBtn) {
+            topSettingsBtn.addEventListener('click', () => {
+                chrome.runtime.openOptionsPage();
+            });
+        }
 
         document.getElementById('refresh-btn').addEventListener('click', () => {
             console.log('Refreshing content without reload');
@@ -1295,7 +1331,7 @@ class SakinahNewTab {
         }
 
         // Update theme based on Maghrib if in auto mode
-        if (this.settings.themeMode === 'auto' && timings.Maghrib) {
+        if (this.settings.theme === 'auto' && timings.Maghrib) {
             const [mHours, mMinutes] = timings.Maghrib.split(':').map(Number);
             const [fHours, fMinutes] = timings.Fajr.split(':').map(Number);
             const maghribTime = mHours * 60 + mMinutes;
@@ -1611,17 +1647,31 @@ class SakinahNewTab {
         return absoluteNum;
     }
 
-    mapReciterId(id) {
-        const mapping = {
+    getReciterConfig(id) {
+        const configs = {
+            'ar.alafasy': { bitrate: 128 },
+            'ar.abdulsamad': { bitrate: 64 },
+            'ar.abdurrahmaansudais': { bitrate: 192 },
+            'ar.mahermuaiqly': { bitrate: 64 },
+            'ar.minshawi': { bitrate: 128 },
+            'ar.ahmedajamy': { bitrate: 128 },
+            'ar.hudhaify': { bitrate: 128 }
+        };
+        
+        const legacyMapping = {
             'Alafasy_128kbps': 'ar.alafasy',
-            'Abdul_Basit_Murattal_192kbps': 'ar.abdulbasit',
-            'Abdurrahmaan_As-Sudais_192kbps': 'ar.sudais',
+            'Abdul_Basit_Murattal_192kbps': 'ar.abdulsamad',
+            'Abdurrahmaan_As-Sudais_192kbps': 'ar.abdurrahmaansudais',
             'Maher_AlMuaiqly_64kbps': 'ar.mahermuaiqly',
             'Minshawi_Murattal_128kbps': 'ar.minshawi',
-            'Ahmed_ibn_Ali_al-Ajamy_128kbps': 'ar.ahmedajamy',
-            'Ghamadi_40kbps': 'ar.alafasy'
+            'Ahmed_ibn_Ali_al-Ajamy_128kbps': 'ar.ahmedajamy'
         };
-        return mapping[id] || id;
+        
+        const actualId = legacyMapping[id] || id;
+        return {
+            id: actualId,
+            bitrate: configs[actualId]?.bitrate || 128
+        };
     }
 
     reciteAyah() {
@@ -1641,9 +1691,12 @@ class SakinahNewTab {
             return;
         }
 
-        const reciter = this.mapReciterId(this.settings.reciter || 'ar.alafasy');
+        const config = this.getReciterConfig(this.settings.reciter || 'ar.alafasy');
         const absoluteAyahNum = this.getAyahNumber(this.currentAyah.surahNumber, this.currentAyah.ayahNumber);
-        const audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${absoluteAyahNum}.mp3`;
+        
+        const audioUrl = `https://cdn.islamic.network/quran/audio/${config.bitrate}/${config.id}/${absoluteAyahNum}.mp3`;
+        
+        console.log('Playing recitation:', config.id, 'Ayah:', absoluteAyahNum, 'URL:', audioUrl);
 
         if (btn) {
             btn.classList.add('playing');
@@ -1653,11 +1706,13 @@ class SakinahNewTab {
 
         this.audio = new Audio(audioUrl);
         this.audio.play().catch(err => {
-            console.error('Audio playback failed:', err);
-            if (btn) {
-                btn.classList.remove('playing');
-                const text = translator.get('hifdh.listen');
-                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> ${text}`;
+            console.error('Audio playback failed for', config.id, 'at', config.bitrate, 'kbps:', err);
+            // Fallback to Alafasy 128kbps (most reliable)
+            if (config.id !== 'ar.alafasy') {
+                console.log('Falling back to Alafasy...');
+                const fallbackUrl = `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${absoluteAyahNum}.mp3`;
+                this.audio = new Audio(fallbackUrl);
+                this.audio.play().catch(e => console.error('Fallback audio failed:', e));
             }
         });
 

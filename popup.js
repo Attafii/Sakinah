@@ -18,12 +18,29 @@ class SakinahPopup {
         await this.checkOnboarding();
         await this.loadQuranData();
         this.setupEventListeners();
-        this.loadSettings();
+        await this.loadSettings();
         this.fetchPrayerTimes();
         this.showRandomAyah();
         this.loadFavorites();
+        this.applyDisplaySettings();
         // Initialize Lucide icons after page load
         setTimeout(() => initLucideIcons(), 100);
+        
+        // Listen for storage changes to update theme in real-time
+        chrome.storage.onChanged.addListener((changes, area) => {
+            if (area === 'sync') {
+                if (changes.theme) {
+                    this.settings.theme = changes.theme.newValue;
+                    this.updateTheme();
+                }
+                if (changes.arabicFont || changes.fontSize) {
+                    if (changes.arabicFont) this.settings.arabicFont = changes.arabicFont.newValue;
+                    if (changes.fontSize) this.settings.fontSize = changes.fontSize.newValue;
+                    this.applyDisplaySettings();
+                }
+            }
+        });
+
         // hadith state
         this.hadithData = null;
         this.currentHadithIndex = -1;
@@ -46,8 +63,8 @@ class SakinahPopup {
     }
 
     async checkOnboarding() {
-        const result = await chrome.storage.sync.get(['settings']);
-        if (!result.settings || result.settings.onboardingCompleted !== true) {
+        const result = await chrome.storage.sync.get(['onboardingCompleted']);
+        if (result.onboardingCompleted !== true) {
             window.location.href = 'onboarding.html';
         }
     }
@@ -1442,8 +1459,55 @@ Please provide a thoughtful, accurate explanation following this structure:
             document.getElementById('notification-settings').style.display = 
                 settings.notificationsEnabled ? 'block' : 'none';
 
+            this.updateTheme();
+
         } catch (error) {
             console.error('Error loading settings:', error);
+        }
+    }
+
+    applyDisplaySettings() {
+        if (!this.settings) return;
+        const body = document.body;
+        
+        // Apply Arabic Font
+        const fontClass = this.settings.arabicFont || 'font-uthmani';
+        body.classList.remove('font-uthmani', 'font-indopak', 'font-standard');
+        body.classList.add(fontClass);
+
+        // Apply Font Size
+        const sizeClass = `size-${this.settings.fontSize || 'medium'}`;
+        body.classList.remove('size-small', 'size-medium', 'size-large', 'size-extra-large');
+        body.classList.add(sizeClass);
+
+        // Apply Theme Mode
+        this.updateTheme();
+    }
+
+    updateTheme() {
+        const mode = this.settings.theme || 'auto';
+        const body = document.body;
+
+        if (mode === 'dark') {
+            body.classList.add('dark-mode');
+        } else if (mode === 'light') {
+            body.classList.remove('dark-mode');
+        } else {
+            // Auto mode
+            this.checkAutoTheme();
+        }
+    }
+
+    checkAutoTheme() {
+        const body = document.body;
+        const now = new Date();
+        const hour = now.getHours();
+
+        // Simple fallback: dark between 7 PM and 6 AM
+        if (hour >= 19 || hour < 6) {
+            body.classList.add('dark-mode');
+        } else {
+            body.classList.remove('dark-mode');
         }
     }
 
@@ -2323,17 +2387,31 @@ Please provide a thoughtful, accurate explanation following this structure:
         return this.calculateSimilarity(a, b);
     }
 
-    mapReciterId(id) {
-        const mapping = {
+    getReciterConfig(id) {
+        const configs = {
+            'ar.alafasy': { bitrate: 128 },
+            'ar.abdulsamad': { bitrate: 64 },
+            'ar.abdurrahmaansudais': { bitrate: 192 },
+            'ar.mahermuaiqly': { bitrate: 64 },
+            'ar.minshawi': { bitrate: 128 },
+            'ar.ahmedajamy': { bitrate: 128 },
+            'ar.hudhaify': { bitrate: 128 }
+        };
+        
+        const legacyMapping = {
             'Alafasy_128kbps': 'ar.alafasy',
-            'Abdul_Basit_Murattal_192kbps': 'ar.abdulbasit',
-            'Abdurrahmaan_As-Sudais_192kbps': 'ar.sudais',
+            'Abdul_Basit_Murattal_192kbps': 'ar.abdulsamad',
+            'Abdurrahmaan_As-Sudais_192kbps': 'ar.abdurrahmaansudais',
             'Maher_AlMuaiqly_64kbps': 'ar.mahermuaiqly',
             'Minshawi_Murattal_128kbps': 'ar.minshawi',
-            'Ahmed_ibn_Ali_al-Ajamy_128kbps': 'ar.ahmedajamy',
-            'Ghamadi_40kbps': 'ar.alafasy'
+            'Ahmed_ibn_Ali_al-Ajamy_128kbps': 'ar.ahmedajamy'
         };
-        return mapping[id] || id;
+        
+        const actualId = legacyMapping[id] || id;
+        return {
+            id: actualId,
+            bitrate: configs[actualId]?.bitrate || 128
+        };
     }
 
     // Audio playback for Listen mode
@@ -2346,15 +2424,18 @@ Please provide a thoughtful, accurate explanation following this structure:
 
         const statusEl = document.getElementById('hifdh-audio-status');
         const reciterSelect = document.getElementById('hifdh-reciter');
-        const reciter = this.mapReciterId(reciterSelect ? reciterSelect.value : 'ar.alafasy');
+        const reciterId = reciterSelect ? reciterSelect.value : (this.settings.reciter || 'ar.alafasy');
+        const config = this.getReciterConfig(reciterId);
         const playBtn = document.getElementById('hifdh-play');
 
         // Get verse number
         const verseNum = ay.numberInSurah || ay.verse || (this.hifdhState.ayahIndex + 1);
         const surahNum = s.number;
+        const absoluteAyahNum = this.getAyahNumber(surahNum, verseNum);
 
-        // Format for API: surah:ayah
-        const audioUrl = `https://cdn.islamic.network/quran/audio/128/${reciter}/${this.getAyahNumber(surahNum, verseNum)}.mp3`;
+        const audioUrl = `https://cdn.islamic.network/quran/audio/${config.bitrate}/${config.id}/${absoluteAyahNum}.mp3`;
+
+        console.log('Playing Hifdh recitation:', config.id, 'Ayah:', absoluteAyahNum, 'URL:', audioUrl);
 
         if (statusEl) statusEl.textContent = '🔄 Loading audio...';
         if (playBtn) playBtn.textContent = '⏳ Loading...';
@@ -2363,6 +2444,7 @@ Please provide a thoughtful, accurate explanation following this structure:
             // Stop previous audio
             if (this.hifdhAudio) {
                 this.hifdhAudio.pause();
+                this.hifdhAudio = null;
             }
 
             this.hifdhAudio = new Audio(audioUrl);
@@ -2373,13 +2455,30 @@ Please provide a thoughtful, accurate explanation following this structure:
             };
             
             this.hifdhAudio.onended = () => {
-                if (statusEl) statusEl.textContent = '✓ Finished';
-                if (playBtn) playBtn.textContent = '▶️ Play';
+                const repeatBtn = document.getElementById('hifdh-repeat');
+                if (repeatBtn && repeatBtn.classList.contains('active')) {
+                    this.hifdhAudio.play();
+                } else {
+                    if (statusEl) statusEl.textContent = '✅ Finished';
+                    if (playBtn) playBtn.textContent = '▶️ Play';
+                }
             };
             
             this.hifdhAudio.onerror = () => {
-                if (statusEl) statusEl.textContent = '❌ Audio not available';
-                if (playBtn) playBtn.textContent = '▶️ Play';
+                console.warn('Audio 404/Error for', config.id, ', falling back to Alafasy...');
+                // Fallback to Alafasy
+                if (config.id !== 'ar.alafasy') {
+                    if (statusEl) statusEl.textContent = '🔄 Trying Alafasy...';
+                    const fallbackUrl = `https://cdn.islamic.network/quran/audio/128/ar.alafasy/${absoluteAyahNum}.mp3`;
+                    this.hifdhAudio = new Audio(fallbackUrl);
+                    this.hifdhAudio.play().catch(err => {
+                        if (statusEl) statusEl.textContent = '❌ Audio not available';
+                        if (playBtn) playBtn.textContent = '▶️ Play';
+                    });
+                } else {
+                    if (statusEl) statusEl.textContent = '❌ Audio not available';
+                    if (playBtn) playBtn.textContent = '▶️ Play';
+                }
             };
 
             await this.hifdhAudio.play();

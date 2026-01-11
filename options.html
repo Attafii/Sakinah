@@ -86,6 +86,11 @@
             font-size: 1.8rem;
         }
 
+        /* Arabic Font & Size Classes for Preview */
+        .font-uthmani .arabic { font-family: 'Amiri', serif !important; }
+        .font-indopak .arabic { font-family: 'Amiri', serif !important; font-weight: 700 !important; }
+        .font-standard .arabic { font-family: sans-serif !important; }
+
         .nav-list {
             list-style: none;
             flex: 1;
@@ -382,6 +387,78 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* Dark Mode */
+        body.dark-mode {
+            --bg-gradient: linear-gradient(135deg, #1a1a1a 0%, #2d3436 100%);
+            --glass-bg: rgba(30, 30, 30, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-main: #dfe6e9;
+            --text-secondary: #b2bec3;
+        }
+
+        body.dark-mode .sidebar {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .sidebar-header h1 span {
+            color: var(--primary-light);
+        }
+
+        body.dark-mode .nav-item {
+            color: var(--text-secondary);
+        }
+
+        body.dark-mode .nav-item:hover,
+        body.dark-mode .nav-item.active {
+            color: var(--primary-light);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .setting-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .setting-title {
+            color: #fff;
+        }
+
+        body.dark-mode select, 
+        body.dark-mode input[type="text"], 
+        body.dark-mode input[type="time"],
+        body.dark-mode .deed-input {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        body.dark-mode select:focus, 
+        body.dark-mode input:focus {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #dfe6e9;
+        }
+
+        body.dark-mode .section-header {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .time-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .slider {
+            background-color: #444;
+        }
+
+        body.dark-mode .ai-status {
+            background: rgba(114, 186, 174, 0.05);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .options-wrapper {
@@ -616,6 +693,24 @@
                             <option value="daily">Daily</option>
                             <option value="random">Random (Every refresh)</option>
                             <option value="fixed">Fixed (Stay on one verse)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="setting-card">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <span class="setting-title">Reciter</span>
+                            <span class="setting-desc">Choose the voice for verse recitations.</span>
+                        </div>
+                        <select id="reciter">
+                            <option value="ar.alafasy">Mishary Rashid Alafasy</option>
+                            <option value="ar.abdulsamad">Abdul Basit Abdul Samad</option>
+                            <option value="ar.abdurrahmaansudais">Abdurrahman As-Sudais</option>
+                            <option value="ar.mahermuaiqly">Maher Al-Muaiqly</option>
+                            <option value="ar.minshawi">Mohamed Siddiq El-Minshawi</option>
+                            <option value="ar.ahmedajamy">Ahmed Al-Ajamy</option>
+                            <option value="ar.hudhaify">Ali Al-Huthaifi</option>
                         </select>
                     </div>
                 </div>

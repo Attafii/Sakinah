@@ -1,57 +1,48 @@
-Privacy Policy – Sakinah Chrome Extension
+# Privacy Policy – Sakinah Chrome Extension
 
-Last updated: 2025
+Last updated: January 2026
 
-Sakinah is a privacy-focused Chrome extension designed to provide Qur'anic reflection, memorization tools, and optional AI-assisted spiritual guidance.
+Sakinah is a privacy-conscious Chrome extension designed to provide Qur'anic reflection, prayer time tracking, and AI-assisted spiritual guidance.
 
-1. Data Collection
+## 1. Data Types Collected & Used
 
-Sakinah does not collect personal identity information such as name, email address, age, or account credentials.
+### Personally Identifiable Information (PII)
+Sakinah accesses your **email address** via the `chrome.identity` API solely to display the currently active profile account within the extension dashboard. We do not store this email on external servers, nor do we use it for marketing.
 
-User-Provided Content
+### Location Data
+To provide accurate **Prayer Times** and **Qibla direction**, Sakinah requests access to your geographic location. This data is:
+- Processed locally to calculate times.
+- Sent to the [Aladhan API](https://aladhan.com) to retrieve prayer schedules for your specific coordinates.
 
-When users choose to interact with the AI guide, the text they explicitly enter (such as questions or reflections) is temporarily sent to a secure backend service to generate a response. This data is not stored by the extension.
+### Web History & Browsing Data
+Sakinah uses the `history`, `topSites`, and `sessions` permissions to display your most-visited websites and recently closed tabs for quick access on your home dashboard. This data is **processed entirely on your local machine** and is never uploaded, transmitted, or shared.
 
-Technical Data
+### Personal Communications (AI Guide)
+When you interact with the **AI Guide**, the text messages you enter are sent to our secure backend proxy (Cloudflare Workers) and the Groq API to generate a response. These messages are processed in real-time and are not saved by the extension once the session ends.
 
-IP address information may be processed implicitly by the backend service for request delivery, security, and rate-limiting purposes. This information is not stored or linked to individual users.
+## 2. Local Storage
+Sakinah stores the following data locally on your device using `chrome.storage`:
+- User preferences (theme, font, notification settings).
+- Favorites, bookmarks, and custom collections.
+- Qur'an memorization (hifdh) progress.
+- Prayer time settings and calculation methods.
 
-2. Local Storage
+## 3. Data Sharing & Third Parties
+Sakinah **does not sell, rent, or trade** your personal data to third parties. We only share data with service providers necessary for functionality:
+- **Cloudflare/Groq:** To provide AI responses.
+- **Aladhan.com:** To provide prayer time calculations.
+- **Islamic Network:** To provide Qur'anic audio streams.
 
-Sakinah stores the following data locally using Chrome storage:
+## 4. Security
+- **No Remote Code:** All application logic is bundled locally.
+- **Secure Proxy:** AI requests are routed through a secure proxy to protect user privacy and prevent direct API key exposure.
+- **Permissions:** We only request permissions necessary for the features you use.
 
-User preferences (language, notification settings, quiet hours)
+## 5. User Control & Deletion
+You have full control over your data:
+- You can clear your "Favorites" or "Hifdh" progress in the settings.
+- You can disable AI features or notifications at any time.
+- Uninstalling the extension automatically removes all locally stored data.
 
-Favorites and custom collections
-
-Memorization (hifdh) progress
-
-This data remains on the user's device and is not transmitted externally.
-
-3. Offline Content
-
-Core Qur'an and Hadith content is bundled with the extension and functions fully offline.
-
-4. Data Sharing
-
-Sakinah does not sell, rent, or transfer user data to third parties. Data is used solely to provide the extension's core functionality.
-
-5. Notifications
-
-Notifications are sent only based on user-configured schedules or explicit test actions.
-
-6. Security
-
-API keys are never embedded in the extension. All AI requests are routed through a secure proxy to protect user data.
-
-7. User Control
-
-Users can disable AI features, notifications, and clear stored data at any time by removing the extension or adjusting settings.
-
-8. Changes
-
-This privacy policy may be updated to reflect future improvements. Any changes will be published on this page.
-
-9. Contact
-
-For questions regarding privacy, contact the developer via the Chrome Web Store listing.
+## 6. Contact
+For questions regarding this policy, please contact us via the support link on the Chrome Web Store listing.
