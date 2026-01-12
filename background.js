@@ -101,8 +101,8 @@ class SakinahBackground {
                 quietStart: settings.quietStart,
                 quietEnd: settings.quietEnd,
                 type: settings.notificationType,
-                dailyEnabled: settings.dailyAyahEnabled,
-                dailyTime: settings.dailyAyahTime
+                dailyEnabled: settings.dailyAyahEnabled || false,
+                dailyTime: settings.dailyAyahTime || '08:00'
             };
 
             console.log('Background: Settings loaded', this.notificationSettings);

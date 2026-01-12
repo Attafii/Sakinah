@@ -394,6 +394,7 @@
             --glass-border: rgba(255, 255, 255, 0.1);
             --text-main: #dfe6e9;
             --text-secondary: #b2bec3;
+            accent-color: var(--primary);
         }
 
         body.dark-mode .sidebar {
@@ -427,14 +428,21 @@
         body.dark-mode input[type="text"], 
         body.dark-mode input[type="time"],
         body.dark-mode .deed-input {
-            background: rgba(255, 255, 255, 0.05);
+            background: #252525;
             border-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        body.dark-mode select option {
+            background: #1e1e1e;
             color: white;
         }
 
         body.dark-mode select:focus, 
         body.dark-mode input:focus {
-            background: rgba(255, 255, 255, 0.1);
+            background: #2d2d2d;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(114, 186, 174, 0.2);
         }
 
         body.dark-mode .btn-secondary {
@@ -452,7 +460,11 @@
         }
 
         body.dark-mode .slider {
-            background-color: #444;
+            background-color: #333;
+        }
+
+        body.dark-mode input:checked + .slider {
+            background-color: var(--primary);
         }
 
         body.dark-mode .ai-status {

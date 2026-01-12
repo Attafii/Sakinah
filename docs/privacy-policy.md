@@ -15,12 +15,32 @@ To provide accurate **Prayer Times** and **Qibla direction**, Sakinah requests a
 - Sent to the [Aladhan API](https://aladhan.com) to retrieve prayer schedules for your specific coordinates.
 
 ### Web History & Browsing Data
-Sakinah uses the `history`, `topSites`, and `sessions` permissions to display your most-visited websites and recently closed tabs for quick access on your home dashboard. This data is **processed entirely on your local machine** and is never uploaded, transmitted, or shared.
+Sakinah uses the `history`, `topSites`, and `sessions` permissions to provide a productivity-oriented dashboard experience:
+- **History & TopSites:** To display your most-visited websites and recently closed tabs for quick access on your home dashboard. 
+- **Sessions:** To detect real-time changes in browser windows and tabs to keep your "Recently Closed" widget accurate.
+This data is **processed entirely on your local machine** and is never uploaded, transmitted, or shared.
+
+### Display & System Information
+The `system.display` permission is used to identify the user's screen resolution and taskbar position. This allows the extension to precisely position the "Ayah of the Moment" notification window in the corner of the screen without obscuring active workspace areas.
 
 ### Personal Communications (AI Guide)
 When you interact with the **AI Guide**, the text messages you enter are sent to our secure backend proxy (Cloudflare Workers) and the Groq API to generate a response. These messages are processed in real-time and are not saved by the extension once the session ends.
 
-## 2. Local Storage
+## 2. Chrome Web Store Justifications
+The following justifications are provided for the specific permissions requested by Sakinah:
+
+| Permission | Purpose & Implementation |
+| :--- | :--- |
+| **Host Permissions** | Required to fetch dynamic data including AI Hadith explanations, live prayer time updates from AlAdhan, and Qur'anic audio assets. |
+| **Bookmarks** | Enables a built-in bookmark navigator on the dashboard, allowing users to quickly access their resources without leaving their spiritual environment. |
+| **Geolocation** | Crucial for calculating precise prayer timings (Fajr, Dhuhr, etc.) and Qibla direction based on the user's exact coordinates. |
+| **History** | Powers the "Recently Closed Tabs" widget on the new-tab page, serving as a productivity hub for the user. |
+| **Identity** | Used to display the user's active Google profile inside the extension UI for personalized greeting and sync status. |
+| **Sessions** | Analyzes recent browser sessions to allow the dashboard to provide restore shortcuts for closed windows. |
+| **System.Display** | Detects screen dimensions to ensure that the unique Sakinah notification "mini-window" is positioned correctly for the user's specific monitor setup. |
+| **topSites** | Populates the "Quick Access" dashboard icons with the user's most frequently visited websites. |
+
+## 3. Local Storage
 Sakinah stores the following data locally on your device using `chrome.storage`:
 - User preferences (theme, font, notification settings).
 - Favorites, bookmarks, and custom collections.

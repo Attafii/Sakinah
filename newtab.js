@@ -434,12 +434,13 @@ class SakinahNewTab {
                 }
             };
 
-            const [quran, adhkar, hadith, hifdh, hifdhMeta] = await Promise.all([
+            const [quran, adhkar, hadith, hifdh, hifdhMeta, duaas] = await Promise.all([
                 loadFile('quran.json'),
                 loadFile('adhkar.json'),
                 loadFile('ahadith.json'),
                 loadFile('quran_hifdh.json'),
-                loadFile('quran_hifdh_meta.json')
+                loadFile('quran_hifdh_meta.json'),
+                loadFile('duaas.json')
             ]);
 
             this.quranData = quran;
@@ -447,13 +448,15 @@ class SakinahNewTab {
             this.hadithData = hadith;
             this.hifdhData = hifdh;
             this.hifdhMeta = hifdhMeta;
+            this.duaaData = duaas;
             
             console.log('Data loaded:', { 
                 quran: !!quran, 
                 adhkar: !!adhkar, 
                 hadith: !!hadith, 
                 hifdh: !!hifdh,
-                hifdhMeta: !!hifdhMeta
+                hifdhMeta: !!hifdhMeta,
+                duaas: !!duaas
             });
             
             if (this.hifdhData) {
@@ -506,6 +509,7 @@ class SakinahNewTab {
         this.loadHabits();
         this.loadGratitude();
         this.loadSunnahOfDay();
+        this.displayDuaa();
         this.setupBackground();
         this.applyDisplaySettings();
         
@@ -673,7 +677,7 @@ class SakinahNewTab {
         ];
 
         const bgImage = document.getElementById('bg-image');
-        const refreshBtn = document.getElementById('refresh-bg');
+        const refreshBtn = document.getElementById('refresh-wallpaper-btn');
 
         const setRandomBackground = async () => {
             // Check for local uploaded wallpaper first
@@ -933,10 +937,6 @@ class SakinahNewTab {
             });
         }
 
-        document.getElementById('customize-btn').addEventListener('click', () => {
-            chrome.runtime.openOptionsPage();
-        });
-
         const topSettingsBtn = document.getElementById('top-settings-btn');
         if (topSettingsBtn) {
             topSettingsBtn.addEventListener('click', () => {
@@ -944,21 +944,25 @@ class SakinahNewTab {
             });
         }
 
-        document.getElementById('refresh-btn').addEventListener('click', () => {
-            console.log('Refreshing content without reload');
-            this.displayAyah(true);
-            this.displayAdhkar();
-            this.displayHadith();
-            this.displayQuiz();
-            
-            // Optional: Add a small rotation animation to the icon
-            const icon = document.querySelector('#refresh-btn svg');
-            if (icon) {
-                icon.style.transition = 'transform 0.5s ease';
-                icon.style.transform = 'rotate(360deg)';
-                setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 500);
-            }
-        });
+        const navbarRefreshBtn = document.getElementById('navbar-refresh-btn');
+        if (navbarRefreshBtn) {
+            navbarRefreshBtn.addEventListener('click', () => {
+                console.log('Refreshing content without reload');
+                this.displayAyah(true);
+                this.displayAdhkar();
+                this.displayHadith();
+                this.displayQuiz();
+                this.displayDuaa();
+                
+                // Optional: Add a small rotation animation to the icon
+                const icon = navbarRefreshBtn.querySelector('svg');
+                if (icon) {
+                    icon.style.transition = 'transform 0.5s ease';
+                    icon.style.transform = 'rotate(360deg)';
+                    setTimeout(() => { icon.style.transform = 'rotate(0deg)'; }, 500);
+                }
+            });
+        }
 
         const refreshQuizBtn = document.getElementById('refresh-quiz-btn');
         if (refreshQuizBtn) {
@@ -996,6 +1000,30 @@ class SakinahNewTab {
                     } catch (error) {
                         console.error('AI Error:', error);
                         tafsirEl.textContent = "An error occurred while explaining the verse.";
+                    }
+                }
+            });
+        }
+
+        const explainHadithBtn = document.getElementById('explain-hadith-btn');
+        if (explainHadithBtn) {
+            explainHadithBtn.addEventListener('click', async () => {
+                if (this.currentHadith && this.aiGuide) {
+                    const tafsirEl = document.getElementById('hadith-tafsir');
+                    if (!tafsirEl) return;
+
+                    tafsirEl.style.display = 'block';
+                    tafsirEl.innerHTML = '<div style="text-align:center; padding:10px; opacity: 0.7;">Generating spiritual insight (EN/AR)...</div>';
+                    
+                    try {
+                        const explanation = await this.aiGuide.explainHadith(this.currentHadith);
+                        tafsirEl.innerHTML = explanation.replace(/\n/g, '<br>');
+                        
+                        // Scroll to see the explanation if needed
+                        tafsirEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    } catch (error) {
+                        console.error('AI Error:', error);
+                        tafsirEl.textContent = "An error occurred while explaining the hadith.";
                     }
                 }
             });
@@ -1742,6 +1770,28 @@ class SakinahNewTab {
         if (translationEl) translationEl.textContent = randomItem.translation;
     }
 
+    displayDuaa() {
+        const duaaContainer = document.getElementById('duaa-of-the-day');
+        if (!this.duaaData || !this.duaaData.duaas) {
+            if (duaaContainer) duaaContainer.style.display = 'none';
+            return;
+        }
+
+        if (duaaContainer) duaaContainer.style.display = 'block';
+
+        const items = this.duaaData.duaas;
+        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+        const dailyItem = items[dayOfYear % items.length];
+
+        const arabicEl = document.getElementById('duaa-arabic');
+        const translationEl = document.getElementById('duaa-translation');
+        const sourceEl = document.getElementById('duaa-source');
+
+        if (arabicEl) arabicEl.textContent = dailyItem.arabic;
+        if (translationEl) translationEl.textContent = dailyItem.translation;
+        if (sourceEl) sourceEl.textContent = `— ${dailyItem.source}`;
+    }
+
     displayHadith() {
         const content = document.querySelector('.hadith-content');
         const separator = document.querySelector('.module-separator');
@@ -1754,14 +1804,24 @@ class SakinahNewTab {
 
         const items = this.hadithData.hadiths;
         const randomItem = items[Math.floor(Math.random() * items.length)];
+        this.currentHadith = {
+            arabic: randomItem.arabic_text,
+            translation: randomItem.english_translation,
+            source: randomItem.source
+        };
 
         const arabicEl = document.getElementById('hadith-arabic');
         const translationEl = document.getElementById('hadith-translation');
         const sourceEl = document.getElementById('hadith-source');
+        const tafsirEl = document.getElementById('hadith-tafsir');
 
         if (arabicEl) arabicEl.textContent = randomItem.arabic_text;
         if (translationEl) translationEl.textContent = randomItem.english_translation;
         if (sourceEl) sourceEl.textContent = randomItem.source;
+        if (tafsirEl) {
+            tafsirEl.style.display = 'none';
+            tafsirEl.innerHTML = '';
+        }
         
         // Only show separator if both Adhkar and Hadith are visible
         if (separator) {

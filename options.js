@@ -340,7 +340,7 @@ class SakinahOptions {
     }
 
     sendTestNotification() {
-        chrome.runtime.sendMessage({ action: 'sendTestNotification' });
+        chrome.runtime.sendMessage({ action: 'showRandomAyah' });
         this.showToast("Test notification sent!");
     }
 

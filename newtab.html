@@ -225,6 +225,16 @@
             transform: translateY(-1px);
         }
 
+        /* Duaa of the Day Styles */
+        .duaa-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Wallpaper Modal Styles */
         .wallpaper-modal {
             position: fixed;
@@ -314,6 +324,7 @@
         .font-uthmani .adhkar-arabic, 
         .font-uthmani .hadith-arabic,
         .font-uthmani .suggested-ayah-arabic,
+        .font-uthmani #duaa-arabic,
         .font-uthmani .arabic { font-family: 'Amiri', serif !important; }
 
         .font-indopak .arabic-text, 
@@ -321,6 +332,7 @@
         .font-indopak .adhkar-arabic, 
         .font-indopak .hadith-arabic,
         .font-indopak .suggested-ayah-arabic,
+        .font-indopak #duaa-arabic,
         .font-indopak .arabic { font-family: 'Amiri', serif !important; font-weight: 700 !important; }
 
         .font-standard .arabic-text, 
@@ -328,18 +340,19 @@
         .font-standard .adhkar-arabic, 
         .font-standard .hadith-arabic,
         .font-standard .suggested-ayah-arabic,
+        .font-standard #duaa-arabic,
         .font-standard .arabic { font-family: sans-serif !important; }
 
         /* Font Size Applications */
-        .size-small .arabic-text, .size-small #sunnah-arabic, .size-small .adhkar-arabic, .size-small .hadith-arabic { font-size: 1.2rem !important; }
-        .size-medium .arabic-text, .size-medium #sunnah-arabic, .size-medium .adhkar-arabic, .size-medium .hadith-arabic { font-size: 1.5rem !important; }
-        .size-large .arabic-text, .size-large #sunnah-arabic, .size-large .adhkar-arabic, .size-large .hadith-arabic { font-size: 2.1rem !important; }
-        .size-extra-large .arabic-text, .size-extra-large #sunnah-arabic, .size-extra-large .adhkar-arabic, .size-extra-large .hadith-arabic { font-size: 2.8rem !important; }
+        .size-small .arabic-text, .size-small #sunnah-arabic, .size-small .adhkar-arabic, .size-small .hadith-arabic, .size-small #duaa-arabic { font-size: 1.2rem !important; }
+        .size-medium .arabic-text, .size-medium #sunnah-arabic, .size-medium .adhkar-arabic, .size-medium .hadith-arabic, .size-medium #duaa-arabic { font-size: 1.5rem !important; }
+        .size-large .arabic-text, .size-large #sunnah-arabic, .size-large .adhkar-arabic, .size-large .hadith-arabic, .size-large #duaa-arabic { font-size: 2.1rem !important; }
+        .size-extra-large .arabic-text, .size-extra-large #sunnah-arabic, .size-extra-large .adhkar-arabic, .size-extra-large .hadith-arabic, .size-extra-large #duaa-arabic { font-size: 2.8rem !important; }
 
-        .size-small .translation-text, .size-small .adhkar-translation, .size-small .hadith-translation { font-size: 0.8rem !important; }
-        .size-medium .translation-text, .size-medium .adhkar-translation, .size-medium .hadith-translation { font-size: 0.95rem !important; }
-        .size-large .translation-text, .size-large .adhkar-translation, .size-large .hadith-translation { font-size: 1.15rem !important; }
-        .size-extra-large .translation-text, .size-extra-large .adhkar-translation, .size-extra-large .hadith-translation { font-size: 1.35rem !important; }
+        .size-small .translation-text, .size-small .adhkar-translation, .size-small .hadith-translation, .size-small #duaa-translation { font-size: 0.8rem !important; }
+        .size-medium .translation-text, .size-medium .adhkar-translation, .size-medium .hadith-translation, .size-medium #duaa-translation { font-size: 0.95rem !important; }
+        .size-large .translation-text, .size-large .adhkar-translation, .size-large .hadith-translation, .size-large #duaa-translation { font-size: 1.15rem !important; }
+        .size-extra-large .translation-text, .size-extra-large .adhkar-translation, .size-extra-large .hadith-translation, .size-extra-large #duaa-translation { font-size: 1.35rem !important; }
 
         @keyframes float {
             from { transform: translate(0, 0) scale(1); }
@@ -439,6 +452,10 @@
             cursor: pointer;
             border: 2px solid rgba(255, 255, 255, 0.2);
             transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .google-profile:hover {
@@ -1532,6 +1549,13 @@
 
     <!-- Main Content (Enabled State) -->
     <div id="enabled-content" class="container">
+        <!-- Top Right Actions -->
+        <div style="position: absolute; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px;">
+            <button id="refresh-wallpaper-btn" class="google-apps-btn" title="Refresh Wallpaper" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            </button>
+        </div>
+
         <!-- Account & Links -->
         <div class="google-nav" id="account-nav">
             <a href="#" class="google-link" id="nav-link-1">Mail</a>
@@ -1544,8 +1568,8 @@
                     <!-- Apps will be injected here -->
                 </div>
             </div>
-            <button id="refresh-bg" class="google-apps-btn" title="Change Background">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            <button id="navbar-refresh-btn" class="google-apps-btn" title="Refresh Content">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
             </button>
             <button id="customize-wallpaper-btn" class="google-apps-btn" title="Customize Wallpaper">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -1558,7 +1582,7 @@
                 <svg id="theme-icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </button>
             <div class="google-profile" id="account-profile" title="Account">
-                <img src="icons/Sakinah.png" alt="Profile" id="profile-img">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
         </div>
 
@@ -1615,7 +1639,7 @@
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <span data-i18n="hifdh.listen">Recite</span>
                         </button>
-                        <button id="explain-ayah-btn" data-i18n="popup.explainAyah">Explain</button>
+                        <button id="explain-ayah-btn" class="ai-button" data-i18n="popup.explainAyah">Explain</button>
                     </div>
                 </div>
                 <div id="ayah-tafsir"></div>
@@ -1691,6 +1715,19 @@
                             <button id="save-gratitude-btn" class="gratitude-save-btn">Save Entry</button>
                         </div>
                     </div>
+                    
+                    <!-- Duaa of the Day Section -->
+                    <div class="module-separator" style="margin: 15px 0 10px 0;"></div>
+                    <div id="duaa-of-the-day" class="duaa-container">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <span class="module-subtitle" style="font-size: 0.75rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Duaa of the Day</span>
+                        </div>
+                        <div class="duaa-content" style="text-align: center;">
+                            <p id="duaa-arabic" style="font-family: 'Amiri', serif; color: var(--primary-dark); margin-bottom: 8px; direction: rtl; line-height: 1.6;"></p>
+                            <p id="duaa-translation" style="color: var(--text-main); line-height: 1.5; margin-bottom: 5px;"></p>
+                            <p id="duaa-source" style="font-size: 0.7rem; color: var(--text-muted); font-style: italic;"></p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="module-card" id="adhkar-module" style="display: none;">
@@ -1707,6 +1744,13 @@
                         <span class="hadith-arabic" id="hadith-arabic"></span>
                         <span class="hadith-translation" id="hadith-translation"></span>
                         <span class="hadith-source" id="hadith-source"></span>
+                        <div class="hadith-actions" style="margin-top: 10px; display: flex; gap: 8px;">
+                            <button id="explain-hadith-btn" class="ai-button" title="Explain Hadith with AI" style="font-size: 0.7rem; padding: 4px 8px; background: rgba(114, 186, 174, 0.1); border: 1px solid var(--primary); border-radius: 4px; color: var(--primary-dark); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                Explain Hadith
+                            </button>
+                        </div>
+                        <div id="hadith-tafsir" class="tafsir-content" style="display: none; margin-top: 10px; padding: 10px; background: rgba(114, 186, 174, 0.05); border-left: 3px solid var(--primary); font-size: 0.8rem; line-height: 1.5; color: var(--text-color);"></div>
                     </div>
                 </div>
 
@@ -1726,17 +1770,6 @@
                         <div class="quiz-feedback" id="quiz-feedback" style="margin-top: 8px; padding: 8px; border-radius: 8px; font-size: 0.75rem; display: none;"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="footer-actions">
-                <button class="action-btn" id="customize-btn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-                    Settings
-                </button>
-                <button class="action-btn" id="refresh-btn">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
-                    Refresh
-                </button>
             </div>
         </div>
     </div>

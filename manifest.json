@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Sakinah",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Find peace through the Qur'an with random Ayahs, AI-guided spiritual guidance, and customizable notifications.",
 
   "permissions": [

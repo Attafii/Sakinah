@@ -368,6 +368,26 @@ Provide context, spiritual lessons, and how it can be applied to daily life.`;
         }
     }
 
+    // Explain a specific Hadith using AI
+    async explainHadith(hadith, options = {}) {
+        try {
+            const prompt = `Please explain this Hadith in a compassionate and clear way:
+Hadith: ${hadith.arabic || ''}
+Translation: ${hadith.translation || ''}
+Source: ${hadith.source || ''}
+
+CRITICAL: Provide the explanation in BOTH Arabic (العربية الفصحى) and English.
+Each section should be clearly labeled.
+Provide context, spiritual lessons, and how it can be applied to daily life today.`;
+
+            const result = await this.getGuidance(prompt, [], options);
+            return result.success ? result.response : 'Unable to generate explanation at this time.';
+        } catch (error) {
+            console.error('Error explaining hadith:', error);
+            return 'An error occurred while explaining the hadith.';
+        }
+    }
+
     // Get user settings
     async getSettings() {
         try {

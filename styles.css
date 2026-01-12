@@ -31,6 +31,7 @@ body.dark-mode {
     --glass-border: rgba(255, 255, 255, 0.1);
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.4);
+    accent-color: var(--primary);
 }
 
 body.dark-mode {
@@ -85,9 +86,32 @@ body.dark-mode .tab-button.active {
 body.dark-mode select,
 body.dark-mode textarea,
 body.dark-mode #emotional-state {
-    background: #2a2a2a;
+    background: #252525;
     color: white;
     border-color: var(--glass-border);
+}
+
+body.dark-mode select option {
+    background: #1e1e1e;
+    color: white;
+}
+
+body.dark-mode select:hover,
+body.dark-mode select:focus {
+    border-color: var(--primary);
+}
+
+body.dark-mode .ai-button {
+    background: rgba(114, 186, 174, 0.2) !important;
+    color: var(--primary-light) !important;
+    border-color: var(--primary) !important;
+}
+
+body.dark-mode .tafsir-content,
+body.dark-mode #ayah-tafsir,
+body.dark-mode #hadith-tafsir {
+    background: rgba(114, 186, 174, 0.1) !important;
+    color: var(--text-main) !important;
 }
 
 body.dark-mode .footer {
@@ -97,28 +121,28 @@ body.dark-mode .footer {
 
 /* ===== FONTS AND SIZES ===== */
 /* Arabic Font Apply */
-.font-uthmani .ayah-arabic, .font-uthmani .arabic-text, .font-uthmani #hadith-arabic, .font-uthmani #hifdh-arabic, .font-uthmani .sunnah-arabic, .font-uthmani .favorite-arabic, .font-uthmani .adhkar-arabic, .font-uthmani .hadith-arabic, .font-uthmani .suggested-ayah-arabic, .font-uthmani .arabic { 
+.font-uthmani .ayah-arabic, .font-uthmani .arabic-text, .font-uthmani #hadith-arabic, .font-uthmani #hifdh-arabic, .font-uthmani .sunnah-arabic, .font-uthmani .favorite-arabic, .font-uthmani .adhkar-arabic, .font-uthmani .hadith-arabic, .font-uthmani .suggested-ayah-arabic, .font-uthmani #duaa-arabic, .font-uthmani .arabic { 
     font-family: 'Amiri', 'Traditional Arabic', serif !important; 
 }
-.font-indopak .ayah-arabic, .font-indopak .arabic-text, .font-indopak #hadith-arabic, .font-indopak #hifdh-arabic, .font-indopak .sunnah-arabic, .font-indopak .favorite-arabic, .font-indopak .adhkar-arabic, .font-indopak .hadith-arabic, .font-indopak .suggested-ayah-arabic, .font-indopak .arabic { 
+.font-indopak .ayah-arabic, .font-indopak .arabic-text, .font-indopak #hadith-arabic, .font-indopak #hifdh-arabic, .font-indopak .sunnah-arabic, .font-indopak .favorite-arabic, .font-indopak .adhkar-arabic, .font-indopak .hadith-arabic, .font-indopak .suggested-ayah-arabic, .font-indopak #duaa-arabic, .font-indopak .arabic { 
     font-family: 'Amiri', serif !important; 
     font-weight: 700 !important; 
 }
-.font-standard .ayah-arabic, .font-standard .arabic-text, .font-standard #hadith-arabic, .font-standard #hifdh-arabic, .font-standard .sunnah-arabic, .font-standard .favorite-arabic, .font-standard .adhkar-arabic, .font-standard .hadith-arabic, .font-standard .suggested-ayah-arabic, .font-standard .arabic { 
+.font-standard .ayah-arabic, .font-standard .arabic-text, .font-standard #hadith-arabic, .font-standard #hifdh-arabic, .font-standard .sunnah-arabic, .font-standard .favorite-arabic, .font-standard .adhkar-arabic, .font-standard .hadith-arabic, .font-standard .suggested-ayah-arabic, .font-standard #duaa-arabic, .font-standard .arabic { 
     font-family: 'Segoe UI', system-ui, sans-serif !important; 
 }
 
 /* Arabic Size Apply */
-.size-small .ayah-arabic, .size-small .arabic-text, .size-small #hadith-arabic, .size-small #hifdh-arabic, .size-small .favorite-arabic, .size-small .adhkar-arabic, .size-small .hadith-arabic { font-size: 1.2rem !important; }
-.size-medium .ayah-arabic, .size-medium .arabic-text, .size-medium #hadith-arabic, .size-medium #hifdh-arabic, .size-medium .favorite-arabic, .size-medium .adhkar-arabic, .size-medium .hadith-arabic { font-size: 1.5rem !important; }
-.size-large .ayah-arabic, .size-large .arabic-text, .size-large #hadith-arabic, .size-large #hifdh-arabic, .size-large .favorite-arabic, .size-large .adhkar-arabic, .size-large .hadith-arabic { font-size: 2.1rem !important; }
-.size-extra-large .ayah-arabic, .size-extra-large .arabic-text, .size-extra-large #hadith-arabic, .size-extra-large #hifdh-arabic, .size-extra-large .favorite-arabic, .size-extra-large .adhkar-arabic, .size-extra-large .hadith-arabic { font-size: 2.8rem !important; }
+.size-small .ayah-arabic, .size-small .arabic-text, .size-small #hadith-arabic, .size-small #hifdh-arabic, .size-small .favorite-arabic, .size-small .adhkar-arabic, .size-small .hadith-arabic, .size-small #duaa-arabic { font-size: 1.2rem !important; }
+.size-medium .ayah-arabic, .size-medium .arabic-text, .size-medium #hadith-arabic, .size-medium #hifdh-arabic, .size-medium .favorite-arabic, .size-medium .adhkar-arabic, .size-medium .hadith-arabic, .size-medium #duaa-arabic { font-size: 1.5rem !important; }
+.size-large .ayah-arabic, .size-large .arabic-text, .size-large #hadith-arabic, .size-large #hifdh-arabic, .size-large .favorite-arabic, .size-large .adhkar-arabic, .size-large .hadith-arabic, .size-large #duaa-arabic { font-size: 2.1rem !important; }
+.size-extra-large .ayah-arabic, .size-extra-large .arabic-text, .size-extra-large #hadith-arabic, .size-extra-large #hifdh-arabic, .size-extra-large .favorite-arabic, .size-extra-large .adhkar-arabic, .size-extra-large .hadith-arabic, .size-extra-large #duaa-arabic { font-size: 2.8rem !important; }
 
 /* Translation Size Apply */
-.size-small .ayah-translation, .size-small .translation-text, .size-small #hadith-translation, .size-small #hifdh-translation, .size-small .favorite-translation, .size-small .adhkar-translation, .size-small .hadith-translation { font-size: 0.8rem !important; }
-.size-medium .ayah-translation, .size-medium .translation-text, .size-medium #hadith-translation, .size-medium #hifdh-translation, .size-medium .favorite-translation, .size-medium .adhkar-translation, .size-medium .hadith-translation { font-size: 0.95rem !important; }
-.size-large .ayah-translation, .size-large .translation-text, .size-large #hadith-translation, .size-large #hifdh-translation, .size-large .favorite-translation, .size-large .adhkar-translation, .size-large .hadith-translation { font-size: 1.15rem !important; }
-.size-extra-large .ayah-translation, .size-extra-large .translation-text, .size-extra-large #hadith-translation, .size-extra-large #hifdh-translation, .size-extra-large .favorite-translation, .size-extra-large .adhkar-translation, .size-extra-large .hadith-translation { font-size: 1.35rem !important; }
+.size-small .ayah-translation, .size-small .translation-text, .size-small #hadith-translation, .size-small #hifdh-translation, .size-small .favorite-translation, .size-small .adhkar-translation, .size-small .hadith-translation, .size-small #duaa-translation { font-size: 0.8rem !important; }
+.size-medium .ayah-translation, .size-medium .translation-text, .size-medium #hadith-translation, .size-medium #hifdh-translation, .size-medium .favorite-translation, .size-medium .adhkar-translation, .size-medium .hadith-translation, .size-medium #duaa-translation { font-size: 0.95rem !important; }
+.size-large .ayah-translation, .size-large .translation-text, .size-large #hadith-translation, .size-large #hifdh-translation, .size-large .favorite-translation, .size-large .adhkar-translation, .size-large .hadith-translation, .size-large #duaa-translation { font-size: 1.15rem !important; }
+.size-extra-large .ayah-translation, .size-extra-large .translation-text, .size-extra-large #hadith-translation, .size-extra-large #hifdh-translation, .size-extra-large .favorite-translation, .size-extra-large .adhkar-translation, .size-extra-large .hadith-translation, .size-extra-large #duaa-translation { font-size: 1.35rem !important; }
 
 /* ===== RESET AND BASE STYLES ===== */
 * {
