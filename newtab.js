@@ -73,7 +73,7 @@ class SakinahNewTab {
         // Check if bookmarks API is available
         if (typeof chrome === 'undefined' || !chrome.bookmarks) {
             console.warn('Bookmarks API not available');
-            sidebarList.innerHTML = '<div class="sidebar-item">Bookmarks permission required</div>';
+            sidebarList.innerHTML = `<div class="sidebar-item">${translator.get('options.newtab.bookmarksPermission')}</div>`;
             return;
         }
 
@@ -260,10 +260,9 @@ class SakinahNewTab {
             }
 
             if (recent.length === 0) {
-                recentList.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 20px; opacity: 0.6;">' +
-                    '<p style="font-size: 0.8rem;">No recent activity found.</p>' +
-                    '<p style="font-size: 0.7rem; margin-top: 5px;">Please ensure "History" permission is granted in extension settings.</p>' +
-                '</div>';
+                recentList.innerHTML = `<div style="grid-column: 1/-1; text-align: center; padding: 20px; opacity: 0.6;">
+                    <p style="font-size: 0.8rem;">${translator.get('options.newtab.noActivity')}</p>
+                </div>`;
                 return;
             }
 
@@ -541,19 +540,20 @@ class SakinahNewTab {
         if (typeof translator !== 'undefined') {
             translator.applyLanguage();
         }
+        this.applyVisibilitySettings();
     }
 
     setupEcosystem() {
         const provider = this.settings.primaryEcosystem || 'google';
         const ecosystems = {
             google: {
-                name: 'Google',
+                name: translator.get('ecosystems.google'),
                 searchUrl: 'https://www.google.com/search',
-                searchPlaceholder: 'Search Google...',
+                searchPlaceholder: translator.get('options.newtab.searchPlaceholder'),
                 profileUrl: 'https://myaccount.google.com',
                 links: [
-                    { label: 'Gmail', url: 'https://mail.google.com' },
-                    { label: 'Images', url: 'https://www.google.com/imghp' }
+                    { label: translator.get('ecosystems.gmail'), url: 'https://mail.google.com' },
+                    { label: translator.get('ecosystems.images'), url: 'https://www.google.com/imghp' }
                 ],
                 apps: [
                     { name: 'Search', url: 'https://www.google.com', icon: 'https://www.google.com/favicon.ico' },
@@ -568,13 +568,13 @@ class SakinahNewTab {
                 ]
             },
             microsoft: {
-                name: 'Microsoft',
+                name: translator.get('ecosystems.microsoft'),
                 searchUrl: 'https://www.bing.com/search',
-                searchPlaceholder: 'Search Bing...',
+                searchPlaceholder: translator.get('options.newtab.searchPlaceholder'),
                 profileUrl: 'https://account.microsoft.com',
                 links: [
-                    { label: 'Outlook', url: 'https://outlook.live.com' },
-                    { label: 'Office', url: 'https://www.office.com' }
+                    { label: translator.get('ecosystems.outlook'), url: 'https://outlook.live.com' },
+                    { label: translator.get('ecosystems.office'), url: 'https://www.office.com' }
                 ],
                 apps: [
                     { name: 'Outlook', url: 'https://outlook.live.com', icon: 'https://res-1.cdn.office.net/assets/mail/pwa/v1/pngs/apple-touch-icon.png' },
@@ -589,13 +589,13 @@ class SakinahNewTab {
                 ]
             },
             apple: {
-                name: 'Apple',
-                searchUrl: 'https://www.google.com/search', // Apple doesn't have a search engine, usually defaults to Google
-                searchPlaceholder: 'Search with Sakinah...',
+                name: translator.get('ecosystems.apple'),
+                searchUrl: 'https://www.google.com/search', 
+                searchPlaceholder: translator.get('options.newtab.searchPlaceholder'),
                 profileUrl: 'https://appleid.apple.com',
                 links: [
-                    { label: 'iCloud Mail', url: 'https://www.icloud.com/mail' },
-                    { label: 'Photos', url: 'https://www.icloud.com/photos' }
+                    { label: translator.get('ecosystems.mail'), url: 'https://www.icloud.com/mail' },
+                    { label: translator.get('ecosystems.photos'), url: 'https://www.icloud.com/photos' }
                 ],
                 apps: [
                     { name: 'Mail', url: 'https://www.icloud.com/mail', icon: 'https://www.icloud.com/favicon.ico' },
@@ -641,7 +641,7 @@ class SakinahNewTab {
             disabledSearchInput.placeholder = data.searchPlaceholder;
         }
         if (appsBtn) {
-            appsBtn.title = `${data.name} Apps`;
+            appsBtn.title = translator.get('ecosystems.apps').replace('{name}', data.name);
         }
 
         // Update Apps Dropdown
@@ -658,7 +658,7 @@ class SakinahNewTab {
         // Update Profile Link
         const profileBtn = document.getElementById('account-profile');
         if (profileBtn) {
-            profileBtn.title = `${data.name} Account`;
+            profileBtn.title = `${data.name} ${translator.get('options.title')}`;
         }
     }
 
@@ -834,6 +834,42 @@ class SakinahNewTab {
         this.updateTheme();
     }
 
+    applyVisibilitySettings() {
+        const setVisibility = (id, show) => {
+            const el = document.getElementById(id) || document.querySelector(id);
+            if (el) el.style.display = show ? '' : 'none';
+        };
+
+        setVisibility('#account-nav', this.settings.showAccountNav);
+        setVisibility('.top-bar', this.settings.showTopBar);
+        setVisibility('.search-ai-section', this.settings.showSearch);
+        setVisibility('.utility-grid', this.settings.showRecentTabs);
+        setVisibility('#ayah-section', this.settings.showAyah);
+        setVisibility('#prayer-times-module', this.settings.showPrayerTimes);
+        setVisibility('#habit-tracker-module', this.settings.showDeeds);
+        setVisibility('#sunnah-module', this.settings.showSunnah);
+        setVisibility('.bookmarks-sidebar', this.settings.showSidebar);
+        setVisibility('#ai-chat-widget', this.settings.showAiChat);
+        setVisibility('#adhkar-module', this.settings.showAdhkar);
+        setVisibility('#quiz-module', this.settings.showQuiz);
+        
+        // Special handling for Gratitude and Duaa since they are in the same module
+        const gratitudeTitle = document.querySelector('#gratitude-module .module-title');
+        const gratitudeContainer = document.querySelector('#gratitude-module .gratitude-container');
+        const gratitudeSeparator = document.querySelector('#gratitude-module .module-separator');
+        const duaaSection = document.getElementById('duaa-of-the-day');
+        const gratitudeModule = document.getElementById('gratitude-module');
+
+        if (gratitudeTitle) gratitudeTitle.style.display = this.settings.showGratitude ? '' : 'none';
+        if (gratitudeContainer) gratitudeContainer.style.display = this.settings.showGratitude ? '' : 'none';
+        if (gratitudeSeparator) gratitudeSeparator.style.display = (this.settings.showGratitude && this.settings.showDuaa) ? '' : 'none';
+        if (duaaSection) duaaSection.style.display = this.settings.showDuaa ? '' : 'none';
+        
+        if (gratitudeModule) {
+            gratitudeModule.style.display = (this.settings.showGratitude || this.settings.showDuaa) ? '' : 'none';
+        }
+    }
+
     updateTheme() {
         const mode = this.settings.theme || 'auto';
         const body = document.body;
@@ -975,7 +1011,7 @@ class SakinahNewTab {
         const clearRecentBtn = document.getElementById('clear-recent-btn');
         if (clearRecentBtn) {
             clearRecentBtn.addEventListener('click', () => {
-                if (confirm('Are you sure you want to clear all recent tabs?')) {
+                if (confirm(translator.get('options.newtab.confirmClearRecent'))) {
                     this.clearAllRecent();
                 }
             });
@@ -989,7 +1025,7 @@ class SakinahNewTab {
                     if (!tafsirEl) return;
 
                     tafsirEl.style.display = 'block';
-                    tafsirEl.innerHTML = '<div style="text-align:center; padding:10px; opacity: 0.7;">Generating spiritual insight (EN/AR)...</div>';
+                    tafsirEl.innerHTML = `<div style="text-align:center; padding:10px; opacity: 0.7;">${translator.get('options.newtab.generatingInsight')}</div>`;
                     
                     try {
                         const explanation = await this.aiGuide.explainAyah(this.currentAyah);
@@ -999,7 +1035,7 @@ class SakinahNewTab {
                         tafsirEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     } catch (error) {
                         console.error('AI Error:', error);
-                        tafsirEl.textContent = "An error occurred while explaining the verse.";
+                        tafsirEl.textContent = translator.get('options.newtab.errorAI');
                     }
                 }
             });
@@ -1013,7 +1049,7 @@ class SakinahNewTab {
                     if (!tafsirEl) return;
 
                     tafsirEl.style.display = 'block';
-                    tafsirEl.innerHTML = '<div style="text-align:center; padding:10px; opacity: 0.7;">Generating spiritual insight (EN/AR)...</div>';
+                    tafsirEl.innerHTML = `<div style="text-align:center; padding:10px; opacity: 0.7;">${translator.get('options.newtab.generatingInsight')}</div>`;
                     
                     try {
                         const explanation = await this.aiGuide.explainHadith(this.currentHadith);
@@ -1023,7 +1059,7 @@ class SakinahNewTab {
                         tafsirEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                     } catch (error) {
                         console.error('AI Error:', error);
-                        tafsirEl.textContent = "An error occurred while explaining the hadith.";
+                        tafsirEl.textContent = translator.get('options.newtab.errorAI');
                     }
                 }
             });
@@ -1060,6 +1096,7 @@ class SakinahNewTab {
                 }
                 this.loadSettings().then(() => {
                     this.applyDisplaySettings();
+                    this.applyVisibilitySettings();
                     this.setupBackground();
                 });
             } else if (area === 'local' && changes.customWallpaperData) {
@@ -1132,11 +1169,11 @@ class SakinahNewTab {
                 }
                 this.addChatMessage('bot', response);
             } else {
-                this.addChatMessage('bot', "I'm sorry, I couldn't connect to the guidance system.");
+                this.addChatMessage('bot', translator.get('options.newtab.errorAI'));
             }
         } catch (error) {
             console.error('Chat Error:', error);
-            this.addChatMessage('bot', "An error occurred. Please try again.");
+            this.addChatMessage('bot', translator.get('options.newtab.errorAI'));
         }
     }
 
@@ -1172,28 +1209,51 @@ class SakinahNewTab {
             }
 
             // Update Day display
-            const daysAr = ['الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
-            const daysEn = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            
+            const days = translator.get('days');
             const dayIndex = now.getDay();
             const dayArEl = document.getElementById('current-day-ar');
             const dayEnEl = document.getElementById('current-day-en');
+            const isAr = translator.getCurrentLanguage() === 'ar';
             
-            if (dayArEl) dayArEl.textContent = daysAr[dayIndex];
-            if (dayEnEl) dayEnEl.textContent = daysEn[dayIndex];
+            if (dayArEl && dayEnEl) {
+                if (isAr) {
+                    dayArEl.textContent = days[dayIndex];
+                    dayArEl.style.display = 'block';
+                    dayEnEl.style.display = 'none';
+                } else {
+                    dayEnEl.textContent = days[dayIndex];
+                    dayEnEl.style.display = 'block';
+                    dayArEl.style.display = 'none';
+                }
+            }
         };
         update();
         setInterval(update, 1000);
     }
 
+    formatHijriDate(h) {
+        const isAr = translator.getCurrentLanguage() === 'ar';
+        const monthName = isAr ? h.month.ar : h.month.en;
+        return isAr 
+            ? `${h.day} ${monthName} ${h.year}هـ`
+            : `${h.day} ${monthName} ${h.year}`;
+    }
+
     async updateCalendar() {
         const now = new Date();
+        const isAr = translator.getCurrentLanguage() === 'ar';
         
         // Gregorian Date
-        const gregMonthName = now.toLocaleString('en-US', { month: 'long' });
+        const months = translator.get('months');
+        const gregMonthName = months[now.getMonth()];
         const gregDay = now.getDate();
         const gregYear = now.getFullYear();
-        document.getElementById('gregorian-date').textContent = `${gregMonthName} ${gregDay}, ${gregYear}`;
+
+        const dateStr = isAr 
+            ? `${gregDay} ${gregMonthName} ${gregYear}م`
+            : `${gregMonthName} ${gregDay}, ${gregYear}`;
+
+        document.getElementById('gregorian-date').textContent = dateStr;
 
         try {
             // Fetch Hijri date from Aladhan API
@@ -1201,16 +1261,16 @@ class SakinahNewTab {
             const month = String(now.getMonth() + 1).padStart(2, '0');
             const year = now.getFullYear();
             
-            // Note: Aladhan API endpoint is /gToH/{date}
             const apiUrl = `https://api.aladhan.com/v1/gToH/${day}-${month}-${year}?calendarMethod=UAQ`;
             const response = await fetch(apiUrl);
             const data = await response.json();
 
             if (data && data.code === 200 && data.data) {
                 const h = data.data.hijri;
-                // Display in "Day Month Year" format
-                document.getElementById('hijri-date').textContent = `${h.day} ${h.month.en} ${h.year}`;
-                console.log('Hijri date updated via API');
+                const hijriEl = document.getElementById('hijri-date');
+                if (hijriEl) {
+                    hijriEl.textContent = this.formatHijriDate(h);
+                }
             } else {
                 throw new Error('API response error');
             }
@@ -1222,13 +1282,19 @@ class SakinahNewTab {
 
     async updateCalendarFallback(now) {
         try {
-            // Hijri Date (Local Fallback)
-            const hijriFormatter = new Intl.DateTimeFormat('en-u-ca-islamic-uma-nu-latn', {
+            const isAr = translator.getCurrentLanguage() === 'ar';
+            const locale = isAr ? 'ar-SA-u-ca-islamic-uma' : 'en-u-ca-islamic-uma';
+            
+            const hijriFormatter = new Intl.DateTimeFormat(locale, {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
             });
-            document.getElementById('hijri-date').textContent = hijriFormatter.format(now);
+            
+            let formatted = hijriFormatter.format(now);
+            
+            // For Arabic, Intl might add "هـ" or similar, clean up if needed but usually it's fine
+            document.getElementById('hijri-date').textContent = formatted;
         } catch (e) {
             console.error('Hijri calendar not supported locally', e);
             document.getElementById('hijri-date').style.display = 'none';
@@ -1286,7 +1352,7 @@ class SakinahNewTab {
                 if (data.data.date && data.data.date.hijri) {
                     const h = data.data.date.hijri;
                     const hijriEl = document.getElementById('hijri-date');
-                    if (hijriEl) hijriEl.textContent = `${h.day} ${h.month.en} ${h.year}`;
+                    if (hijriEl) hijriEl.textContent = this.formatHijriDate(h);
                 }
             }
         } catch (e) {
@@ -1312,7 +1378,7 @@ class SakinahNewTab {
                 if (data.data.date && data.data.date.hijri) {
                     const h = data.data.date.hijri;
                     const hijriEl = document.getElementById('hijri-date');
-                    if (hijriEl) hijriEl.textContent = `${h.day} ${h.month.en} ${h.year}`;
+                    if (hijriEl) hijriEl.textContent = this.formatHijriDate(h);
                 }
             }
         } catch (e) {
@@ -1390,13 +1456,7 @@ class SakinahNewTab {
         habitListContainer.innerHTML = '';
 
         // Render deeds from settings
-        const deeds = this.settings.deeds || [
-            "5 Daily Prayers",
-            "Read Quran",
-            "Morning/Evening Adhkar",
-            "Act of Kindness",
-            "Give Charity"
-        ];
+        const deeds = this.settings.deeds || translator.get('defaultDeeds');
 
         deeds.forEach((deed, index) => {
             if (!deed) return;
@@ -1451,8 +1511,9 @@ class SakinahNewTab {
             history[today] = text;
             await chrome.storage.local.set({ gratitudeHistory: history });
             
-            saveBtn.textContent = 'Saved! ✨';
-            setTimeout(() => { saveBtn.textContent = 'Save Entry'; }, 2000);
+            const originalText = saveBtn.textContent;
+            saveBtn.textContent = translator.get('options.newtab.saved');
+            setTimeout(() => { saveBtn.textContent = originalText; }, 2000);
         });
 
         const updateHistoryUI = () => {
@@ -1460,7 +1521,7 @@ class SakinahNewTab {
             const sortedDates = Object.keys(history).sort((a, b) => new Date(b) - new Date(a));
             
             if (sortedDates.length === 0) {
-                historyList.innerHTML = '<div style="text-align: center; opacity: 0.5; padding: 20px;">No entries yet. Start writing today!</div>';
+                historyList.innerHTML = `<div style="text-align: center; opacity: 0.5; padding: 20px;">${translator.get('options.newtab.noHistory')}</div>`;
                 return;
             }
 
@@ -1517,58 +1578,8 @@ class SakinahNewTab {
     }
 
     loadSunnahOfDay() {
-        const sunnahs = [
-            { 
-                arabic: 'السواك عند كل صلاة',
-                title: 'Using the Siwak', 
-                description: 'استخدام السواك قبل كل صلاة للحفاظ على الطهارة.\nUsing the Siwak before every Salah to maintain purity.' 
-            },
-            { 
-                arabic: 'التبسم في وجه أخيك',
-                title: 'Smiling', 
-                description: 'التبسم في وجه الآخرين صدقة.\nSmiling at others is a form of charity (Sadaqah).' 
-            },
-            { 
-                arabic: 'النوم على الشق الأيمن',
-                title: 'Sleeping on the Right', 
-                description: 'النوم على الجانب الأيمن اتباعاً للسنة النبوية.\nSleeping on your right side following the prophetic tradition.' 
-            },
-            { 
-                arabic: 'التسمية عند دخول البيت',
-                title: 'Bismillah upon Entering', 
-                description: 'قول بسم الله عند دخول المنزل لجلب البركة.\nSaying Bismillah when entering your home for barakah.' 
-            },
-            { 
-                arabic: 'الوضوء قبل النوم',
-                title: 'Wudu before Sleep', 
-                description: 'الوضوء قبل الذهاب إلى الفراش للبقاء على طهارة.\nPerforming Wudu before going to bed to stay in a state of purity.' 
-            },
-            { 
-                arabic: 'الشرب جالساً',
-                title: 'Drinking while Sitting', 
-                description: 'شرب الماء جالساً وعلى ثلاث دفعات.\nDrinking water while sitting and in three breaths.' 
-            },
-            { 
-                arabic: 'البدء باليمين',
-                title: 'Starting with the Right', 
-                description: 'البدء دائماً بالجانب الأيمن عند اللبس أو دخول المسجد.\nAlways starting with the right side when dressing or entering the Masjid.' 
-            },
-            { 
-                arabic: 'إفشاء السلام',
-                title: 'Spreading Salaam', 
-                description: 'إلقاء السلام على من تعرف ومن لا تعرف.\nOffering Salaam to those you know and those you do not know.' 
-            },
-            { 
-                arabic: 'إماطة الأذى عن الطريق',
-                title: 'Removing Harm', 
-                description: 'إزالة الأذى عن الطريق شعبة من شعب الإيمان.\nRemoving a harmful object from the path is a branch of faith.' 
-            },
-            { 
-                arabic: 'التسميت عند العطاس',
-                title: 'Sneezing Etiquette', 
-                description: 'قول الحمد لله بعد العطاس واتباع سنن الاستجابة.\nSaying Alhamdulillah after sneezing and following the sunnah responses.' 
-            }
-        ];
+        const sunnahs = translator.get('sunnahs');
+        if (!sunnahs || !Array.isArray(sunnahs)) return;
 
         const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
         const sunnah = sunnahs[dayOfYear % sunnahs.length];
@@ -1652,7 +1663,12 @@ class SakinahNewTab {
                 translationEl.style.transition = 'opacity 0.8s ease';
                 translationEl.style.opacity = 1;
             }
-            if (referenceEl) referenceEl.textContent = `${ayah.surah} ${ayah.surahNumber}:${ayah.ayahNumber}`;
+
+            const surahName = (translator.getCurrentLanguage() === 'ar' && this.hifdhMeta && this.hifdhMeta.surahNames)
+                ? this.hifdhMeta.surahNames[ayah.surahNumber - 1]
+                : ayah.surah;
+
+            if (referenceEl) referenceEl.textContent = `${surahName} ${ayah.surahNumber}:${ayah.ayahNumber}`;
             if (themeEl) themeEl.textContent = ayah.theme || '';
             
             if (tafsirEl) {
@@ -1714,7 +1730,7 @@ class SakinahNewTab {
             if (btn) {
                 btn.classList.remove('playing');
                 const text = translator.get('hifdh.listen');
-                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> ${text}`;
+                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> <span>${text}</span>`;
             }
             return;
         }
@@ -1729,7 +1745,7 @@ class SakinahNewTab {
         if (btn) {
             btn.classList.add('playing');
             const text = translator.get('common.stop');
-            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> ${text}`;
+            btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> <span>${text}</span>`;
         }
 
         this.audio = new Audio(audioUrl);
@@ -1748,7 +1764,7 @@ class SakinahNewTab {
             if (btn) {
                 btn.classList.remove('playing');
                 const text = translator.get('hifdh.listen');
-                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> ${text}`;
+                btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> <span>${text}</span>`;
             }
         };
     }
@@ -1863,7 +1879,10 @@ class SakinahNewTab {
 
         if (!correctHalf) return;
 
-        questionEl.innerHTML = `<div style="font-size: 0.8rem; color: var(--primary); margin-bottom: 5px;">Complete the verse (${surah.name || 'Surah ' + surah.number} ${ayah.numberInSurah}):</div><div style="font-family: 'Amiri', serif; font-size: 1.3rem; direction: rtl;">${promptText}...</div>`;
+        const quizPrompt = translator.get('hifdh.quizPrompt');
+        const surahLabel = translator.get('ayah.surah');
+        
+        questionEl.innerHTML = `<div style="font-size: 0.8rem; color: var(--primary); margin-bottom: 5px;">${quizPrompt} (${surahLabel} ${surah.name || surah.number} ${ayah.numberInSurah}):</div><div style="font-family: 'Amiri', serif; font-size: 1.3rem; direction: rtl;">${promptText}...</div>`;
         optionsEl.innerHTML = '';
         feedbackEl.style.display = 'none';
 
@@ -1910,13 +1929,13 @@ class SakinahNewTab {
                 if (opt.correct) {
                     btn.style.background = 'rgba(40, 167, 69, 0.2)';
                     btn.style.borderColor = '#28a745';
-                    feedbackEl.textContent = `✨ Correct! MashaAllah.`;
+                    feedbackEl.textContent = `✨ ${translator.get('hifdh.excellentMashallah')}`;
                     feedbackEl.style.background = 'rgba(212, 237, 218, 0.8)';
                     feedbackEl.style.color = '#155724';
                 } else {
                     btn.style.background = 'rgba(220, 53, 69, 0.2)';
                     btn.style.borderColor = '#dc3545';
-                    feedbackEl.textContent = `💡 The correct completion was: ${correctHalf}`;
+                    feedbackEl.textContent = `💡 ${translator.get('hifdh.notQuiteCorrect')}`;
                     feedbackEl.style.background = 'rgba(248, 215, 218, 0.8)';
                     feedbackEl.style.color = '#721c24';
                 }

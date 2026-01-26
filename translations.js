@@ -153,73 +153,193 @@ const TRANSLATIONS = {
                 dailyQuiz: "Daily Quiz",
                 dailyAdhkar: "Daily Adhkar",
                 favorites: "Favorites",
-                recentTabs: "Recent Tabs"
-            },
-            
-            // Notification Settings
-            notificationSection: "Notification Schedule",
-            enableNotifications: "Enable notifications",
-            notificationType: "Notification Type",
-            intervalBased: "Interval-based",
-            customTimes: "Custom times",
-            both: "Both",
-            notificationInterval: "Notification Interval",
-            minutes: "minutes",
-            customTimesLabel: "Custom Notification Times",
-            addTime: "Add Time",
-            removeTime: "Remove",
-            quietHours: "Quiet Hours",
-            quietStart: "Start",
-            quietEnd: "End",
-            
-            // Display Settings
-            displaySection: "Display Settings",
-            showArabic: "Show Arabic text",
-            showTranslation: "Show English translation",
-            showSurahInfo: "Show Surah information",
-            fontSize: "Font Size",
-            small: "Small",
-            medium: "Medium",
-            large: "Large",
-            
-            // Recitation Settings
-            recitationSection: "Recitation Settings",
-            reciter: "Reciter",
-            
-            // AI Guide Settings
-            aiSection: "AI Guide Preferences",
-            aiAlwaysEnabled: "Advanced AI analysis with Groq API is always enabled for enhanced emotion analysis and accurate Ayah suggestions.",
-            detailedExplanations: "Show detailed explanations",
-            contextHistory: "Remember conversation context",
-            responseStyle: "Response Style",
-            concise: "Concise",
-            detailed: "Detailed",
-            scholarly: "Scholarly",
-            explanationLanguage: "Explanation Language",
-            english: "English",
-            arabic: "العربية (Arabic)",
-            
-            // Privacy Settings
-            privacySection: "Privacy Settings",
-            offlineMode: "Offline mode (local AI only)",
-            anonymousUsage: "Anonymous usage statistics",
-            
-            // Actions
-            saveSettings: "Save Settings",
-            exportSettings: "Export Settings",
-            importSettings: "Import Settings",
-            resetSettings: "Reset to Defaults",
-            showOnboarding: "Show Onboarding",
-            settingsSaved: "Settings saved successfully!",
-            settingsReset: "Settings reset to defaults",
-            
-            // Language Settings
-            languageSection: "Language Settings",
-            interfaceLanguage: "Interface Language",
-            changeLanguage: "Change Language",
+                recentTabs: "Recent Tabs",
+            prayerTimes: "Prayer Times",
+            dailyDeeds: "Daily Deeds",
+            sunnahOfDay: "Sunnah of the Day",
+            gratitudeJournal: "Gratitude Journal",
+            duaaOfDay: "Duaa of the Day",
+            adhkarHadith: "Adhkar & Hadith",
+            quiz: "Quiz",
+            bookmarksBar: "Bookmarks Bar",
+            otherBookmarks: "Other Bookmarks",
+            searchBookmarks: "Search bookmarks...",
+            clearAll: "Clear All",
+            gratitudePlaceholder: "What are you grateful for today? (Alhamdulillah for...)",
+            history: "History",
+            saveEntry: "Save Entry",
+            saved: "Saved! ✨",
+            loadingDeeds: "Loading deeds...",
+            noActivity: "No recent activity found.",
+            noHistory: "No entries yet. Start writing today!",
+            bookmarksPermission: "Bookmarks permission required",
+            confirmClearRecent: "Are you sure you want to clear all recent tabs?",
+            generatingInsight: "Generating spiritual insight...",
+            errorAI: "An error occurred during analysis.",
+            aiGuideTitle: "Sakinah Guide",
+            aiWelcome: "Assalamu Alaikum! I'm Sakinah, your spiritual guide. How can I help you find peace today?",
+            explainHadith: "Explain Hadith",
+            refreshContent: "Refresh Content",
+            customizeWallpaper: "Customize Wallpaper",
+            refreshWallpaper: "Refresh Wallpaper",
+            gratitudeHistory: "Gratitude History",
+            downloadJournal: "Download Journal (.txt)",
+            imageUrl: "Image URL",
+            or: "— OR —",
+            uploadDevice: "Upload from device",
         },
+
+        // Notification Sections
+        notificationSection: "Notification Schedule",
+        enableNotifications: "Enable notifications",
+        notificationType: "Notification Type",
+        intervalBased: "Interval-based",
+        customTimes: "Custom times",
+        both: "Both",
+        notificationInterval: "Notification Interval",
+        minutes: "minutes",
+        customTimesLabel: "Custom Notification Times",
+        addTime: "Add Time",
+        removeTime: "Remove",
+        quietHours: "Quiet Hours",
+        quietStart: "Start",
+        quietEnd: "End",
         
-        // Notification Popup
+        // Display Settings
+        displaySection: "Display Settings",
+        showArabic: "Show Arabic text",
+        showTranslation: "Show English translation",
+        showSurahInfo: "Show Surah information",
+        fontSize: "Font Size",
+        small: "Small",
+        medium: "Medium",
+        large: "Large",
+        
+        // Recitation Settings
+        recitationSection: "Recitation Settings",
+        reciter: "Reciter",
+        
+        // AI Guide Settings
+        aiSection: "AI Guide Preferences",
+        aiAlwaysEnabled: "Advanced AI analysis with Groq API is always enabled for enhanced emotion analysis and accurate Ayah suggestions.",
+        detailedExplanations: "Show detailed explanations",
+        contextHistory: "Remember conversation context",
+        responseStyle: "Response Style",
+        concise: "Concise",
+        detailed: "Detailed",
+        scholarly: "Scholarly",
+        explanationLanguage: "Explanation Language",
+        english: "English",
+        arabic: "العربية (Arabic)",
+        
+        // Privacy Settings
+        privacySection: "Privacy Settings",
+        offlineMode: "Offline mode (local AI only)",
+        anonymousUsage: "Anonymous usage statistics",
+        
+        // Actions
+        saveSettings: "Save Settings",
+        exportSettings: "Export Settings",
+        importSettings: "Import Settings",
+        resetSettings: "Reset to Defaults",
+        showOnboarding: "Show Onboarding",
+        settingsSaved: "Settings saved successfully!",
+        settingsReset: "Settings reset to defaults",
+        
+        // Language Settings
+        languageSection: "Language Settings",
+        interfaceLanguage: "Interface Language",
+        changeLanguage: "Change Language",
+    },
+
+    ecosystems: {
+        google: "Google",
+        microsoft: "Microsoft",
+        apple: "Apple",
+        apps: "{name} Apps",
+        gmail: "Gmail",
+        images: "Images",
+        outlook: "Outlook",
+        office: "Office",
+        mail: "Mail",
+        photos: "Photos"
+    },
+
+    prayers: {
+        fajr: "Fajr",
+        sunrise: "Sunrise",
+        dhuhr: "Dhuhr",
+        asr: "Asr",
+        maghrib: "Maghrib",
+        isha: "Isha"
+    },
+
+    months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+
+    days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
+    defaultDeeds: [
+        "5 Daily Prayers",
+        "Read Quran",
+        "Morning/Evening Adhkar",
+        "Act of Kindness",
+        "Give Charity"
+    ],
+
+    sunnahs: [
+        { 
+            arabic: 'السواك عند كل صلاة',
+            title: 'Using the Siwak', 
+            description: 'Using the Siwak before every Salah to maintain purity.' 
+        },
+        { 
+            arabic: 'التبسم في وجه أخيك',
+            title: 'Smiling', 
+            description: 'Smiling at others is a form of charity (Sadaqah).' 
+        },
+        { 
+            arabic: 'النوم على الشق الأيمن',
+            title: 'Sleeping on the Right', 
+            description: 'Sleeping on your right side following the prophetic tradition.' 
+        },
+        { 
+            arabic: 'التسمية عند دخول البيت',
+            title: 'Bismillah upon Entering', 
+            description: 'Saying Bismillah when entering your home for barakah.' 
+        },
+        { 
+            arabic: 'الوضوء قبل النوم',
+            title: 'Wudu before Sleep', 
+            description: 'Performing Wudu before going to bed to stay in a state of purity.' 
+        },
+        { 
+            arabic: 'الشرب جالساً',
+            title: 'Drinking while Sitting', 
+            description: 'Drinking water while sitting and in three breaths.' 
+        },
+        { 
+            arabic: 'البدء باليمين',
+            title: 'Starting with the Right', 
+            description: 'Always starting with the right side when dressing or entering the Masjid.' 
+        },
+        { 
+            arabic: 'إفشاء السلام',
+            title: 'Spreading Salaam', 
+            description: 'Offering Salaam to those you know and those you do not know.' 
+        },
+        { 
+            arabic: 'إماطة الأذى عن الطريق',
+            title: 'Removing Harm', 
+            description: 'Removing a harmful object from the path is a branch of faith.' 
+        },
+        { 
+            arabic: 'التسميت عند العطاس',
+            title: 'Sneezing Etiquette', 
+            description: 'Saying Alhamdulillah after sneezing and following the sunnah responses.' 
+        }
+    ],
+    
+    // Notification Popup
         notification: {
             title: "Sakinah - Ayah of the moment",
             openExtension: "Open Extension",
@@ -437,71 +557,193 @@ const TRANSLATIONS = {
                 dailyQuiz: "اختبار اليوم",
                 dailyAdhkar: "أذكار اليوم",
                 favorites: "المفضلة",
-                recentTabs: "علامات التبويب الأخيرة"
-            },
-            
-            // Notification Settings
-            notificationSection: "إعدادات الإشعارات",
-            enableNotifications: "تفعيل الإشعارات",
-            notificationType: "نوع الإشعار",
-            intervalBased: "على فترات زمنية",
-            customTimes: "أوقات مخصصة",
-            both: "كلاهما",
-            notificationInterval: "الفترة الزمنية للإشعارات",
-            minutes: "دقيقة",
-            customTimesLabel: "أوقات الإشعارات المخصصة",
-            addTime: "إضافة وقت",
-            removeTime: "إزالة",
-            quietHours: "ساعات الهدوء",
-            quietStart: "البداية",
-            quietEnd: "النهاية",
-            
-            // Display Settings
-            displaySection: "إعدادات العرض",
-            showArabic: "عرض النص العربي",
-            showTranslation: "عرض الترجمة الإنجليزية",
-            showSurahInfo: "عرض معلومات السورة",
-            fontSize: "حجم الخط",
-            small: "صغير",
-            medium: "متوسط",
-            large: "كبير",
-            
-            // Recitation Settings
-            recitationSection: "إعدادات التلاوة",
-            reciter: "القارئ",
-            
-            // AI Guide Settings
-            aiSection: "تفضيلات المرشد الذكي",
-            aiAlwaysEnabled: "التحليل المتقدم بالذكاء الاصطناعي (Groq API) مفعّل دائماً لتحليل أفضل للمشاعر واقتراحات دقيقة للآيات.",
-            detailedExplanations: "عرض شروحات تفصيلية",
-            contextHistory: "تذكر سياق المحادثة",
-            responseStyle: "أسلوب الرد",
-            concise: "موجز",
-            detailed: "تفصيلي",
-            scholarly: "علمي",
-            explanationLanguage: "لغة الشرح",
-            english: "English (الإنجليزية)",
-            arabic: "العربية",
-            
-            // Privacy Settings
-            privacySection: "إعدادات الخصوصية",
-            offlineMode: "الوضع غير المتصل (ذكاء اصطناعي محلي فقط)",
-            anonymousUsage: "إحصائيات الاستخدام المجهولة",
-            
-            // Actions
-            saveSettings: "حفظ الإعدادات",
-            exportSettings: "تصدير الإعدادات",
-            importSettings: "استيراد الإعدادات",
-            resetSettings: "إعادة تعيين إلى الافتراضي",            showOnboarding: "عرض البداية",            settingsSaved: "تم حفظ الإعدادات بنجاح!",
-            settingsReset: "تم إعادة تعيين الإعدادات إلى الافتراضي",
-            
-            // Language Settings
-            languageSection: "إعدادات اللغة",
-            interfaceLanguage: "لغة الواجهة",
-            changeLanguage: "تغيير اللغة",
+                recentTabs: "علامات التبويب الأخيرة",
+            prayerTimes: "مواقيت الصلاة",
+            dailyDeeds: "أعمال اليوم",
+            sunnahOfDay: "سنة اليوم",
+            gratitudeJournal: "مذكرات الامتنان",
+            duaaOfDay: "دعاء اليوم",
+            adhkarHadith: "الأذكار والأحاديث",
+            quiz: "اختبار",
+            bookmarksBar: "شريط الإشارات",
+            otherBookmarks: "إشارات أخرى",
+            searchBookmarks: "البحث في الإشارات...",
+            clearAll: "مسح الكل",
+            gratitudePlaceholder: "ما الذي تمتن له اليوم؟ (الحمد لله على...)",
+            history: "السجل",
+            saveEntry: "حفظ",
+            saved: "تم الحفظ! ✨",
+            loadingDeeds: "جاري تحميل الأعمال...",
+            noActivity: "لم يتم العثور على نشاط مؤخراً.",
+            noHistory: "لا توجد مدخلات بعد. ابدأ الكتابة اليوم!",
+            bookmarksPermission: "مطلوب إذن الوصول إلى الإشارات المرجعية",
+            confirmClearRecent: "هل أنت متأكد من مسح جميع علامات التبويب الأخيرة؟",
+            generatingInsight: "جاري توليد رؤية روحية...",
+            errorAI: "حدث خطأ أثناء التحليل.",
+            aiGuideTitle: "مرشد سكينة",
+            aiWelcome: "السلام عليكم! أنا سكينة، مرشدك الروحي. كيف يمكنني مساعدتك في العثور على السلام اليوم؟",
+            explainHadith: "شرح الحديث",
+            refreshContent: "تحديث المحتوى",
+            customizeWallpaper: "تخصيص الخلفية",
+            refreshWallpaper: "تحديث الخلفية",
+            gratitudeHistory: "سجل الامتنان",
+            downloadJournal: "تحميل المذكرات (ملف نصي)",
+            imageUrl: "رابط الصورة",
+            or: "— أو —",
+            uploadDevice: "رفع من الجهاز",
         },
+
+        // Notification Settings
+        notificationSection: "إعدادات الإشعارات",
+        enableNotifications: "تفعيل الإشعارات",
+        notificationType: "نوع الإشعار",
+        intervalBased: "على فترات زمنية",
+        customTimes: "أوقات مخصصة",
+        both: "كلاهما",
+        notificationInterval: "الفترة الزمنية للإشعارات",
+        minutes: "دقيقة",
+        customTimesLabel: "أوقات الإشعارات المخصصة",
+        addTime: "إضافة وقت",
+        removeTime: "إزالة",
+        quietHours: "ساعات الهدوء",
+        quietStart: "البداية",
+        quietEnd: "النهاية",
         
-        // Notification Popup
+        // Display Settings
+        displaySection: "إعدادات العرض",
+        showArabic: "عرض النص العربي",
+        showTranslation: "عرض الترجمة الإنجليزية",
+        showSurahInfo: "عرض معلومات السورة",
+        fontSize: "حجم الخط",
+        small: "صغير",
+        medium: "متوسط",
+        large: "كبير",
+        
+        // Recitation Settings
+        recitationSection: "إعدادات التلاوة",
+        reciter: "القارئ",
+        
+        // AI Guide Settings
+        aiSection: "تفضيلات المرشد الذكي",
+        aiAlwaysEnabled: "التحليل المتقدم بالذكاء الاصطناعي (Groq API) مفعّل دائماً لتحليل أفضل للمشاعر واقتراحات دقيقة للآيات.",
+        detailedExplanations: "عرض شروحات تفصيلية",
+        contextHistory: "تذكر سياق المحادثة",
+        responseStyle: "أسلوب الرد",
+        concise: "موجز",
+        detailed: "تفصيلي",
+        scholarly: "علمي",
+        explanationLanguage: "لغة الشرح",
+        english: "English (الإنجليزية)",
+        arabic: "العربية",
+        
+        // Privacy Settings
+        privacySection: "إعدادات الخصوصية",
+        offlineMode: "الوضع غير المتصل (ذكاء اصطناعي محلي فقط)",
+        anonymousUsage: "إحصائيات الاستخدام المجهولة",
+        
+        // Actions
+        saveSettings: "حفظ الإعدادات",
+        exportSettings: "تصدير الإعدادات",
+        importSettings: "استيراد الإعدادات",
+        resetSettings: "إعادة تعيين إلى الافتراضي",
+        showOnboarding: "عرض البداية",
+        settingsSaved: "تم حفظ الإعدادات بنجاح!",
+        settingsReset: "تم إعادة تعيين الإعدادات إلى الافتراضي",
+        
+        // Language Settings
+        languageSection: "إعدادات اللغة",
+        interfaceLanguage: "لغة الواجهة",
+        changeLanguage: "تغيير اللغة",
+    },
+
+    ecosystems: {
+        google: "جوجل",
+        microsoft: "مايكروسوفت",
+        apple: "أبل",
+        apps: "تطبيقات {name}",
+        gmail: "جي ميل",
+        images: "صور",
+        outlook: "أوتلوك",
+        office: "أوفيس",
+        mail: "البريد",
+        photos: "الصور"
+    },
+
+    prayers: {
+        fajr: "الفجر",
+        sunrise: "الشروق",
+        dhuhr: "الظهر",
+        asr: "العصر",
+        maghrib: "المغرب",
+        isha: "العشاء"
+    },
+
+    months: ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+
+    days: ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"],
+
+    defaultDeeds: [
+        "الصلوات الخمس",
+        "قراءة القرآن",
+        "أذكار الصباح والمساء",
+        "فعل خير",
+        "تصدق"
+    ],
+
+    sunnahs: [
+        { 
+            arabic: 'السواك عند كل صلاة',
+            title: 'استخدام السواك', 
+            description: 'استخدام السواك قبل كل صلاة للحفاظ على طهارة الفم.' 
+        },
+        { 
+            arabic: 'التبسم في وجه أخيك',
+            title: 'التبسم', 
+            description: 'التبسم في وجه الآخرين صدقة تؤجر عليها.' 
+        },
+        { 
+            arabic: 'النوم على الشق الأيمن',
+            title: 'النوم على الجانب الأيمن', 
+            description: 'النوم على الجانب الأيمن اتباعاً للسنة النبوية الشريفة.' 
+        },
+        { 
+            arabic: 'التسمية عند دخول البيت',
+            title: 'البسملة عند الدخول', 
+            description: 'قول بسم الله عند دخول المنزل لجلب البركة وطرد الشيطان.' 
+        },
+        { 
+            arabic: 'الوضوء قبل النوم',
+            title: 'الوضوء قبل النوم', 
+            description: 'الوضوء قبل الذهاب إلى الفراش للبقاء على طهارة طوال الليل.' 
+        },
+        { 
+            arabic: 'الشرب جالساً',
+            title: 'الشرب جالساً', 
+            description: 'شرب الماء جالساً وعلى ثلاث دفعات كما كان يفعل النبي ﷺ.' 
+        },
+        { 
+            arabic: 'البدء باليمين',
+            title: 'البدء باليمين', 
+            description: 'البدء دائماً بالجانب الأيمن عند اللبس أو دخول المسجد أو العمل.' 
+        },
+        { 
+            arabic: 'إفشاء السلام',
+            title: 'إفشاء السلام', 
+            description: 'إلقاء السلام على من تعرف ومن لا تعرف لنشر المحبة.' 
+        },
+        { 
+            arabic: 'إماطة الأذى عن الطريق',
+            title: 'إماطة الأذى', 
+            description: 'إزالة الأذى عن الطريق شعبة من شعب الإيمان.' 
+        },
+        { 
+            arabic: 'التسميت عند العطاس',
+            title: 'آداب العطاس', 
+            description: 'قول الحمد لله بعد العطاس واتباع هدي النبي ﷺ في الرد.' 
+        }
+    ],
+    
+    // Notification Popup
         notification: {
             title: "سكينة - آية اللحظة",
             openExtension: "فتح الإضافة",

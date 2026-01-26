@@ -75,6 +75,18 @@ class SakinahOptions {
         document.getElementById('reciter').value = this.settings.reciter || 'ar.alafasy';
         document.getElementById('show-adhkar').checked = this.settings.showAdhkar;
         document.getElementById('show-quiz').checked = this.settings.showQuiz;
+        document.getElementById('show-account-nav').checked = this.settings.showAccountNav;
+        document.getElementById('show-top-bar').checked = this.settings.showTopBar;
+        document.getElementById('show-search').checked = this.settings.showSearch;
+        document.getElementById('show-recent-tabs').checked = this.settings.showRecentTabs;
+        document.getElementById('show-ayah').checked = this.settings.showAyah;
+        document.getElementById('show-prayer-times').checked = this.settings.showPrayerTimes;
+        document.getElementById('show-deeds').checked = this.settings.showDeeds;
+        document.getElementById('show-sunnah').checked = this.settings.showSunnah;
+        document.getElementById('show-gratitude').checked = this.settings.showGratitude;
+        document.getElementById('show-duaa').checked = this.settings.showDuaa;
+        document.getElementById('show-sidebar').checked = this.settings.showSidebar;
+        document.getElementById('show-ai-chat').checked = this.settings.showAiChat;
         document.getElementById('ayah-rotation').value = this.settings.ayahRotation;
 
         // Prayer
@@ -279,6 +291,18 @@ class SakinahOptions {
             reciter: document.getElementById('reciter').value,
             showAdhkar: document.getElementById('show-adhkar').checked,
             showQuiz: document.getElementById('show-quiz').checked,
+            showAccountNav: document.getElementById('show-account-nav').checked,
+            showTopBar: document.getElementById('show-top-bar').checked,
+            showSearch: document.getElementById('show-search').checked,
+            showRecentTabs: document.getElementById('show-recent-tabs').checked,
+            showAyah: document.getElementById('show-ayah').checked,
+            showPrayerTimes: document.getElementById('show-prayer-times').checked,
+            showDeeds: document.getElementById('show-deeds').checked,
+            showSunnah: document.getElementById('show-sunnah').checked,
+            showGratitude: document.getElementById('show-gratitude').checked,
+            showDuaa: document.getElementById('show-duaa').checked,
+            showSidebar: document.getElementById('show-sidebar').checked,
+            showAiChat: document.getElementById('show-ai-chat').checked,
             ayahRotation: document.getElementById('ayah-rotation').value,
             prayerCity: document.getElementById('prayer-city').value,
             prayerCountry: document.getElementById('prayer-country').value,

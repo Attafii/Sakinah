@@ -644,21 +644,42 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            padding-bottom: 15px;
+            padding-bottom: 25px; /* Added more space */
             border-bottom: 1px solid var(--glass-border);
+            gap: 20px;
+        }
+
+        .time-section {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .day-section {
+            flex: 2; /* Day gets more space to prevent truncation */
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 180px;
         }
 
         .current-time {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             font-weight: 300;
             color: var(--primary-dark);
             line-height: 1;
         }
 
         .date-section {
+            flex: 1;
             text-align: right;
             font-size: 0.85rem;
             color: var(--text-secondary);
+            min-width: 150px;
+        }
+
+        [dir="rtl"] .date-section {
+            text-align: left;
         }
 
         .hijri-date {
@@ -1523,6 +1544,164 @@
                 font-size: 1.5rem;
             }
         }
+
+        /* RTL Specific Overrides */
+        [dir="rtl"] .google-nav {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .google-nav > * {
+            margin-right: 0;
+            margin-left: 10px;
+        }
+
+        [dir="rtl"] .google-nav > *:last-child {
+            margin-left: 0;
+        }
+
+        [dir="rtl"] #account-profile {
+            margin-left: 0;
+            margin-right: 10px;
+        }
+
+        [dir="rtl"] #clock {
+            direction: ltr; /* Keeping time LTR often looks better */
+        }
+
+        [dir="rtl"] .date-section {
+            text-align: left;
+        }
+
+        [dir="rtl"] .bookmarks-sidebar {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        [dir="rtl"] .sidebar-search-container {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .sidebar-search-input {
+            text-align: right;
+        }
+
+        [dir="rtl"] .sidebar-item {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        [dir="rtl"] .sidebar-item.child-item {
+            padding-left: 20px;
+            padding-right: 35px;
+        }
+
+        [dir="rtl"] .bar-input {
+            padding-left: 20px;
+            padding-right: 45px;
+            text-align: right;
+        }
+
+        [dir="rtl"] .bar-icon {
+            left: auto;
+            right: 15px;
+        }
+
+        [dir="rtl"] .module-title {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .prayer-name {
+            font-family: inherit;
+        }
+
+        [dir="rtl"] .habit-item {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+
+        [dir="rtl"] .habit-item:hover {
+            transform: translateX(-5px);
+        }
+
+        [dir="rtl"] .gratitude-save-btn {
+            align-self: flex-start;
+        }
+
+        [dir="rtl"] #duaa-source {
+            text-align: left;
+        }
+
+        [dir="rtl"] .hadith-actions {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .ai-chat-widget {
+            right: auto;
+            left: 30px;
+        }
+
+        [dir="rtl"] .ai-chat-window {
+            align-items: flex-start;
+        }
+
+        [dir="rtl"] .ai-message.bot {
+            align-self: flex-end;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 2px;
+            text-align: right;
+        }
+
+        [dir="rtl"] .ai-message.user {
+            align-self: flex-start;
+            border-bottom-right-radius: 15px;
+            border-bottom-left-radius: 2px;
+            text-align: right;
+        }
+
+        [dir="rtl"] .ai-chat-input-area {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .ai-chat-input-area input {
+            text-align: right;
+        }
+
+        [dir="rtl"] .enable-sakinah-btn {
+            right: auto;
+            left: 30px;
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] .blob-1 {
+            right: auto;
+            left: -100px;
+        }
+
+        [dir="rtl"] .blob-2 {
+            left: auto;
+            right: -100px;
+        }
+
+        [dir="rtl"] .remove-item-btn {
+            right: auto;
+            left: -4px;
+        }
+
+        [dir="rtl"] .suggested-ayah-card {
+            border-left: none;
+            border-right: 3px solid var(--primary);
+            text-align: right;
+        }
+
+        [dir="rtl"] #recite-ayah-btn {
+            flex-direction: row-reverse;
+        }
+
+        [dir="rtl"] #ayah-reference {
+            flex-direction: row-reverse;
+        }
     </style>
 </head>
 <body>
@@ -1535,14 +1714,14 @@
     <div class="bookmarks-sidebar">
         <div class="sidebar-search-container">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity: 0.6;"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-            <input type="text" id="sidebar-search" class="sidebar-search-input" placeholder="Search bookmarks...">
+            <input type="text" id="sidebar-search" class="sidebar-search-input" data-i18n-placeholder="options.newtab.searchBookmarks" placeholder="Search bookmarks...">
         </div>
         <div class="sidebar-section">
-            <div class="sidebar-title">Bookmarks Bar</div>
+            <div class="sidebar-title" data-i18n="options.newtab.bookmarksBar">Bookmarks Bar</div>
             <div id="sidebar-bookmarks-list" class="sidebar-list"></div>
         </div>
         <div class="sidebar-section" style="margin-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 20px;">
-            <div class="sidebar-title">Other Bookmarks</div>
+            <div class="sidebar-title" data-i18n="options.newtab.otherBookmarks">Other Bookmarks</div>
             <div id="sidebar-other-bookmarks-list" class="sidebar-list"></div>
         </div>
     </div>
@@ -1551,7 +1730,7 @@
     <div id="enabled-content" class="container">
         <!-- Top Right Actions -->
         <div style="position: absolute; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px;">
-            <button id="refresh-wallpaper-btn" class="google-apps-btn" title="Refresh Wallpaper" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
+            <button id="refresh-wallpaper-btn" class="google-apps-btn" data-i18n-title="options.newtab.refreshWallpaper" title="Refresh Wallpaper" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
             </button>
         </div>
@@ -1568,13 +1747,13 @@
                     <!-- Apps will be injected here -->
                 </div>
             </div>
-            <button id="navbar-refresh-btn" class="google-apps-btn" title="Refresh Content">
+            <button id="navbar-refresh-btn" class="google-apps-btn" data-i18n-title="options.newtab.refreshContent" title="Refresh Content">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
             </button>
-            <button id="customize-wallpaper-btn" class="google-apps-btn" title="Customize Wallpaper">
+            <button id="customize-wallpaper-btn" class="google-apps-btn" data-i18n-title="options.newtab.customizeWallpaper" title="Customize Wallpaper">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </button>
-            <button id="top-settings-btn" class="google-apps-btn" title="Settings">
+            <button id="top-settings-btn" class="google-apps-btn" data-i18n-title="options.settings" title="Settings">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1-1-1.72v-.51a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
             </button>
             <button id="theme-toggle" class="google-apps-btn" title="Toggle Theme" style="margin-right: 10px;">
@@ -1589,14 +1768,14 @@
         <div class="main-card">
             <!-- Top Bar: Time & Calendar -->
             <div class="top-bar">
-                <div class="time-section" style="flex: 1;">
+                <div class="time-section">
                     <div class="current-time" id="clock">00:00</div>
                 </div>
-                <div class="day-section" style="flex: 1; text-align: center; display: flex; flex-direction: column; gap: 2px;">
+                <div class="day-section">
                     <span id="current-day-ar" style="font-family: 'Amiri', serif; font-size: 1.4rem; color: var(--primary-dark); font-weight: 700;"></span>
                     <span id="current-day-en" style="font-size: 0.85rem; color: var(--text-secondary); font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;"></span>
                 </div>
-                <div class="date-section" style="flex: 1; text-align: right;">
+                <div class="date-section">
                     <span class="hijri-date" id="hijri-date">...</span>
                     <span class="gregorian-date" id="gregorian-date">...</span>
                 </div>
@@ -1623,7 +1802,7 @@
                     <div id="recent-tabs-list" class="link-grid">
                         <!-- Recent tabs will be injected here -->
                     </div>
-                    <button id="clear-recent-btn" class="clear-all-btn">Clear All</button>
+                    <button id="clear-recent-btn" class="clear-all-btn" data-i18n="options.newtab.clearAll">Clear All</button>
                 </div>
             </div>
 
@@ -1635,7 +1814,7 @@
                     <span class="ayah-reference" id="ayah-reference"></span>
                     <span id="ayah-theme"></span>
                     <div class="ayah-actions">
-                        <button id="recite-ayah-btn" title="Recite Ayah">
+                        <button id="recite-ayah-btn" data-i18n-title="hifdh.listen" title="Recite Ayah">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
                             <span data-i18n="hifdh.listen">Recite</span>
                         </button>
@@ -1650,31 +1829,31 @@
                 <div class="module-card" id="prayer-times-module">
                     <h3 class="module-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/><path d="m12 2 4 4-4 4-4-4 4-4z"/><path d="m12 22 4-4-4-4-4 4 4 4z"/></svg>
-                        Prayer Times
+                        <span data-i18n="options.newtab.prayerTimes">Prayer Times</span>
                     </h3>
                     <div class="prayer-times-container" id="prayer-times-list">
                         <div class="prayer-time-item" id="prayer-fajr">
-                            <span class="prayer-name">Fajr</span>
+                            <span class="prayer-name" data-i18n="prayers.fajr">Fajr</span>
                             <span class="prayer-time">--:--</span>
                         </div>
                         <div class="prayer-time-item" id="prayer-sunrise">
-                            <span class="prayer-name">Sunrise</span>
+                            <span class="prayer-name" data-i18n="prayers.sunrise">Sunrise</span>
                             <span class="prayer-time">--:--</span>
                         </div>
                         <div class="prayer-time-item" id="prayer-dhuhr">
-                            <span class="prayer-name">Dhuhr</span>
+                            <span class="prayer-name" data-i18n="prayers.dhuhr">Dhuhr</span>
                             <span class="prayer-time">--:--</span>
                         </div>
                         <div class="prayer-time-item" id="prayer-asr">
-                            <span class="prayer-name">Asr</span>
+                            <span class="prayer-name" data-i18n="prayers.asr">Asr</span>
                             <span class="prayer-time">--:--</span>
                         </div>
                         <div class="prayer-time-item" id="prayer-maghrib">
-                            <span class="prayer-name">Maghrib</span>
+                            <span class="prayer-name" data-i18n="prayers.maghrib">Maghrib</span>
                             <span class="prayer-time">--:--</span>
                         </div>
                         <div class="prayer-time-item" id="prayer-isha">
-                            <span class="prayer-name">Isha</span>
+                            <span class="prayer-name" data-i18n="prayers.isha">Isha</span>
                             <span class="prayer-time">--:--</span>
                         </div>
                     </div>
@@ -1683,18 +1862,18 @@
                 <div class="module-card" id="habit-tracker-module">
                     <h3 class="module-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                        Daily Deeds
+                        <span data-i18n="options.newtab.dailyDeeds">Daily Deeds</span>
                     </h3>
                     <div class="habit-list" id="habit-list">
                         <!-- Habits will be dynamically loaded here -->
-                        <div style="font-size: 0.8rem; opacity: 0.5; text-align: center; padding: 10px;">Loading deeds...</div>
+                        <div style="font-size: 0.8rem; opacity: 0.5; text-align: center; padding: 10px;" data-i18n="options.newtab.loadingDeeds">Loading deeds...</div>
                     </div>
                 </div>
 
                 <div class="module-card" id="sunnah-module">
                     <h3 class="module-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
-                        Sunnah of the Day
+                        <span data-i18n="options.newtab.sunnahOfDay">Sunnah of the Day</span>
                     </h3>
                     <div class="word-container">
                         <span id="sunnah-arabic" class="sunnah-arabic"></span>
@@ -1706,13 +1885,13 @@
                 <div class="module-card" id="gratitude-module">
                     <h3 class="module-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                        Gratitude Journal
+                        <span data-i18n="options.newtab.gratitudeJournal">Gratitude Journal</span>
                     </h3>
                     <div class="gratitude-container">
-                        <textarea id="gratitude-input" class="gratitude-input" placeholder="What are you grateful for today? (Alhamdulillah for...)"></textarea>
+                        <textarea id="gratitude-input" class="gratitude-input" data-i18n-placeholder="options.newtab.gratitudePlaceholder" placeholder="What are you grateful for today? (Alhamdulillah for...)"></textarea>
                         <div style="display: flex; gap: 8px; justify-content: flex-end;">
-                            <button id="view-gratitude-history-btn" class="gratitude-save-btn" style="background: rgba(0,0,0,0.05); color: var(--text-main);">History</button>
-                            <button id="save-gratitude-btn" class="gratitude-save-btn">Save Entry</button>
+                            <button id="view-gratitude-history-btn" class="gratitude-save-btn" style="background: rgba(0,0,0,0.05); color: var(--text-main);" data-i18n="options.newtab.history">History</button>
+                            <button id="save-gratitude-btn" class="gratitude-save-btn" data-i18n="options.newtab.saveEntry">Save Entry</button>
                         </div>
                     </div>
                     
@@ -1720,7 +1899,7 @@
                     <div class="module-separator" style="margin: 15px 0 10px 0;"></div>
                     <div id="duaa-of-the-day" class="duaa-container">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <span class="module-subtitle" style="font-size: 0.75rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;">Duaa of the Day</span>
+                            <span class="module-subtitle" style="font-size: 0.75rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;" data-i18n="options.newtab.duaaOfDay">Duaa of the Day</span>
                         </div>
                         <div class="duaa-content" style="text-align: center;">
                             <p id="duaa-arabic" style="font-family: 'Amiri', serif; color: var(--primary-dark); margin-bottom: 8px; direction: rtl; line-height: 1.6;"></p>
@@ -1733,7 +1912,7 @@
                 <div class="module-card" id="adhkar-module" style="display: none;">
                     <h3 class="module-title">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
-                        Adhkar & Hadith
+                        <span data-i18n="options.newtab.adhkarHadith">Adhkar & Hadith</span>
                     </h3>
                     <div class="adhkar-content">
                         <span class="adhkar-arabic" id="adhkar-arabic"></span>
@@ -1745,9 +1924,9 @@
                         <span class="hadith-translation" id="hadith-translation"></span>
                         <span class="hadith-source" id="hadith-source"></span>
                         <div class="hadith-actions" style="margin-top: 10px; display: flex; gap: 8px;">
-                            <button id="explain-hadith-btn" class="ai-button" title="Explain Hadith with AI" style="font-size: 0.7rem; padding: 4px 8px; background: rgba(114, 186, 174, 0.1); border: 1px solid var(--primary); border-radius: 4px; color: var(--primary-dark); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
+                            <button id="explain-hadith-btn" class="ai-button" data-i18n-title="options.newtab.explainHadith" title="Explain Hadith with AI" style="font-size: 0.7rem; padding: 4px 8px; background: rgba(114, 186, 174, 0.1); border: 1px solid var(--primary); border-radius: 4px; color: var(--primary-dark); cursor: pointer; display: flex; align-items: center; gap: 4px; transition: all 0.2s;">
                                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                                Explain Hadith
+                                <span data-i18n="options.newtab.explainHadith">Explain Hadith</span>
                             </button>
                         </div>
                         <div id="hadith-tafsir" class="tafsir-content" style="display: none; margin-top: 10px; padding: 10px; background: rgba(114, 186, 174, 0.05); border-left: 3px solid var(--primary); font-size: 0.8rem; line-height: 1.5; color: var(--text-color);"></div>
@@ -1758,7 +1937,7 @@
                     <h3 class="module-title" style="display: flex; justify-content: space-between; align-items: center;">
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
-                            Quiz
+                            <span data-i18n="options.newtab.quiz">Quiz</span>
                         </div>
                         <button id="refresh-quiz-btn" style="background: none; border: none; color: var(--primary-dark); cursor: pointer; padding: 2px; display: flex; align-items: center; opacity: 0.6; transition: opacity 0.2s;">
                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
@@ -1781,7 +1960,7 @@
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
                 <polyline points="9 22 9 12 15 12 15 22"/>
             </svg>
-            <span>Enable Sakinah New Tab</span>
+            <span data-i18n="options.newtab.enableSakinah">Enable Sakinah New Tab</span>
         </button>
     </div>
 
@@ -1794,17 +1973,17 @@
                         <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1-8.313-12.454z" />
                         <path d="M17.5 5.5l1 1.5l1.5 1l-1.5 1l-1 1.5l-1-1.5l-1.5-1l1.5-1z" />
                     </svg>
-                    Sakinah Guide
+                    <span data-i18n="options.newtab.aiGuideTitle">Sakinah Guide</span>
                 </div>
                 <button id="close-chat" class="close-chat">&times;</button>
             </div>
             <div id="ai-chat-messages" class="ai-chat-messages">
-                <div class="ai-message bot">
+                <div class="ai-message bot" data-i18n="options.newtab.aiWelcome">
                     Assalamu Alaikum! I'm Sakinah, your spiritual guide. How can I help you find peace today?
                 </div>
             </div>
             <div class="ai-chat-input-area">
-                <input type="text" id="ai-chat-input" placeholder="Type your message...">
+                <input type="text" id="ai-chat-input" data-i18n-placeholder="aiGuide.inputPlaceholder" placeholder="Type your message...">
                 <button id="send-chat">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
                 </button>
@@ -1821,15 +2000,15 @@
     <!-- Gratitude History Modal -->
     <div id="gratitude-modal" class="wallpaper-modal">
         <div class="wallpaper-modal-content" style="max-width: 500px; max-height: 80vh;">
-            <h3 class="wallpaper-modal-title">Gratitude History</h3>
+            <h3 class="wallpaper-modal-title" data-i18n="options.newtab.gratitudeHistory">Gratitude History</h3>
             
             <div id="gratitude-history-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin: 15px 0; padding-right: 5px;">
                 <!-- History items will be injected here -->
             </div>
 
             <div class="wallpaper-btn-group">
-                <button id="download-gratitude-btn" class="wallpaper-btn wallpaper-btn-primary">Download All (.txt)</button>
-                <button id="close-gratitude-modal-btn" class="wallpaper-btn wallpaper-btn-secondary">Close</button>
+                <button id="download-gratitude-btn" class="wallpaper-btn wallpaper-btn-primary" data-i18n="options.newtab.downloadJournal">Download All (.txt)</button>
+                <button id="close-gratitude-modal-btn" class="wallpaper-btn wallpaper-btn-secondary" data-i18n="common.close">Close</button>
             </div>
         </div>
     </div>
@@ -1837,25 +2016,25 @@
     <!-- Wallpaper Customization Modal -->
     <div id="wallpaper-modal" class="wallpaper-modal">
         <div class="wallpaper-modal-content">
-            <h3 class="wallpaper-modal-title">Customize Wallpaper</h3>
+            <h3 class="wallpaper-modal-title" data-i18n="options.newtab.customizeWallpaper">Customize Wallpaper</h3>
             
             <div class="wallpaper-option">
-                <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Image URL</label>
+                <label style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);" data-i18n="options.newtab.imageUrl">Image URL</label>
                 <input type="text" id="modal-wallpaper-url" class="wallpaper-input" placeholder="https://example.com/image.jpg">
             </div>
 
-            <div style="text-align: center; font-size: 0.7rem; color: var(--text-secondary); margin: -10px 0;">— OR —</div>
+            <div style="text-align: center; font-size: 0.7rem; color: var(--text-secondary); margin: -10px 0;" data-i18n="options.newtab.or">— OR —</div>
 
             <div class="wallpaper-option">
-                <button id="modal-upload-btn" class="wallpaper-btn wallpaper-btn-secondary">📁 Upload from device</button>
+                <button id="modal-upload-btn" class="wallpaper-btn wallpaper-btn-secondary">📁 <span data-i18n="options.newtab.uploadDevice">Upload from device</span></button>
                 <input type="file" id="modal-wallpaper-upload" accept="image/*" style="display: none;">
             </div>
 
             <div class="wallpaper-btn-group">
-                <button id="modal-clear-btn" class="wallpaper-btn wallpaper-btn-secondary">Clear</button>
-                <button id="modal-save-btn" class="wallpaper-btn wallpaper-btn-primary">Save</button>
+                <button id="modal-clear-btn" class="wallpaper-btn wallpaper-btn-secondary" data-i18n="common.clear">Clear</button>
+                <button id="modal-save-btn" class="wallpaper-btn wallpaper-btn-primary" data-i18n="common.save">Save</button>
             </div>
-            <button id="modal-close-btn" style="background: none; border: none; color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; margin-top: 5px;">Close</button>
+            <button id="modal-close-btn" style="background: none; border: none; color: var(--text-secondary); font-size: 0.8rem; cursor: pointer; margin-top: 5px;" data-i18n="common.close">Close</button>
         </div>
     </div>
 
