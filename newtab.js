@@ -54,6 +54,7 @@ class SakinahNewTab {
         this.loadBookmarks();
         this.loadRecentTabs();
         this.setupEventListeners();
+        this.initShareModal();
         this.setupChatWidget();
         this.startClock();
     }
@@ -1072,6 +1073,38 @@ class SakinahNewTab {
             });
         }
 
+        // Share Buttons
+        const shareAyahBtn = document.getElementById('share-ayah-btn');
+        if (shareAyahBtn) {
+            shareAyahBtn.addEventListener('click', () => {
+                if (this.currentAyah) {
+                    const reference = document.getElementById('ayah-reference')?.textContent || '';
+                    const text = `📖 ${this.currentAyah.arabic}\n\n✨ ${this.currentAyah.translation}\n\n📍 ${reference}\n\nShared via Sakinah`;
+                    this.handleShare(translator.get('share.dailyAyah'), text);
+                }
+            });
+        }
+
+        const shareSunnahBtn = document.getElementById('share-sunnah-btn');
+        if (shareSunnahBtn) {
+            shareSunnahBtn.addEventListener('click', () => {
+                if (this.currentHadith) {
+                    const text = `${translator.get('share.sunnahOfDay')}:\n\n📜 ${this.currentHadith.arabic}\n\n✨ ${this.currentHadith.translation}\n\n📚 Source: ${this.currentHadith.source}\n\nShared via Sakinah`;
+                    this.handleShare(translator.get('share.sunnahOfDay'), text);
+                }
+            });
+        }
+
+        const shareDuaaBtn = document.getElementById('share-duaa-btn');
+        if (shareDuaaBtn) {
+            shareDuaaBtn.addEventListener('click', () => {
+                if (this.currentDuaa) {
+                    const text = `${translator.get('share.duaaOfDay')}:\n\n🤲 ${this.currentDuaa.arabic}\n\n✨ ${this.currentDuaa.translation}\n\n📚 Source: ${this.currentDuaa.source}\n\nShared via Sakinah`;
+                    this.handleShare(translator.get('share.duaaOfDay'), text);
+                }
+            });
+        }
+
         // Listen for session changes (recently closed tabs)
         if (chrome.sessions && chrome.sessions.onChanged) {
             chrome.sessions.onChanged.addListener(() => {
@@ -1798,6 +1831,7 @@ class SakinahNewTab {
         const items = this.duaaData.duaas;
         const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
         const dailyItem = items[dayOfYear % items.length];
+        this.currentDuaa = dailyItem;
 
         const arabicEl = document.getElementById('duaa-arabic');
         const translationEl = document.getElementById('duaa-translation');
@@ -1943,6 +1977,114 @@ class SakinahNewTab {
             });
             optionsEl.appendChild(btn);
         });
+    }
+
+    async handleShare(title, text) {
+        const modal = document.getElementById('share-modal');
+        const preview = document.getElementById('share-preview-text');
+        if (modal && preview) {
+            preview.textContent = text;
+            modal.style.display = 'flex';
+            this.currentShareData = { title, text };
+        } else {
+            // Fallback to native or clipboard if modal missing
+            if (navigator.share) {
+                try {
+                    await navigator.share({ title, text });
+                } catch (e) { this.copyToClipboard(text); }
+            } else {
+                this.copyToClipboard(text);
+            }
+        }
+    }
+
+    initShareModal() {
+        const modal = document.getElementById('share-modal');
+        const closeBtn = document.getElementById('close-share-modal');
+        const backdrop = document.getElementById('share-modal-backdrop');
+        
+        const close = () => { if (modal) modal.style.display = 'none'; };
+        if (closeBtn) closeBtn.addEventListener('click', close);
+        if (backdrop) backdrop.addEventListener('click', close);
+
+        // Share Options
+        const webStoreUrl = `https://chromewebstore.google.com/detail/sakinah/${chrome.runtime.id}`;
+
+        document.getElementById('share-whatsapp')?.addEventListener('click', () => {
+            const text = encodeURIComponent(this.currentShareData.text);
+            window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+        });
+
+        document.getElementById('share-twitter')?.addEventListener('click', () => {
+            const text = encodeURIComponent(this.currentShareData.text);
+            window.open(`https://twitter.com/intent/tweet?text=${text}`, '_blank');
+        });
+
+        document.getElementById('share-telegram')?.addEventListener('click', () => {
+            const text = encodeURIComponent(this.currentShareData.text);
+            window.open(`https://t.me/share/url?url=${encodeURIComponent(webStoreUrl)}&text=${text}`, '_blank');
+        });
+
+        document.getElementById('share-instagram')?.addEventListener('click', () => {
+            // Instagram doesn't support direct text sharing via URL in browser
+            // Best UX is to copy text to clipboard and then open Instagram
+            navigator.clipboard.writeText(this.currentShareData.text).then(() => {
+                this.showToast(translator.get('share.copied_to_clipboard') + ' Redirecting to Instagram...');
+                setTimeout(() => {
+                    window.open('https://www.instagram.com/', '_blank');
+                }, 1000);
+            });
+        });
+
+        document.getElementById('share-messenger')?.addEventListener('click', () => {
+            const text = encodeURIComponent(this.currentShareData.text);
+            // Messenger share URL
+            window.open(`https://www.facebook.com/dialog/send?link=${encodeURIComponent(webStoreUrl)}&app_id=291449035973&redirect_uri=${encodeURIComponent(webStoreUrl)}&quote=${text}`, '_blank');
+        });
+
+        document.getElementById('share-copy-link')?.addEventListener('click', () => {
+            navigator.clipboard.writeText(webStoreUrl).then(() => {
+                this.showToast(translator.get('share.link_copied'));
+                close();
+            });
+        });
+
+        document.getElementById('share-native')?.addEventListener('click', async () => {
+            if (navigator.share) {
+                try {
+                    await navigator.share(this.currentShareData);
+                    close();
+                } catch (e) { console.warn('Native share failed', e); }
+            } else {
+                this.copyToClipboard(this.currentShareData.text);
+            }
+        });
+
+        document.getElementById('share-copy-full')?.addEventListener('click', () => {
+            this.copyToClipboard(this.currentShareData.text);
+            close();
+        });
+    }
+
+    copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            this.showToast(translator.get('share.copied_to_clipboard') || 'Copied to clipboard!');
+        }).catch(err => {
+            console.error('Clipboard failed:', err);
+        });
+    }
+
+    showToast(message) {
+        const toast = document.getElementById('toast-container');
+        const messageEl = document.getElementById('toast-message');
+        if (!toast || !messageEl) return;
+
+        messageEl.textContent = message;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 3000);
     }
 }
 
