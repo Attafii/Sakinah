@@ -348,6 +348,106 @@ const TRANSLATIONS = {
             arabic: 'التسميت عند العطاس',
             title: 'Sneezing Etiquette', 
             description: 'Saying Alhamdulillah after sneezing and following the sunnah responses.' 
+        },
+        { 
+            arabic: 'الأذكار بعد الصلاة',
+            title: 'Dhikr after Salah', 
+            description: 'Reciting Tasbih, Tahmid and Takbir 33 times each after every obligatory prayer.' 
+        },
+        { 
+            arabic: 'ركعتا الفجر',
+            title: 'The Two Rak\'ahs of Fajr', 
+            description: 'Observing the two Sunnah rak\'ahs before the Fajr prayer, for their immense reward.' 
+        },
+        { 
+            arabic: 'الأكل باليمين',
+            title: 'Eating with the Right Hand', 
+            description: 'Using the right hand for eating and drinking as taught by the Prophet.' 
+        },
+        { 
+            arabic: 'قراءة آية الكرسي قبل النوم',
+            title: 'Ayat al-Kursi before Sleep', 
+            description: 'Reciting Ayat al-Kursi before going to bed for divine protection during the night.' 
+        },
+        { 
+            arabic: 'صيام الاثنين والخميس',
+            title: 'Fasting Mondays & Thursdays', 
+            description: 'Fasting on these two days of the week as it was the regular practice of the Prophet ﷺ.' 
+        },
+        { 
+            arabic: 'عيادة المريض',
+            title: 'Visiting the Sick', 
+            description: 'Spending time to visit and comfort a Muslim who is ill, following the Sunnah.' 
+        },
+        { 
+            arabic: 'استخدام اليد اليمنى في الأمور الطيبة',
+            title: 'Using Right Hand for Good', 
+            description: 'Using the right hand for giving, taking, shaking hands and other noble actions.' 
+        },
+        { 
+            arabic: 'التسمية قبل الأكل',
+            title: 'Bismillah before Eating', 
+            description: 'Starting your meal with Bismillah to bring barakah to your food.' 
+        },
+        { 
+            arabic: 'قراءة سورة الكهف يوم الجمعة',
+            title: 'Surah Al-Kahf on Friday', 
+            description: 'Reading Surah Al-Kahf on Fridays for spiritual light that lasts until the following Friday.' 
+        },
+        { 
+            arabic: 'كثرة الاستغفار',
+            title: 'Seeking Forgiveness', 
+            description: 'Frequently seeking Allah\'s forgiveness through Istighfar throughout the day.' 
+        },
+        { 
+            arabic: 'تحية المسجد',
+            title: 'Tahiyatul Masjid', 
+            description: 'Offering two rak\'ahs of prayer as a greeting upon entering the Masjid.' 
+        },
+        { 
+            arabic: 'صلاة الاستخارة',
+            title: 'Istikhara Prayer', 
+            description: 'Seeking Allah\'s guidance for important life decisions through a special prayer.' 
+        },
+        { 
+            arabic: 'قراءة سورة الملك',
+            title: 'Reading Surah Al-Mulk', 
+            description: 'Reciting Surah Al-Mulk every night to seek protection from the grave\'s punishment.' 
+        },
+        { 
+            arabic: 'نفض الفراش',
+            title: 'Dusting the Bed', 
+            description: 'Dusting off the bed three times before lying down to sleep.' 
+        },
+        { 
+            arabic: 'عدم الإسراف في الماء',
+            title: 'Saving Water', 
+            description: 'Being mindful not to waste water, even when performing Wudu from a running stream.' 
+        },
+        { 
+            arabic: 'السلام على الصبيان',
+            title: 'Greeting Children', 
+            description: 'Offering Salaam to children to teach them and follow the Prophet\'s humility.' 
+        },
+        { 
+            arabic: 'ركعتا سنة الوضوء',
+            title: 'Prayer after Wudu', 
+            description: 'Observing two rak\'ahs of prayer after completing Wudu (Shukr al-Wudu).' 
+        },
+        { 
+            arabic: 'المشي إلى المسجد',
+            title: 'Walking to the Masjid', 
+            description: 'Walking to the prayer, where every step raises a degree and removes a sin.' 
+        },
+        { 
+            arabic: 'المصافحة عند اللقاء',
+            title: 'Shaking Hands', 
+            description: 'Shaking hands when meeting other Muslims to have sins forgiven.' 
+        },
+        { 
+            arabic: 'تهادوا تحابوا',
+            title: 'Exchanging Gifts', 
+            description: 'Exchanging gifts with one another to increase mutual love and affection.' 
         }
     ],
     
@@ -764,6 +864,106 @@ const TRANSLATIONS = {
             arabic: 'التسميت عند العطاس',
             title: 'آداب العطاس', 
             description: 'قول الحمد لله بعد العطاس واتباع هدي النبي ﷺ في الرد.' 
+        },
+        { 
+            arabic: 'الأذكار بعد الصلاة',
+            title: 'الأذكار بعد الصلاة', 
+            description: 'المداومة على أذكار ما بعد الصلاة (التسبيح والتحميد والتكبير).' 
+        },
+        { 
+            arabic: 'ركعتا الفجر',
+            title: 'سنة الفجر القبلية', 
+            description: 'صلاة ركعتين قبل صلاة الفجر، وهما خير من الدنيا وما فيها.' 
+        },
+        { 
+            arabic: 'الأكل باليمين',
+            title: 'الأكل باليد اليمنى', 
+            description: 'استخدام اليد اليمنى في الأكل والشرب اتباعاً لهدي النبي ﷺ.' 
+        },
+        { 
+            arabic: 'قراءة آية الكرسي قبل النوم',
+            title: 'آية الكرسي قبل النوم', 
+            description: 'قراءة آية الكرسي عند النوم للحفظ من الشيطان حتى يصبح.' 
+        },
+        { 
+            arabic: 'صيام الاثنين والخميس',
+            title: 'صيام الاثنين والخميس', 
+            description: 'الحرص على صيام يومي الاثنين والخميس من كل أسبوع.' 
+        },
+        { 
+            arabic: 'عيادة المريض',
+            title: 'زيارة المريض', 
+            description: 'زيارة المرضى والدعاء لهم بالشفاء وتخفيف آلامهم.' 
+        },
+        { 
+            arabic: 'استخدام اليد اليمنى في الأمور الطيبة',
+            title: 'التيمن في الأمور الطيبة', 
+            description: 'تفضيل اليد اليمنى في العطاء والأخذ والمصافحة وشؤون الخير.' 
+        },
+        { 
+            arabic: 'التسمية قبل الأكل',
+            title: 'التسمية قبل الطعام', 
+            description: 'قول (بسم الله) قبل البدء بالأكل لجلب البركة في الطعام.' 
+        },
+        { 
+            arabic: 'قراءة سورة الكهف يوم الجمعة',
+            title: 'سورة الكهف يوم الجمعة', 
+            description: 'قراءة سورة الكهف في يوم الجمعة لتنور للمسلم ما بين الجمعتين.' 
+        },
+        { 
+            arabic: 'كثرة الاستغفار',
+            title: 'ملازمة الاستغفار', 
+            description: 'الإكثار من قول (أستغفر الله) في جميع الأوقات لطلب المغفرة.' 
+        },
+        { 
+            arabic: 'تحية المسجد',
+            title: 'تحية المسجد', 
+            description: 'صلاة ركعتين عند دخول المسجد قبل الجلوس.' 
+        },
+        { 
+            arabic: 'صلاة الاستخارة',
+            title: 'صلاة الاستخارة', 
+            description: 'طلب الخيرة من الله تعالى في الأمور الهامة من خلال صلاة الاستخارة.' 
+        },
+        { 
+            arabic: 'قراءة سورة الملك',
+            title: 'قراءة سورة الملك', 
+            description: 'المداومة على قراءة سورة الملك كل ليلة قبل النوم للمنجاة من عذاب القبر.' 
+        },
+        { 
+            arabic: 'نفض الفراش',
+            title: 'نفض الفراش', 
+            description: 'نفض الفراش ثلاث مرات قبل الاستلقاء للنوم اتباعاً للسنة.' 
+        },
+        { 
+            arabic: 'عدم الإسراف في الماء',
+            title: 'عدم الإسراف في الماء', 
+            description: 'الاقتصاد في استخدام الماء حتى لو كان المسلم يتوضأ من نهر جارٍ.' 
+        },
+        { 
+            arabic: 'السلام على الصبيان',
+            title: 'السلام على الصبيان', 
+            description: 'إلقاء السلام على الأطفال لتعليمهم وتواضعاً كما فعل النبي ﷺ.' 
+        },
+        { 
+            arabic: 'ركعتا سنة الوضوء',
+            title: 'ركعتا سنة الوضوء', 
+            description: 'صلاة ركعتين نافلة بعد الفراغ من الوضوء مباشرة.' 
+        },
+        { 
+            arabic: 'المشي إلى المسجد',
+            title: 'المشي إلى المسجد', 
+            description: 'السير إلى الصلاة حيث تكتب بكل خطوة حسنة وتمحى بها سيئة.' 
+        },
+        { 
+            arabic: 'المصافحة عند اللقاء',
+            title: 'المصافحة عند اللقاء', 
+            description: 'مصافحة المسلم لأخيه عند اللقاء لتساقط الذنوب من بين أصابعهما.' 
+        },
+        { 
+            arabic: 'تهادوا تحابوا',
+            title: 'تبادل الهدايا', 
+            description: 'تبادل الهدايا بين الناس لنشر المحبة وتأليف القلوب.' 
         }
     ],
     

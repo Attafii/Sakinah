@@ -47,6 +47,108 @@
       "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْبُخْلِ وَالْجُبْنِ، وَضَلَعِ الدَّيْنِ، وَغَلَبَةِ الرِّجَالِ",
       "translation": "O Allah, I seek refuge with You from worry and grief, from incapacity and laziness, from cowardice and miserliness, from being heavily in debt and from being overpowered by (other) men.",
       "source": "Bukhari"
+    },
+    {
+      "id": 9,
+      "arabic": "رَبِّ زِدْنِي عِلْمًا",
+      "translation": "My Lord, increase me in knowledge.",
+      "source": "Quran 20:114"
+    },
+    {
+      "id": 10,
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ، وَمِنْ عَذَابِ جَهَنَّمَ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ",
+      "translation": "O Allah, I seek refuge in You from the punishment of the grave, and from the punishment of Hell-fire, and from the trials of life and death, and from the evil of the trial of Dajjal.",
+      "source": "Bukhari"
+    },
+    {
+      "id": 11,
+      "arabic": "رَبَّنَا آتِنَا مِن لَّدُنكَ رَحْمَةً وَهَيِّئْ لَنَا مِنْ أَمْرِنَا رَشَدًا",
+      "translation": "Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance.",
+      "source": "Quran 18:10"
+    },
+    {
+      "id": 12,
+      "arabic": "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ",
+      "translation": "O Allah, help me to remember You, to thank You, and to worship You in an excellent manner.",
+      "source": "Abu Dawud"
+    },
+    {
+      "id": 13,
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ الْجَنَّةَ وَأَعُوذُ بِكَ مِنَ النَّارِ",
+      "translation": "O Allah, I ask You for Paradise and I seek refuge in You from the Fire.",
+      "source": "Abu Dawud"
+    },
+    {
+      "id": 14,
+      "arabic": "رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ",
+      "translation": "My Lord, forgive me and accept my repentance, for You are the Acceptor of Repentance, the Merciful.",
+      "source": "Tirmidhi"
+    },
+    {
+      "id": 15,
+      "arabic": "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ",
+      "translation": "Allah is sufficient for me; there is no deity except Him. On Him I have relied, and He is the Lord of the Great Throne.",
+      "source": "Quran 9:129"
+    },
+    {
+      "id": 16,
+      "arabic": "اللَّهُمَّ انْفَعْنِي بِمَا عَلَّمْتَنِي وَعَلِّمْنِي مَا يَنْفَعُنِي وَزِدْنِي عِلْمًا",
+      "translation": "O Allah, benefit me with what You have taught me, and teach me that which will benefit me, and increase me in knowledge.",
+      "source": "Tirmidhi"
+    },
+    {
+      "id": 17,
+      "arabic": "رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِن ذُرِّيَّتِي رَبَّنَا وَتَقَبَّلْ دُعَاءِ",
+      "translation": "My Lord, make me an establisher of prayer, and [many] from my descendants. Our Lord, and accept my supplication.",
+      "source": "Quran 14:40"
+    },
+    {
+      "id": 18,
+      "arabic": "رَّبِّ اغْفِرْ وَارْحَمْ وَأَنتَ خَيْرُ الرَّاحِمِينَ",
+      "translation": "My Lord, forgive and have mercy, and You are the best of the merciful.",
+      "source": "Quran 23:118"
+    },
+    {
+      "id": 19,
+      "arabic": "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً إِنَّكَ أَنتَ الْوَهَّابُ",
+      "translation": "Our Lord, let not our hearts deviate after You have guided us and grant us from Yourself mercy. Indeed, You are the Bestower.",
+      "source": "Quran 3:8"
+    },
+    {
+      "id": 20,
+      "arabic": "اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا",
+      "translation": "O Allah, I ask You for knowledge that is of benefit, a good provision, and deeds that will be accepted.",
+      "source": "Ibn Majah"
+    },
+    {
+      "id": 21,
+      "arabic": "اللَّهُمَّ يَا مُصَرِّفَ الْقُلُوبِ صَرِّفْ قُلُوبَنَا عَلَى طَاعَتِكَ",
+      "translation": "O Allah, Director of hearts, direct our hearts to Your obedience.",
+      "source": "Muslim"
+    },
+    {
+      "id": 22,
+      "arabic": "رَبَّنَا اصْرِفْ عَنَّا عَذَابَ جَهَنَّمَ إِنَّ عَذَابَهَا كَانَ غَرَامًا",
+      "translation": "Our Lord, avert from us the punishment of Hell. Indeed, its punishment is ever adhering.",
+      "source": "Quran 25:65"
+    },
+    {
+      "id": 23,
+      "arabic": "رَبِّ هَبْ لِي حُكْمًا وَأَلْحِقْنِي بِالصَّالِحِينَ",
+      "translation": "My Lord, grant me authority and join me with the righteous.",
+      "source": "Quran 26:83"
+    },
+    {
+      "id": 24,
+      "arabic": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكُفْرِ وَالْفَقْرِ، وَأَعُوذُ بِكَ مِنْ عَذَابِ الْقَبْرِ",
+      "translation": "O Allah, I seek refuge in You from disbelief and poverty, and I seek refuge in You from the punishment of the grave.",
+      "source": "Abu Dawud"
+    },
+    {
+      "id": 25,
+      "arabic": "اللَّهُمَّ أَصْلِحْ لِي دِينِي الَّذِي هُوَ عِصْمَةُ أَمْرِي، وَأَصْلِحْ لِي دُنْيَايَ الَّتِي فِيهَا مَعَاشِي",
+      "translation": "O Allah, set right for me my religion which is the safeguard of my affairs, and set right for me the affairs of my world wherein is my living.",
+      "source": "Muslim"
     }
   ]
 }
