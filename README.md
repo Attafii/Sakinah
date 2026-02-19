@@ -7,6 +7,8 @@
 	<a href="https://sakinah.attafii.dev/"><img src="https://img.shields.io/badge/Website-sakinah.attafii.dev-green?logo=internet-explorer" alt="Website"></a>
 </p>
 
+<img width="779" height="440" alt="image" src="https://github.com/user-attachments/assets/5e932421-2cca-4508-b468-2d1e652a7440" />
+
 ---
 
 ## ✨ Features (Highlights)
@@ -17,6 +19,7 @@
 	<span style="display:inline-block;background:#e8f7ef;color:#0b9d58;padding:6px 10px;border-radius:18px;margin-right:6px">📅 Prayer Times</span>
 	<span style="display:inline-block;background:#f3e8ff;color:#7b1fa2;padding:6px 10px;border-radius:18px">🔒 Privacy First</span>
 	</p>
+<img width="776" height="440" alt="image" src="https://github.com/user-attachments/assets/2a569773-d967-40af-b8e3-67bc695c7f5e" />
 
 ### 🕋 Spiritual Dashboard (New Tab)
 <p style="font-size:16px;color:#222">Transform your new tab into a peaceful sanctuary:</p>
@@ -27,15 +30,22 @@
 - <strong style="color:#0b66c3">Gratitude Journal</strong>: Private journal with history modal and .txt export.
 - <strong style="color:#0b66c3">Bilingual Hijri Calendar</strong> and <strong>Quranic Quiz</strong> for interactive learning.
 
+<img width="780" height="440" alt="image" src="https://github.com/user-attachments/assets/2d14582e-b7c5-43de-b884-4f527b16025a" />
+
 ### 🤖 Sakinah AI Guide
 - <strong style="color:#7b1fa2">Empathetic Chat</strong>: Receive comforting advice and relevant Quranic verses.
 - <strong style="color:#7b1fa2">Bilingual Explanations</strong>: Deep-dives into Ayahs in Arabic and English.
 - <strong style="color:#7b1fa2">Favorites Analysis</strong>: AI-powered insights that identify spiritual patterns in your saved verses.
 
+<img width="774" height="440" alt="image" src="https://github.com/user-attachments/assets/bd2eb7cd-2c49-44ad-bb0e-3e287624f144" />
+
+
 ### 🛠️ Customization & Productivity
 - <strong style="color:#0b9d58">Personalized Wallpapers</strong>: Upload or set by URL.
 - <strong style="color:#0b9d58">Theme Support</strong>: Light, Dark, Auto (sunset-sync).
 - <strong style="color:#0b9d58">Bookmarks & Privacy</strong>: Searchable bookmarks sidebar and optional recent-tabs manager.
+<img width="782" height="440" alt="image" src="https://github.com/user-attachments/assets/78b3483f-52ab-49df-9e5e-926ef43a649d" />
+<img width="788" height="440" alt="image" src="https://github.com/user-attachments/assets/9a708536-3871-4155-b3cc-6dcf62dbe035" />
 
 ---
 
