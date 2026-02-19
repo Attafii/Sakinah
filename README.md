@@ -1,58 +1,59 @@
-🌙 Sakinah - A Calm Beginning
+<h1 style="font-size:48px; color:#0b3d91; margin-bottom:8px">🌙 Sakinah — A Calm Beginning</h1>
 
-**Sakinah** is a comprehensive browser extension designed to bring tranquility, spiritual reflection, and organized productivity to your daily digital life.
+<p style="font-size:18px; color:#333; max-width:900px">Sakinah is a browser extension that brings tranquility, spiritual reflection, and organized productivity to your daily digital life.</p>
+
+<p>
+	<a href="https://chromewebstore.google.com/detail/sakinah/imobigiagbmnloclcblmollcadpmhmgn?utm_source=item-share-cb"><img src="https://img.shields.io/badge/Chrome%20Web%20Store-Open-blue?logo=google-chrome" alt="Chrome Web Store"></a>
+	<a href="https://sakinah.attafii.dev/"><img src="https://img.shields.io/badge/Website-sakinah.attafii.dev-green?logo=internet-explorer" alt="Website"></a>
+</p>
 
 ---
-<img width="779" height="440" alt="image" src="https://github.com/user-attachments/assets/fd0d64c6-67be-492d-aa08-bd0fe480376e" />
 
-## ✨ Features
+## ✨ Features (Highlights)
+
+<p style="font-size:20px">
+	<span style="display:inline-block;background:#e8f3ff;color:#0b66c3;padding:6px 10px;border-radius:18px;margin-right:6px">🕋 New Tab</span>
+	<span style="display:inline-block;background:#fff3e0;color:#ff9800;padding:6px 10px;border-radius:18px;margin-right:6px">🤖 AI Guide</span>
+	<span style="display:inline-block;background:#e8f7ef;color:#0b9d58;padding:6px 10px;border-radius:18px;margin-right:6px">📅 Prayer Times</span>
+	<span style="display:inline-block;background:#f3e8ff;color:#7b1fa2;padding:6px 10px;border-radius:18px">🔒 Privacy First</span>
+	</p>
 
 ### 🕋 Spiritual Dashboard (New Tab)
-Transform your new tab into a peaceful sanctuary:
-- **Daily Ayah & Rotation**: Beautifully rendered verses with optional random or daily rotation.
-- **Prayer Times**: Automatic geo-located or city-based prayer timings with real-time "active" prayer highlighting.
-- **Sunnah of the Day**: Rotating prophetic traditions presented in both **Arabic and English**.
-- **Daily Deeds**: Track 5 customizable spiritual goals (e.g., Prayers, Charity, Adhkar) with a clean progress UI.
-- **Gratitude Journal**: A persistent private journal to record daily blessings, featuring a **History Modal** and **.txt Export** functionality.
-- **Bilingual Hijri Calendar**: Seamlessly updated Hijri and Gregorian dates featuring full month names.
-- **Quranic Quiz**: Test your knowledge with interactive verse completion challenges.
-
-  <img width="776" height="440" alt="image" src="https://github.com/user-attachments/assets/2790b5bf-d27a-420d-98c3-a516c8c38216" />
-<img width="780" height="440" alt="image" src="https://github.com/user-attachments/assets/e1de780a-16b2-4314-8232-7482a5d87391" />
-
+<p style="font-size:16px;color:#222">Transform your new tab into a peaceful sanctuary:</p>
+- <strong style="color:#0b66c3">Daily Ayah & Rotation</strong>: Beautifully rendered verses with optional random or daily rotation.
+- <strong style="color:#0b66c3">Prayer Times</strong>: Automatic geo-located or city-based prayer timings with real-time "active" prayer highlighting.
+- <strong style="color:#0b66c3">Sunnah of the Day</strong>: Rotating prophetic traditions presented in both <strong>Arabic</strong> and <strong>English</strong>.
+- <strong style="color:#0b66c3">Daily Deeds</strong>: Track 5 customizable spiritual goals with a clean progress UI.
+- <strong style="color:#0b66c3">Gratitude Journal</strong>: Private journal with history modal and .txt export.
+- <strong style="color:#0b66c3">Bilingual Hijri Calendar</strong> and <strong>Quranic Quiz</strong> for interactive learning.
 
 ### 🤖 Sakinah AI Guide
-- **Empathetic Chat**: Describe your feelings to receive comforting advice and relevant Quranic verses.
-- **Bilingual Explanations**: One-click deep-dives into any Ayah, provided in both **Arabic (العربية الفصحى)** and **English**.
-- **Favorites Analysis**: AI-powered insights that analyze your saved verses to identify spiritual patterns and suggest personalized actions.
-
-<img width="866" height="440" alt="image" src="https://github.com/user-attachments/assets/b147eb28-1486-46b8-9d79-faf955a03b38" />
+- <strong style="color:#7b1fa2">Empathetic Chat</strong>: Receive comforting advice and relevant Quranic verses.
+- <strong style="color:#7b1fa2">Bilingual Explanations</strong>: Deep-dives into Ayahs in Arabic and English.
+- <strong style="color:#7b1fa2">Favorites Analysis</strong>: AI-powered insights that identify spiritual patterns in your saved verses.
 
 ### 🛠️ Customization & Productivity
-- **Personalized Wallpapers**: Set custom backgrounds via URL or direct local upload.
-- **Theme Support**: Light, Dark, and "Auto" (sunset-sync) modes.
-- **Ecosystem Integration**: Quick-toggle links and apps for **Google, Microsoft, and Apple** ecosystems.
-- **Bookmarks & Privacy**: A sleek searchable bookmarks sidebar and "Recent Tabs" manager with privacy-first optional permissions.
-
-<img width="782" height="440" alt="image" src="https://github.com/user-attachments/assets/3714847b-8ee4-49a5-932e-5f1ea0bedffc" />
-<img width="788" height="440" alt="image" src="https://github.com/user-attachments/assets/7a8a939c-93cd-4e80-93c7-31ba6fe4cf0f" />
+- <strong style="color:#0b9d58">Personalized Wallpapers</strong>: Upload or set by URL.
+- <strong style="color:#0b9d58">Theme Support</strong>: Light, Dark, Auto (sunset-sync).
+- <strong style="color:#0b9d58">Bookmarks & Privacy</strong>: Searchable bookmarks sidebar and optional recent-tabs manager.
 
 ---
 
 ## 📂 Project Structure
-sakinah/
+<pre style="background:#f7f9fc;padding:12px;border-radius:8px">sakinah/
 │── manifest.json      # Extension configuration with optional permissions
-│── background.js       # Background logic for notifications and state
-│── newtab.html/js      # Central dashboard experience
-│── popup.html/js       # Quick-access extension popup
-│── options.html/js     # Detailed settings and customization
-│── ai.js               # Dual-language AI integration (Groq/Llama 3)
-│── config.js           # Default settings and proxy endpoints
-│── quran.json          # Curated Quranic dataset
+│── background.js      # Background logic for notifications and state
+│── newtab.html/js     # Central dashboard experience
+│── popup.html/js      # Quick-access extension popup
+│── options.html/js    # Detailed settings and customization
+│── ai.js              # Dual-language AI integration (Groq/Llama 3)
+│── config.js          # Default settings and proxy endpoints
+│── quran.json         # Curated Quranic dataset
 │── adhkar.json/ahadith.json # Spiritual content libraries
-│── styles.css          # Glassmorphism and responsive design
-│── build.bat           # Deployment and key injection script
-│── icons/              # Islamic branding assets
+│── styles.css         # Glassmorphism and responsive design
+│── build.bat          # Deployment and key injection script
+│── icons/             # Islamic branding assets
+</pre>
 
 ---
 
@@ -64,20 +65,29 @@ sakinah/
 3. Enable **Developer Mode**
 4. Click **Load Unpacked** and select the Sakinah folder.
 
+### 2. Configuration
+- Get a free API key from [Groq Console](https://console.groq.com/keys).
+- Create a `.env` file or use `build.bat` to inject your `GROQ_API_KEY`.
+- Use `restore-config.bat` before committing to keep your keys private.
+
 ---
 
 ## 🧠 AI Favorites Analysis
-Go to the **Favorites** tab and click "Analyze Favorites" to see personalized spiritual insights based on what you share with Sakinah.
+Go to the **Favorites** tab and click "Analyze Favorites" to see personalized spiritual insights.
 
-### Privacy & Security:
-- ✅ **No Personal Data**: Only verse identifiers are used for analysis.
-- ✅ **Local Storage**: All history and settings reside only in your browser.
-- ✅ **Optional Permissions**: Sensitive features (History/Bookmarks) only activate when you choose.
+### Privacy & Security
+- ✅ <strong>No Personal Data</strong>: Only verse identifiers are used for analysis.
+- ✅ <strong>Local Storage</strong>: All history and settings remain in your browser.
+- ✅ <strong>Optional Permissions</strong>: Sensitive features enable only when you choose.
 
 ---
 
 ## 🛠 Tech Stack
-- **Manifest V3** Chrome Extension API.
-- **Groq AI (Llama 3.3)** for multilingual NLP.
-- **Vanilla JavaScript & Glassmorphism CSS**.
-- **Aladhan API** for precise global prayer timings.
+- **Manifest V3** Chrome Extension API
+- **Groq AI (Llama 3.3)** for multilingual NLP
+- **Vanilla JavaScript & Glassmorphism CSS**
+- **Aladhan API** for precise global prayer timings
+
+---
+
+If you'd like a version tailored for GitHub Pages (README → docs/index.html) I can generate that next.
