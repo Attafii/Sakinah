@@ -1,4 +1,4 @@
-<img width="788" height="440" alt="image" src="https://github.com/user-attachments/assets/8f7021ad-25c4-4965-bb66-6e952bbb5cb4" /># 🌙 Sakinah - A Calm Beginning
+🌙 Sakinah - A Calm Beginning
 
 **Sakinah** is a comprehensive browser extension designed to bring tranquility, spiritual reflection, and organized productivity to your daily digital life.
 
