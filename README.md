@@ -3,6 +3,7 @@
 **Sakinah** is a comprehensive browser extension designed to bring tranquility, spiritual reflection, and organized productivity to your daily digital life.
 
 ---
+<img width="779" height="440" alt="image" src="https://github.com/user-attachments/assets/fd0d64c6-67be-492d-aa08-bd0fe480376e" />
 
 ## ✨ Features
 
