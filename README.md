@@ -1,4 +1,4 @@
-# 🌙 Sakinah - A Calm Beginning
+<img width="788" height="440" alt="image" src="https://github.com/user-attachments/assets/8f7021ad-25c4-4965-bb66-6e952bbb5cb4" /># 🌙 Sakinah - A Calm Beginning
 
 **Sakinah** is a comprehensive browser extension designed to bring tranquility, spiritual reflection, and organized productivity to your daily digital life.
 
@@ -17,16 +17,25 @@ Transform your new tab into a peaceful sanctuary:
 - **Bilingual Hijri Calendar**: Seamlessly updated Hijri and Gregorian dates featuring full month names.
 - **Quranic Quiz**: Test your knowledge with interactive verse completion challenges.
 
+  <img width="776" height="440" alt="image" src="https://github.com/user-attachments/assets/2790b5bf-d27a-420d-98c3-a516c8c38216" />
+<img width="780" height="440" alt="image" src="https://github.com/user-attachments/assets/e1de780a-16b2-4314-8232-7482a5d87391" />
+
+
 ### 🤖 Sakinah AI Guide
 - **Empathetic Chat**: Describe your feelings to receive comforting advice and relevant Quranic verses.
 - **Bilingual Explanations**: One-click deep-dives into any Ayah, provided in both **Arabic (العربية الفصحى)** and **English**.
 - **Favorites Analysis**: AI-powered insights that analyze your saved verses to identify spiritual patterns and suggest personalized actions.
+
+<img width="866" height="440" alt="image" src="https://github.com/user-attachments/assets/b147eb28-1486-46b8-9d79-faf955a03b38" />
 
 ### 🛠️ Customization & Productivity
 - **Personalized Wallpapers**: Set custom backgrounds via URL or direct local upload.
 - **Theme Support**: Light, Dark, and "Auto" (sunset-sync) modes.
 - **Ecosystem Integration**: Quick-toggle links and apps for **Google, Microsoft, and Apple** ecosystems.
 - **Bookmarks & Privacy**: A sleek searchable bookmarks sidebar and "Recent Tabs" manager with privacy-first optional permissions.
+
+<img width="782" height="440" alt="image" src="https://github.com/user-attachments/assets/3714847b-8ee4-49a5-932e-5f1ea0bedffc" />
+<img width="788" height="440" alt="image" src="https://github.com/user-attachments/assets/7a8a939c-93cd-4e80-93c7-31ba6fe4cf0f" />
 
 ---
 
@@ -54,11 +63,6 @@ sakinah/
 2. Open Chrome -> `chrome://extensions`
 3. Enable **Developer Mode**
 4. Click **Load Unpacked** and select the Sakinah folder.
-
-### 2. Configuration
-- Get a free API key from [Groq Console](https://console.groq.com/keys).
-- Create a `.env` file or use `build.bat` to inject your `GROQ_API_KEY`.
-- Use `restore-config.bat` before committing to keep your keys private.
 
 ---
 
